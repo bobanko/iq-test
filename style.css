@@ -72,3 +72,9 @@
   color: white;
   background-color: #8b8b8b;
 }
+
+hr {
+  padding: 0;
+  margin: 10px;
+  width: 100%;
+}
