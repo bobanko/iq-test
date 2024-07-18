@@ -1,19 +1,28 @@
+:root {
+  --red: #ff5455;
+  --green: #00bc62;
+  --blue: #00c8dc;
+  --yellow: #e0d93b;
+  --gray: #d9d9d9;
+  --dimgray: #8b8b8b;
+}
+
 .red {
-  --color: #ff5455;
+  --color: var(--red);
 }
 
 .green {
-  --color: #00bc62;
+  --color: var(--green);
 }
 
 .blue {
-  --color: #00c8dc;
+  --color: var(--blue);
 }
 
 .yellow {
-  --color: #e0d93b;
+  --color: var(--yellow);
 }
 
 .gray {
-  --color: #d9d9d9;
+  --color: var(--gray);
 }

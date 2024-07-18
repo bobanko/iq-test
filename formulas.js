@@ -1,3 +1,5 @@
+import { animations } from "./animations.js";
+
 function pickRandom(array) {
   const randomIndex = Math.floor(Math.random() * array.length);
   return array[randomIndex];
@@ -281,8 +283,31 @@ function processEquation() {
 
     $answerLetter.textContent = answerLetters[letterCount++];
 
+    $answer.addEventListener("click", () =>
+      processWithAnswer({
+        $button: $answer,
+        chosenAnswer: answer,
+        properAnswer: q,
+      })
+    );
+
     $answerBlock.appendChild($answer);
   }
 }
 
+function toggleDebugInfo() {
+  if ($debug.checked) {
+  } else {
+  }
+}
+
 $btnGenerate.addEventListener("click", processEquation);
+$debug.addEventListener("click", toggleDebugInfo);
+
+function processWithAnswer({ $button, chosenAnswer, properAnswer }) {
+  if (chosenAnswer === properAnswer) {
+    $button.querySelector(".question-part").animate(...animations.proper);
+  } else {
+    $button.querySelector(".question-part").animate(...animations.wrong);
+  }
+}

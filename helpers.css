@@ -20,6 +20,10 @@
   justify-content: center;
 }
 
-.p-10 {
-  padding: 10px;
+[hidden] {
+  display: none !important;
+}
+
+[disabled] {
+  pointer-events: none;
 }
