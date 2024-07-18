@@ -77,6 +77,8 @@ function generateEquation() {
   // x = y * z -- use multi, get x as result
   // x + y = z -- sort asc
   //
+
+  console.log("generate formulas:");
   const formulas = [];
 
   const mulResult = [4, 6, 8, 9];
@@ -99,30 +101,50 @@ function generateEquation() {
   // todo(vmyshko): calc probabilities, increase prob of mul?
   const useMulForZ = pickRandom([true, false]);
   // multi for z is possible and 50% chance fired
-  if (mulResult.includes(x * y) && useMulForZ) {
+
+  if (mulResult.includes(x * y) && ![x, y].includes(1) && useMulForZ) {
     // use multi
     z = x * y;
-    formulas.push(`x * y = z; ${x} * ${y} = ${z}; 🈴 * 🛜 = ✅;`);
+    console.log(`x * y = z; ${x} * ${y} = ${z}; 🈴 * 🛜 = ✅;`);
+
+    formulas.push("x * y = z");
   } else {
     // use sum
     z = x + y;
-    formulas.push(`x + y = z; ${x} + ${y} = ${z}; 🈴 + 🛜 = ✅;`);
+    console.log(`x + y = z; ${x} + ${y} = ${z}; 🈴 + 🛜 = ✅;`);
+    formulas.push("x + y = z");
   }
 
   // formula #2
   // constant
   let c;
 
+  // todo(vmyshko): use all pairs [x|y] [x|z] [y|z]
+
+  // 2 + 6 = 8
+
+  // from: x + y = z
+  // y - x | y * x |
+  // x + z |  z / x |
+  // y + z | z / y -- not possible
+
+  // todo(vmyshko): same for q
+  // but add:
+  // q + q | q * q
+  // q + c | q * c | q - c
+
   // multi for c is possible and 50% chance fired
   if (Number.isInteger(y / x) && !useMulForZ) {
     // todo(vmyshko): add 50% prob
     //use multi
     c = y / x;
-    formulas.push(`y = x * c; ${x} * ${c} = ${y}; 🈴 * ${c} = 🛜;`);
+    console.log(`y = x * c; ${x} * ${c} = ${y}; 🈴 * ${c} = 🛜;`);
+    formulas.push("x * c = y");
   } else {
     // use sum
     c = y - x;
-    formulas.push(`x + c = y; ${x} + ${c} = ${y}; 🈴 + ${c} = 🛜;`);
+    console.log(`x + c = y; ${x} + ${c} = ${y}; 🈴 + ${c} = 🛜;`);
+    formulas.push("x + c = y");
   }
 
   // formula #3
@@ -132,36 +154,135 @@ function generateEquation() {
   if (Number.isInteger(z / x)) {
     //use multi
     q = z / x;
-    formulas.push(`x * q = z; ${x} * ${q} = ${z}; 🈴 * ❓ = ✅`);
+    console.log(`x * q = z; ${x} * ${q} = ${z}; 🈴 * ❓ = ✅`);
+    formulas.push("x * q = z");
   }
   // prevent q === y case
   else if (z !== x + y) {
     // use sum
     q = z - x;
-    formulas.push(`x + q = z; ${x} + ${q} = ${z}; 🈴 + ❓ = ✅`);
+    console.log(`x + q = z; ${x} + ${q} = ${z}; 🈴 + ❓ = ✅`);
+    formulas.push("x + q = z");
   } else {
     // custom case
     // different formula ops
 
     // can be: q @ c @ [x|y|z]
     q = z - c;
-    formulas.push(`c + q = z; ${c} + ${q} = ${z}; ${c} + ❓ = ✅`);
+    console.log(`c + q = z; ${c} + ${q} = ${z}; ${c} + ❓ = ✅`);
+    formulas.push("c + q = z");
     //OR
     // q+q / q*q
   }
 
-  // Вывод уравнений
-  console.log("Сгенерированные уравнения:");
-  for (let f of formulas) {
-    console.log(f);
-  }
+  // log results
 
-  // Вывод значения Q, которое нужно угадать
-  console.log(`Неизвестная, которую нужно угадать: Q = ${q}`);
+  console.log(`Q = ${q}`);
+
+  return {
+    formulas,
+    x,
+    y,
+    z,
+    c,
+    q,
+  };
 }
 
-$btnGenerate.addEventListener(
-  "click",
-  // Вызов функции для генерации уравнений
-  generateEquation
-);
+function processEquation() {
+  const { formulas, x, y, z, c, q } = generateEquation();
+  const variables = {
+    x,
+    y,
+    z,
+    c,
+    q,
+  };
+
+  const varColors = {
+    x: "red",
+    y: "blue",
+    z: "green",
+    c: "yellow",
+    q: "gray",
+  };
+
+  $questionBlock.replaceChildren();
+
+  for (let formula of formulas) {
+    const parts = formula.split(" ");
+
+    const fragment = $tmplQuestionRow.content.cloneNode(true); //fragment
+    const $questionRow = fragment.firstElementChild;
+
+    for (let part of parts) {
+      const isVariable = "xyzcq".includes(part);
+      const isOperator = "+-*=".includes(part);
+
+      if (isVariable) {
+        const fragment = $tmplQuestionPart.content.cloneNode(true); //fragment
+        const $questionPart = fragment.firstElementChild;
+
+        $questionPart.textContent = variables[part];
+        $questionPart.classList.add(varColors[part]);
+
+        $questionRow.appendChild($questionPart);
+      }
+
+      if (isOperator) {
+        const fragment = $tmplQuestionOperator.content.cloneNode(true); //fragment
+        const $questionOperator = fragment.firstElementChild;
+
+        $questionOperator.textContent = part;
+
+        $questionRow.appendChild($questionOperator);
+      }
+    }
+
+    $questionBlock.appendChild($questionRow);
+  }
+
+  // add answers
+
+  const possibleAnswers = new Set([1, 2, 3, 4, 5, 6, 7, 8, 9]);
+  possibleAnswers.delete(q);
+
+  const actualAnswers = [q];
+
+  for (let i = 0; i < 5; i++) {
+    const answer = pickRandom([...possibleAnswers]);
+
+    possibleAnswers.delete(answer);
+    actualAnswers.push(answer);
+  }
+
+  actualAnswers.sort((a, b) => a - b);
+
+  console.log(actualAnswers);
+
+  const answerLetters = "abcdef";
+  // todo(vmyshko): refac
+  let letterCount = 0;
+  $answerBlock.replaceChildren();
+  for (let answer of actualAnswers) {
+    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
+    const $answer = fragment.firstElementChild;
+
+    //
+    const fragment2 = $tmplQuestionPart.content.cloneNode(true); //fragment
+    const $questionPart = fragment2.firstElementChild;
+
+    $questionPart.textContent = answer;
+    $questionPart.classList.add(varColors["q"]);
+
+    $answer.appendChild($questionPart);
+
+    const $answerLetter = $answer.querySelector(".answer-letter");
+
+    $answerLetter.textContent = answerLetters[letterCount++];
+
+    $answerBlock.appendChild($answer);
+  }
+}
+
+$btnGenerate.addEventListener("click", processEquation);

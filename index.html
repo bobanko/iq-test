@@ -5,10 +5,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IQ test</title>
     <link rel="icon" href="./iq.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
     <script type="module" async src="./formulas.js"></script>
   </head>
-  <body>
-    kek
-    <button id="$btnGenerate" type="button">generate</button>
+
+  <body class="inter-regular">
+    <template id="$tmplQuestionRow">
+      <div class="question-row"></div>
+    </template>
+
+    <template id="$tmplQuestionPart">
+      <div class="question-part">var</div>
+    </template>
+
+    <template id="$tmplQuestionOperator">
+      <div class="question-operator">op</div>
+    </template>
+
+    <template id="$tmplAnswer">
+      <div class="answer">
+        <div class="answer-letter inter-semibold">x</div>
+      </div>
+    </template>
+
+    <!-- ---- -->
+    <section id="$mainSection" class="flex-col align-center">
+      <button id="$btnGenerate" type="button" class="p-10">generate</button>
+
+      <div id="$questionBlock" class="question-block">
+        <div class="question-row">
+          <div class="question-part red">R</div>
+          <div class="question-operator">+</div>
+          <div class="question-part blue">B</div>
+          <div class="question-operator">=</div>
+          <div class="question-part green">G</div>
+        </div>
+
+        <div class="question-row">
+          <div class="question-part red">R</div>
+          <div class="question-operator">+</div>
+          <div class="question-part blue">B</div>
+          <div class="question-operator">=</div>
+          <div class="question-part green">G</div>
+        </div>
+        <div class="question-row">
+          <div class="question-part red">R</div>
+          <div class="question-operator">+</div>
+          <div class="question-part blue">B</div>
+          <div class="question-operator">=</div>
+          <div class="question-part green">G</div>
+        </div>
+      </div>
+
+      <div id="$answerBlock" class="answer-block justify-center p-10"></div>
+    </section>
   </body>
 </html>
