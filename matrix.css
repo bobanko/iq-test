@@ -1,0 +1,31 @@
+section {
+  background-color: #c0c0c0;
+}
+
+.question-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  --matrix-cell-size: 30px;
+}
+
+.question-matrix {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  background-color: white;
+
+  border: 1px solid black;
+  border-radius: 2px;
+}
+
+.matrix-cell {
+  width: var(--matrix-cell-size);
+  height: var(--matrix-cell-size);
+  background-color: var(--color, transparent);
+  border: 1px solid black;
+}
+
+.answer-block {
+  --matrix-cell-size: 20px;
+}
