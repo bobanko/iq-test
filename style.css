@@ -7,6 +7,16 @@
   --row-height: 75px;
 }
 
+/* @property --color {
+  syntax: "<color>";
+  inherits: false;
+  initial-value: transparent;
+} */
+
+body {
+  background-color: #c0c0c0;
+}
+
 .p-10 {
   padding: 10px;
 }
@@ -29,16 +39,6 @@ button[type="button"] {
   text-align: center;
 
   gap: 10px;
-
-  line-height: var(--row-height);
-}
-
-.question-block .red,
-.question-block .green,
-.question-block .blue,
-.question-block .gray {
-  color: transparent;
-  text-shadow: none;
 }
 
 .question-row {
@@ -49,11 +49,20 @@ button[type="button"] {
 }
 
 .question-part {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   width: var(--row-height);
   height: var(--row-height);
 
   background-color: var(--color, transparent);
+  text-transform: uppercase;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.question-block .question-part {
+  border: 2px solid black;
 }
 
 .question-block .question-part {
@@ -67,12 +76,16 @@ button[type="button"] {
   text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 }
 
+/* // */
+
 .answer-block {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
 
   gap: 10px;
+
+  --answer-bg-color: var(--dimgray);
+  --answer-letter-color: white;
 }
 
 .answer {
@@ -82,27 +95,44 @@ button[type="button"] {
   font-size: 50px;
   text-align: center;
 
-  line-height: var(--row-height);
+  /* --answer-bg-color: var(--color, var(--answer-bg-color)); */
 
-  border: 3px solid var(--dimgray);
+  background-color: var(--answer-bg-color);
+  border: 3px solid var(--answer-bg-color);
+  border-radius: 2px;
+
+  transition: 200ms all;
+}
+
+.answer.selected {
+  --answer-bg-color: var(--color, #ffdf32);
+  --answer-letter-color: black;
+
+  box-shadow: 0 0 0 2px black;
 }
 
 .answer-letter {
-  width: calc(var(--row-height) / 3);
-  height: var(--row-height);
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
-  line-height: var(--row-height);
+  width: calc(var(--row-height) / 3);
+
   text-align: center;
+
+  color: var(--answer-letter-color);
 
   font-size: 20px;
   text-transform: uppercase;
 
-  color: white;
-  background-color: #8b8b8b;
+  transition: 200ms all;
 }
+
+/* // */
 
 hr {
   padding: 0;
   margin: 10px;
   width: 100%;
+  border-width: 2px;
 }
