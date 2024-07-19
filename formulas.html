@@ -10,16 +10,17 @@
   </head>
 
   <body class="inter-regular">
+    <!-- templates -->
     <template id="$tmplQuestionRow">
       <div class="question-row"></div>
     </template>
 
     <template id="$tmplQuestionPart">
-      <div class="question-part">var</div>
+      <div class="question-part"></div>
     </template>
 
     <template id="$tmplQuestionOperator">
-      <div class="question-operator">op</div>
+      <div class="question-operator"></div>
     </template>
 
     <template id="$tmplAnswer">
@@ -30,9 +31,13 @@
 
     <!-- ---- -->
     <section id="$mainSection" class="flex-col align-center">
-      <button id="$btnGenerate" type="button" class="p-10 m-10">
-        generate
-      </button>
+      <div class="flex-row">
+        <a class="p-10 m-10" href="./index.html">Back</a>
+
+        <button id="$btnGenerate" type="button" class="p-10 m-10">
+          generate
+        </button>
+      </div>
 
       <hr />
 

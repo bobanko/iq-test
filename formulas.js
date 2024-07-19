@@ -1,20 +1,5 @@
 import { animations } from "./animations.js";
-
-function pickRandom(array) {
-  const randomIndex = Math.floor(Math.random() * array.length);
-  return array[randomIndex];
-}
-
-function pickRandomOperation() {
-  const operations = ["+", "-", "*"];
-  return pickRandom(operations);
-}
-
-// todo(vmyshko): extract to helpers
-function fromRange(min, max) {
-  const randomIndex = Math.floor(min + Math.random() * (max - min + 1));
-  return randomIndex;
-}
+import { fromRange, pickRandom } from "./helpers.js";
 
 // ---------
 
@@ -225,7 +210,17 @@ function processEquation() {
         const fragment = $tmplQuestionPart.content.cloneNode(true); //fragment
         const $questionPart = fragment.firstElementChild;
 
-        $questionPart.textContent = variables[part];
+        if (part === "c") {
+          $questionPart.textContent = variables[part];
+        } else if (part === "q") {
+          $questionPart.textContent = "?";
+        } else {
+          //xyz
+          //set color's first letter
+          //   $questionPart.textContent = varColors[part][0];
+          //skip
+        }
+
         $questionPart.classList.add(varColors[part]);
 
         $questionRow.appendChild($questionPart);
@@ -270,6 +265,9 @@ function processEquation() {
     const fragment = $tmplAnswer.content.cloneNode(true); //fragment
     const $answer = fragment.firstElementChild;
 
+    const $answerLetter = $answer.querySelector(".answer-letter");
+    $answerLetter.textContent = answerLetters[letterCount++];
+
     //
     const fragment2 = $tmplQuestionPart.content.cloneNode(true); //fragment
     const $questionPart = fragment2.firstElementChild;
@@ -278,10 +276,6 @@ function processEquation() {
     $questionPart.classList.add(varColors["q"]);
 
     $answer.appendChild($questionPart);
-
-    const $answerLetter = $answer.querySelector(".answer-letter");
-
-    $answerLetter.textContent = answerLetters[letterCount++];
 
     $answer.addEventListener("click", () =>
       processWithAnswer({
@@ -295,19 +289,24 @@ function processEquation() {
   }
 }
 
-function toggleDebugInfo() {
-  if ($debug.checked) {
-  } else {
-  }
-}
-
 $btnGenerate.addEventListener("click", processEquation);
-$debug.addEventListener("click", toggleDebugInfo);
+
+function toggleAnswerSelect($newAnswer) {
+  $answerBlock
+    .querySelectorAll(".answer")
+    .forEach(($answer) => $answer.classList.remove("selected"));
+
+  $newAnswer.classList.add("selected");
+}
 
 function processWithAnswer({ $button, chosenAnswer, properAnswer }) {
+  toggleAnswerSelect($button);
+
   if (chosenAnswer === properAnswer) {
-    $button.querySelector(".question-part").animate(...animations.proper);
+    $button.classList.add("green");
   } else {
-    $button.querySelector(".question-part").animate(...animations.wrong);
+    $button.classList.add("red");
   }
 }
+
+processEquation();
