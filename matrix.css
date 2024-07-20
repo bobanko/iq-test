@@ -26,6 +26,16 @@ section {
   border: 1px solid black;
 }
 
+.question-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--dimgray);
+  color: black;
+  border: 2px solid black;
+}
+
 .answer-block {
   --matrix-cell-size: 20px;
 }
