@@ -24,7 +24,7 @@ section {
 .matrix-cell {
   width: var(--matrix-cell-size);
   height: var(--matrix-cell-size);
-  background-color: var(--color, transparent);
+  background: var(--color, transparent);
   border: 1px solid black;
 }
 
@@ -41,4 +41,33 @@ section {
 
 .answer-block {
   --matrix-cell-size: 20px;
+}
+
+/* mixed colors */
+
+.red.blue {
+  --color: linear-gradient(
+    to bottom right,
+    var(--red) 45%,
+    black 50%,
+    var(--blue) 55%
+  );
+}
+
+.green.blue {
+  --color: linear-gradient(
+    to bottom right,
+    var(--green) 45%,
+    black 50%,
+    var(--blue) 55%
+  );
+}
+
+.green.red {
+  --color: linear-gradient(
+    to bottom right,
+    var(--green) 45%,
+    black 50%,
+    var(--red) 55%
+  );
 }
