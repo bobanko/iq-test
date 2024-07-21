@@ -10,6 +10,8 @@ section {
 }
 
 .question-matrix {
+  /* prevent outside recoloring */
+  --color: white;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 
@@ -34,6 +36,7 @@ section {
   background-color: var(--dimgray);
   color: black;
   border: 2px solid black;
+  border-radius: 2px;
 }
 
 .answer-block {

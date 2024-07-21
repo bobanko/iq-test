@@ -7,6 +7,10 @@
   --row-height: 75px;
 }
 
+.tiktok-text {
+  text-shadow: 1px 1px #f72456, -1px -1px #19f2e4;
+}
+
 /* @property --color {
   syntax: "<color>";
   inherits: false;
@@ -84,7 +88,7 @@ button[type="button"] {
 
   gap: 10px;
 
-  --answer-bg-color: var(--dimgray);
+  --color: var(--dimgray);
   --answer-letter-color: white;
 }
 
@@ -95,17 +99,15 @@ button[type="button"] {
   font-size: 50px;
   text-align: center;
 
-  /* --answer-bg-color: var(--color, var(--answer-bg-color)); */
-
-  background-color: var(--answer-bg-color);
-  border: 3px solid var(--answer-bg-color);
+  background-color: var(--color);
+  border: 3px solid var(--color);
   border-radius: 2px;
 
   transition: 200ms all;
 }
 
 .answer.selected {
-  --answer-bg-color: var(--color, #ffdf32);
+  --color: var(--yellow);
   --answer-letter-color: black;
 
   box-shadow: 0 0 0 2px black;
