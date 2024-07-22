@@ -1,10 +1,33 @@
-import { fromRange, pickRandom, spliceRandom } from "./helpers.js";
+import { fromRange, pickRandom, shuffle, spliceRandom } from "./helpers.js";
 
 const mtxSize = 3;
 const cellCount = mtxSize ** 2;
 
-function getIndexByRowCol({ row, col }) {
-  return row * mtxSize + col;
+const difficultyLevel = 3;
+
+// todo(vmyshko): extract?
+export class Point {
+  get index() {
+    return this.row * mtxSize + this.col;
+  }
+
+  constructor({ row, col, color = null }) {
+    this.row = row;
+    this.col = col;
+
+    this.color = color;
+  }
+
+  shift({ row, col }) {
+    this.row = (this.row + row) % mtxSize; // only positive rules!
+    this.col = (this.col + col) % mtxSize; // todo(vmyshko): refac to allow neg rules
+  }
+
+  toString() {
+    const { col, row, color } = this;
+
+    return `'${color}':[${row},${col}];`;
+  }
 }
 
 function createPaintedMatrix(points = []) {
@@ -24,25 +47,15 @@ function getPossibleMatrixCells() {
     .map((_, row) =>
       Array(mtxSize)
         .fill(null)
-        .map((_, col) => ({
-          row,
-          col,
-          index: getIndexByRowCol({ row, col }),
-        }))
+        .map((_, col) => new Point({ row, col }))
     )
     .flat();
 }
 
 function applyRule(prevPoint, rule) {
-  const row = (prevPoint.row + rule.row) % mtxSize; // only positive rules!
-  const col = (prevPoint.col + rule.col) % mtxSize; // todo(vmyshko): refac to allow neg rules
-
-  const nextPoint = {
-    row,
-    col,
-    index: getIndexByRowCol({ row, col }),
-    color: prevPoint.color,
-  };
+  const nextPoint = new Point({ ...prevPoint });
+  //apply rule
+  nextPoint.shift({ ...rule });
 
   return nextPoint;
 }
@@ -52,19 +65,45 @@ function generateMatrixQuiz() {
 
   // todo(vmyshko): gen rules..
   // todo(vmyshko): ..based on difficulty level (top/left/diagonals/..)
-  const rule1 = { row: fromRange(1, 2), col: 0 };
-  console.log({ rule1 });
+
+  const simpleRules = [
+    { row: 0, col: 1 }, // right
+    { row: 1, col: 0 }, // down
+    { row: 2, col: 0 }, // up
+    { row: 0, col: 2 }, // left
+  ];
+
+  const advancedRules = [
+    //diagonals
+    { row: 1, col: 1 },
+    { row: 1, col: 2 },
+    { row: 2, col: 1 },
+    { row: 2, col: 2 },
+
+    // todo(vmyshko): add rotation rules? knight-horse rule?
+  ];
+
+  const rules = [
+    //simple
+    ...shuffle(simpleRules),
+    ...shuffle(advancedRules),
+  ];
 
   const correctAnswerPoints = [];
 
   // todo(vmyshko): pt count depends on difficulty level
-  const pointColors = [
+  const pointColors = shuffle([
     "green",
-    // "red",
-    // "blue",
-    // "yellow",
+    "red",
+    "blue",
+    "yellow",
     //
-  ];
+  ]); // todo(vmyshko): shuffle
+  // remove extra colors based on difficulty
+  pointColors.splice(difficultyLevel);
+  rules.splice(difficultyLevel);
+
+  console.log({ rules });
 
   const freeCellsForPoints = getPossibleMatrixCells();
   for (let row = 0; row < mtxSize; row++) {
@@ -73,12 +112,7 @@ function generateMatrixQuiz() {
       //new point for each row
       const randomPoint = spliceRandom(freeCellsForPoints);
 
-      const currentPoint = {
-        row: randomPoint.row,
-        col: randomPoint.col,
-        index: randomPoint.index,
-        color: ptColor,
-      };
+      const currentPoint = new Point({ ...randomPoint, color: ptColor });
 
       prevPoints.push(currentPoint);
     } // ptColor
@@ -91,12 +125,11 @@ function generateMatrixQuiz() {
     for (let col = 1; col < mtxSize; col++) {
       const nextPoints = [];
 
-      for (let prevPoint of prevPoints) {
+      for (let [index, prevPoint] of prevPoints.entries()) {
         // todo(vmyshko): apply rule
-        const nextPoint = applyRule(prevPoint, rule1);
+        const nextPoint = applyRule(prevPoint, rules[index]);
 
         nextPoints.push(nextPoint);
-        console.log({ nextPoint });
       }
 
       const $questionMatrix = createPaintedMatrix(nextPoints);
@@ -120,27 +153,53 @@ function generateMatrixQuiz() {
   //new,old
   $questionBlock.replaceChild($questionMark, $correctAnswerQuestion);
 
-  //2
-  //3
-  //...
   // gen answers
 
-  const answers = [$correctAnswerQuestion];
+  // todo(vmyshko):
+  // move 1 *2
+  // move 2 *2
+  // move 1&2 *2 -- hard, can replace each other
 
-  // remove cell from correct answer
-  const firstIndex = getIndexByRowCol(correctAnswerPoints[0]);
+  // ???
 
-  const freeCellsForPt1 = getPossibleMatrixCells();
+  const answerPointGroups = [correctAnswerPoints];
 
-  for (let answerIndex = 1; answerIndex < 6; answerIndex++) {
+  function serializePointGroup(pointGroup) {
+    return pointGroup.reduce(
+      (acc, currentPoint) => acc + currentPoint.toString(),
+      ""
+    );
+  }
+
+  const uniqueGroups = new Set([serializePointGroup(correctAnswerPoints)]);
+  while (answerPointGroups.length < 6) {
     // todo(vmyshko): create unique wrong answers
+    const incorrectPoints = [];
 
-    const { color } = correctAnswerPoints[0];
-    const { index: rndCellIndex } = spliceRandom(freeCellsForPt1);
+    // todo(vmyshko): gen random
 
-    const $mtx = createPaintedMatrix([{ index: rndCellIndex, color }]);
+    const possibleCells = getPossibleMatrixCells();
 
-    answers.push($mtx);
+    for (let ptColor of pointColors) {
+      const randomFreeCell = spliceRandom(possibleCells);
+
+      const randomPoint = new Point({ ...randomFreeCell, color: ptColor });
+
+      incorrectPoints.push(randomPoint);
+    }
+
+    //check existance
+    if (uniqueGroups.has(serializePointGroup(incorrectPoints))) {
+      // points already exist
+      // skip
+      continue;
+    }
+
+    if (incorrectPoints.length === 1) debugger;
+    //add
+    answerPointGroups.push(incorrectPoints);
+
+    //push if unique
   }
 
   $answerBlock.replaceChildren(); //clear
@@ -148,8 +207,8 @@ function generateMatrixQuiz() {
   const answerLetters = "abcdef";
   let letterCount = 0;
 
-  pickRandom(answers);
-  for (let $answerMtx of answers) {
+  // todo(vmyshko): shuffle
+  for (let answerPoints of shuffle(answerPointGroups)) {
     // answer wrapper
     const fragment = $tmplAnswer.content.cloneNode(true); //fragment
     const $answer = fragment.firstElementChild;
@@ -157,16 +216,17 @@ function generateMatrixQuiz() {
     const $answerLetter = $answer.querySelector(".answer-letter");
     $answerLetter.textContent = answerLetters[letterCount++];
 
+    // todo(vmyshko): extract mtx creation to ui part?
+    const $answerMtx = createPaintedMatrix(answerPoints);
+
     // question
-
     $answer.appendChild($answerMtx);
-
     $answer.addEventListener("click", () => toggleAnswerSelect($answer));
-
     $answerBlock.appendChild($answer);
 
-    if ($answerMtx === $correctAnswerQuestion) {
-      $answer.classList.add("green");
+    // debug -- mark correct
+    if (answerPoints === correctAnswerPoints) {
+      console.log($answerLetter.textContent);
     }
   }
 }
