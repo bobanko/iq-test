@@ -26,6 +26,8 @@
   height: var(--question-size);
 
   color: var(--color);
+
+  transition: all 200ms ease-in-out;
 }
 
 .rotational-static {
