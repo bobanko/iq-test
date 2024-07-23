@@ -1,7 +1,3 @@
-section {
-  background-color: #c0c0c0;
-}
-
 .question-block {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
