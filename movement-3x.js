@@ -153,7 +153,7 @@ function generateMatrixQuiz() {
   //new,old
   $questionBlock.replaceChild($questionMark, $correctAnswerQuestion);
 
-  // gen answers
+  // ANSWERS
 
   // todo(vmyshko):
   // move 1 *2
