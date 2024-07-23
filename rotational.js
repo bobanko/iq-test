@@ -1,6 +1,7 @@
 // questions
 
-import { fromRange, shuffle } from "./helpers.js";
+import { wrapAnswers } from "./common.js";
+import { fromRange, preventSvgCache, shuffle } from "./helpers.js";
 
 function getQuestionParts($questionRotational) {
   const [$rpQuarter, $rpQuarter2, $rpSquare, $rpCircle, $rpArrow] = [
@@ -98,23 +99,20 @@ function generateRotationalQuiz() {
         $rpQuarter2,
       ];
 
-      parts.forEach(($part) => {
-        $part.ariaHidden = true;
-      });
-
       parts.slice(0, difficulty).forEach(($part, index) => {
         $part.ariaHidden = false;
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[index]);
 
+        // todo(vmyshko): grab last question degs as answer degs
         const currentDeg = sumDeg(deltaDegs[row][index], rules[index] * col);
 
         rotateTo($part, currentDeg);
       });
 
       $questionBlock.appendChild($questionRotational);
-    }
-  }
+    } //col
+  } //row
 
   console.log("deltaDegs", deltaDegs);
 
@@ -130,7 +128,9 @@ function generateRotationalQuiz() {
 
   // todo(vmyshko): gen answers
 
-  const answers = [$correctAnswerQuestion];
+  const correctDegs = [];
+
+  const answerQuestions = [$correctAnswerQuestion];
   for (let index = 1; index < 6; index++) {
     // question
     const questionTmpl = $tmplQuestionRotational.content.cloneNode(true); //fragment
@@ -140,53 +140,24 @@ function generateRotationalQuiz() {
     const { $rpQuarter, $rpSquare, $rpCircle, $rpArrow } =
       getQuestionParts($questionRotational);
 
-    $rpQuarter.ariaHidden = true;
-    $rpSquare.ariaHidden = true;
-    $rpCircle.ariaHidden = true;
-    $rpArrow.ariaHidden = true;
+    $rpArrow.ariaHidden = false;
 
-    answers.push($questionRotational);
+    answerQuestions.push($questionRotational);
   }
 
-  // wrap answers
-  const answerLetters = "abcdef";
-  $answerBlock.replaceChildren();
-  for (let [index, $question] of shuffle(answers).entries()) {
-    // answer
-    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
-    const $answer = fragment.firstElementChild;
-
-    const $answerLetter = $answer.querySelector(".answer-letter");
-    $answerLetter.textContent = answerLetters[index];
-
-    $answer.appendChild($question);
-    $answer.addEventListener("click", () => toggleAnswerSelect($answer));
-
-    $answerBlock.appendChild($answer);
-
-    if ($question === $correctAnswerQuestion) {
-      console.log({ answerLetter: answerLetters[index] });
-    }
-  }
-
-  // todo(vmyshko): debug: prevent svg cache
-  [...document.querySelectorAll("use")].forEach((use) => {
-    const [url, hash] = use.href.baseVal.split("#");
-    use.href.baseVal = `${url}?${Date.now()}#${hash}`;
+  wrapAnswers({
+    $answerBlock,
+    answerQuestions,
+    $tmplAnswer,
+    $correctAnswerQuestion,
   });
+
+  preventSvgCache();
 }
 
 $btnGenerate.addEventListener("click", generateRotationalQuiz);
 
 generateRotationalQuiz();
-
-function toggleAnswerSelect($newAnswer) {
-  $answerBlock
-    .querySelectorAll(".answer")
-    .forEach(($answer) => $answer.classList.remove("selected"));
-
-  $newAnswer.classList.add("selected");
-}
 
 $difficulty.addEventListener("change", () => {
   $difficultyText.textContent = `[${$difficulty.value}]`;
