@@ -57,12 +57,29 @@
     <!-- end -->
 
     <section id="$mainSection" class="flex-col align-center">
-      <div class="flex-row">
-        <a class="p-10 m-10" href="./index.html">Back</a>
+      <div class="flex-col">
+        <div class="flex-row">
+          <a class="p-10 m-10" href="./index.html">Back</a>
 
-        <button id="$btnGenerate" type="button" class="p-10 m-10">
-          generate
-        </button>
+          <label class="flex-row align-center">
+            <input type="checkbox" id="$shuffleColors" checked />
+            <span>shuffle colors</span>
+          </label>
+
+          <!-- <label class="flex-row align-center">
+            <input type="checkbox" id="$shuffleParts" />
+            <span>shuffle parts</span>
+          </label> -->
+
+          <button id="$btnGenerate" type="button" class="p-10 m-10">
+            generate
+          </button>
+        </div>
+
+        <label class="flex-row align-center">
+          <input type="range" id="$difficulty" min="1" max="4" value="2" />
+          <span>difficulty <span id="$difficultyText">x</span></span>
+        </label>
       </div>
 
       <hr />

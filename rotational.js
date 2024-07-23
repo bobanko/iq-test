@@ -28,7 +28,10 @@ function sumDeg(deg1, deg2) {
 }
 
 function generateRotationalQuiz() {
-  const colors = shuffle(["green", "red", "blue", "yellow"]);
+  const colors = ["green", "red", "blue", "yellow"];
+  if ($shuffleColors.checked) {
+    colors.splice(0, colors.length, ...shuffle(colors));
+  }
 
   const rowsNum = 3;
   const colsNum = 3;
@@ -43,7 +46,7 @@ function generateRotationalQuiz() {
 
   console.log("rules", rules);
 
-  const difficulty = 2;
+  const difficulty = Number.parseInt($difficulty.value);
 
   rules.splice(difficulty);
 
@@ -109,11 +112,16 @@ function generateRotationalQuiz() {
   console.log("deltaDegs", deltaDegs);
   // answers
 
+  const answerLetters = "abcdef";
+
   $answerBlock.replaceChildren();
-  for (let index = 0; index < 9; index++) {
+  for (let index = 0; index < 6; index++) {
     // answer
     const fragment = $tmplAnswer.content.cloneNode(true); //fragment
     const $answer = fragment.firstElementChild;
+
+    const $answerLetter = $answer.querySelector(".answer-letter");
+    $answerLetter.textContent = answerLetters[index];
 
     // question
     const questionTmpl = $tmplQuestionRotational.content.cloneNode(true); //fragment
@@ -152,3 +160,9 @@ function toggleAnswerSelect($newAnswer) {
 
   $newAnswer.classList.add("selected");
 }
+
+$difficulty.addEventListener("change", () => {
+  $difficultyText.textContent = `[${$difficulty.value}]`;
+});
+
+$difficulty.dispatchEvent(new Event("change"));
