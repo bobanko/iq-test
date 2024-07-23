@@ -12,39 +12,25 @@
   </head>
   <body class="inter-regular">
     <!-- templates -->
+    <template id="$tmplRotationalPart">
+      <svg class="rotational-part" aria-hidden="true">
+        <use href="" />
+      </svg>
+    </template>
 
     <template id="$tmplQuestionRotational">
       <div class="question-rotational">
         <!-- white background -->
-        <svg class="rotational-part rp-bg">
+        <svg class="rotational-static">
           <use href="./images/clock-bg.svg#bg" />
         </svg>
 
-        <!-- parts -->
-        <svg class="rotational-part rp-quarter" aria-hidden="true">
-          <use href="./images/clock-quarter.svg#quarter" />
-        </svg>
-
-        <!-- todo(vmyshko): for future use -->
-        <!-- todo(vmyshko): maybe copy existing? -->
-        <svg class="rotational-part rp-quarter2" aria-hidden="true">
-          <use href="./images/clock-quarter.svg#quarter" />
-        </svg>
-
-        <svg class="rotational-part rp-circle" aria-hidden="true">
-          <use href="./images/clock-circle.svg#circle" />
-        </svg>
-
-        <svg class="rotational-part rp-square" aria-hidden="true">
-          <use href="./images/clock-square.svg#square" />
-        </svg>
-
-        <svg class="rotational-part rp-arrow" aria-hidden="true">
-          <use href="./images/clock-arrow.svg?kek#arrow" />
-        </svg>
+        <div class="part-container rotational-static flex">
+          <!-- svgs here -->
+        </div>
 
         <!-- black frame -->
-        <svg class="rotational-part rp-frame">
+        <svg class="rotational-static">
           <use href="./images/clock-frame.svg#frame" />
         </svg>
       </div>

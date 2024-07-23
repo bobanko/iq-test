@@ -28,6 +28,12 @@
   color: var(--color);
 }
 
+.rotational-static {
+  position: absolute;
+  width: var(--question-size);
+  height: var(--question-size);
+}
+
 .answer-block {
   --question-size: 70px;
 }
