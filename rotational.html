@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQ test</title>
+    <link rel="icon" href="./iq.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./rotational.css" />
+
+    <script src="./rotational.js" type="module" async></script>
+  </head>
+  <body class="inter-regular">
+    <!-- templates -->
+
+    <template id="$tmplQuestionRotational">
+      <div class="question-rotational">
+        <!-- white background -->
+        <svg class="rotational-part rp-bg">
+          <use href="./images/clock-bg.svg#bg" />
+        </svg>
+
+        <!-- parts -->
+        <svg class="rotational-part rp-quarter">
+          <use href="./images/clock-quarter.svg#quarter" />
+        </svg>
+
+        <svg class="rotational-part rp-circle">
+          <use href="./images/clock-circle.svg#circle" />
+        </svg>
+
+        <svg class="rotational-part rp-square">
+          <use href="./images/clock-square.svg#square" />
+        </svg>
+
+        <svg class="rotational-part rp-arrow">
+          <use href="./images/clock-arrow.svg?kek#arrow" />
+        </svg>
+
+        <!-- black frame -->
+        <svg class="rotational-part rp-frame">
+          <use href="./images/clock-frame.svg#frame" />
+        </svg>
+      </div>
+    </template>
+
+    <template id="$tmplQuestionMark">
+      <div class="question-mark">?</div>
+    </template>
+
+    <template id="$tmplAnswer">
+      <button class="answer">
+        <div class="answer-letter inter-semibold">x</div>
+      </button>
+    </template>
+
+    <!-- end -->
+
+    <section id="$mainSection" class="flex-col align-center">
+      <div class="flex-row">
+        <a class="p-10 m-10" href="./index.html">Back</a>
+
+        <button id="$btnGenerate" type="button" class="p-10 m-10">
+          generate
+        </button>
+      </div>
+
+      <hr />
+
+      <div id="$questionBlock" class="question-block">
+        <!-- questions go here -->
+      </div>
+
+      <hr />
+
+      <div id="$answerBlock" class="answer-block justify-center">
+        <!-- answers go here -->
+      </div>
+    </section>
+  </body>
+</html>

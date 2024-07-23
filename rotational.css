@@ -1,0 +1,50 @@
+/* //todo: extract */
+.question-block {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+
+  --question-size: 80px;
+}
+
+.question-rotational {
+  position: relative;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--question-size);
+  height: var(--question-size);
+
+  box-sizing: border-box;
+  /* border-radius: calc(var(--question-size) / 2); */
+}
+
+.rotational-part {
+  position: absolute;
+  width: var(--question-size);
+  height: var(--question-size);
+
+  color: var(--color);
+}
+
+.answer-block {
+  --question-size: 70px;
+}
+
+.answer-block .question-rotational {
+  /* todo: keep or remove? */
+  background-color: #a2a2a2;
+}
+
+.answer {
+  /* todo: think about it */
+  border-top-right-radius: calc(var(--question-size) / 2);
+  border-bottom-right-radius: calc(var(--question-size) / 2);
+}
+.answer .question-rotational {
+  border-top-right-radius: inherit;
+  border-bottom-right-radius: inherit;
+}
+
+/* rotations */
