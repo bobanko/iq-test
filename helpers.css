@@ -24,6 +24,10 @@
   display: none !important;
 }
 
+svg[aria-hidden="true"] {
+  display: none !important;
+}
+
 [disabled] {
   pointer-events: none;
 }
