@@ -17,6 +17,27 @@ function sumDeg(deg1, deg2) {
   return (deg1 + deg2) % 360;
 }
 
+// todo(vmyshko): gen answers/anything!
+function makeUnique({ genFn, prevValuesSet, serializeFn }) {
+  const maxLoopCount = 100;
+  let loopCount = 0;
+  do {
+    const uniqueValue = genFn();
+
+    const serializedValue = serializeFn(uniqueValue);
+    if (!prevValuesSet.has(serializedValue)) {
+      prevValuesSet.add(serializedValue);
+      return uniqueValue;
+    }
+
+    loopCount++;
+  } while (loopCount < maxLoopCount);
+
+  throw Error(
+    `makeUnique: generation attempts reached ${loopCount}. aborting...`
+  );
+}
+
 const svgHrefs = {
   quarter: "./images/clock-quarter.svg#quarter",
   circle: "./images/clock-circle.svg#circle",
@@ -45,6 +66,7 @@ const genConfigs = {
     ], // pick random from inner array
 
     sameFigsBetweenRows: true,
+    sameColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     canOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
@@ -86,10 +108,10 @@ function createQuestionRotational({
   canOverlap = true, // [2 and more] figs can overlap each other - have same deg
 }) {
   const questionTmpl = $tmplQuestionRotational.content.cloneNode(true); //fragment
-  const $questionRotational = questionTmpl.firstElementChild;
-  const $partContainer = $questionRotational.querySelector(".part-container");
+  const $question = questionTmpl.firstElementChild;
+  const $partContainer = $question.querySelector(".part-container");
 
-  const figsUsed = [];
+  const figsUsed = new Set();
   figs.forEach((fig) => {
     const {
       pickFrom, // pick random from inner array
@@ -102,27 +124,23 @@ function createQuestionRotational({
     const $svg = partTmpl.firstElementChild;
     const $use = $svg.querySelector("use");
 
-    // todo(vmyshko): simplify?
-    do {
-      const randomFig = pickRandom(pickFrom);
-      //unique fig found
-      if (!onlyUniqueFigs || !figsUsed.includes(randomFig)) {
-        figsUsed.push(randomFig);
-        break;
-      }
-    } while (onlyUniqueFigs); //true
-    $use.href.baseVal = figsUsed.at(-1); //pick last
+    const currentFig = makeUnique({
+      prevValuesSet: figsUsed,
+      serializeFn: (value) => toString(),
+      genFn: () => pickRandom(pickFrom),
+    });
+
+    $use.href.baseVal = currentFig;
 
     rotateTo($svg, startDeg);
 
     $partContainer.appendChild($svg);
   });
 
-  return $questionRotational;
+  return $question;
 }
 
 function generateRotationalQuiz() {
-  const colors = ["green", "red", "blue", "yellow"];
   if ($shuffleColors.checked) {
     colors.splice(0, colors.length, ...shuffle(colors));
   }
@@ -134,11 +152,10 @@ function generateRotationalQuiz() {
 
   // gen rules
   // todo(vmyshko): make unique rules, no dupes
+
   const rules = Array(4)
     .fill(null)
     .map((_) => getRandomDeg({ skipZero: true }));
-
-  console.log("rules", rules);
 
   // todo(vmyshko): maybe make different question types here:
   // arrow and circle
@@ -148,6 +165,7 @@ function generateRotationalQuiz() {
   const difficulty = Number.parseInt($difficulty.value);
 
   rules.splice(difficulty);
+  console.log("rules", rules);
 
   const correctDegs = [];
 
@@ -176,15 +194,12 @@ function generateRotationalQuiz() {
     deltaDegs.push(rowDeltaDegs);
 
     for (let col = 0; col < colsNum; col++) {
-      const $questionRotational = $baseQuestion.cloneNode(true);
+      const $question = $baseQuestion.cloneNode(true);
 
       // get parts
-      const parts = [
-        ...$questionRotational.querySelectorAll(".rotational-part"),
-      ];
+      const parts = [...$question.querySelectorAll(".rotational-part")];
 
-      parts.slice(0, difficulty).forEach(($part, index) => {
-        $part.ariaHidden = false;
+      parts.forEach(($part, index) => {
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[index]);
 
@@ -192,24 +207,19 @@ function generateRotationalQuiz() {
         const currentDeg = sumDeg(deltaDegs[row][index], rules[index] * col);
 
         rotateTo($part, currentDeg);
+
+        if (row === 2 && col == 2) {
+          //last question -- correct
+          correctDegs.push(currentDeg);
+        }
       });
 
-      // todo(vmyshko): what i need to make 1 rot-q?
-      // colors order
-      // parts order
-      // deg order
-
-      // 1 part?
-
-      // className
-      // color
-      // deg
-
-      $questionBlock.appendChild($questionRotational);
+      $questionBlock.appendChild($question);
     } //col
   } //row
 
   console.log("deltaDegs", deltaDegs);
+  console.log("correctDegs", correctDegs);
 
   // replace last question with ? and move it to answers
   const $correctAnswerQuestion = $questionBlock.lastChild;
@@ -219,22 +229,44 @@ function generateRotationalQuiz() {
   //new,old
   $questionBlock.replaceChild($questionMark, $correctAnswerQuestion);
 
+  // *******
   // ANSWERS
-
-  // todo(vmyshko): gen answers
+  // *******
 
   const answerQuestions = [$correctAnswerQuestion];
-  for (let index = 1; index < 6; index++) {
+  const usedDegsSet = new Set([correctDegs.toString()]);
+  for (let answerIndex = 1; answerIndex < 6; answerIndex++) {
     // question
 
-    const $questionRotational = $baseQuestion.cloneNode(true);
+    const $question = $baseQuestion.cloneNode(true);
 
     // get parts
-    const parts = [...$questionRotational.querySelectorAll(".rotational-part")];
+    const parts = [...$question.querySelectorAll(".rotational-part")];
 
-    parts[0].ariaHidden = false;
+    try {
+      const currentDegs = makeUnique({
+        genFn: () =>
+          parts.map((_) =>
+            getRandomDeg({
+              // todo(vmyshko): get from rules?
+              stepDeg: 45,
+            })
+          ),
+        prevValuesSet: usedDegsSet,
+        serializeFn: (value) => value.toString(),
+      });
 
-    answerQuestions.push($questionRotational);
+      parts.forEach(($part, index) => {
+        // todo(vmyshko): apply rule? color?
+        $part.classList.add(colors[index]);
+
+        rotateTo($part, currentDegs[index]);
+      });
+
+      answerQuestions.push($question);
+    } catch (error) {
+      console.warn(error);
+    }
   }
 
   wrapAnswers({
