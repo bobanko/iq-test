@@ -3,7 +3,7 @@
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 
-  --question-size: 80px;
+  --question-size: 100px;
 }
 
 .question-rotational {
@@ -39,6 +39,7 @@
 
 .answer {
   /* todo: think about it */
+  /* todo: fix rounded corner */
   border-top-right-radius: calc(var(--question-size) / 2);
   border-bottom-right-radius: calc(var(--question-size) / 2);
 }
