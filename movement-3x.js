@@ -1,4 +1,5 @@
-import { fromRange, pickRandom, shuffle, spliceRandom } from "./helpers.js";
+import { wrapAnswers } from "./common.js";
+import { shuffle, spliceRandom } from "./helpers.js";
 
 const mtxSize = 3;
 const cellCount = mtxSize ** 2;
@@ -195,49 +196,24 @@ function generateMatrixQuiz() {
       continue;
     }
 
-    if (incorrectPoints.length === 1) debugger;
     //add
     answerPointGroups.push(incorrectPoints);
 
     //push if unique
   }
 
-  $answerBlock.replaceChildren(); //clear
+  const answerQuestions = answerPointGroups.map((apg) =>
+    createPaintedMatrix(apg)
+  );
 
-  const answerLetters = "abcdef";
-
-  // todo(vmyshko): shuffle
-  for (let [index, answerPoints] of shuffle(answerPointGroups).entries()) {
-    // answer wrapper
-    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
-    const $answer = fragment.firstElementChild;
-
-    const $answerLetter = $answer.querySelector(".answer-letter");
-    $answerLetter.textContent = answerLetters[index];
-
-    // todo(vmyshko): extract mtx creation to ui part?
-    const $answerMtx = createPaintedMatrix(answerPoints);
-
-    // question
-    $answer.appendChild($answerMtx);
-    $answer.addEventListener("click", () => toggleAnswerSelect($answer));
-    $answerBlock.appendChild($answer);
-
-    // debug -- mark correct
-    if (answerPoints === correctAnswerPoints) {
-      console.log($answerLetter.textContent);
-    }
-  }
+  wrapAnswers({
+    $answerBlock,
+    answerQuestions,
+    $tmplAnswer,
+    $correctAnswerQuestion: answerQuestions[0],
+  });
 }
 
 $btnGenerate.addEventListener("click", generateMatrixQuiz);
 
 generateMatrixQuiz();
-
-function toggleAnswerSelect($newAnswer) {
-  $answerBlock
-    .querySelectorAll(".answer")
-    .forEach(($answer) => $answer.classList.remove("selected"));
-
-  $newAnswer.classList.add("selected");
-}

@@ -1,4 +1,4 @@
-import { animations } from "./animations.js";
+import { wrapAnswers } from "./common.js";
 import { fromRange, pickRandom } from "./helpers.js";
 
 // ---------
@@ -257,56 +257,24 @@ function processEquation() {
 
   console.log(actualAnswers);
 
-  const answerLetters = "abcdef";
-  // todo(vmyshko): refac
-  let letterCount = 0;
-  $answerBlock.replaceChildren();
-  for (let answer of actualAnswers) {
-    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
-    const $answer = fragment.firstElementChild;
+  const answerQuestions = actualAnswers.map((answerText) => {
+    const fragment = $tmplQuestionPart.content.cloneNode(true); //fragment
+    const $questionPart = fragment.firstElementChild;
 
-    const $answerLetter = $answer.querySelector(".answer-letter");
-    $answerLetter.textContent = answerLetters[letterCount++];
-
-    //
-    const fragment2 = $tmplQuestionPart.content.cloneNode(true); //fragment
-    const $questionPart = fragment2.firstElementChild;
-
-    $questionPart.textContent = answer;
+    $questionPart.textContent = answerText;
     $questionPart.classList.add(varColors["q"]);
 
-    $answer.appendChild($questionPart);
+    return $questionPart;
+  });
 
-    $answer.addEventListener("click", () =>
-      processWithAnswer({
-        $button: $answer,
-        chosenAnswer: answer,
-        properAnswer: q,
-      })
-    );
-
-    $answerBlock.appendChild($answer);
-  }
+  wrapAnswers({
+    $answerBlock,
+    $tmplAnswer,
+    answerQuestions,
+    $correctAnswerQuestion: answerQuestions[0],
+  });
 }
 
 $btnGenerate.addEventListener("click", processEquation);
-
-function toggleAnswerSelect($newAnswer) {
-  $answerBlock
-    .querySelectorAll(".answer")
-    .forEach(($answer) => $answer.classList.remove("selected"));
-
-  $newAnswer.classList.add("selected");
-}
-
-function processWithAnswer({ $button, chosenAnswer, properAnswer }) {
-  toggleAnswerSelect($button);
-
-  if (chosenAnswer === properAnswer) {
-    $button.classList.add("green");
-  } else {
-    $button.classList.add("red");
-  }
-}
 
 processEquation();
