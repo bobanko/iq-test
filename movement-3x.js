@@ -205,16 +205,15 @@ function generateMatrixQuiz() {
   $answerBlock.replaceChildren(); //clear
 
   const answerLetters = "abcdef";
-  let letterCount = 0;
 
   // todo(vmyshko): shuffle
-  for (let answerPoints of shuffle(answerPointGroups)) {
+  for (let [index, answerPoints] of shuffle(answerPointGroups).entries()) {
     // answer wrapper
     const fragment = $tmplAnswer.content.cloneNode(true); //fragment
     const $answer = fragment.firstElementChild;
 
     const $answerLetter = $answer.querySelector(".answer-letter");
-    $answerLetter.textContent = answerLetters[letterCount++];
+    $answerLetter.textContent = answerLetters[index];
 
     // todo(vmyshko): extract mtx creation to ui part?
     const $answerMtx = createPaintedMatrix(answerPoints);
