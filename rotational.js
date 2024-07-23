@@ -3,14 +3,15 @@
 import { fromRange, shuffle } from "./helpers.js";
 
 function getQuestionParts($questionRotational) {
-  const [$rpQuarter, $rpSquare, $rpCircle, $rpArrow] = [
+  const [$rpQuarter, $rpQuarter2, $rpSquare, $rpCircle, $rpArrow] = [
     ".rp-quarter",
+    ".rp-quarter2",
     ".rp-square",
     ".rp-circle",
     ".rp-arrow",
   ].map((selector) => $questionRotational.querySelector(selector));
 
-  return { $rpQuarter, $rpSquare, $rpCircle, $rpArrow };
+  return { $rpQuarter, $rpQuarter2, $rpSquare, $rpCircle, $rpArrow };
 }
 
 function rotateTo($elem, deg) {
@@ -46,6 +47,11 @@ function generateRotationalQuiz() {
 
   console.log("rules", rules);
 
+  // todo(vmyshko): maybe make different question types here:
+  // arrow and circle
+  // quarters (multiple)
+  // quarters + circle + square
+
   const difficulty = Number.parseInt($difficulty.value);
 
   rules.splice(difficulty);
@@ -80,7 +86,7 @@ function generateRotationalQuiz() {
       const $questionRotational = questionTmpl.firstElementChild;
 
       // get parts
-      const { $rpQuarter, $rpSquare, $rpCircle, $rpArrow } =
+      const { $rpQuarter, $rpSquare, $rpCircle, $rpArrow, $rpQuarter2 } =
         getQuestionParts($questionRotational);
 
       const parts = [
@@ -89,6 +95,7 @@ function generateRotationalQuiz() {
         $rpCircle,
         $rpSquare,
         $rpQuarter,
+        $rpQuarter2,
       ];
 
       parts.forEach(($part) => {
@@ -110,19 +117,21 @@ function generateRotationalQuiz() {
   }
 
   console.log("deltaDegs", deltaDegs);
-  // answers
 
-  const answerLetters = "abcdef";
+  // replace last question with ? and move it to answers
+  const $correctAnswerQuestion = $questionBlock.lastChild;
 
-  $answerBlock.replaceChildren();
-  for (let index = 0; index < 6; index++) {
-    // answer
-    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
-    const $answer = fragment.firstElementChild;
+  const questionMarkTmpl = $tmplQuestionMark.content.cloneNode(true); //fragment
+  const $questionMark = questionMarkTmpl.firstElementChild;
+  //new,old
+  $questionBlock.replaceChild($questionMark, $correctAnswerQuestion);
 
-    const $answerLetter = $answer.querySelector(".answer-letter");
-    $answerLetter.textContent = answerLetters[index];
+  // ANSWERS
 
+  // todo(vmyshko): gen answers
+
+  const answers = [$correctAnswerQuestion];
+  for (let index = 1; index < 6; index++) {
     // question
     const questionTmpl = $tmplQuestionRotational.content.cloneNode(true); //fragment
     const $questionRotational = questionTmpl.firstElementChild;
@@ -134,12 +143,30 @@ function generateRotationalQuiz() {
     $rpQuarter.ariaHidden = true;
     $rpSquare.ariaHidden = true;
     $rpCircle.ariaHidden = true;
-    // $rpArrow.ariaHidden=true;
+    $rpArrow.ariaHidden = true;
 
-    $answer.appendChild($questionRotational);
+    answers.push($questionRotational);
+  }
+
+  // wrap answers
+  const answerLetters = "abcdef";
+  $answerBlock.replaceChildren();
+  for (let [index, $question] of shuffle(answers).entries()) {
+    // answer
+    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
+    const $answer = fragment.firstElementChild;
+
+    const $answerLetter = $answer.querySelector(".answer-letter");
+    $answerLetter.textContent = answerLetters[index];
+
+    $answer.appendChild($question);
     $answer.addEventListener("click", () => toggleAnswerSelect($answer));
 
     $answerBlock.appendChild($answer);
+
+    if ($question === $correctAnswerQuestion) {
+      console.log({ answerLetter: answerLetters[index] });
+    }
   }
 
   // todo(vmyshko): debug: prevent svg cache

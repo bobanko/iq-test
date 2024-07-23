@@ -48,4 +48,13 @@
   border-bottom-right-radius: inherit;
 }
 
-/* rotations */
+.question-mark {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--dimgray);
+  color: black;
+  border: 2px solid black;
+  border-radius: calc(var(--question-size) / 2);
+}
