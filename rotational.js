@@ -55,6 +55,13 @@ const allFigs = [
 ];
 
 const genConfigs = {
+  //  1 quarter (/arrow/circle/custom) 90deg
+  //  2 quarters 90deg same deg
+  //  1 quarter 45deg
+  //  2 quarters 90deg diff deg (no overlap)
+  //  3 quarters 90deg diff deg
+  //  2 quarters 45deg (semi-overlap/full overlap)
+
   oneQuarter90: {
     figs: [
       {
@@ -73,32 +80,20 @@ const genConfigs = {
 
   twoQuarters45: {
     figs: [[svgHrefs.quarter], [svgHrefs.quarter]],
-    onlyUniqueFigs: false,
-    degSteps: [90, 90],
   },
 
   //
   oneQuarter45: {
     figs: [svgHrefs.quarter],
-    degSteps: [45],
   },
   oneQuarter45: {
     figs: [svgHrefs.quarter],
-    degSteps: [45],
   },
   twoQuarters90: {
     figs: [svgHrefs.quarter, svgHrefs.quarter],
-    degSteps: [90, 90],
   },
   // 2
 };
-
-//  1 quarter (/arrow/circle/custom) 90deg
-//  2 quarters 90deg same deg
-//  1 quarter 45deg
-//  2 quarters 90deg diff deg (no overlap)
-//  3 quarters 90deg diff deg
-//  2 quarters 45deg (semi-overlap/full overlap)
 
 const currentGenConfig = genConfigs.oneQuarter90;
 
@@ -153,9 +148,9 @@ function generateRotationalQuiz() {
   // gen rules
   // todo(vmyshko): make unique rules, no dupes
 
-  const rules = Array(4)
-    .fill(null)
-    .map((_) => getRandomDeg({ skipZero: true }));
+  const rules = currentGenConfig.figs.map((fig) =>
+    getRandomDeg({ skipZero: fig.skipZero, stepDeg: fig.stepDeg })
+  );
 
   // todo(vmyshko): maybe make different question types here:
   // arrow and circle
@@ -246,11 +241,14 @@ function generateRotationalQuiz() {
     try {
       const currentDegs = makeUnique({
         genFn: () =>
-          parts.map((_) =>
-            getRandomDeg({
-              // todo(vmyshko): get from rules?
-              stepDeg: 45,
-            })
+          parts.map((_, index) =>
+            sumDeg(
+              correctDegs[index],
+              getRandomDeg({
+                stepDeg: currentGenConfig.figs[index].stepDeg,
+                skipZero: false,
+              })
+            )
           ),
         prevValuesSet: usedDegsSet,
         serializeFn: (value) => value.toString(),
