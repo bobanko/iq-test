@@ -54,7 +54,7 @@
           <a class="p-10 m-10" href="./index.html">Back</a>
 
           <label class="flex-row align-center">
-            <input type="checkbox" id="$shuffleColors" checked />
+            <input type="checkbox" id="$shuffleColors" checked disabled />
             <span>shuffle colors</span>
           </label>
 
@@ -68,10 +68,7 @@
           </button>
         </div>
 
-        <label class="flex-row align-center">
-          <input type="range" id="$difficulty" min="1" max="4" value="2" />
-          <span>difficulty <span id="$difficultyText">x</span></span>
-        </label>
+        <select id="$selectConfig"></select>
       </div>
 
       <hr />

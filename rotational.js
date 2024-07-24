@@ -282,8 +282,6 @@ const genConfigs = {
   },
 };
 
-const currentGenConfig = genConfigs.quarterFig90;
-
 function createQuestionRotational({
   figs = [],
   onlyUniqueFigs = false, // [2 and more]
@@ -329,7 +327,9 @@ function createQuestionRotational({
   return $question;
 }
 
-function generateRotationalQuiz() {
+let lastConfig = null;
+function generateRotationalQuiz(config = lastConfig) {
+  lastConfig = config;
   // shuffle colors for new quiz
   colors.splice(0, colors.length, ...shuffle(colors));
 
@@ -341,7 +341,7 @@ function generateRotationalQuiz() {
   // gen rules
   // todo(vmyshko): make unique rules, no dupes
   // todo(vmyshko): impl currentGenConfig.noOverlap
-  const rules = currentGenConfig.figs.map((fig) =>
+  const rules = config.figs.map((fig) =>
     getRandomDeg({ skipZero: fig.skipZero, stepDeg: fig.stepDeg })
   );
 
@@ -356,7 +356,7 @@ function generateRotationalQuiz() {
 
   $questionBlock.replaceChildren();
   const deltaDegs = [];
-  const $baseQuestion = createQuestionRotational(currentGenConfig);
+  const $baseQuestion = createQuestionRotational(config);
   for (let row = 0; row < rowsNum; row++) {
     // row
 
@@ -364,7 +364,7 @@ function generateRotationalQuiz() {
     // make unique basic delta deg
     // todo(vmyshko): extract unique gen logic
     const rowDeltaDegs = [];
-    for (let fig of currentGenConfig.figs) {
+    for (let fig of config.figs) {
       do {
         const randomDeg = getRandomDeg({
           stepDeg: fig.stepDeg,
@@ -381,11 +381,11 @@ function generateRotationalQuiz() {
     }
     deltaDegs.push(rowDeltaDegs);
 
-    if (currentGenConfig.shiftColorsBetweenRows) {
+    if (config.shiftColorsBetweenRows) {
       colors.push(colors.shift());
     }
 
-    if (currentGenConfig.shiftFigsBetweenRows) {
+    if (config.shiftFigsBetweenRows) {
       // todo(vmyshko): impl, but how?
     }
 
@@ -401,7 +401,7 @@ function generateRotationalQuiz() {
 
         // todo(vmyshko): grab last question degs as answer degs
         const currentDeg = normalizeDeg(
-          currentGenConfig.figs[index].startDeg +
+          config.figs[index].startDeg +
             deltaDegs[row][index] +
             rules[index] * col
         );
@@ -451,7 +451,7 @@ function generateRotationalQuiz() {
               normalizeDeg(
                 correctDegs[index] +
                   getRandomDeg({
-                    stepDeg: currentGenConfig.figs[index].stepDeg,
+                    stepDeg: config.figs[index].stepDeg,
                     skipZero: false,
                   })
               )
@@ -460,7 +460,7 @@ function generateRotationalQuiz() {
         });
 
         if (
-          currentGenConfig.noOverlap &&
+          config.noOverlap &&
           currentDegs.length !== new Set(currentDegs).size
         ) {
           console.log("overlap degs", currentDegs);
@@ -477,7 +477,7 @@ function generateRotationalQuiz() {
         answerQuestions.push($question);
 
         break;
-      } while (currentGenConfig.noOverlap);
+      } while (config.noOverlap);
     } catch (error) {
       console.warn(error);
     }
@@ -493,12 +493,24 @@ function generateRotationalQuiz() {
   preventSvgCache();
 }
 
-$btnGenerate.addEventListener("click", generateRotationalQuiz);
+$btnGenerate.addEventListener("click", () => generateRotationalQuiz());
 
-generateRotationalQuiz();
+// generateRotationalQuiz();
 
-$difficulty.addEventListener("change", () => {
-  $difficultyText.textContent = `[${$difficulty.value}]`;
+// init config options
+Object.entries(genConfigs).map(([key, value]) => {
+  const $option = document.createElement("option");
+
+  $option.value = key;
+  $option.textContent = key;
+
+  $selectConfig.appendChild($option);
 });
 
-$difficulty.dispatchEvent(new Event("change"));
+$selectConfig.addEventListener("change", (event) => {
+  const configName = event.target.value;
+
+  generateRotationalQuiz(genConfigs[configName]);
+});
+
+$selectConfig.dispatchEvent(new Event("change"));
