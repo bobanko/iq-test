@@ -45,7 +45,7 @@ const svgHrefs = {
   arrow: "./images/clock-arrow.svg?kek#arrow",
 };
 
-const colors = ["green", "red", "blue", "yellow"];
+const colors = ["red", "green", "blue", "yellow"];
 
 const allFigs = [
   svgHrefs.quarter,
@@ -73,7 +73,7 @@ const genConfigs = {
     ], // pick random from inner array
 
     sameFigsBetweenRows: true,
-    sameColorsBetweenRows: false,
+    shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     canOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
@@ -187,9 +187,8 @@ function generateRotationalQuiz() {
     }
     deltaDegs.push(rowDeltaDegs);
 
-    if (!currentGenConfig.sameColorsBetweenRows) {
-      // shuffle colors between rows
-      colors.splice(0, colors.length, ...shuffle(colors));
+    if (currentGenConfig.shiftColorsBetweenRows) {
+      colors.push(colors.shift());
     }
 
     for (let col = 0; col < colsNum; col++) {
