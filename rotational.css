@@ -28,6 +28,8 @@
   color: var(--color);
 
   transition: all 200ms ease-in-out;
+
+  mix-blend-mode: multiply;
 }
 
 .rotational-static {
