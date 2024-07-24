@@ -73,7 +73,7 @@ const genConfigs = {
     ], // pick random from inner array
 
     sameFigsBetweenRows: true,
-    sameColorsBetweenRows: true,
+    sameColorsBetweenRows: false,
     onlyUniqueFigs: true, // [2 and more]
     canOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
@@ -136,9 +136,8 @@ function createQuestionRotational({
 }
 
 function generateRotationalQuiz() {
-  if ($shuffleColors.checked) {
-    colors.splice(0, colors.length, ...shuffle(colors));
-  }
+  // shuffle colors for new quiz
+  colors.splice(0, colors.length, ...shuffle(colors));
 
   const rowsNum = 3;
   const colsNum = 3;
@@ -187,6 +186,11 @@ function generateRotationalQuiz() {
       } while (true);
     }
     deltaDegs.push(rowDeltaDegs);
+
+    if (!currentGenConfig.sameColorsBetweenRows) {
+      // shuffle colors between rows
+      colors.splice(0, colors.length, ...shuffle(colors));
+    }
 
     for (let col = 0; col < colsNum; col++) {
       const $question = $baseQuestion.cloneNode(true);
