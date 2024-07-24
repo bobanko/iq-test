@@ -280,6 +280,37 @@ const genConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
+
+  quarterFigs15mensa: {
+    figs: [
+      // todo(vmyshko): maybe make kinda groups between figs, to no-overlap, unique-color, etc.
+      // like a group/arr which is shared between figs, and depletes from it,
+      // also it may be possible to make same for degs
+      {
+        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 15, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 15, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgHrefs.quarter],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 15, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ], // pick random from inner array
+
+    shiftFigsBetweenRows: true,
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
 };
 
 function createQuestionRotational({
