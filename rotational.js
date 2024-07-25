@@ -10,7 +10,9 @@ function rotateTo($elem, deg) {
 function getRandomDeg({ stepDeg = 45, skipZero = false } = {}) {
   const randomDeg = fromRange(skipZero ? 1 : 0, 360 / stepDeg - 1) * stepDeg;
 
-  return randomDeg;
+  if (isNaN(randomDeg)) throw Error("getRandomDeg: bad args");
+
+  return normalizeDeg(randomDeg);
 }
 
 function normalizeDeg(deg) {
@@ -18,6 +20,7 @@ function normalizeDeg(deg) {
 }
 
 // todo(vmyshko): gen answers/anything!
+// todo(vmyshko): refac to have genFn and uniqueCheckFn only
 function makeUnique({
   genFn,
   prevValuesSet,
@@ -47,16 +50,10 @@ const svgHrefs = {
   circle: "./images/clock-circle.svg#circle",
   square: "./images/clock-square.svg#square",
   arrow: "./images/clock-arrow.svg?kek#arrow",
+  arrowAlt: "./images/clock-arrow-alt.svg?kek#arrow-alt",
 };
 
 const colors = ["red", "green", "blue", "yellow"];
-
-const allFigs = [
-  svgHrefs.quarter,
-  svgHrefs.circle,
-  svgHrefs.square,
-  svgHrefs.arrow,
-];
 
 const genConfigs = {
   //  1 quarter (/arrow/circle/custom) 90deg
@@ -127,7 +124,7 @@ const genConfigs = {
         pickFrom: [svgHrefs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
+        skipZero: false, // no zero rotation by rules
       },
       {
         pickFrom: [svgHrefs.quarter],
@@ -228,6 +225,28 @@ const genConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
+  // true clock
+  twoArrowClock: {
+    figs: [
+      {
+        pickFrom: [svgHrefs.arrowAlt],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgHrefs.arrow],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ], // pick random from inner array
+
+    shiftFigsBetweenRows: true,
+    shiftColorsBetweenRows: false,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
 
   // clock 3
   // todo(vmyshko): redraw square/circle
@@ -278,6 +297,38 @@ const genConfigs = {
     shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
+
+  fiveStar: {
+    figs: [
+      {
+        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 360 / 5, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ], // pick random from inner array
+
+    shiftFigsBetweenRows: true,
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
+
+  sixStar: {
+    figs: [
+      {
+        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 360 / 6, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ], // pick random from inner array
+
+    shiftFigsBetweenRows: true,
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
 
@@ -347,8 +398,6 @@ function createQuestionRotational({
 
       $use.href.baseVal = currentFig;
 
-      // rotateTo($svg, startDeg);
-
       $partContainer.appendChild($svg);
     } catch (error) {
       console.warn(error);
@@ -395,20 +444,19 @@ function generateRotationalQuiz(config = lastConfig) {
     // make unique basic delta deg
     // todo(vmyshko): extract unique gen logic
     const rowDeltaDegs = [];
+
     for (let fig of config.figs) {
-      do {
-        const randomDeg = getRandomDeg({
-          stepDeg: fig.stepDeg,
-          skipZero: fig.skipZero,
-        });
+      const randomDeg = makeUnique({
+        genFn: () =>
+          getRandomDeg({
+            stepDeg: fig.stepDeg,
+            // no skip, cause it's initial pos
+            skipZero: false,
+          }),
+        prevValuesSet: new Set(rowDeltaDegs),
+      });
 
-        //   check deg for unique
-        if (rowDeltaDegs.includes(randomDeg)) continue;
-
-        rowDeltaDegs.push(randomDeg);
-
-        break;
-      } while (true);
+      rowDeltaDegs.push(randomDeg);
     }
     deltaDegs.push(rowDeltaDegs);
 
@@ -475,7 +523,12 @@ function generateRotationalQuiz(config = lastConfig) {
     const parts = [...$question.querySelectorAll(".rotational-part")];
 
     try {
+      let whileCount = 0;
       do {
+        whileCount++;
+        if (whileCount > 100) {
+          throw Error("possible infinite loop");
+        }
         const currentDegs = makeUnique({
           genFn: () =>
             parts.map((_, index) =>
