@@ -49,13 +49,38 @@ const svgHrefs = {
   quarter: "./images/clock-quarter.svg#quarter",
   circle: "./images/clock-circle.svg#circle",
   square: "./images/clock-square.svg#square",
-  arrow: "./images/clock-arrow.svg?kek#arrow",
-  arrowAlt: "./images/clock-arrow-alt.svg?kek#arrow-alt",
+  arrow: "./images/clock-arrow.svg#arrow",
+  arrowAlt: "./images/clock-arrow-alt.svg#arrow-alt",
+
+  //letters
+  letterP: "./images/letter-p.svg#letter",
+  letterU: "./images/letter-u.svg#letter",
+  letterT: "./images/letter-t.svg#letter",
 };
 
-const colors = ["red", "green", "blue", "yellow"];
+const defaultColors = ["red", "green", "blue", "yellow"];
 
 const genConfigs = {
+  //  custom letters
+  letters: {
+    // todo(vmyshko): put colors to use, shared between figs? how?
+
+    figs: [
+      {
+        pickFrom: [svgHrefs.letterP, svgHrefs.letterU, svgHrefs.letterT],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+        colorsFrom: ["black", "red"],
+      },
+    ], // pick random from inner array
+
+    shiftFigsBetweenRows: true,
+    shiftColorsBetweenRows: false,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
+
   //  1 quarter (/arrow/circle/custom) 90deg
   oneQuarter90: {
     figs: [
@@ -411,7 +436,7 @@ let lastConfig = null;
 function generateRotationalQuiz(config = lastConfig) {
   lastConfig = config;
   // shuffle colors for new quiz
-  colors.splice(0, colors.length, ...shuffle(colors));
+  defaultColors.splice(0, defaultColors.length, ...shuffle(defaultColors));
 
   const rowsNum = 3;
   const colsNum = 3;
@@ -434,37 +459,63 @@ function generateRotationalQuiz(config = lastConfig) {
 
   const correctDegs = [];
 
-  $questionBlock.replaceChildren();
+  const questionElements = [];
   const deltaDegs = [];
   const $baseQuestion = createQuestionRotational(config);
   for (let row = 0; row < rowsNum; row++) {
     // row
 
     // todo(vmyshko): make this for each fig
+
     // make unique basic delta deg
-    // todo(vmyshko): extract unique gen logic
-    const rowDeltaDegs = [];
 
-    for (let fig of config.figs) {
-      const randomDeg = makeUnique({
-        genFn: () =>
-          getRandomDeg({
-            stepDeg: fig.stepDeg,
-            // no skip, cause it's initial pos
-            skipZero: false,
-          }),
-        prevValuesSet: new Set(rowDeltaDegs),
-      });
+    const rowDeltaDegs = makeUnique({
+      genFn: () => {
+        const _rowDeltaDegs = [];
 
-      rowDeltaDegs.push(randomDeg);
-    }
+        for (let fig of config.figs) {
+          const randomDeg = makeUnique({
+            genFn: () =>
+              getRandomDeg({
+                stepDeg: fig.stepDeg,
+                // no skip, cause it's initial pos
+                skipZero: false,
+              }),
+            prevValuesSet: new Set(_rowDeltaDegs),
+          });
+
+          _rowDeltaDegs.push(randomDeg);
+        }
+
+        return _rowDeltaDegs;
+      },
+      //flatten inner arrays
+      prevValuesSet: new Set(deltaDegs.map((dd) => dd.toString())),
+    });
+
     deltaDegs.push(rowDeltaDegs);
 
+    // shuffle colors for new quiz
+    defaultColors.splice(0, defaultColors.length, ...shuffle(defaultColors));
+
+    config.figs.forEach((fig) => {
+      fig.colorsFrom.splice(
+        0,
+        fig.colorsFrom.length,
+        ...shuffle(fig.colorsFrom)
+      );
+    });
+
     if (config.shiftColorsBetweenRows) {
-      colors.push(colors.shift());
+      defaultColors.push(defaultColors.shift());
+
+      config.figs.forEach((fig) => {
+        fig.colorsFrom.push(fig.colorsFrom.shift());
+      });
     }
 
     if (config.shiftFigsBetweenRows) {
+      console.log("not implemented");
       // todo(vmyshko): impl, but how?
     }
 
@@ -475,6 +526,9 @@ function generateRotationalQuiz(config = lastConfig) {
       const parts = [...$question.querySelectorAll(".rotational-part")];
 
       parts.forEach(($part, index) => {
+        // todo(vmyshko): shuffle colors between
+        const colors = config.figs[index].colorsFrom ?? [...defaultColors];
+
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[index]);
 
@@ -493,15 +547,41 @@ function generateRotationalQuiz(config = lastConfig) {
         }
       });
 
-      $questionBlock.appendChild($question);
+      questionElements.push($question);
     } //col
   } //row
+
+  $questionBlock.replaceChildren(...questionElements);
+
+  // const oldEls = [...$questionBlock.children];
+  // questionElements.forEach(async (elem, index) => {
+  //   const oldEl = oldEls[index];
+
+  //   // todo(vmyshko): make animation here
+  //   if (oldEl) {
+  //     // await oldEl.animate([{}, { opacity: "0", transform: "scale(0)" }], {
+  //     //   duration: 200,
+  //     //   iterations: 1,
+  //     //   easing: "ease-in-out",
+  //     // }).finished;
+
+  //     oldEl.remove();
+  //   }
+
+  //   $questionBlock.appendChild(elem);
+
+  //   // elem.animate([{ opacity: "0", transform: "scale(0)" }, {}], {
+  //   //   duration: 200,
+  //   //   iterations: 1,
+  //   //   easing: "ease-in-out",
+  //   // });
+  // });
 
   console.log("deltaDegs", deltaDegs);
   console.log("correctDegs", correctDegs);
 
   // replace last question with ? and move it to answers
-  const $correctAnswerQuestion = $questionBlock.lastChild;
+  const $correctAnswerQuestion = questionElements.at(-1);
 
   const questionMarkTmpl = $tmplQuestionMark.content.cloneNode(true); //fragment
   const $questionMark = questionMarkTmpl.firstElementChild;
@@ -552,6 +632,7 @@ function generateRotationalQuiz(config = lastConfig) {
         }
 
         parts.forEach(($part, index) => {
+          const colors = config.figs[index].colorsFrom ?? [...defaultColors];
           // todo(vmyshko): apply rule? color?
           $part.classList.add(colors[index]);
 

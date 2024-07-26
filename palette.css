@@ -5,6 +5,7 @@
   --yellow: #ffdf32;
   --gray: #d9d9d9;
   --dimgray: #8b8b8b;
+  --black: black;
 }
 
 .red {
@@ -25,4 +26,8 @@
 
 .gray {
   --color: var(--gray);
+}
+
+.black {
+  --color: var(--black);
 }
