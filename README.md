@@ -6,17 +6,38 @@ iq test with generated questions
 
 https://bobanko.github.io/iq-test/
 
+## inspiration
+
+good detailed stats, by countries etc.  
+https://international-iq-test.com/  
+test results sample here  
+https://international-iq-test.com/ru/6695aaa1-c870-4010-88dc-4a8395ca4579
+
+stylish, good questions  
+https://testometrika.com/blog/a-test-to-determine-the-iq-level-of-ravena/
+
+MENSA test, bizarre questions, bw  
+https://www.mensa.org/mensa-iq-challenge/
+
+this one is scam, but has stylish questions  
+**WARNING**: DO NOT pay for that!  
+https://iqboost.mobi/
+
 ## TO-DO
 
 rotational
 [x] make (wrong) answers  
-[ ] fix do-not-repeat between rows  
-[ ] make types:  
+[x] fix do-not-repeat between rows  
+[x] make types:  
 [x] arrow + circle
 [x] quarters (multiple)
 [x] quarters + circle + square
 [x] overlap/no overlap -- think about it
+
 [ ] fix square to look normal with circle
+
+[x] add static images as parts via config
+[x] impl different configurable bgs
 
 [ ] custom image rotation type (plane/knight/pencil) -- think about it
 [ ] non90deg shuffles - 6star, 5star -- draw mocks
