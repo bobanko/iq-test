@@ -29,3 +29,7 @@ export function preventSvgCache() {
     use.href.baseVal = `${url}?${Date.now()}#${hash}`;
   });
 }
+
+export function wait(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}

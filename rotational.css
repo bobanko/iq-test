@@ -27,7 +27,7 @@
 
   color: var(--color);
 
-  transition: all 200ms ease-in-out;
+  transition: all 500ms ease-in-out;
 
   mix-blend-mode: multiply;
   /* mix-blend-mode: color-burn;

@@ -1,13 +1,22 @@
 // questions
 
 import { wrapAnswers } from "./common.js";
-import { fromRange, pickRandom, preventSvgCache, shuffle } from "./helpers.js";
+import {
+  fromRange,
+  pickRandom,
+  preventSvgCache,
+  shuffle,
+  wait,
+} from "./helpers.js";
 
-function rotateTo($elem, deg) {
+async function rotateTo($elem, deg) {
+  // to help user to understand rotations
+  await wait(0);
   $elem.style.transform = `rotate(${deg}deg)`;
 }
 
 function getRandomDeg({ stepDeg = 45, skipZero = false } = {}) {
+  if (stepDeg === 0) return 0;
   const randomDeg = fromRange(skipZero ? 1 : 0, 360 / stepDeg - 1) * stepDeg;
 
   if (isNaN(randomDeg)) throw Error("getRandomDeg: bad args");
@@ -56,6 +65,11 @@ const svgHrefs = {
   letterP: "./images/letter-p.svg#letter",
   letterU: "./images/letter-u.svg#letter",
   letterT: "./images/letter-t.svg#letter",
+
+  // static
+  pentagon: "./images/pentagon.svg#pentagon",
+  hexagon: "./images/hexagon.svg#hexagon",
+  hexFlake: "./images/hex-snowflake.svg#hex-snowflake",
 };
 
 const defaultColors = ["red", "green", "blue", "yellow"];
@@ -65,11 +79,20 @@ const genConfigs = {
   letters: {
     // todo(vmyshko): put colors to use, shared between figs? how?
 
+    // todo(vmyshko):
+    // each fig has colors arr, as svgs
+    // ? arr should be shared between figs, if you want unique figs took once?
+    // same for colors
+    // fig can be fixed/static, no rule for it, for static bgs, but startDeg still applies
+    // OR put static figs separately?
+    // fig order applies as z-index (naturally)
+    // mirroring should be avail. same as degs for each fig.
+
     figs: [
       {
         pickFrom: [svgHrefs.letterP, svgHrefs.letterU, svgHrefs.letterT],
         startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
+        stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
         colorsFrom: ["black", "red"],
       },
@@ -325,13 +348,21 @@ const genConfigs = {
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
 
-  fiveStar: {
+  pentagon: {
     figs: [
       {
         pickFrom: [svgHrefs.square, svgHrefs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 360 / 5, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
+      },
+
+      //static
+      {
+        pickFrom: [svgHrefs.pentagon],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 0, // min rotation step by rules
+        skipZero: false, // no zero rotation by rules
       },
     ], // pick random from inner array
 
@@ -341,13 +372,20 @@ const genConfigs = {
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
 
-  sixStar: {
+  hexagon: {
     figs: [
       {
         pickFrom: [svgHrefs.square, svgHrefs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 360 / 6, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
+      },
+      //static
+      {
+        pickFrom: [svgHrefs.hexFlake],
+        startDeg: 30, // initial rotation, before rules: 0, -45
+        stepDeg: 0, // min rotation step by rules
+        skipZero: false, // no zero rotation by rules
       },
     ], // pick random from inner array
 
@@ -499,7 +537,7 @@ function generateRotationalQuiz(config = lastConfig) {
     defaultColors.splice(0, defaultColors.length, ...shuffle(defaultColors));
 
     config.figs.forEach((fig) => {
-      fig.colorsFrom.splice(
+      fig.colorsFrom?.splice(
         0,
         fig.colorsFrom.length,
         ...shuffle(fig.colorsFrom)
@@ -510,7 +548,7 @@ function generateRotationalQuiz(config = lastConfig) {
       defaultColors.push(defaultColors.shift());
 
       config.figs.forEach((fig) => {
-        fig.colorsFrom.push(fig.colorsFrom.shift());
+        fig.colorsFrom?.push(fig.colorsFrom.shift());
       });
     }
 
