@@ -34,6 +34,16 @@
   mix-blend-mode: overlay; */
 }
 
+.frame-fill {
+  fill: white;
+}
+
+.frame-stroke {
+  fill: none;
+  stroke: black;
+  stroke-width: 2px;
+}
+
 .rotational-static {
   position: absolute;
   width: var(--question-size);

@@ -54,7 +54,7 @@ function makeUnique({
   );
 }
 
-const svgHrefs = {
+const svgFigs = {
   quarter: "./images/clock-quarter.svg#quarter",
   circle: "./images/clock-circle.svg#circle",
   square: "./images/clock-square.svg#square",
@@ -67,9 +67,14 @@ const svgHrefs = {
   letterT: "./images/letter-t.svg#letter",
 
   // static
-  pentagon: "./images/pentagon.svg#pentagon",
-  hexagon: "./images/hexagon.svg#hexagon",
   hexFlake: "./images/hex-snowflake.svg#hex-snowflake",
+  hexSector: "./images/hex-sector.svg#figure",
+};
+
+const svgFrames = {
+  pentagon: "./images/frame-pentagon.svg#frame",
+  hexagon: "./images/frame-hexagon.svg#frame",
+  circle: "./images/frame-circle.svg#frame",
 };
 
 const defaultColors = ["red", "green", "blue", "yellow"];
@@ -90,7 +95,7 @@ const genConfigs = {
 
     figs: [
       {
-        pickFrom: [svgHrefs.letterP, svgHrefs.letterU, svgHrefs.letterT],
+        pickFrom: [svgFigs.letterP, svgFigs.letterU, svgFigs.letterT],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -108,7 +113,7 @@ const genConfigs = {
   oneQuarter90: {
     figs: [
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -125,7 +130,7 @@ const genConfigs = {
   oneQuarter45: {
     figs: [
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -146,13 +151,13 @@ const genConfigs = {
   twoQuarters45: {
     figs: [
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -169,13 +174,13 @@ const genConfigs = {
   twoQuarters90: {
     figs: [
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: false, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -192,19 +197,19 @@ const genConfigs = {
   threeQuarters90: {
     figs: [
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -221,7 +226,7 @@ const genConfigs = {
   oneFig90: {
     figs: [
       {
-        pickFrom: [svgHrefs.circle, svgHrefs.square, svgHrefs.arrow],
+        pickFrom: [svgFigs.circle, svgFigs.square, svgFigs.arrow],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -238,7 +243,7 @@ const genConfigs = {
   oneFig45: {
     figs: [
       {
-        pickFrom: [svgHrefs.circle, svgHrefs.square, svgHrefs.arrow],
+        pickFrom: [svgFigs.circle, svgFigs.square, svgFigs.arrow],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -255,13 +260,13 @@ const genConfigs = {
   clock4590: {
     figs: [
       {
-        pickFrom: [svgHrefs.arrow],
+        pickFrom: [svgFigs.arrow],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.circle, svgHrefs.square],
+        pickFrom: [svgFigs.circle, svgFigs.square],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -277,13 +282,13 @@ const genConfigs = {
   twoArrowClock: {
     figs: [
       {
-        pickFrom: [svgHrefs.arrowAlt],
+        pickFrom: [svgFigs.arrowAlt],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.arrow],
+        pickFrom: [svgFigs.arrow],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -301,19 +306,19 @@ const genConfigs = {
   clock459090: {
     figs: [
       {
-        pickFrom: [svgHrefs.arrow],
+        pickFrom: [svgFigs.arrow],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.circle],
+        pickFrom: [svgFigs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.square],
+        pickFrom: [svgFigs.square],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -329,13 +334,13 @@ const genConfigs = {
   quarterFig90: {
     figs: [
       {
-        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        pickFrom: [svgFigs.square, svgFigs.circle],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -351,44 +356,76 @@ const genConfigs = {
   pentagon: {
     figs: [
       {
-        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        pickFrom: [svgFigs.circle, svgFigs.arrow],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 360 / 5, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
 
       //static
-      {
-        pickFrom: [svgHrefs.pentagon],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 0, // min rotation step by rules
-        skipZero: false, // no zero rotation by rules
-      },
+      // {
+      //   pickFrom: [svgHrefs.framePentagon],
+      //   startDeg: 0, // initial rotation, before rules: 0, -45
+      //   stepDeg: 0, // min rotation step by rules
+      //   skipZero: false, // no zero rotation by rules
+      // },
     ], // pick random from inner array
 
+    svgFrame: svgFrames.pentagon,
     shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
 
-  hexagon: {
+  hexagonCircle: {
     figs: [
       {
-        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        pickFrom: [svgFigs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 360 / 6, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       //static
+      // {
+      //   pickFrom: [svgHrefs.frameHexagon],
+      //   startDeg: 30, // initial rotation, before rules: 0, -45
+      //   stepDeg: 0, // min rotation step by rules
+      //   skipZero: false, // no zero rotation by rules
+      // },
+    ], // pick random from inner array
+
+    svgFrame: svgFrames.hexagon,
+    shiftFigsBetweenRows: true,
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
+
+  hexagonSector: {
+    figs: [
       {
-        pickFrom: [svgHrefs.hexFlake],
-        startDeg: 30, // initial rotation, before rules: 0, -45
+        pickFrom: [svgFigs.hexSector],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 360 / 6, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.hexSector],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 360 / 6, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      // static
+      {
+        pickFrom: [svgFigs.hexFlake],
+        startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 0, // min rotation step by rules
         skipZero: false, // no zero rotation by rules
       },
     ], // pick random from inner array
 
+    svgFrame: svgFrames.hexagon,
     shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
@@ -401,19 +438,19 @@ const genConfigs = {
       // like a group/arr which is shared between figs, and depletes from it,
       // also it may be possible to make same for degs
       {
-        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        pickFrom: [svgFigs.square, svgFigs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 15, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.square, svgHrefs.circle],
+        pickFrom: [svgFigs.square, svgFigs.circle],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 15, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgHrefs.quarter],
+        pickFrom: [svgFigs.quarter],
         startDeg: 45, // initial rotation, before rules: 0, -45
         stepDeg: 15, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
@@ -431,12 +468,21 @@ function createQuestionRotational({
   figs = [],
   onlyUniqueFigs = false, // [2 and more]
   canOverlap = true, // [2 and more] figs can overlap each other - have same deg
+  svgFrame = svgFrames.circle,
 }) {
   // todo(vmyshko): make proper z-indexes for figs somehow?
 
   const questionTmpl = $tmplQuestionRotational.content.cloneNode(true); //fragment
   const $question = questionTmpl.firstElementChild;
+
+  // todo(vmyshko): impl custom frame
   const $partContainer = $question.querySelector(".part-container");
+
+  $partContainer.style.mask = `url(${svgFrame})`;
+
+  // apply bg and border
+  $question.querySelector(".frame-fill>use").href.baseVal = svgFrame;
+  $question.querySelector(".frame-stroke>use").href.baseVal = svgFrame;
 
   const figsUsed = new Set();
   figs.forEach((fig) => {

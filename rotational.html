@@ -21,17 +21,20 @@
     <template id="$tmplQuestionRotational">
       <div class="question-rotational">
         <!-- white background -->
-        <svg class="rotational-static">
-          <use href="./images/clock-bg.svg#bg" />
+        <svg class="rotational-static frame-fill">
+          <use href="./images/frame-hexagon.svg#frame" />
         </svg>
 
-        <div class="part-container rotational-static flex">
+        <div
+          class="part-container rotational-static flex"
+          style="mask: url(./images/frame-hexagon.svg#frame)"
+        >
           <!-- svgs here -->
         </div>
 
         <!-- black frame -->
-        <svg class="rotational-static">
-          <use href="./images/clock-frame.svg#frame" />
+        <svg class="rotational-static frame-stroke">
+          <use href="./images/frame-hexagon.svg#frame" />
         </svg>
       </div>
     </template>

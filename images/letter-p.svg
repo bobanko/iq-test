@@ -1,5 +1,4 @@
 <svg id="letter" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <rect x="1" y="1" width="78" height="78" rx="39" stroke="black" stroke-width="2"/>
     <line id="Line 13" x1="50.9985" y1="18.9995" x2="50.9985" y2="60.9995" stroke="currentColor" stroke-width="4"/>
     <line id="Line 14" x1="28.9985" y1="60.9995" x2="28.9985" y2="18.9995" stroke="currentColor" stroke-width="4"/>
     <line id="Line 15" x1="16.9985" y1="20.9995" x2="62.9985" y2="20.9995" stroke="currentColor" stroke-width="4"/>
