@@ -134,7 +134,7 @@ button[type="button"] {
 
 hr {
   padding: 0;
-  margin: 10px;
+  margin: 10px 0;
   width: 100%;
   border-width: 2px;
 }

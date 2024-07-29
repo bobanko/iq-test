@@ -51,21 +51,20 @@
 
     <!-- end -->
 
-    <section id="$mainSection" class="flex-col align-center">
-      <div class="flex-col">
-        <div class="flex-row">
-          <a class="p-10 m-10" href="./index.html">Back</a>
+    <header class="flex-col">
+      <div class="flex-row">
+        <a class="p-10 m-10" href="./index.html">Back</a>
 
-          <button id="$btnGenerate" type="button" class="p-10 m-10">
-            generate
-          </button>
-        </div>
-
-        <select id="$selectConfig"></select>
+        <button id="$btnGenerate" type="button" class="p-10 m-10">
+          generate
+        </button>
       </div>
-
       <hr />
+    </header>
 
+    <section id="$mainSection" class="flex-col align-center">
+      <select id="$selectConfig"></select>
+      <hr />
       <div id="$questionBlock" class="question-block">
         <!-- questions go here -->
       </div>
