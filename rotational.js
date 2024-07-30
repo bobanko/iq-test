@@ -1,5 +1,3 @@
-// questions
-
 import { wrapAnswers } from "./common.js";
 import {
   fromRange,
@@ -55,7 +53,7 @@ function makeUnique({
   );
 }
 
-function createQuestionRotational({
+function createPatternRotational({
   figs = [],
   onlyUniqueFigs = false, // [2 and more]
   canOverlap = true, // [2 and more] figs can overlap each other - have same deg
@@ -63,17 +61,17 @@ function createQuestionRotational({
 }) {
   // todo(vmyshko): make proper z-indexes for figs somehow?
 
-  const questionTmpl = $tmplQuestionRotational.content.cloneNode(true); //fragment
-  const $question = questionTmpl.firstElementChild;
+  const patternTmpl = $tmplPatternRotational.content.cloneNode(true); //fragment
+  const $pattern = patternTmpl.firstElementChild;
 
   // todo(vmyshko): impl custom frame
-  const $partContainer = $question.querySelector(".part-container");
+  const $partContainer = $pattern.querySelector(".part-container");
 
   $partContainer.style.mask = `url(${svgFrame})`;
 
   // apply bg and border
-  $question.querySelector(".frame-fill>use").href.baseVal = svgFrame;
-  $question.querySelector(".frame-stroke>use").href.baseVal = svgFrame;
+  $pattern.querySelector(".frame-fill>use").href.baseVal = svgFrame;
+  $pattern.querySelector(".frame-stroke>use").href.baseVal = svgFrame;
 
   const figsUsed = new Set();
   figs.forEach((fig) => {
@@ -104,7 +102,7 @@ function createQuestionRotational({
     }
   });
 
-  return $question;
+  return $pattern;
 }
 
 let lastConfig = null;
@@ -125,18 +123,13 @@ function generateRotationalQuiz(config = lastConfig) {
     getRandomDeg({ skipZero: fig.skipZero, stepDeg: fig.stepDeg })
   );
 
-  // todo(vmyshko): maybe make different question types here:
-  // arrow and circle
-  // quarters (multiple)
-  // quarters + circle + square
-
   console.log("rules", rules);
 
   const correctDegs = [];
 
-  const questionElements = [];
+  const patterns = [];
   const deltaDegs = [];
-  const $baseQuestion = createQuestionRotational(config);
+  const $basePattern = createPatternRotational(config);
   for (let row = 0; row < rowsNum; row++) {
     // row
 
@@ -195,10 +188,10 @@ function generateRotationalQuiz(config = lastConfig) {
     }
 
     for (let col = 0; col < colsNum; col++) {
-      const $question = $baseQuestion.cloneNode(true);
+      const $pattern = $basePattern.cloneNode(true);
 
       // get parts
-      const parts = [...$question.querySelectorAll(".rotational-part")];
+      const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
       parts.forEach(($part, index) => {
         // todo(vmyshko): shuffle colors between
@@ -207,7 +200,7 @@ function generateRotationalQuiz(config = lastConfig) {
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[index]);
 
-        // todo(vmyshko): grab last question degs as answer degs
+        // todo(vmyshko): grab last pattern degs as answer degs
         const currentDeg = normalizeDeg(
           config.figs[index].startDeg +
             deltaDegs[row][index] +
@@ -217,65 +210,40 @@ function generateRotationalQuiz(config = lastConfig) {
         rotateTo($part, currentDeg);
 
         if (row === 2 && col == 2) {
-          //last question -- correct
+          //last pattern -- correct
           correctDegs.push(currentDeg);
         }
       });
 
-      questionElements.push($question);
+      patterns.push($pattern);
     } //col
   } //row
 
-  $questionBlock.replaceChildren(...questionElements);
-
-  // const oldEls = [...$questionBlock.children];
-  // questionElements.forEach(async (elem, index) => {
-  //   const oldEl = oldEls[index];
-
-  //   // todo(vmyshko): make animation here
-  //   if (oldEl) {
-  //     // await oldEl.animate([{}, { opacity: "0", transform: "scale(0)" }], {
-  //     //   duration: 200,
-  //     //   iterations: 1,
-  //     //   easing: "ease-in-out",
-  //     // }).finished;
-
-  //     oldEl.remove();
-  //   }
-
-  //   $questionBlock.appendChild(elem);
-
-  //   // elem.animate([{ opacity: "0", transform: "scale(0)" }, {}], {
-  //   //   duration: 200,
-  //   //   iterations: 1,
-  //   //   easing: "ease-in-out",
-  //   // });
-  // });
+  $patternArea.replaceChildren(...patterns);
 
   console.log("deltaDegs", deltaDegs);
   console.log("correctDegs", correctDegs);
 
-  // replace last question with ? and move it to answers
-  const $correctAnswerQuestion = questionElements.at(-1);
+  // replace last pattern with ? and move it to answers
+  const $correctAnswerPattern = patterns.at(-1);
 
-  const questionMarkTmpl = $tmplQuestionMark.content.cloneNode(true); //fragment
-  const $questionMark = questionMarkTmpl.firstElementChild;
+  const patternQuestionMarkTmpl =
+    $tmplPatternQuestionMark.content.cloneNode(true); //fragment
+  const $patternQuestionMark = patternQuestionMarkTmpl.firstElementChild;
   //new,old
-  $questionBlock.replaceChild($questionMark, $correctAnswerQuestion);
+  $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
 
   // *******
   // ANSWERS
   // *******
 
-  const answerQuestions = [$correctAnswerQuestion];
+  const answerPatterns = [$correctAnswerPattern];
   const usedDegsSet = new Set([correctDegs.toString()]);
   for (let answerIndex = 1; answerIndex < 6; answerIndex++) {
-    // question
-
-    const $question = $baseQuestion.cloneNode(true);
+    const $pattern = $basePattern.cloneNode(true);
 
     // get parts
-    const parts = [...$question.querySelectorAll(".rotational-part")];
+    const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
     try {
       let whileCount = 0;
@@ -314,7 +282,7 @@ function generateRotationalQuiz(config = lastConfig) {
           rotateTo($part, currentDegs[index]);
         });
 
-        answerQuestions.push($question);
+        answerPatterns.push($pattern);
 
         break;
       } while (config.noOverlap);
@@ -324,10 +292,10 @@ function generateRotationalQuiz(config = lastConfig) {
   }
 
   wrapAnswers({
-    $answerBlock,
-    answerQuestions,
+    $answerList,
+    answerPatterns,
     $tmplAnswer,
-    $correctAnswerQuestion,
+    $correctAnswerPattern: $correctAnswerPattern,
   });
 
   preventSvgCache();

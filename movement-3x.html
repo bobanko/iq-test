@@ -13,8 +13,8 @@
   <body class="inter-regular">
     <!-- templates -->
 
-    <template id="$tmplQuestionMatrix">
-      <div class="question-matrix">
+    <template id="$tmplPatternMatrix">
+      <div class="pattern-matrix">
         <div class="matrix-cell"></div>
         <div class="matrix-cell"></div>
         <div class="matrix-cell"></div>
@@ -27,8 +27,8 @@
       </div>
     </template>
 
-    <template id="$tmplQuestionMark">
-      <div class="question-mark">?</div>
+    <template id="$tmplPatternQuestionMark">
+      <div class="pattern-question-mark">?</div>
     </template>
 
     <template id="$tmplAnswer">
@@ -50,199 +50,14 @@
 
       <hr />
 
-      <div id="$questionBlock" class="question-block">
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <!-- // -->
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <!-- // -->
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
-        <div class="question-matrix">
-          <div class="matrix-cell red"></div>
-          <div class="matrix-cell green"></div>
-          <div class="matrix-cell blue"></div>
-          <div class="matrix-cell yellow"></div>
-          <div class="matrix-cell gray"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell"></div>
-          <div class="matrix-cell red"></div>
-        </div>
+      <div id="$patternArea" class="pattern-area">
+        <!-- patterns go here -->
       </div>
 
       <hr />
 
-      <div id="$answerBlock" class="answer-block justify-center">
-        <button class="answer">
-          <div class="answer-letter inter-semibold">x</div>
-          <div class="question-matrix">
-            <div class="matrix-cell red"></div>
-            <div class="matrix-cell green"></div>
-            <div class="matrix-cell blue"></div>
-            <div class="matrix-cell yellow"></div>
-            <div class="matrix-cell gray"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell red"></div>
-          </div>
-        </button>
-        <button class="answer">
-          <div class="answer-letter inter-semibold">y</div>
-          <div class="question-matrix">
-            <div class="matrix-cell red"></div>
-            <div class="matrix-cell green"></div>
-            <div class="matrix-cell blue"></div>
-            <div class="matrix-cell yellow"></div>
-            <div class="matrix-cell gray"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell red"></div>
-          </div>
-        </button>
-        <button class="answer">
-          <div class="answer-letter inter-semibold">z</div>
-          <div class="question-matrix">
-            <div class="matrix-cell red"></div>
-            <div class="matrix-cell green"></div>
-            <div class="matrix-cell blue"></div>
-            <div class="matrix-cell yellow"></div>
-            <div class="matrix-cell gray"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell red"></div>
-          </div>
-        </button>
-
-        <button class="answer">
-          <div class="answer-letter inter-semibold">x</div>
-          <div class="question-matrix">
-            <div class="matrix-cell red"></div>
-            <div class="matrix-cell green"></div>
-            <div class="matrix-cell blue"></div>
-            <div class="matrix-cell yellow"></div>
-            <div class="matrix-cell gray"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell red"></div>
-          </div>
-        </button>
-        <button class="answer">
-          <div class="answer-letter inter-semibold">y</div>
-          <div class="question-matrix">
-            <div class="matrix-cell red"></div>
-            <div class="matrix-cell green"></div>
-            <div class="matrix-cell blue"></div>
-            <div class="matrix-cell yellow"></div>
-            <div class="matrix-cell gray"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell red"></div>
-          </div>
-        </button>
-        <button class="answer">
-          <div class="answer-letter inter-semibold">z</div>
-          <div class="question-matrix">
-            <div class="matrix-cell red"></div>
-            <div class="matrix-cell green"></div>
-            <div class="matrix-cell blue"></div>
-            <div class="matrix-cell yellow"></div>
-            <div class="matrix-cell gray"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell"></div>
-            <div class="matrix-cell red"></div>
-          </div>
-        </button>
+      <div id="$answerList" class="answer-list justify-center">
+        <!-- answers go here -->
       </div>
     </section>
   </body>

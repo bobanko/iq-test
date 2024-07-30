@@ -1,16 +1,16 @@
 import { shuffle } from "./helpers.js";
 
 export function wrapAnswers({
-  $answerBlock,
+  $answerList,
   $tmplAnswer,
-  answerQuestions,
-  $correctAnswerQuestion,
+  answerPatterns,
+  $correctAnswerPattern,
 }) {
   // wrap answers
   const answerLetters = "abcdef";
 
-  $answerBlock.replaceChildren();
-  for (let [index, $question] of shuffle(answerQuestions).entries()) {
+  $answerList.replaceChildren();
+  for (let [index, $pattern] of shuffle(answerPatterns).entries()) {
     // answer
     const fragment = $tmplAnswer.content.cloneNode(true); //fragment
     const $answer = fragment.firstElementChild;
@@ -18,14 +18,14 @@ export function wrapAnswers({
     const $answerLetter = $answer.querySelector(".answer-letter");
     $answerLetter.textContent = answerLetters[index];
 
-    $answer.appendChild($question);
+    $answer.appendChild($pattern);
     $answer.addEventListener("click", () =>
-      toggleAnswerSelect({ $answer, $answerBlock })
+      toggleAnswerSelect({ $answer, $answerList })
     );
 
-    $answerBlock.appendChild($answer);
+    $answerList.appendChild($answer);
 
-    if ($question === $correctAnswerQuestion) {
+    if ($pattern === $correctAnswerPattern) {
       console.log({ answerLetter: answerLetters[index] });
     }
   }
@@ -33,8 +33,8 @@ export function wrapAnswers({
   // todo(vmyshko): return correct answer letter?
 }
 
-function toggleAnswerSelect({ $answer, $answerBlock }) {
-  $answerBlock
+function toggleAnswerSelect({ $answer, $answerList }) {
+  $answerList
     .querySelectorAll(".answer")
     .forEach(($answer) => $answer.classList.remove("selected"));
 

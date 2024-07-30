@@ -1,11 +1,11 @@
-.question-block {
+.pattern-area {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 
   --matrix-cell-size: 30px;
 }
 
-.question-matrix {
+.pattern-matrix {
   /* prevent outside recoloring */
   --color: white;
   display: grid;
@@ -24,7 +24,7 @@
   border: 1px solid black;
 }
 
-.question-mark {
+.pattern-question-mark {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -35,7 +35,7 @@
   border-radius: 2px;
 }
 
-.answer-block {
+.answer-list {
   --matrix-cell-size: 20px;
 }
 

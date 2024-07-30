@@ -194,49 +194,49 @@ function processEquation() {
     q: "gray",
   };
 
-  $questionBlock.replaceChildren();
+  $patternArea.replaceChildren();
 
   for (let formula of formulas) {
     const parts = formula.split(" ");
 
-    const fragment = $tmplQuestionRow.content.cloneNode(true); //fragment
-    const $questionRow = fragment.firstElementChild;
+    const fragment = $tmplPatternRow.content.cloneNode(true); //fragment
+    const $patternRow = fragment.firstElementChild;
 
     for (let part of parts) {
       const isVariable = "xyzcq".includes(part);
       const isOperator = "+-*=".includes(part);
 
       if (isVariable) {
-        const fragment = $tmplQuestionPart.content.cloneNode(true); //fragment
-        const $questionPart = fragment.firstElementChild;
+        const fragment = $tmplPatternPart.content.cloneNode(true); //fragment
+        const $patternPart = fragment.firstElementChild;
 
         if (part === "c") {
-          $questionPart.textContent = variables[part];
+          $patternPart.textContent = variables[part];
         } else if (part === "q") {
-          $questionPart.textContent = "?";
+          $patternPart.textContent = "?";
         } else {
           //xyz
           //set color's first letter
-          //   $questionPart.textContent = varColors[part][0];
+          //   $patternPart.textContent = varColors[part][0];
           //skip
         }
 
-        $questionPart.classList.add(varColors[part]);
+        $patternPart.classList.add(varColors[part]);
 
-        $questionRow.appendChild($questionPart);
+        $patternRow.appendChild($patternPart);
       }
 
       if (isOperator) {
-        const fragment = $tmplQuestionOperator.content.cloneNode(true); //fragment
-        const $questionOperator = fragment.firstElementChild;
+        const fragment = $tmplPatternOperator.content.cloneNode(true); //fragment
+        const $patternOperator = fragment.firstElementChild;
 
-        $questionOperator.textContent = part;
+        $patternOperator.textContent = part;
 
-        $questionRow.appendChild($questionOperator);
+        $patternRow.appendChild($patternOperator);
       }
     }
 
-    $questionBlock.appendChild($questionRow);
+    $patternArea.appendChild($patternRow);
   }
 
   // add answers
@@ -257,21 +257,21 @@ function processEquation() {
 
   console.log(actualAnswers);
 
-  const answerQuestions = actualAnswers.map((answerText) => {
-    const fragment = $tmplQuestionPart.content.cloneNode(true); //fragment
-    const $questionPart = fragment.firstElementChild;
+  const answerPatterns = actualAnswers.map((answerText) => {
+    const fragment = $tmplPatternPart.content.cloneNode(true); //fragment
+    const $patternPart = fragment.firstElementChild;
 
-    $questionPart.textContent = answerText;
-    $questionPart.classList.add(varColors["q"]);
+    $patternPart.textContent = answerText;
+    $patternPart.classList.add(varColors["q"]);
 
-    return $questionPart;
+    return $patternPart;
   });
 
   wrapAnswers({
-    $answerBlock,
+    $answerList,
     $tmplAnswer,
-    answerQuestions,
-    $correctAnswerQuestion: answerQuestions[0],
+    answerPatterns,
+    $correctAnswerPattern: answerPatterns[0],
   });
 }
 

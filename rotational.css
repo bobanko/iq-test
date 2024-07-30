@@ -1,29 +1,29 @@
 /* //todo: extract */
-.question-block {
+.pattern-area {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
 
-  --question-size: 100px;
+  --pattern-size: 100px;
 }
 
-.question-rotational {
+.pattern-rotational {
   position: relative;
 
   display: flex;
   align-items: center;
   justify-content: center;
 
-  width: var(--question-size);
-  height: var(--question-size);
+  width: var(--pattern-size);
+  height: var(--pattern-size);
 
   box-sizing: border-box;
-  /* border-radius: calc(var(--question-size) / 2); */
+  /* border-radius: calc(var(--pattern-size) / 2); */
 }
 
 .rotational-part {
   position: absolute;
-  width: var(--question-size);
-  height: var(--question-size);
+  width: var(--pattern-size);
+  height: var(--pattern-size);
 
   color: var(--color);
 
@@ -46,21 +46,21 @@
 
 .rotational-static {
   position: absolute;
-  width: var(--question-size);
-  height: var(--question-size);
+  width: var(--pattern-size);
+  height: var(--pattern-size);
 }
 
 .part-container {
   isolation: isolate;
   /* overflow: hidden; */
-  /* border-radius: calc(var(--question-size) / 2); */
+  /* border-radius: calc(var(--pattern-size) / 2); */
 }
 
-.answer-block {
-  --question-size: 70px;
+.answer-list {
+  --pattern-size: 70px;
 }
 
-.answer-block .question-rotational {
+.answer-list .pattern-rotational {
   /* todo: keep or remove? */
   background-color: #a2a2a2;
 }
@@ -68,15 +68,15 @@
 .answer {
   /* todo: think about it */
   /* todo: fix rounded corner */
-  border-top-right-radius: calc(var(--question-size) / 2 + 3px);
-  border-bottom-right-radius: calc(var(--question-size) / 2 + 3px);
+  border-top-right-radius: calc(var(--pattern-size) / 2 + 3px);
+  border-bottom-right-radius: calc(var(--pattern-size) / 2 + 3px);
 }
-.answer .question-rotational {
+.answer .pattern-rotational {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
 }
 
-.question-mark {
+.pattern-question-mark {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -84,7 +84,7 @@
   background-color: var(--dimgray);
   color: black;
   border: 2px solid black;
-  border-radius: calc(var(--question-size) / 2);
+  border-radius: calc(var(--pattern-size) / 2);
 }
 
 .question-list {

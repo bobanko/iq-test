@@ -32,14 +32,14 @@ export class Point {
 }
 
 function createPaintedMatrix(points = []) {
-  const questionTmpl = $tmplQuestionMatrix.content.cloneNode(true); //fragment
-  const $questionMatrix = questionTmpl.firstElementChild;
+  const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
+  const $patternMatrix = patternTmpl.firstElementChild;
 
   for (let { index, color } of points) {
-    $questionMatrix.children[index].classList.add(color);
+    $patternMatrix.children[index].classList.add(color);
   }
 
-  return $questionMatrix;
+  return $patternMatrix;
 }
 
 function getPossibleMatrixCells() {
@@ -62,7 +62,7 @@ function applyRule(prevPoint, rule) {
 }
 
 function generateMatrixQuiz() {
-  $questionBlock.replaceChildren(); //clear
+  $patternArea.replaceChildren(); //clear
 
   // todo(vmyshko): gen rules..
   // todo(vmyshko): ..based on difficulty level (top/left/diagonals/..)
@@ -119,8 +119,8 @@ function generateMatrixQuiz() {
     } // ptColor
 
     //first mtx in row
-    const $questionMatrix = createPaintedMatrix(prevPoints);
-    $questionBlock.appendChild($questionMatrix);
+    const $patternMatrix = createPaintedMatrix(prevPoints);
+    $patternArea.appendChild($patternMatrix);
 
     // skip 1st
     for (let col = 1; col < mtxSize; col++) {
@@ -133,8 +133,8 @@ function generateMatrixQuiz() {
         nextPoints.push(nextPoint);
       }
 
-      const $questionMatrix = createPaintedMatrix(nextPoints);
-      $questionBlock.appendChild($questionMatrix);
+      const $patternMatrix = createPaintedMatrix(nextPoints);
+      $patternArea.appendChild($patternMatrix);
 
       //last block
       if (row === 2 && col === 2) {
@@ -146,13 +146,14 @@ function generateMatrixQuiz() {
     } // col
   } // row
 
-  // replace last question with ? and move it to answers
-  const $correctAnswerQuestion = $questionBlock.lastChild;
+  // replace last pattern with ? and move it to answers
+  const $correctAnswerPattern = $patternArea.lastChild;
 
-  const questionMarkTmpl = $tmplQuestionMark.content.cloneNode(true); //fragment
-  const $questionMark = questionMarkTmpl.firstElementChild;
+  const patternQuestionMarkTmpl =
+    $tmplPatternQuestionMark.content.cloneNode(true); //fragment
+  const $patternQuestionMark = patternQuestionMarkTmpl.firstElementChild;
   //new,old
-  $questionBlock.replaceChild($questionMark, $correctAnswerQuestion);
+  $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
 
   // ANSWERS
 
@@ -202,15 +203,15 @@ function generateMatrixQuiz() {
     //push if unique
   }
 
-  const answerQuestions = answerPointGroups.map((apg) =>
+  const answerPatterns = answerPointGroups.map((apg) =>
     createPaintedMatrix(apg)
   );
 
   wrapAnswers({
-    $answerBlock,
-    answerQuestions,
+    $answerList,
+    answerPatterns,
     $tmplAnswer,
-    $correctAnswerQuestion: answerQuestions[0],
+    $correctAnswerPattern: answerPatterns[0],
   });
 }
 
