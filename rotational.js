@@ -53,18 +53,10 @@ function makeUnique({
   );
 }
 
-function createPatternRotational({
-  figs = [],
-  onlyUniqueFigs = false, // [2 and more]
-  canOverlap = true, // [2 and more] figs can overlap each other - have same deg
-  svgFrame = svgFrames.circle,
-}) {
-  // todo(vmyshko): make proper z-indexes for figs somehow?
-
+function createPatternRotationalBase({ svgFrame = svgFrames.circle }) {
   const patternTmpl = $tmplPatternRotational.content.cloneNode(true); //fragment
   const $pattern = patternTmpl.firstElementChild;
 
-  // todo(vmyshko): impl custom frame
   const $partContainer = $pattern.querySelector(".part-container");
 
   $partContainer.style.mask = `url(${svgFrame})`;
@@ -72,6 +64,28 @@ function createPatternRotational({
   // apply bg and border
   $pattern.querySelector(".frame-fill>use").href.baseVal = svgFrame;
   $pattern.querySelector(".frame-stroke>use").href.baseVal = svgFrame;
+
+  return $pattern;
+}
+
+function createPatternQuestionMark({ svgFrame = svgFrames.circle }) {
+  const $pattern = createPatternRotationalBase({ svgFrame });
+
+  $pattern.classList.add("pattern-question-mark");
+
+  // todo(vmyshko): add ?
+
+  return $pattern;
+}
+
+function createPatternRotational({
+  figs = [],
+  onlyUniqueFigs = false, // [2 and more]
+  canOverlap = true, // [2 and more] figs can overlap each other - have same deg
+  svgFrame = svgFrames.circle,
+}) {
+  const $pattern = createPatternRotationalBase({ svgFrame });
+  const $partContainer = $pattern.querySelector(".part-container");
 
   const figsUsed = new Set();
   figs.forEach((fig) => {
@@ -227,9 +241,10 @@ function generateRotationalQuiz(config = lastConfig) {
   // replace last pattern with ? and move it to answers
   const $correctAnswerPattern = patterns.at(-1);
 
-  const patternQuestionMarkTmpl =
-    $tmplPatternQuestionMark.content.cloneNode(true); //fragment
-  const $patternQuestionMark = patternQuestionMarkTmpl.firstElementChild;
+  const $patternQuestionMark = createPatternQuestionMark({
+    svgFrame: config.svgFrame,
+  });
+
   //new,old
   $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
 

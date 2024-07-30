@@ -20,6 +20,23 @@
   /* border-radius: calc(var(--pattern-size) / 2); */
 }
 
+.pattern-rotational.pattern-question-mark {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  color: black;
+}
+.pattern-rotational.pattern-question-mark:after {
+  content: "?";
+  position: relative;
+}
+
+.pattern-rotational.pattern-question-mark .frame-fill {
+  fill: var(--dimgray);
+}
+
 .rotational-part {
   position: absolute;
   width: var(--pattern-size);
@@ -74,17 +91,6 @@
 .answer .pattern-rotational {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
-}
-
-.pattern-question-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: var(--dimgray);
-  color: black;
-  border: 2px solid black;
-  border-radius: calc(var(--pattern-size) / 2);
 }
 
 .question-list {
