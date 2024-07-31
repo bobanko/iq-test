@@ -5,6 +5,12 @@
 
 :root {
   --row-height: 75px;
+
+  --body-bg-color: #c0c0c0;
+}
+
+button {
+  cursor: pointer;
 }
 
 .tiktok-text {
@@ -18,7 +24,7 @@
 } */
 
 body {
-  background-color: #c0c0c0;
+  background-color: var(--body-bg-color);
 }
 
 .p-10 {
@@ -31,6 +37,17 @@ body {
 
 button[type="button"] {
   background-color: #8b8b8b;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  margin-bottom: 20px;
+
+  /* background-color: var(--body-bg-color); */
+  background-color: #a2a2a2;
+  box-shadow: 0 0 5px 0 black;
 }
 
 .pattern-area {
@@ -84,6 +101,7 @@ button[type="button"] {
 
 .answer-list {
   display: grid;
+
   grid-template-columns: 1fr 1fr 1fr;
 
   gap: 10px;
@@ -95,6 +113,7 @@ button[type="button"] {
 .answer {
   display: flex;
   flex-direction: row;
+  align-items: center;
 
   font-size: 50px;
   text-align: center;
@@ -137,4 +156,5 @@ hr {
   margin: 10px 0;
   width: 100%;
   border-width: 2px;
+  box-sizing: border-box;
 }
