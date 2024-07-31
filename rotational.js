@@ -196,11 +196,6 @@ function generateRotationalQuiz(config = lastConfig) {
       });
     }
 
-    if (config.shiftFigsBetweenRows) {
-      console.log("not implemented");
-      // todo(vmyshko): impl, but how?
-    }
-
     for (let col = 0; col < colsNum; col++) {
       const $pattern = $basePattern.cloneNode(true);
 
@@ -337,3 +332,17 @@ $selectConfig.addEventListener("change", (event) => {
 });
 
 $selectConfig.dispatchEvent(new Event("change"));
+
+const questionButtons = [...$questionList.querySelectorAll(".question-number")];
+
+function questionButtonClick($currentButton) {
+  questionButtons.forEach(($button) => {
+    $button.classList.remove("selected");
+  });
+
+  $currentButton.classList.add("selected");
+}
+
+questionButtons.forEach(($button) =>
+  $button.addEventListener("click", () => questionButtonClick($button))
+);

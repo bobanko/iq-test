@@ -45,11 +45,10 @@ export const genConfigs = {
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
-        colorsFrom: ["black", "red"],
+        colorsFrom: ["black", "red", "green"],
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: false,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -64,9 +63,8 @@ export const genConfigs = {
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -81,9 +79,8 @@ export const genConfigs = {
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -108,9 +105,8 @@ export const genConfigs = {
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -131,9 +127,8 @@ export const genConfigs = {
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
@@ -160,9 +155,8 @@ export const genConfigs = {
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
@@ -177,9 +171,8 @@ export const genConfigs = {
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -194,9 +187,8 @@ export const genConfigs = {
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -217,9 +209,8 @@ export const genConfigs = {
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -239,9 +230,8 @@ export const genConfigs = {
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: false,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -269,9 +259,8 @@ export const genConfigs = {
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -291,9 +280,8 @@ export const genConfigs = {
         stepDeg: 90, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -315,10 +303,10 @@ export const genConfigs = {
       //   stepDeg: 0, // min rotation step by rules
       //   skipZero: false, // no zero rotation by rules
       // },
-    ], // pick random from inner array
+    ],
 
     svgFrame: svgFrames.pentagon,
-    shiftFigsBetweenRows: true,
+
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -339,10 +327,10 @@ export const genConfigs = {
       //   stepDeg: 0, // min rotation step by rules
       //   skipZero: false, // no zero rotation by rules
       // },
-    ], // pick random from inner array
+    ],
 
     svgFrame: svgFrames.hexagon,
-    shiftFigsBetweenRows: true,
+
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -364,10 +352,10 @@ export const genConfigs = {
         stepDeg: 0, // min rotation step by rules
         skipZero: false, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
     // svgFrame: svgFrames.hexagon,
-    shiftFigsBetweenRows: true,
+
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -393,10 +381,10 @@ export const genConfigs = {
         stepDeg: 0, // min rotation step by rules
         skipZero: false, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
     svgFrame: svgFrames.hexagon,
-    shiftFigsBetweenRows: true,
+
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -429,10 +417,10 @@ export const genConfigs = {
         stepDeg: 0, // min rotation step by rules
         skipZero: false, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
     svgFrame: svgFrames.hexagon,
-    shiftFigsBetweenRows: true,
+
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -466,10 +454,10 @@ export const genConfigs = {
         stepDeg: 0, // min rotation step by rules
         skipZero: false, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
     // svgFrame: svgFrames.hexagon,
-    shiftFigsBetweenRows: true,
+
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
@@ -498,9 +486,8 @@ export const genConfigs = {
         stepDeg: 15, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
-    ], // pick random from inner array
+    ],
 
-    shiftFigsBetweenRows: true,
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
