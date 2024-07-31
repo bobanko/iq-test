@@ -333,7 +333,7 @@ $selectConfig.addEventListener("change", (event) => {
 
 $selectConfig.dispatchEvent(new Event("change"));
 
-const questionButtons = [...$questionList.querySelectorAll(".question-number")];
+const questionButtons = [...$questionList.querySelectorAll(".question-button")];
 
 function questionButtonClick($currentButton) {
   questionButtons.forEach(($button) => {

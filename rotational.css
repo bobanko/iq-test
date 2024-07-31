@@ -100,7 +100,7 @@
   justify-content: center;
 }
 
-.question-number {
+.question-button {
   --size: 56px;
 
   font-size: 20px;
@@ -117,7 +117,15 @@
   border-radius: 3px;
 }
 
-.question-number.selected {
+.question-button.correct {
+  background-color: var(--green);
+}
+
+.question-button.wrong {
+  background-color: var(--red);
+}
+
+.question-button.selected {
   background-color: var(--yellow);
   border-color: black;
 }
