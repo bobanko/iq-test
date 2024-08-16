@@ -3,6 +3,7 @@ import {
   fromRange,
   pickRandom,
   preventSvgCache,
+  setRandomSeed,
   shuffle,
   wait,
 } from "./helpers.js";
@@ -119,17 +120,15 @@ function createPatternRotational({
   return $pattern;
 }
 
-let lastConfig = null;
-function generateRotationalQuiz(config = lastConfig) {
-  lastConfig = config;
-  // shuffle colors for new quiz
-  defaultColors.splice(0, defaultColors.length, ...shuffle(defaultColors));
+function generateRotationalQuiz({ config, seed = 0 }) {
+  setRandomSeed(seed);
+  console.log("🍀 generation seed", { seed, config });
 
+  // todo(vmyshko): separate gen logic and draw logic
   const rowsNum = 3;
   const colsNum = 3;
 
   // todo(vmyshko): those who can't overlap -- rotate as pair
-
   // gen rules
   // todo(vmyshko): make unique rules, no dupes
   // todo(vmyshko): impl currentGenConfig.noOverlap
@@ -144,6 +143,8 @@ function generateRotationalQuiz(config = lastConfig) {
   const patterns = [];
   const deltaDegs = [];
   const $basePattern = createPatternRotational(config);
+
+  const shuffledDefaultColors = shuffle(defaultColors);
   for (let row = 0; row < rowsNum; row++) {
     // row
 
@@ -177,23 +178,17 @@ function generateRotationalQuiz(config = lastConfig) {
 
     deltaDegs.push(rowDeltaDegs);
 
-    // shuffle colors for new quiz
-    defaultColors.splice(0, defaultColors.length, ...shuffle(defaultColors));
-
     config.figs.forEach((fig) => {
-      fig.colorsFrom?.splice(
-        0,
-        fig.colorsFrom.length,
-        ...shuffle(fig.colorsFrom)
-      );
+      if (!fig.colorsFrom) {
+        fig.colorsFrom = shuffledDefaultColors;
+      }
     });
 
     if (config.shiftColorsBetweenRows) {
-      defaultColors.push(defaultColors.shift());
-
-      config.figs.forEach((fig) => {
-        fig.colorsFrom?.push(fig.colorsFrom.shift());
-      });
+      // todo(vmyshko): do not alter config colors!
+      // config.figs.forEach((fig) => {
+      //   fig.colorsFrom?.push(fig.colorsFrom.shift());
+      // });
     }
 
     for (let col = 0; col < colsNum; col++) {
@@ -203,8 +198,7 @@ function generateRotationalQuiz(config = lastConfig) {
       const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
       parts.forEach(($part, index) => {
-        // todo(vmyshko): shuffle colors between
-        const colors = config.figs[index].colorsFrom ?? [...defaultColors];
+        const colors = config.figs[index].colorsFrom;
 
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[index]);
@@ -285,7 +279,7 @@ function generateRotationalQuiz(config = lastConfig) {
         }
 
         parts.forEach(($part, index) => {
-          const colors = config.figs[index].colorsFrom ?? [...defaultColors];
+          const colors = config.figs[index].colorsFrom;
           // todo(vmyshko): apply rule? color?
           $part.classList.add(colors[index]);
 
@@ -311,10 +305,6 @@ function generateRotationalQuiz(config = lastConfig) {
   preventSvgCache();
 }
 
-$btnGenerate.addEventListener("click", () => generateRotationalQuiz());
-
-// generateRotationalQuiz();
-
 // init config options
 Object.entries(genConfigs).map(([key, value]) => {
   const $option = document.createElement("option");
@@ -325,24 +315,57 @@ Object.entries(genConfigs).map(([key, value]) => {
   $selectConfig.appendChild($option);
 });
 
-$selectConfig.addEventListener("change", (event) => {
-  const configName = event.target.value;
-
-  generateRotationalQuiz(genConfigs[configName]);
-});
-
-$selectConfig.dispatchEvent(new Event("change"));
-
-const questionButtons = [...$questionList.querySelectorAll(".question-button")];
+// question buttons
 
 function questionButtonClick($currentButton) {
+  const questionButtons = [
+    ...$questionList.querySelectorAll(".question-button"),
+  ];
   questionButtons.forEach(($button) => {
     $button.classList.remove("selected");
   });
 
   $currentButton.classList.add("selected");
+
+  // todo(vmyshko): load question
 }
 
-questionButtons.forEach(($button) =>
-  $button.addEventListener("click", () => questionButtonClick($button))
-);
+function addQuestionButton(callbackFn = () => void 0) {
+  const questionButtons = [
+    ...$questionList.querySelectorAll(".question-button"),
+  ];
+
+  const questionButtonTmpl = $tmplQuestionButton.content.cloneNode(true); //fragment
+  const $questionButton = questionButtonTmpl.firstElementChild;
+
+  $questionButton.textContent = questionButtons.length + 1;
+  $questionList.appendChild($questionButton);
+
+  $questionButton.addEventListener("click", () => {
+    questionButtonClick($questionButton);
+    callbackFn($questionButton);
+  });
+}
+
+{
+  // basic question list init
+  // todo(vmyshko): add seed for each q
+  const seed = 1;
+  // todo(vmyshko): save answers between buttons
+
+  addQuestionButton(() =>
+    generateRotationalQuiz({ config: genConfigs.letters, seed })
+  );
+  addQuestionButton(() =>
+    generateRotationalQuiz({ config: genConfigs.oneQuarter90, seed })
+  );
+  addQuestionButton(() =>
+    generateRotationalQuiz({ config: genConfigs.twoQuarters90, seed })
+  );
+  addQuestionButton(() =>
+    generateRotationalQuiz({ config: genConfigs.oneQuarter45, seed })
+  );
+  addQuestionButton(() =>
+    generateRotationalQuiz({ config: genConfigs.twoQuarters45, seed })
+  );
+}

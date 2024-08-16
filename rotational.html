@@ -49,15 +49,15 @@
       </button>
     </template>
 
+    <template id="$tmplQuestionButton">
+      <button class="question-button">x</button>
+    </template>
+
     <!-- end -->
 
     <header class="flex-col">
       <div class="flex-row">
         <a class="p-10 m-10" href="./index.html">Back</a>
-
-        <button id="$btnGenerate" type="button" class="p-10 m-10">
-          generate
-        </button>
       </div>
     </header>
 
@@ -74,26 +74,16 @@
 
       <div id="$questionList" class="question-list">
         <!-- question links go here -->
-
-        <button class="question-button">1</button>
-        <button class="question-button selected">2</button>
-        <button class="question-button">3</button>
-        <button class="question-button correct">4</button>
-        <button class="question-button wrong">5</button>
-
-        <button class="question-button">6</button>
-        <button class="question-button">7</button>
-        <button class="question-button">8</button>
-        <button class="question-button">9</button>
-        <button class="question-button">10</button>
       </div>
 
       <hr />
       <div class="flex-row">
-        debug config:
-        <select id="$selectConfig"></select>
+        <select id="$selectConfig" class="m-10"></select>
+
+        <button id="$btnGenerate" type="button" class="p-10 m-10">
+          generate
+        </button>
       </div>
-      <hr />
     </section>
   </body>
 </html>
