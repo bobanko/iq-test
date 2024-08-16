@@ -44,53 +44,59 @@
 .red.green {
   --color: linear-gradient(
     to bottom right,
-    var(--green) 45%,
-    black 50%,
-    var(--red) 55%
+    var(--green) 48%,
+    black 48%,
+    black 52%,
+    var(--red) 52%
   );
 }
 
 .red.blue {
   --color: linear-gradient(
     to bottom right,
-    var(--red) 45%,
-    black 50%,
-    var(--blue) 55%
+    var(--red) 48%,
+    black 48%,
+    black 52%,
+    var(--blue) 52%
   );
 }
 
 .red.yellow {
   --color: linear-gradient(
     to bottom right,
-    var(--red) 45%,
-    black 50%,
-    var(--yellow) 55%
+    var(--red) 48%,
+    black 48%,
+    black 52%,
+    var(--yellow) 52%
   );
 }
 
 .green.blue {
   --color: linear-gradient(
     to bottom right,
-    var(--green) 45%,
-    black 50%,
-    var(--blue) 55%
+    var(--green) 48%,
+    black 48%,
+    black 52%,
+    var(--blue) 52%
   );
 }
 
 .green.yellow {
   --color: linear-gradient(
     to bottom right,
-    var(--green) 45%,
-    black 50%,
-    var(--yellow) 55%
+    var(--green) 48%,
+    black 48%,
+    black 52%,
+    var(--yellow) 52%
   );
 }
 
 .yellow.blue {
   --color: linear-gradient(
     to bottom right,
-    var(--yellow) 45%,
-    black 50%,
-    var(--blue) 55%
+    var(--yellow) 48%,
+    black 48%,
+    black 52%,
+    var(--blue) 52%
   );
 }
