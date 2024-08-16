@@ -27,7 +27,7 @@ export const defaultColors = ["red", "green", "blue", "yellow"];
 
 export const genConfigs = {
   //  custom letters
-  letters: {
+  letters45: {
     // todo(vmyshko): put colors to use, shared between figs? how?
 
     // todo(vmyshko):
@@ -75,7 +75,7 @@ export const genConfigs = {
     figs: [
       {
         pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
+        startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
@@ -95,13 +95,13 @@ export const genConfigs = {
     figs: [
       {
         pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
+        startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
         pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
+        startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
@@ -135,7 +135,7 @@ export const genConfigs = {
   },
 
   //  3 quarters 90deg diff deg
-  threeQuarters90: {
+  threeQuarters: {
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -151,7 +151,7 @@ export const genConfigs = {
       },
       {
         pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
+        startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
@@ -215,7 +215,7 @@ export const genConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
   },
-  // true clock
+  // true clock 45/45
   twoArrowClock: {
     figs: [
       {
@@ -238,7 +238,7 @@ export const genConfigs = {
   },
 
   // clock 3
-  // todo(vmyshko): redraw square/circle
+  // todo(vmyshko): redraw square/circle + and/or add arrows as alt
   clock459090: {
     figs: [
       {
@@ -469,21 +469,29 @@ export const genConfigs = {
       // like a group/arr which is shared between figs, and depletes from it,
       // also it may be possible to make same for degs
       {
+        pickFrom: [svgFigs.letterP, svgFigs.letterT, svgFigs.letterU],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+
+      {
         pickFrom: [svgFigs.square, svgFigs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 15, // min rotation step by rules
+        stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
       {
-        pickFrom: [svgFigs.square, svgFigs.circle],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 15, // min rotation step by rules
+        pickFrom: [svgFigs.arrow, svgFigs.arrowAlt],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
+
       {
-        pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 15, // min rotation step by rules
+        pickFrom: [svgFigs.quarter, svgFigs.hexSector60, svgFigs.hexSector120],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 30, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
     ],
