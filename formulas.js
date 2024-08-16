@@ -267,11 +267,12 @@ function processEquation() {
     return $patternPart;
   });
 
+  // $correctAnswer -- answerPatterns[0]
+
   wrapAnswers({
     $answerList,
     $tmplAnswer,
     answerPatterns,
-    $correctAnswerPattern: answerPatterns[0],
   });
 }
 

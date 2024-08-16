@@ -1,11 +1,6 @@
 import { shuffle } from "./helpers.js";
 
-export function wrapAnswers({
-  $answerList,
-  $tmplAnswer,
-  answerPatterns,
-  $correctAnswerPattern,
-}) {
+export function wrapAnswers({ $answerList, $tmplAnswer, answerPatterns }) {
   // wrap answers
   const answerLetters = "abcdef";
 
@@ -24,10 +19,6 @@ export function wrapAnswers({
     );
 
     $answerList.appendChild($answer);
-
-    if ($pattern === $correctAnswerPattern) {
-      console.log({ answerLetter: answerLetters[index] });
-    }
   }
 
   // todo(vmyshko): return correct answer letter?

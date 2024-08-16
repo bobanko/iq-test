@@ -207,11 +207,11 @@ function generateMatrixQuiz() {
     createPaintedMatrix(apg)
   );
 
+  // $correctAnswer -- answerPatterns[0]
   wrapAnswers({
     $answerList,
     answerPatterns,
     $tmplAnswer,
-    $correctAnswerPattern: answerPatterns[0],
   });
 }
 
