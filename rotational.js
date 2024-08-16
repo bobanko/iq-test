@@ -181,16 +181,6 @@ function displayRotationalQuestion({ config, seed = 0 }) {
   preventSvgCache();
 }
 
-// init config options
-Object.entries(genConfigs).map(([key, value]) => {
-  const $option = document.createElement("option");
-
-  $option.value = key;
-  $option.textContent = key;
-
-  $selectConfig.appendChild($option);
-});
-
 // question buttons
 
 function questionButtonClick($currentButton) {
@@ -267,4 +257,6 @@ function addQuestionButton(callbackFn = () => void 0) {
       displayRotationalQuestion({ config, seed: Math.random() });
     });
   });
+
+  $questionList.firstElementChild.click();
 }
