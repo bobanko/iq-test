@@ -1,57 +1,15 @@
 import { wrapAnswers } from "./common.js";
-import {
-  fromRange,
-  pickRandom,
-  preventSvgCache,
-  setRandomSeed,
-  shuffle,
-  wait,
-} from "./helpers.js";
+import { pickRandom, preventSvgCache, shuffle, wait } from "./helpers.js";
 import { defaultColors, genConfigs, svgFrames } from "./rotational.config.js";
+import {
+  generateRotationalQuestion,
+  makeUnique,
+} from "./rotational.generator.js";
 
 async function rotateTo($elem, deg) {
   // to help user to understand rotations
   await wait(0);
   $elem.style.transform = `rotate(${deg}deg)`;
-}
-
-function getRandomDeg({ stepDeg = 45, skipZero = false } = {}) {
-  if (stepDeg === 0) return 0;
-  const randomDeg = fromRange(skipZero ? 1 : 0, 360 / stepDeg - 1) * stepDeg;
-
-  if (isNaN(randomDeg)) throw Error("getRandomDeg: bad args");
-
-  return normalizeDeg(randomDeg);
-}
-
-function normalizeDeg(deg) {
-  return deg % 360;
-}
-
-// todo(vmyshko): gen answers/anything!
-// todo(vmyshko): refac to have genFn and uniqueCheckFn only
-function makeUnique({
-  genFn,
-  prevValuesSet,
-  serializeFn = (value) => value.toString(),
-}) {
-  const maxLoopCount = 100;
-  let loopCount = 0;
-  do {
-    const uniqueValue = genFn();
-
-    const serializedValue = serializeFn(uniqueValue);
-    if (!prevValuesSet.has(serializedValue)) {
-      prevValuesSet.add(serializedValue);
-      return uniqueValue;
-    }
-
-    loopCount++;
-  } while (loopCount < maxLoopCount);
-
-  throw Error(
-    `makeUnique: generation attempts reached ${loopCount}. aborting...`
-  );
 }
 
 function createPatternRotationalBase({ svgFrame = svgFrames.circle }) {
@@ -120,64 +78,30 @@ function createPatternRotational({
   return $pattern;
 }
 
-function generateRotationalQuiz({ config, seed = 0 }) {
-  setRandomSeed(seed);
-  console.log("🍀 generation seed", { seed, config });
-
-  // todo(vmyshko): separate gen logic and draw logic
-  const rowsNum = 3;
-  const colsNum = 3;
+function displayRotationalQuestion({ config, seed = 0 }) {
+  const {
+    //
+    rowsNum,
+    colsNum,
+    //
+    mtxDegs,
+    answersDegs,
+    // todo(vmyshko): how to understand which answer is correct,
+    // ...when elems were made?
+    correctDegs,
+  } = generateRotationalQuestion({ config, seed });
 
   // todo(vmyshko): those who can't overlap -- rotate as pair
-  // gen rules
-  // todo(vmyshko): make unique rules, no dupes
-  // todo(vmyshko): impl currentGenConfig.noOverlap
-  const rules = config.figs.map((fig) =>
-    getRandomDeg({ skipZero: fig.skipZero, stepDeg: fig.stepDeg })
-  );
-
-  console.log("rules", rules);
-
-  const correctDegs = [];
 
   const patterns = [];
-  const deltaDegs = [];
-  const $basePattern = createPatternRotational(config);
 
+  const $basePattern = createPatternRotational(config);
   const shuffledDefaultColors = shuffle(defaultColors);
+
   for (let row = 0; row < rowsNum; row++) {
     // row
 
-    // todo(vmyshko): make this for each fig
-
-    // make unique basic delta deg
-
-    const rowDeltaDegs = makeUnique({
-      genFn: () => {
-        const _rowDeltaDegs = [];
-
-        for (let fig of config.figs) {
-          const randomDeg = makeUnique({
-            genFn: () =>
-              getRandomDeg({
-                stepDeg: fig.stepDeg,
-                // no skip, cause it's initial pos
-                skipZero: false,
-              }),
-            prevValuesSet: new Set(_rowDeltaDegs),
-          });
-
-          _rowDeltaDegs.push(randomDeg);
-        }
-
-        return _rowDeltaDegs;
-      },
-      //flatten inner arrays
-      prevValuesSet: new Set(deltaDegs.map((dd) => dd.toString())),
-    });
-
-    deltaDegs.push(rowDeltaDegs);
-
+    // coloring logic here
     config.figs.forEach((fig) => {
       if (!fig.colorsFrom) {
         fig.colorsFrom = shuffledDefaultColors;
@@ -191,31 +115,22 @@ function generateRotationalQuiz({ config, seed = 0 }) {
       // });
     }
 
+    // ***
+
     for (let col = 0; col < colsNum; col++) {
       const $pattern = $basePattern.cloneNode(true);
 
       // get parts
       const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
-      parts.forEach(($part, index) => {
-        const colors = config.figs[index].colorsFrom;
+      parts.forEach(($part, partIndex) => {
+        const colors = config.figs[partIndex].colorsFrom;
 
         // todo(vmyshko): apply rule? color?
-        $part.classList.add(colors[index]);
+        $part.classList.add(colors[partIndex]);
 
-        // todo(vmyshko): grab last pattern degs as answer degs
-        const currentDeg = normalizeDeg(
-          config.figs[index].startDeg +
-            deltaDegs[row][index] +
-            rules[index] * col
-        );
-
+        const currentDeg = mtxDegs[row][col][partIndex];
         rotateTo($part, currentDeg);
-
-        if (row === 2 && col == 2) {
-          //last pattern -- correct
-          correctDegs.push(currentDeg);
-        }
       });
 
       patterns.push($pattern);
@@ -223,9 +138,6 @@ function generateRotationalQuiz({ config, seed = 0 }) {
   } //row
 
   $patternArea.replaceChildren(...patterns);
-
-  console.log("deltaDegs", deltaDegs);
-  console.log("correctDegs", correctDegs);
 
   // replace last pattern with ? and move it to answers
   const $correctAnswerPattern = patterns.at(-1);
@@ -242,64 +154,28 @@ function generateRotationalQuiz({ config, seed = 0 }) {
   // *******
 
   const answerPatterns = [$correctAnswerPattern];
-  const usedDegsSet = new Set([correctDegs.toString()]);
-  for (let answerIndex = 1; answerIndex < 6; answerIndex++) {
+
+  for (let currentDegs of answersDegs) {
     const $pattern = $basePattern.cloneNode(true);
 
     // get parts
     const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
-    try {
-      let whileCount = 0;
-      do {
-        whileCount++;
-        if (whileCount > 100) {
-          throw Error("possible infinite loop");
-        }
-        const currentDegs = makeUnique({
-          genFn: () =>
-            parts.map((_, index) =>
-              normalizeDeg(
-                correctDegs[index] +
-                  getRandomDeg({
-                    stepDeg: config.figs[index].stepDeg,
-                    skipZero: false,
-                  })
-              )
-            ),
-          prevValuesSet: usedDegsSet,
-        });
+    parts.forEach(($part, index) => {
+      const colors = config.figs[index].colorsFrom;
+      // todo(vmyshko): apply rule? color?
+      $part.classList.add(colors[index]);
 
-        if (
-          config.noOverlap &&
-          currentDegs.length !== new Set(currentDegs).size
-        ) {
-          console.log("overlap degs", currentDegs);
-          continue;
-        }
+      rotateTo($part, currentDegs[index]);
+    });
 
-        parts.forEach(($part, index) => {
-          const colors = config.figs[index].colorsFrom;
-          // todo(vmyshko): apply rule? color?
-          $part.classList.add(colors[index]);
-
-          rotateTo($part, currentDegs[index]);
-        });
-
-        answerPatterns.push($pattern);
-
-        break;
-      } while (config.noOverlap);
-    } catch (error) {
-      console.warn(error);
-    }
+    answerPatterns.push($pattern);
   }
 
   wrapAnswers({
     $answerList,
     answerPatterns,
     $tmplAnswer,
-    $correctAnswerPattern: $correctAnswerPattern,
   });
 
   preventSvgCache();
@@ -353,19 +229,42 @@ function addQuestionButton(callbackFn = () => void 0) {
   const seed = 1;
   // todo(vmyshko): save answers between buttons
 
-  addQuestionButton(() =>
-    generateRotationalQuiz({ config: genConfigs.letters, seed })
-  );
-  addQuestionButton(() =>
-    generateRotationalQuiz({ config: genConfigs.oneQuarter90, seed })
-  );
-  addQuestionButton(() =>
-    generateRotationalQuiz({ config: genConfigs.twoQuarters90, seed })
-  );
-  addQuestionButton(() =>
-    generateRotationalQuiz({ config: genConfigs.oneQuarter45, seed })
-  );
-  addQuestionButton(() =>
-    generateRotationalQuiz({ config: genConfigs.twoQuarters45, seed })
-  );
+  // Object.entries(genConfigs);
+
+  const questionTypes = [
+    "oneQuarter90", //1
+    "oneFig90", //1
+
+    "letters45", //1.2
+    "oneQuarter45", //1.2
+    "oneFig45", //1.2
+
+    "pentagon", //1.25
+    "hexagonCircle", //1.25
+    "hexagonSector1", //1.25
+
+    "twoQuarters90", //2
+    "quarterFig90", //2
+    "hexagonSector2", //2.1
+
+    "twoQuarters45", //2.2
+    "clock4590", //2.2
+    "twoArrowClock", //2.2
+
+    "clock459090", //3
+    "hexagonSector3", //3
+    "triadSector", //3
+
+    "threeQuarters", //3.2 hard
+
+    "quarterFigs15mensa", //???
+  ];
+
+  questionTypes.forEach((configName) => {
+    addQuestionButton(() => {
+      const config = genConfigs[configName];
+      console.log("🔮", configName);
+      displayRotationalQuestion({ config, seed: Math.random() });
+    });
+  });
 }
