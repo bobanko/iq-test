@@ -2,6 +2,11 @@ import { seededRandom } from "./seeded-random.js";
 
 export function setRandomSeed(seed = 1) {
   window.random = seededRandom(seed);
+
+  // todo(vmyshko): to fig rng first pseudo random results
+  window.random();
+  window.random();
+  window.random();
 }
 
 function random() {
