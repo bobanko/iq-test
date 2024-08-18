@@ -27,11 +27,13 @@ body {
   background-color: var(--body-bg-color);
 }
 
+/* tailwind-like */
+
 .p-10 {
   padding: 10px;
 }
 
-.plr-10 {
+.px-10 {
   padding-left: 10px;
   padding-right: 10px;
 }
@@ -39,6 +41,17 @@ body {
 .m-10 {
   margin: 10px;
 }
+
+.mx-10 {
+  margin-left: 10px;
+  margin-right: 10px;
+}
+
+.w-100p {
+  width: 100%;
+}
+
+/* // */
 
 button[type="button"] {
   background-color: #8b8b8b;

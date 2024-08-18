@@ -101,7 +101,7 @@
 }
 
 .question-button {
-  --size: 56px;
+  --size: 50px;
 
   font-size: 20px;
   background-color: var(--gray);
