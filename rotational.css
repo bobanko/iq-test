@@ -117,6 +117,12 @@
   border-radius: 3px;
 }
 
+/* todo: draft -- style may change */
+.question-button:not(.answered) {
+  background-color: transparent;
+  border-style: dashed;
+}
+
 .question-button.correct {
   background-color: var(--green);
 }

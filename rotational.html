@@ -56,8 +56,24 @@
     <!-- end -->
 
     <header class="flex-col">
-      <div class="flex-row">
+      <div class="flex-row align-center">
         <a class="p-10 m-10" href="./index.html">Back</a>
+
+        <button id="$btnGenerate" type="button" class="p-10 m-10">
+          generate
+        </button>
+
+        <label class="flex-row align-center"
+          ><span>seed</span>
+          <input
+            type="text"
+            id="$seed"
+            readonly
+            class="m-10"
+            style="width: 100%; font-size: 10px"
+            value="123123"
+          />
+        </label>
       </div>
     </header>
 

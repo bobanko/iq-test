@@ -1,6 +1,11 @@
 import { shuffle } from "./helpers.js";
 
-export function wrapAnswers({ $answerList, $tmplAnswer, answerPatterns }) {
+export function wrapAnswers({
+  $answerList,
+  $tmplAnswer,
+  answerPatterns,
+  answerCallbackFn = () => void 0,
+}) {
   // wrap answers
   const answerLetters = "abcdef";
 
@@ -14,9 +19,10 @@ export function wrapAnswers({ $answerList, $tmplAnswer, answerPatterns }) {
     $answerLetter.textContent = answerLetters[index];
 
     $answer.appendChild($pattern);
-    $answer.addEventListener("click", () =>
-      toggleAnswerSelect({ $answer, $answerList })
-    );
+    $answer.addEventListener("click", () => {
+      toggleAnswerSelect({ $answer, $answerList });
+      answerCallbackFn(index);
+    });
 
     $answerList.appendChild($answer);
   }

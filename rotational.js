@@ -78,7 +78,8 @@ function createPatternRotational({
   return $pattern;
 }
 
-function displayRotationalQuestion({ config, seed = 0 }) {
+const quizAnswers = [];
+function displayRotationalQuestion({ config, seed = 0, questionIndex }) {
   const {
     //
     rowsNum,
@@ -161,12 +162,12 @@ function displayRotationalQuestion({ config, seed = 0 }) {
     // get parts
     const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
-    parts.forEach(($part, index) => {
-      const colors = config.figs[index].colorsFrom;
+    parts.forEach(($part, partIndex) => {
+      const colors = config.figs[partIndex].colorsFrom;
       // todo(vmyshko): apply rule? color?
-      $part.classList.add(colors[index]);
+      $part.classList.add(colors[partIndex]);
 
-      rotateTo($part, currentDegs[index]);
+      rotateTo($part, currentDegs[partIndex]);
     });
 
     answerPatterns.push($pattern);
@@ -176,7 +177,14 @@ function displayRotationalQuestion({ config, seed = 0 }) {
     $answerList,
     answerPatterns,
     $tmplAnswer,
+    answerCallbackFn: (answerIndex) => {
+      quizAnswers[questionIndex] = answerIndex;
+      $questionList.children[questionIndex]?.classList.add("answered");
+    },
   });
+
+  // select previously selected answer if possible
+  $answerList.children[quizAnswers[questionIndex]]?.classList.add("selected");
 
   preventSvgCache();
 }
@@ -196,15 +204,11 @@ function questionButtonClick($currentButton) {
   // todo(vmyshko): load question
 }
 
-function addQuestionButton(callbackFn = () => void 0) {
-  const questionButtons = [
-    ...$questionList.querySelectorAll(".question-button"),
-  ];
-
+function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
   const questionButtonTmpl = $tmplQuestionButton.content.cloneNode(true); //fragment
   const $questionButton = questionButtonTmpl.firstElementChild;
 
-  $questionButton.textContent = questionButtons.length + 1;
+  $questionButton.textContent = text;
   $questionList.appendChild($questionButton);
 
   $questionButton.addEventListener("click", () => {
@@ -213,12 +217,13 @@ function addQuestionButton(callbackFn = () => void 0) {
   });
 }
 
-{
+function generateQuiz() {
   // basic question list init
-  // todo(vmyshko): add seed for each q
-  const seed = 1;
-  // todo(vmyshko): save answers between buttons
+  const seed = Math.random();
+  // todo(vmyshko): add ability to input custom seed/ via url?
+  $seed.value = seed;
 
+  // todo(vmyshko): save answers between buttons
   // Object.entries(genConfigs);
 
   const questionTypes = [
@@ -250,13 +255,27 @@ function addQuestionButton(callbackFn = () => void 0) {
     "quarterFigs15mensa", //???
   ];
 
-  questionTypes.forEach((configName) => {
-    addQuestionButton(() => {
-      const config = genConfigs[configName];
-      console.log("🔮", configName);
-      displayRotationalQuestion({ config, seed: Math.random() });
+  quizAnswers.splice(0); // clear answers
+  $questionList.replaceChildren(); // delete all question buttons
+
+  questionTypes.forEach((configName, questionIndex) => {
+    addQuestionButton({
+      text: `${questionIndex + 1}`,
+      callbackFn: () => {
+        const config = genConfigs[configName];
+        console.log("🔮", configName);
+        displayRotationalQuestion({ config, seed, questionIndex });
+      },
     });
   });
 
   $questionList.firstElementChild.click();
 }
+
+$btnGenerate.addEventListener("click", () => generateQuiz());
+$btnGenerate.click();
+
+$seed.addEventListener("click", () => {
+  $seed.select();
+  document.execCommand("copy");
+});
