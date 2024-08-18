@@ -79,7 +79,7 @@ function createPatternRotational({
 }
 
 const quizAnswers = [];
-function displayRotationalQuestion({ config, seed = 0, questionIndex }) {
+function displayRotationalQuestion({ config, questionData, questionIndex }) {
   const {
     //
     rowsNum,
@@ -90,7 +90,7 @@ function displayRotationalQuestion({ config, seed = 0, questionIndex }) {
     // todo(vmyshko): how to understand which answer is correct,
     // ...when elems were made?
     correctDegs,
-  } = generateRotationalQuestion({ config, seed });
+  } = questionData;
 
   // todo(vmyshko): those who can't overlap -- rotate as pair
 
@@ -219,6 +219,7 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
   });
 }
 
+const questions = [];
 function generateQuiz() {
   // basic question list init
   const seed = Math.random();
@@ -257,16 +258,36 @@ function generateQuiz() {
     "quarterFigs15mensa", //???
   ];
 
+  // todo(vmyshko):  gen questions
+
   quizAnswers.splice(0); // clear answers
+
   $questionList.replaceChildren(); // delete all question buttons
 
-  questionTypes.forEach((configName, questionIndex) => {
+  const generatingQuestionsTimeTestString = `🍀🍀 generating ${questionTypes.length} questions`;
+  console.time(generatingQuestionsTimeTestString);
+  const _questions = questionTypes.map((configName, questionIndex) => {
+    const config = genConfigs[configName];
+    const questionData = generateRotationalQuestion({ config, seed });
+
+    return { questionData, configName, questionIndex };
+  });
+
+  questions.splice(0, questions.length, ..._questions);
+
+  console.timeEnd(generatingQuestionsTimeTestString);
+
+  questions.forEach(({ questionData, configName, questionIndex }) => {
     addQuestionButton({
       text: `${questionIndex + 1}`,
       callbackFn: () => {
         const config = genConfigs[configName];
         console.log("🔮", configName);
-        displayRotationalQuestion({ config, seed, questionIndex });
+        displayRotationalQuestion({
+          config,
+          questionData,
+          questionIndex,
+        });
       },
     });
   });
@@ -274,10 +295,22 @@ function generateQuiz() {
   $questionList.firstElementChild.click();
 }
 
+function checkAnswers() {
+  quizAnswers;
+  // todo(vmyshko): grab answers and check them!111
+  //
+}
+
+// apply handlers
+
 $btnGenerate.addEventListener("click", () => generateQuiz());
 $btnGenerate.click();
 
 $seed.addEventListener("click", () => {
   $seed.select();
   document.execCommand("copy");
+});
+
+$btnFinishQuiz.addEventListener("click", () => {
+  checkAnswers();
 });

@@ -53,7 +53,7 @@
       <button class="question-button">x</button>
     </template>
 
-    <!-- end -->
+    <!-- templates end -->
 
     <header class="flex-col">
       <div class="flex-row align-center">
@@ -78,20 +78,30 @@
     </header>
 
     <section id="$mainSection" class="flex-col align-center">
-      <div id="$patternArea" class="pattern-area">
+      <div class="w-100p" hidden>
+        <div class="flex-row">
+          <div>question 1/30</div>
+          <div>time left: 12:34</div>
+        </div>
+        <hr />
+      </div>
+      <div id="$patternArea" class="pattern-area px-10">
         <!-- patterns go here -->
       </div>
       <hr />
 
-      <div id="$answerList" class="answer-list justify-center">
+      <div id="$answerList" class="answer-list justify-center px-10">
         <!-- answers go here -->
       </div>
       <hr />
 
-      <div id="$questionList" class="question-list">
+      <div id="$questionList" class="question-list px-10">
         <!-- question links go here -->
       </div>
       <hr />
+      <button id="$btnFinishQuiz" type="button" class="p-10 m-10">
+        finish test
+      </button>
     </section>
   </body>
 </html>
