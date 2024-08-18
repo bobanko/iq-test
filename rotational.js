@@ -180,6 +180,8 @@ function displayRotationalQuestion({ config, seed = 0, questionIndex }) {
     answerCallbackFn: (answerIndex) => {
       quizAnswers[questionIndex] = answerIndex;
       $questionList.children[questionIndex]?.classList.add("answered");
+      // go to next question
+      $questionList.children[questionIndex].nextSibling?.click();
     },
   });
 
