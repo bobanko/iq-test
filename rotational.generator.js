@@ -37,8 +37,9 @@ export function makeUnique({
   );
 }
 
-export function generateRotationalQuestion({ config, seed }) {
-  const random = new SeededRandom(seed);
+export function generateRotationalQuestion({ config, seed, questionIndex }) {
+  // todo(vmyshko): use hash/uid of question as seed
+  const random = new SeededRandom(seed + questionIndex);
 
   // todo(vmyshko): keep it here to ensure seeded random
   function getRandomDeg({ stepDeg = 45, skipZero = false }) {

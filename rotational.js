@@ -286,7 +286,11 @@ function generateQuiz() {
   console.time(generatingQuestionsTimeTestString);
   const _questions = questionTypes.map((configName, questionIndex) => {
     const config = genConfigs[configName];
-    const questionData = generateRotationalQuestion({ config, seed });
+    const questionData = generateRotationalQuestion({
+      config,
+      seed,
+      questionIndex,
+    });
 
     return { questionData, configName, questionIndex };
   });
