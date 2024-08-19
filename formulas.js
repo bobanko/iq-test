@@ -1,9 +1,11 @@
 import { wrapAnswers } from "./common.js";
-import { fromRange, pickRandom } from "./helpers.js";
+import { SeededRandom } from "./helpers.js";
 
 // ---------
 
 function generateEquation() {
+  // todo(vmyshko): use proper seed
+  const random = new SeededRandom(Math.random());
   // @ -- operator
 
   // Q - question var
@@ -78,15 +80,15 @@ function generateEquation() {
     [9]: [3, 3],
   };
 
-  const x = fromRange(1, 4); // smallest
-  const y = fromRange(x + 1, 9 - x); // second
+  const x = random.fromRange(1, 4); // smallest
+  const y = random.fromRange(x + 1, 9 - x); // second
 
   // formula #1
   // z
   let z;
 
   // todo(vmyshko): calc probabilities, increase prob of mul?
-  const useMulForZ = pickRandom([true, false]);
+  const useMulForZ = random.sample([true, false]);
   // multi for z is possible and 50% chance fired
 
   if (mulResult.includes(x * y) && ![x, y].includes(1) && useMulForZ) {
@@ -247,7 +249,7 @@ function processEquation() {
   const actualAnswers = [q];
 
   for (let i = 0; i < 5; i++) {
-    const answer = pickRandom([...possibleAnswers]);
+    const answer = random.sample([...possibleAnswers]);
 
     possibleAnswers.delete(answer);
     actualAnswers.push(answer);

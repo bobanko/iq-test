@@ -1,13 +1,11 @@
-import { fromRange, setRandomSeed } from "./random.helpers.js";
+import { SeededRandom } from "./random.helpers.js";
 
-function getRandomDeg({ stepDeg = 45, skipZero = false } = {}) {
-  if (stepDeg === 0) return 0;
-  const randomDeg = fromRange(skipZero ? 1 : 0, 360 / stepDeg - 1) * stepDeg;
+// todo(vmyshko): make it reusable, and more hashy
+const getUid = (() => {
+  let _id = 0;
 
-  if (isNaN(randomDeg)) throw Error("getRandomDeg: bad args");
-
-  return normalizeDeg(randomDeg);
-}
+  return () => `${_id++}`;
+})();
 
 function normalizeDeg(deg) {
   return deg % 360;
@@ -40,9 +38,21 @@ export function makeUnique({
 }
 
 export function generateRotationalQuestion({ config, seed }) {
+  const random = new SeededRandom(seed);
+
+  // todo(vmyshko): keep it here to ensure seeded random
+  function getRandomDeg({ stepDeg = 45, skipZero = false }) {
+    if (stepDeg === 0) return 0;
+    const randomDeg =
+      random.fromRange(skipZero ? 1 : 0, 360 / stepDeg - 1) * stepDeg;
+
+    if (isNaN(randomDeg)) throw Error("getRandomDeg: bad args");
+
+    return normalizeDeg(randomDeg);
+  }
+
   console.log("🍀 generation seed", { seed, config });
   // todo(vmyshko): make constructor for all gen helpers and init it here
-  setRandomSeed(seed);
 
   const rowsNum = 3;
   const colsNum = 3;
@@ -122,9 +132,23 @@ export function generateRotationalQuestion({ config, seed }) {
 
   const usedDegsSet = new Set([correctDegs.toString()]);
 
-  const answersDegs = [];
+  const answers = [];
 
-  for (let answerIndex = 1; answerIndex < 6; answerIndex++) {
+  const correctAnswer = {
+    id: getUid(),
+    degs: correctDegs,
+    isCorrect: true,
+  };
+
+  answers.push(correctAnswer);
+
+  const defaultAnswerCount = 6;
+  for (
+    //skip one for correct
+    let answerIndex = 1;
+    answerIndex < config.answerCount ?? defaultAnswerCount;
+    answerIndex++
+  ) {
     // todo(vmyshko): use makeUnique if possible
     try {
       let whileCount = 0;
@@ -151,11 +175,14 @@ export function generateRotationalQuestion({ config, seed }) {
           config.noOverlap &&
           currentDegs.length !== new Set(currentDegs).size
         ) {
-          //   console.log("overlap degs", currentDegs);
           continue;
         }
 
-        answersDegs.push(currentDegs);
+        answers.push({
+          id: getUid(),
+          degs: currentDegs,
+          isCorrect: false,
+        });
 
         break;
       } while (config.noOverlap);
@@ -168,18 +195,18 @@ export function generateRotationalQuestion({ config, seed }) {
 
   console.log({ rowsDeltaDegs });
   console.log({ mtxDegs });
-  console.log({ answersDegs });
-  console.log({ correctDegs });
+  console.log({ answers });
 
   // todo(vmyshko): return question data
 
   return {
+    seed,
     rowsNum,
     colsNum,
     config,
 
     mtxDegs,
-    answersDegs,
-    correctDegs,
+    answers,
+    correctAnswer,
   };
 }

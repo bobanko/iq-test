@@ -1,5 +1,9 @@
-import { wrapAnswers } from "./common.js";
-import { pickRandom, preventSvgCache, shuffle, wait } from "./helpers.js";
+import {
+  toggleAnswerSelect,
+  wrapAnswerPattern,
+  wrapAnswers,
+} from "./common.js";
+import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
 import { defaultColors, genConfigs, svgFrames } from "./rotational.config.js";
 import {
   generateRotationalQuestion,
@@ -38,11 +42,15 @@ function createPatternQuestionMark({ svgFrame = svgFrames.circle }) {
 }
 
 function createPatternRotational({
-  figs = [],
-  onlyUniqueFigs = false, // [2 and more]
-  canOverlap = true, // [2 and more] figs can overlap each other - have same deg
-  svgFrame = svgFrames.circle,
+  config: {
+    figs = [],
+    onlyUniqueFigs = false, // [2 and more]
+    canOverlap = true, // [2 and more] figs can overlap each other - have same deg
+    svgFrame = svgFrames.circle,
+  },
+  seed,
 }) {
+  const random = new SeededRandom(seed);
   const $pattern = createPatternRotationalBase({ svgFrame });
   const $partContainer = $pattern.querySelector(".part-container");
 
@@ -63,9 +71,9 @@ function createPatternRotational({
       const currentFig = onlyUniqueFigs
         ? makeUnique({
             prevValuesSet: figsUsed,
-            genFn: () => pickRandom(pickFrom),
+            genFn: () => random.sample(pickFrom),
           })
-        : pickRandom(pickFrom);
+        : random.sample(pickFrom);
 
       $use.href.baseVal = currentFig;
 
@@ -86,28 +94,24 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
     colsNum,
     //
     mtxDegs,
-    answersDegs,
-    // todo(vmyshko): how to understand which answer is correct,
-    // ...when elems were made?
-    correctDegs,
+    answers,
+    correctAnswer,
+    seed,
   } = questionData;
 
+  // todo(vmyshko): make it better, to randomize colors between questions,
+  // mb use question hash/id as seed
+  const random = new SeededRandom(seed + questionIndex);
   // todo(vmyshko): those who can't overlap -- rotate as pair
 
   const patterns = [];
 
-  const $basePattern = createPatternRotational(config);
-  const shuffledDefaultColors = shuffle(defaultColors);
+  const $basePattern = createPatternRotational({ config, seed });
+
+  const shuffledDefaultColors = random.shuffle(defaultColors);
 
   for (let row = 0; row < rowsNum; row++) {
     // row
-
-    // coloring logic here
-    config.figs.forEach((fig) => {
-      if (!fig.colorsFrom) {
-        fig.colorsFrom = shuffledDefaultColors;
-      }
-    });
 
     if (config.shiftColorsBetweenRows) {
       // todo(vmyshko): do not alter config colors!
@@ -125,7 +129,8 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
       const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
       parts.forEach(($part, partIndex) => {
-        const colors = config.figs[partIndex].colorsFrom;
+        const colors =
+          config.figs[partIndex].colorsFrom ?? shuffledDefaultColors;
 
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[partIndex]);
@@ -154,39 +159,53 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
   // ANSWERS
   // *******
 
-  const answerPatterns = [$correctAnswerPattern];
+  const answerPatterns = [];
 
-  for (let currentDegs of answersDegs) {
+  for (let { degs, id } of answers) {
     const $pattern = $basePattern.cloneNode(true);
 
     // get parts
     const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
     parts.forEach(($part, partIndex) => {
-      const colors = config.figs[partIndex].colorsFrom;
+      const colors = config.figs[partIndex].colorsFrom ?? shuffledDefaultColors;
       // todo(vmyshko): apply rule? color?
       $part.classList.add(colors[partIndex]);
 
-      rotateTo($part, currentDegs[partIndex]);
+      rotateTo($part, degs[partIndex]);
     });
 
-    answerPatterns.push($pattern);
+    answerPatterns.push({ $pattern, id });
   }
 
-  wrapAnswers({
-    $answerList,
-    answerPatterns,
-    $tmplAnswer,
-    answerCallbackFn: (answerIndex) => {
-      quizAnswers[questionIndex] = answerIndex;
+  const answerLetters = "abcdef";
+  $answerList.replaceChildren();
+
+  random.shuffle(answerPatterns).forEach(({ $pattern, id }, answerIndex) => {
+    const $answer = wrapAnswerPattern({
+      $tmplAnswer,
+      $pattern,
+      letter: answerLetters[answerIndex],
+    });
+    $answer.dataset.id;
+    $answer.dataset.id = id;
+
+    $answer.addEventListener("click", () => {
+      toggleAnswerSelect({ $answer, $answerList });
+
+      quizAnswers[questionIndex] = id;
       $questionList.children[questionIndex]?.classList.add("answered");
       // go to next question
       $questionList.children[questionIndex].nextSibling?.click();
-    },
+    });
+
+    $answerList.appendChild($answer);
   });
 
   // select previously selected answer if possible
-  $answerList.children[quizAnswers[questionIndex]]?.classList.add("selected");
+  $answerList
+    .querySelector(`[data-id='${quizAnswers[questionIndex]}']`)
+    ?.classList.add("selected");
 
   preventSvgCache();
 }
@@ -257,6 +276,9 @@ function generateQuiz() {
 
     "quarterFigs15mensa", //???
   ];
+
+  // debug
+  questionTypes.splice(2);
 
   // todo(vmyshko):  gen questions
 

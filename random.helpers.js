@@ -1,41 +1,46 @@
 import { seededRandom } from "./seeded-random.js";
 
-export function setRandomSeed(seed = 1) {
-  window.random = seededRandom(seed);
+export class SeededRandom {
+  random;
+  constructor(seed) {
+    this.random = seededRandom(seed);
 
-  // todo(vmyshko): to fig rng first pseudo random results
-  window.random();
-  window.random();
-  window.random();
+    // todo(vmyshko): to fig rng first pseudo random results
+    this.random(), this.random(), this.random(), this.random(), this.random();
+  }
+
+  /**
+   *
+   * @param {Array} array collection to pick from
+   * @returns random element from collection
+   */
+  sample(array) {
+    const { random } = this;
+    const randomIndex = Math.floor(random() * array.length);
+    return array[randomIndex];
+  }
+
+  popFrom(array) {
+    const { random } = this;
+    const randomIndex = Math.floor(random() * array.length);
+
+    return array.splice(randomIndex, 1)[0];
+  }
+
+  shuffle(array) {
+    const { random } = this;
+
+    const result = [...array];
+
+    result.sort(() => 0.5 - random());
+
+    return result;
+  }
+
+  fromRange(min, max) {
+    const { random } = this;
+
+    const randomIndex = Math.floor(min + random() * (max - min + 1));
+    return randomIndex;
+  }
 }
-
-function random() {
-  return window.random();
-}
-
-export function pickRandom(array) {
-  const randomIndex = Math.floor(random() * array.length);
-  return array[randomIndex];
-}
-
-export function spliceRandom(array) {
-  const randomIndex = Math.floor(random() * array.length);
-
-  return array.splice(randomIndex, 1)[0];
-}
-
-export function shuffle(array) {
-  const result = [...array];
-
-  result.sort(() => 0.5 - random());
-
-  return result;
-}
-
-export function fromRange(min, max) {
-  const randomIndex = Math.floor(min + random() * (max - min + 1));
-  return randomIndex;
-}
-
-//basic init
-setRandomSeed();

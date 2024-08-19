@@ -1,5 +1,5 @@
 import { wrapAnswers } from "./common.js";
-import { shuffle, spliceRandom } from "./helpers.js";
+import { SeededRandom } from "./helpers.js";
 
 const mtxSize = 3;
 const cellCount = mtxSize ** 2;
@@ -62,6 +62,9 @@ function applyRule(prevPoint, rule) {
 }
 
 function generateMatrixQuiz() {
+  // todo(vmyshko): use proper seed
+  const random = new SeededRandom(Math.random());
+
   $patternArea.replaceChildren(); //clear
 
   // todo(vmyshko): gen rules..
@@ -86,20 +89,20 @@ function generateMatrixQuiz() {
 
   const rules = [
     //simple
-    ...shuffle(simpleRules),
-    ...shuffle(advancedRules),
+    ...random.shuffle(simpleRules),
+    ...random.shuffle(advancedRules),
   ];
 
   const correctAnswerPoints = [];
 
   // todo(vmyshko): pt count depends on difficulty level
-  const pointColors = shuffle([
+  const pointColors = random.shuffle([
     "green",
     "red",
     "blue",
     "yellow",
     //
-  ]); // todo(vmyshko): shuffle
+  ]);
   // remove extra colors based on difficulty
   pointColors.splice(difficultyLevel);
   rules.splice(difficultyLevel);
@@ -111,7 +114,7 @@ function generateMatrixQuiz() {
     const prevPoints = [];
     for (let ptColor of pointColors) {
       //new point for each row
-      const randomPoint = spliceRandom(freeCellsForPoints);
+      const randomPoint = random.popFrom(freeCellsForPoints);
 
       const currentPoint = new Point({ ...randomPoint, color: ptColor });
 
@@ -183,7 +186,7 @@ function generateMatrixQuiz() {
     const possibleCells = getPossibleMatrixCells();
 
     for (let ptColor of pointColors) {
-      const randomFreeCell = spliceRandom(possibleCells);
+      const randomFreeCell = random.popFrom(possibleCells);
 
       const randomPoint = new Point({ ...randomFreeCell, color: ptColor });
 

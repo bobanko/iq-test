@@ -52,6 +52,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: false,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   //  1 quarter (/arrow/circle/custom) 90deg
@@ -68,6 +69,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 4, // how many answers to generate per question
   },
 
   //  1 quarter 45deg
@@ -84,6 +86,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   // todo(vmyshko): rotate both figs in one direction, same deg
@@ -110,6 +113,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   //  2 quarters 90deg diff deg (no overlap)
@@ -132,6 +136,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   //  3 quarters 90deg diff deg
@@ -160,6 +165,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   // 1 fig
@@ -176,6 +182,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 4, // how many answers to generate per question
   },
 
   //  2 fig 45deg
@@ -192,6 +199,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   // clock 2
@@ -214,6 +222,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
   // true clock 45/45
   twoArrowClock: {
@@ -235,6 +244,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: false,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   // clock 3
@@ -264,6 +274,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   quarterFig90: {
@@ -285,6 +296,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   pentagon: {
@@ -310,6 +322,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 5, // how many answers to generate per question
   },
 
   hexagonCircle: {
@@ -334,6 +347,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   hexagonSector1: {
@@ -359,6 +373,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
   hexagonSector2: {
     figs: [
@@ -388,6 +403,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   hexagonSector3: {
@@ -424,6 +440,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   triadSector: {
@@ -461,6 +478,7 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 
   quarterFigs15mensa: {
@@ -499,5 +517,6 @@ export const genConfigs = {
     shiftColorsBetweenRows: true,
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
   },
 };

@@ -1,24 +1,42 @@
-import { shuffle } from "./helpers.js";
+import { SeededRandom } from "./helpers.js";
 
+export function wrapAnswerPattern({ $tmplAnswer, $pattern, letter = "x" }) {
+  const fragment = $tmplAnswer.content.cloneNode(true); //fragment
+  const $answer = fragment.firstElementChild;
+
+  const $answerLetter = $answer.querySelector(".answer-letter");
+  $answerLetter.textContent = letter;
+
+  $answer.appendChild($pattern);
+
+  return $answer;
+}
+
+/**
+ * @deprecated use wrapAnswerPattern instead
+ */
 export function wrapAnswers({
   $answerList,
   $tmplAnswer,
   answerPatterns,
   answerCallbackFn = () => void 0,
 }) {
+  console.warn("@deprecated use wrapAnswerPattern instead");
   // wrap answers
   const answerLetters = "abcdef";
 
+  const random = new SeededRandom(123);
+
   $answerList.replaceChildren();
-  for (let [index, $pattern] of shuffle(answerPatterns).entries()) {
+  for (let [index, $pattern] of random.shuffle(answerPatterns).entries()) {
     // answer
-    const fragment = $tmplAnswer.content.cloneNode(true); //fragment
-    const $answer = fragment.firstElementChild;
 
-    const $answerLetter = $answer.querySelector(".answer-letter");
-    $answerLetter.textContent = answerLetters[index];
+    const $answer = wrapAnswerPattern({
+      $tmplAnswer,
+      $pattern,
+      letter: answerLetters[index],
+    });
 
-    $answer.appendChild($pattern);
     $answer.addEventListener("click", () => {
       toggleAnswerSelect({ $answer, $answerList });
       answerCallbackFn(index);
@@ -26,11 +44,9 @@ export function wrapAnswers({
 
     $answerList.appendChild($answer);
   }
-
-  // todo(vmyshko): return correct answer letter?
 }
 
-function toggleAnswerSelect({ $answer, $answerList }) {
+export function toggleAnswerSelect({ $answer, $answerList }) {
   $answerList
     .querySelectorAll(".answer")
     .forEach(($answer) => $answer.classList.remove("selected"));
