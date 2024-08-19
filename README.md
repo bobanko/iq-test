@@ -36,6 +36,12 @@ rotational
 
 [ ] fix square to look normal with circle
 
+[ ] probably make questions switch animation as slider LtoR,
+so user can swipe questions. it can be hard to impl instant swap,
+when there are 40 questions, so ...
+
+[ ]
+
 [x] add static images as parts via config
 [x] impl different configurable bgs
 
