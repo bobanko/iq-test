@@ -132,6 +132,7 @@
 }
 
 .question-button.selected {
-  background-color: var(--yellow);
+  /* background-color: var(--yellow); */
+  box-shadow: 0 0 0px 3px var(--yellow);
   border-color: black;
 }
