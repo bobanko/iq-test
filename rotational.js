@@ -1,8 +1,4 @@
-import {
-  toggleAnswerSelect,
-  wrapAnswerPattern,
-  wrapAnswers,
-} from "./common.js";
+import { toggleAnswerSelect, wrapAnswerPattern } from "./common.js";
 import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
 import { defaultColors, genConfigs, svgFrames } from "./rotational.config.js";
 import {
@@ -278,7 +274,7 @@ function generateQuiz() {
   ];
 
   // debug
-  questionTypes.splice(2);
+  // questionTypes.splice(2);
 
   // todo(vmyshko):  gen questions
 
@@ -318,9 +314,23 @@ function generateQuiz() {
 }
 
 function checkAnswers() {
-  quizAnswers;
   // todo(vmyshko): grab answers and check them!111
-  //
+
+  questions.forEach(({ questionIndex, questionData }) => {
+    const isCorrect =
+      questionData.correctAnswer.id === quizAnswers[questionIndex];
+
+    const isAnswered = quizAnswers[questionIndex] !== undefined;
+
+    if (!isAnswered) return;
+
+    $questionList.children[questionIndex].classList.toggle(
+      "correct",
+      isCorrect
+    );
+
+    $questionList.children[questionIndex].classList.toggle("wrong", !isCorrect);
+  });
 }
 
 // apply handlers
