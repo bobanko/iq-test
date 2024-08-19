@@ -78,9 +78,9 @@
     </header>
 
     <section id="$mainSection" class="flex-col align-center">
-      <div class="w-100p" hidden>
-        <div class="flex-row">
-          <div>question 1/30</div>
+      <div class="w-100p">
+        <div class="flex-row" style="justify-content: space-around">
+          <div>Question: <span id="$quizProgressLabel2">99/99</span></div>
           <div>time left: 12:34</div>
         </div>
         <hr />
@@ -92,6 +92,13 @@
 
       <div id="$answerList" class="answer-list justify-center px-10">
         <!-- answers go here -->
+      </div>
+      <hr />
+
+      <div class="question-navigation flex-row align-center">
+        <button id="$btnPrevQuestion" class="question-button">prev</button>
+        <div id="$quizProgressLabel" class="p-10">99/99</div>
+        <button id="$btnNextQuestion" class="question-button">next</button>
       </div>
       <hr />
 

@@ -208,6 +208,19 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
   preventSvgCache();
 }
 
+let _currentQuestion;
+function updateQuizProgress({ current, total }) {
+  _currentQuestion = current;
+  $quizProgressLabel.textContent = `${current + 1}/${total}`;
+  $quizProgressLabel2.textContent = `${current + 1}/${total}`;
+}
+
+$btnPrevQuestion.addEventListener("click", () => {
+  $questionList.children[_currentQuestion].previousElementSibling?.click();
+});
+$btnNextQuestion.addEventListener("click", () => {
+  $questionList.children[_currentQuestion].nextElementSibling?.click();
+});
 // question buttons
 
 function questionButtonClick($currentButton) {
@@ -311,6 +324,11 @@ function generateQuiz() {
           config,
           questionData,
           questionIndex,
+        });
+
+        updateQuizProgress({
+          current: questionIndex,
+          total: questions.length,
         });
       },
     });
