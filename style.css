@@ -13,6 +13,10 @@ button {
   cursor: pointer;
 }
 
+.tabular-nums {
+  font-variant-numeric: tabular-nums;
+}
+
 .tiktok-text {
   text-shadow: 1px 1px #f72456, -1px -1px #19f2e4;
 }

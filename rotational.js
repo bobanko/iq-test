@@ -6,6 +6,31 @@ import {
   makeUnique,
 } from "./rotational.generator.js";
 
+import { Timer } from "./timer.js";
+
+// globals
+const timer = new Timer();
+
+timer.onUpdate((diff) => {
+  const timeGivenMs = 40 * 60 * 1000;
+
+  if (timeGivenMs <= diff) {
+    if (timer.isRunning) timer.stop();
+    // todo(vmyshko): stop quiz
+    return;
+  }
+
+  const timeStr = new Date(timeGivenMs - diff).toLocaleTimeString("en-US", {
+    minute: "numeric",
+    second: "numeric",
+    hour12: false,
+  });
+
+  $timer.textContent = timeStr;
+});
+
+// ***
+
 async function rotateTo($elem, deg) {
   // to help user to understand rotations
   await wait(0);
@@ -335,6 +360,8 @@ function generateQuiz() {
   });
 
   $questionList.firstElementChild.click();
+
+  timer.start();
 }
 
 function checkAnswers() {

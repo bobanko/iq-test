@@ -79,9 +79,20 @@
 
     <section id="$mainSection" class="flex-col align-center">
       <div class="w-100p">
-        <div class="flex-row" style="justify-content: space-around">
-          <div>Question: <span id="$quizProgressLabel2">99/99</span></div>
-          <div>time left: 12:34</div>
+        <div
+          class="flex-row align-center"
+          style="justify-content: space-between; text-transform: capitalize"
+        >
+          <div class="px-10">
+            <span>question:</span>
+            <span id="$quizProgressLabel2" class="tabular-nums">99/99</span>
+          </div>
+          <div class="px-10 flex-row align-center" style="gap: 5px">
+            <span style="font-size: x-large">⏱️</span>
+            <!-- <span>time left:</span> -->
+            <span>remaining time:</span>
+            <span id="$timer" class="tabular-nums">99:99</span>
+          </div>
         </div>
         <hr />
       </div>
@@ -97,7 +108,7 @@
 
       <div class="question-navigation flex-row align-center">
         <button id="$btnPrevQuestion" class="question-button">prev</button>
-        <div id="$quizProgressLabel" class="p-10">99/99</div>
+        <div id="$quizProgressLabel" class="p-10 tabular-nums">99/99</div>
         <button id="$btnNextQuestion" class="question-button">next</button>
       </div>
       <hr />
