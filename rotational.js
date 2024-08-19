@@ -186,12 +186,14 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
     $answer.dataset.id;
     $answer.dataset.id = id;
 
-    $answer.addEventListener("click", () => {
+    $answer.addEventListener("click", async () => {
       toggleAnswerSelect({ $answer, $answerList });
 
       quizAnswers[questionIndex] = id;
       $questionList.children[questionIndex]?.classList.add("answered");
+      [...$answerList.children].forEach(($btn) => ($btn.disabled = true));
       // go to next question
+      await wait(500);
       $questionList.children[questionIndex].nextSibling?.click();
     });
 
