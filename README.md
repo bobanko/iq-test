@@ -40,9 +40,9 @@ rotational
 so user can swipe questions. it can be hard to impl instant swap,
 when there are 40 questions, so ...
 
-[ ]
+[ ] when answered - move to unanswered question, if 0 -- propose to finish.
 
-[x] add static images as parts via config
+[x] add static images as parts via config  
 [x] impl different configurable bgs
 
 [ ] custom image rotation type (plane/knight/pencil) -- think about it

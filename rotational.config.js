@@ -487,6 +487,13 @@ export const genConfigs = {
       // like a group/arr which is shared between figs, and depletes from it,
       // also it may be possible to make same for degs
       {
+        pickFrom: [svgFigs.quarter, svgFigs.hexSector60, svgFigs.hexSector120],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 30, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+
+      {
         pickFrom: [svgFigs.letterP, svgFigs.letterT, svgFigs.letterU],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
@@ -503,13 +510,6 @@ export const genConfigs = {
         pickFrom: [svgFigs.arrow, svgFigs.arrowAlt],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-
-      {
-        pickFrom: [svgFigs.quarter, svgFigs.hexSector60, svgFigs.hexSector120],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 30, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
       },
     ],
