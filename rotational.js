@@ -12,7 +12,8 @@ import { Timer } from "./timer.js";
 const timer = new Timer();
 
 timer.onUpdate((diff) => {
-  const timeGivenMs = 40 * 60 * 1000;
+  const oneMinMs = 60 * 1000;
+  const timeGivenMs = questions.length * oneMinMs;
 
   if (timeGivenMs <= diff) {
     if (timer.isRunning) timer.stop();
@@ -27,6 +28,9 @@ timer.onUpdate((diff) => {
   });
 
   $timer.textContent = timeStr;
+
+  $progressTime.max = timeGivenMs;
+  $progressTime.value = diff;
 });
 
 // ***
@@ -203,26 +207,36 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
   $answerList.replaceChildren();
 
   random.shuffle(answerPatterns).forEach(({ $pattern, id }, answerIndex) => {
-    const $answer = wrapAnswerPattern({
+    const $answerButton = wrapAnswerPattern({
       $tmplAnswer,
       $pattern,
       letter: answerLetters[answerIndex],
     });
-    $answer.dataset.id;
-    $answer.dataset.id = id;
+    $answerButton.dataset.id;
+    $answerButton.dataset.id = id;
 
-    $answer.addEventListener("click", async () => {
-      toggleAnswerSelect({ $answer, $answerList });
+    $answerButton.addEventListener("click", async () => {
+      toggleAnswerSelect({ $answer: $answerButton, $answerList });
 
       quizAnswers[questionIndex] = id;
       $questionList.children[questionIndex]?.classList.add("answered");
+
+      // todo(vmyshko): not the best solution, but quizAnswers collection is bad
+      const answeredCount = $questionList.querySelectorAll(".answered").length;
+
+      updateProgressQuiz({
+        answered: answeredCount,
+        total: questions.length,
+      });
+
+      // todo(vmyshko): bug when user is on last question and no nav happens, answers become disabled
       [...$answerList.children].forEach(($btn) => ($btn.disabled = true));
       // go to next question
       await wait(500);
       $questionList.children[questionIndex].nextSibling?.click();
     });
 
-    $answerList.appendChild($answer);
+    $answerList.appendChild($answerButton);
   });
 
   // select previously selected answer if possible
@@ -234,10 +248,16 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
 }
 
 let _currentQuestion;
-function updateQuizProgress({ current, total }) {
+function updateCurrentQuestionLabel({ current, total }) {
   _currentQuestion = current;
-  $quizProgressLabel.textContent = `${current + 1}/${total}`;
-  $quizProgressLabel2.textContent = `${current + 1}/${total}`;
+  $currentQuestionLabel.textContent = `${current + 1}/${total}`;
+}
+
+function updateProgressQuiz({ answered, total }) {
+  $progressQuiz.max = total;
+  $progressQuiz.value = answered;
+
+  $quizProgressAnswered.textContent = `${answered}/${total}`;
 }
 
 $btnPrevQuestion.addEventListener("click", () => {
@@ -351,12 +371,17 @@ function generateQuiz() {
           questionIndex,
         });
 
-        updateQuizProgress({
+        updateCurrentQuestionLabel({
           current: questionIndex,
           total: questions.length,
         });
       },
     });
+  });
+
+  updateProgressQuiz({
+    answered: 0,
+    total: questions.length,
   });
 
   $questionList.firstElementChild.click();

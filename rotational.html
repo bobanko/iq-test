@@ -55,11 +55,11 @@
 
     <!-- templates end -->
 
-    <header class="flex-col">
+    <header class="flex-col" style="z-index: 3">
       <div class="flex-row align-center">
         <a class="p-10 m-10" href="./index.html">Back</a>
 
-        <button id="$btnGenerate" type="button" class="p-10 m-10">
+        <button id="$btnGenerate" type="button" class="ui-button p-10 m-10">
           generate
         </button>
 
@@ -78,24 +78,58 @@
     </header>
 
     <section id="$mainSection" class="flex-col align-center">
-      <div class="w-100p">
-        <div
-          class="flex-row align-center"
-          style="justify-content: space-between; text-transform: capitalize"
-        >
-          <div class="px-10">
-            <span>question:</span>
-            <span id="$quizProgressLabel2" class="tabular-nums">99/99</span>
-          </div>
-          <div class="px-10 flex-row align-center" style="gap: 5px">
-            <span style="font-size: x-large">⏱️</span>
-            <!-- <span>time left:</span> -->
-            <span>remaining time:</span>
-            <span id="$timer" class="tabular-nums">99:99</span>
+      <progress
+        id="$progressQuiz"
+        class="w-100p"
+        max="100"
+        value="0"
+        style="
+          position: sticky;
+          top: 60px;
+          z-index: 2;
+          --progress-value-bg: var(--green);
+          box-shadow: 0px -2px 5px black;
+        "
+      ></progress>
+
+      <div class="flex-col w-100p">
+        <div class="flex-col w-100p py-10">
+          <div
+            class="flex-row align-center"
+            style="justify-content: space-between; text-transform: capitalize"
+          >
+            <div class="px-10">
+              <span>⬆️ answered:</span>
+              <span id="$quizProgressAnswered" class="tabular-nums">99/99</span>
+            </div>
+
+            <div class="px-10 flex-row align-center" style="gap: 5px">
+              <span style="font-size: x-large">⏱️</span>
+              <span> time left:</span>
+              <!-- <span>remaining time:</span> -->
+              <span id="$timer" class="tabular-nums">99:99</span>
+              <span>⬇️</span>
+            </div>
           </div>
         </div>
-        <hr />
       </div>
+
+      <progress
+        id="$progressTime"
+        class="w-100p"
+        max="100"
+        value="0"
+        style="
+          position: sticky;
+          top: 65px;
+          z-index: 1;
+          --progress-value-bg: var(--red);
+          /* box-shadow: 0px -2px 5px black; */
+        "
+      ></progress>
+
+      <hr />
+
       <div id="$patternArea" class="pattern-area px-10">
         <!-- patterns go here -->
       </div>
@@ -107,9 +141,9 @@
       <hr />
 
       <div class="question-navigation flex-row align-center">
-        <button id="$btnPrevQuestion" class="question-button">prev</button>
-        <div id="$quizProgressLabel" class="p-10 tabular-nums">99/99</div>
-        <button id="$btnNextQuestion" class="question-button">next</button>
+        <button id="$btnPrevQuestion" class="ui-button p-10">prev</button>
+        <div id="$currentQuestionLabel" class="p-10 tabular-nums">99/99</div>
+        <button id="$btnNextQuestion" class="ui-button p-10">next</button>
       </div>
       <hr />
 
