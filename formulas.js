@@ -3,9 +3,9 @@ import { SeededRandom } from "./helpers.js";
 
 // ---------
 
-function generateEquation() {
+function generateEquation({ random }) {
   // todo(vmyshko): use proper seed
-  const random = new SeededRandom(Math.random());
+
   // @ -- operator
 
   // Q - question var
@@ -179,7 +179,9 @@ function generateEquation() {
 }
 
 function processEquation() {
-  const { formulas, x, y, z, c, q } = generateEquation();
+  const random = new SeededRandom(Math.random());
+
+  const { formulas, x, y, z, c, q } = generateEquation({ random });
   const variables = {
     x,
     y,
