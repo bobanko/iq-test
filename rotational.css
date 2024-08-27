@@ -1,7 +1,7 @@
 /* //todo: extract */
 .pattern-area {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  grid-template-columns: repeat(3, 1fr);
 
   --pattern-size: 100px;
 }
@@ -73,56 +73,9 @@
   /* border-radius: calc(var(--pattern-size) / 2); */
 }
 
-.answer-list {
-  --pattern-size: 70px;
-  align-content: center;
-}
-
 .answer-list .pattern-rotational {
   /* todo: keep or remove? */
   background-color: #a2a2a2;
-}
-
-.patterns-answers-container {
-  display: flex;
-}
-
-.question-list {
-  display: grid;
-  grid-template-columns: repeat(6, 0fr);
-
-  gap: 10px;
-}
-
-@media (orientation: landscape) {
-  .patterns-answers-container {
-    flex-direction: row;
-  }
-
-  .answer-list {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .question-list {
-    grid-template-columns: repeat(9, 1fr);
-  }
-}
-
-@media (orientation: portrait) {
-  body {
-    width: 100%;
-  }
-  .patterns-answers-container {
-    flex-direction: column;
-  }
-
-  .answer-list {
-    grid-template-columns: repeat(3, 1fr);
-  }
-
-  .question-list {
-    grid-template-columns: repeat(6, 1fr);
-  }
 }
 
 .answer {
