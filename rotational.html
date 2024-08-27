@@ -12,6 +12,8 @@
   </head>
   <body class="inter-regular">
     <!-- templates -->
+
+    <!-- rotational templates -->
     <template id="$tmplRotationalPart">
       <svg class="rotational-part">
         <use href="" />
@@ -39,6 +41,7 @@
       </div>
     </template>
 
+    <!-- common templates -->
     <template id="$tmplPatternQuestionMark">
       <div class="pattern-question-mark">?</div>
     </template>
@@ -99,7 +102,8 @@
             style="justify-content: space-between; text-transform: capitalize"
           >
             <div class="px-10">
-              <span>⬆️ answered:</span>
+              <!-- <span>⬆️</span> -->
+              <span>answered:</span>
               <span id="$quizProgressAnswered" class="tabular-nums">99/99</span>
             </div>
 
@@ -108,13 +112,14 @@
               <span> time left:</span>
               <!-- <span>remaining time:</span> -->
               <span id="$timer" class="tabular-nums">99:99</span>
-              <span>⬇️</span>
+              <!-- <span>⬇️</span> -->
             </div>
           </div>
         </div>
       </div>
 
       <progress
+        hidden
         id="$progressTime"
         class="w-100p"
         max="100"
@@ -130,26 +135,33 @@
 
       <hr />
 
-      <div id="$patternArea" class="pattern-area px-10">
-        <!-- patterns go here -->
+      <div class="patterns-answers-container align-center w-100p">
+        <div id="$patternArea" class="pattern-area p-10">
+          <!-- patterns go here -->
+        </div>
+        <hr />
+
+        <div
+          id="$answerList"
+          class="answer-list align-center justify-center p-10"
+        >
+          <!-- answers go here -->
+        </div>
       </div>
+
       <hr />
 
-      <div id="$answerList" class="answer-list justify-center px-10">
-        <!-- answers go here -->
-      </div>
-      <hr />
-
-      <div class="question-navigation flex-row align-center">
+      <div class="question-navigation flex-row align-center p-10">
         <button id="$btnPrevQuestion" class="ui-button p-10">prev</button>
         <div id="$currentQuestionLabel" class="p-10 tabular-nums">99/99</div>
         <button id="$btnNextQuestion" class="ui-button p-10">next</button>
       </div>
       <hr />
 
-      <div id="$questionList" class="question-list px-10">
+      <div id="$questionList" class="question-list p-10">
         <!-- question links go here -->
       </div>
+
       <hr />
       <button id="$btnFinishQuiz" type="button" class="p-10 m-10">
         finish test

@@ -9,6 +9,22 @@
   --body-bg-color: #c0c0c0;
 }
 
+html {
+  display: flex;
+  flex-direction: column;
+
+  height: 100vh;
+  align-items: center;
+  justify-content: space-around;
+  background-color: gray;
+}
+
+body {
+  max-width: 800px;
+  background-color: var(--body-bg-color);
+  box-shadow: 0 0 4px 0px black;
+}
+
 button {
   cursor: pointer;
 }
@@ -26,10 +42,6 @@ button {
   inherits: false;
   initial-value: transparent;
 } */
-
-body {
-  background-color: var(--body-bg-color);
-}
 
 /* tailwind-like */
 
@@ -54,6 +66,11 @@ body {
 .mx-10 {
   margin-left: 10px;
   margin-right: 10px;
+}
+
+.my-10 {
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .w-100p {
@@ -206,8 +223,9 @@ header {
 
 hr {
   padding: 0;
-  margin: 10px 0;
+  margin: 0;
   width: 100%;
   border-width: 2px;
   box-sizing: border-box;
+  align-self: stretch;
 }

@@ -75,11 +75,54 @@
 
 .answer-list {
   --pattern-size: 70px;
+  align-content: center;
 }
 
 .answer-list .pattern-rotational {
   /* todo: keep or remove? */
   background-color: #a2a2a2;
+}
+
+.patterns-answers-container {
+  display: flex;
+}
+
+.question-list {
+  display: grid;
+  grid-template-columns: repeat(6, 0fr);
+
+  gap: 10px;
+}
+
+@media (orientation: landscape) {
+  .patterns-answers-container {
+    flex-direction: row;
+  }
+
+  .answer-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .question-list {
+    grid-template-columns: repeat(9, 1fr);
+  }
+}
+
+@media (orientation: portrait) {
+  body {
+    width: 100%;
+  }
+  .patterns-answers-container {
+    flex-direction: column;
+  }
+
+  .answer-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .question-list {
+    grid-template-columns: repeat(6, 1fr);
+  }
 }
 
 .answer {
@@ -91,13 +134,6 @@
 .answer .pattern-rotational {
   border-top-right-radius: inherit;
   border-bottom-right-radius: inherit;
-}
-
-.question-list {
-  display: flex;
-  gap: 10px;
-  flex-wrap: wrap;
-  justify-content: center;
 }
 
 .question-button {
