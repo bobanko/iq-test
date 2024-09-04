@@ -78,15 +78,15 @@
   background-color: #a2a2a2;
 }
 
-.answer {
+.answer.rouded-corners {
   /* todo: think about it */
   /* todo: fix rounded corner */
   border-top-right-radius: calc(var(--pattern-size) / 2 + 3px);
   border-bottom-right-radius: calc(var(--pattern-size) / 2 + 3px);
 }
+
 .answer .pattern-rotational {
-  border-top-right-radius: inherit;
-  border-bottom-right-radius: inherit;
+  border-radius: inherit;
 }
 
 .question-button {
