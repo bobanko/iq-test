@@ -29,6 +29,18 @@ button {
   cursor: pointer;
 }
 
+.ui-button,
+button {
+  font-size: 20px;
+  background-color: var(--gray);
+  align-items: center;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  font-weight: 600;
+  border-radius: 3px;
+  user-select: none;
+}
+
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
@@ -77,17 +89,8 @@ button {
   width: 100%;
 }
 
-/* // */
-.ui-button,
-button[type="button"] {
-  font-size: 20px;
-  background-color: var(--gray);
-  align-items: center;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  font-weight: 600;
-  border-radius: 3px;
-  user-select: none;
+.small {
+  font-size: small;
 }
 
 /* progress */
