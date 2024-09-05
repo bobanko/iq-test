@@ -146,9 +146,13 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   // ???
 
-  const answers = [
-    { points: correctAnswerPoints, id: getUid(), isCorrect: true },
-  ];
+  const correctAnswer = {
+    points: correctAnswerPoints,
+    id: getUid(),
+    isCorrect: true,
+  };
+
+  const answers = [correctAnswer];
 
   function serializePointGroup(pointGroup) {
     return pointGroup.reduce(
@@ -193,13 +197,14 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   //questionData
   return {
+    seed,
     patternsInRow,
     patternsInCol,
     mtxSize,
     //
     questions,
     answers,
-    seed,
+    correctAnswer,
     //
   };
 }
