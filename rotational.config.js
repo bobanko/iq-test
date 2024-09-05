@@ -1,3 +1,6 @@
+import { renderRotationalQuestion } from "./rotational.renderer.js";
+import { generateRotationalQuestion } from "./rotational.generator.js";
+
 const svgFigs = {
   quarter: "./images/clock-quarter.svg#quarter",
   circle: "./images/clock-circle.svg#circle",
@@ -39,7 +42,7 @@ export const defaultColors = [
   colors.yellow,
 ];
 
-export const genConfigs = {
+const _rotationalConfigs = {
   //  custom letters
   letters45: {
     // todo(vmyshko): put colors to use, shared between figs? how?
@@ -534,3 +537,14 @@ export const genConfigs = {
     answerCount: 6, // how many answers to generate per question
   },
 };
+
+export const rotationalConfigs = Object.fromEntries(
+  Object.entries(_rotationalConfigs).map((entry) => {
+    const [_key, value] = entry;
+
+    value.generator = generateRotationalQuestion;
+    value.renderer = renderRotationalQuestion;
+
+    return entry;
+  })
+);
