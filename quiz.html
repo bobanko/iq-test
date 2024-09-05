@@ -8,11 +8,11 @@
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./rotational.css" />
 
-    <script src="./rotational.js" type="module" async></script>
+    <script src="./quiz.js" type="module" async></script>
   </head>
   <body class="inter-regular">
     <!-- templates -->
-
+    <!-- todo(vmyshko): extract templates to corresponding question types somehow... -->
     <!-- rotational templates -->
     <template id="$tmplRotationalPart">
       <svg class="rotational-part">
@@ -40,6 +40,19 @@
         </svg>
       </div>
     </template>
+
+    <!-- templates movable -->
+
+    <template id="$tmplPatternMatrix">
+      <div class="pattern-matrix"></div>
+    </template>
+
+    <template id="$tmplMatrixCell">
+      <div class="matrix-cell"></div>
+    </template>
+
+    <!-- templates OTHERs -->
+    <!-- todo(vmyshko): add here -->
 
     <!-- common templates -->
     <template id="$tmplPatternQuestionMark">

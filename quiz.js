@@ -38,12 +38,6 @@ timer.onUpdate((diff) => {
 
 // ***
 
-async function rotateTo($elem, deg) {
-  // to help user to understand rotations
-  await wait(0);
-  $elem.style.transform = `rotate(${deg}deg)`;
-}
-
 function createPatternRotationalBase({ svgFrame = svgFrames.circle }) {
   const patternTmpl = $tmplPatternRotational.content.cloneNode(true); //fragment
   const $pattern = patternTmpl.firstElementChild;
@@ -59,16 +53,7 @@ function createPatternRotationalBase({ svgFrame = svgFrames.circle }) {
   return $pattern;
 }
 
-function createPatternQuestionMark({ svgFrame = svgFrames.circle }) {
-  const $pattern = createPatternRotationalBase({ svgFrame });
-
-  $pattern.classList.add("pattern-question-mark");
-
-  // todo(vmyshko): add ?
-
-  return $pattern;
-}
-
+// todo(vmyshko): extract to rotational
 function createPatternRotational({
   config: {
     figs = [],
@@ -115,7 +100,14 @@ function createPatternRotational({
 }
 
 const quizAnswers = [];
+
 function displayRotationalQuestion({ config, questionData, questionIndex }) {
+  async function rotateTo($elem, deg) {
+    // to help user to understand rotations
+    await wait(0);
+    $elem.style.transform = `rotate(${deg}deg)`;
+  }
+
   const {
     //
     rowsNum,
@@ -176,9 +168,11 @@ function displayRotationalQuestion({ config, questionData, questionIndex }) {
   // replace last pattern with ? and move it to answers
   const $correctAnswerPattern = patterns.at(-1);
 
-  const $patternQuestionMark = createPatternQuestionMark({
+  const $patternQuestionMark = createPatternRotationalBase({
     svgFrame: config.svgFrame,
   });
+
+  $patternQuestionMark.classList.add("pattern-question-mark");
 
   //new,old
   $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
@@ -296,6 +290,8 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
     callbackFn($questionButton);
   });
 }
+
+// ***
 
 const questions = [];
 function generateQuiz() {
