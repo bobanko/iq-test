@@ -1,25 +1,28 @@
 .pattern-area {
+  --size: 3;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--size), 1fr);
 
-  --matrix-cell-size: 30px;
+  --pattern-size: 100px;
 }
 
 .pattern-matrix {
   /* prevent outside recoloring */
+
   --color: white;
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(var(--size), 1fr);
 
   background-color: white;
 
   border: 1px solid black;
   border-radius: 2px;
+
+  width: var(--pattern-size);
+  height: var(--pattern-size);
 }
 
 .matrix-cell {
-  width: var(--matrix-cell-size);
-  height: var(--matrix-cell-size);
   background: var(--color, transparent);
   border: 1px solid black;
 }
@@ -33,10 +36,9 @@
   color: black;
   border: 2px solid black;
   border-radius: 2px;
-}
 
-.answer-list {
-  --matrix-cell-size: 20px;
+  width: var(--pattern-size);
+  height: var(--pattern-size);
 }
 
 /* mixed colors */

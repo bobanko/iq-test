@@ -1,10 +1,12 @@
 import { wrapAnswers } from "./common.js";
 import { SeededRandom } from "./helpers.js";
 
+const patternCount = 9;
+const patternsInRow = patternCount ** 0.5;
+const patternsInCol = patternCount ** 0.5;
 const mtxSize = 3;
-const cellCount = mtxSize ** 2;
 
-const difficultyLevel = 3;
+const difficultyLevel = 2; //3 is max, but why?
 
 // todo(vmyshko): extract?
 export class Point {
@@ -34,6 +36,17 @@ export class Point {
 function createPaintedMatrix(points = []) {
   const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
   const $patternMatrix = patternTmpl.firstElementChild;
+
+  $patternMatrix.style.setProperty("--size", mtxSize);
+
+  Array(mtxSize ** 2)
+    .fill(null)
+    .forEach((_) => {
+      const matrixCellTmpl = $tmplMatrixCell.content.cloneNode(true); //fragment
+      const $matrixCell = matrixCellTmpl.firstElementChild;
+
+      $patternMatrix.appendChild($matrixCell);
+    });
 
   for (let { index, color } of points) {
     $patternMatrix.children[index].classList.add(color);
@@ -67,22 +80,25 @@ function generateMatrixQuiz() {
 
   $patternArea.replaceChildren(); //clear
 
+  $patternArea.style.setProperty("--size", patternsInRow);
+
   // todo(vmyshko): gen rules..
   // todo(vmyshko): ..based on difficulty level (top/left/diagonals/..)
 
+  const backwardShift = mtxSize - 1;
   const simpleRules = [
     { row: 0, col: 1 }, // right
     { row: 1, col: 0 }, // down
-    { row: 2, col: 0 }, // up
-    { row: 0, col: 2 }, // left
+    { row: backwardShift, col: 0 }, // up
+    { row: 0, col: backwardShift }, // left
   ];
 
   const advancedRules = [
     //diagonals
     { row: 1, col: 1 },
-    { row: 1, col: 2 },
-    { row: 2, col: 1 },
-    { row: 2, col: 2 },
+    { row: 1, col: backwardShift },
+    { row: backwardShift, col: 1 },
+    { row: backwardShift, col: backwardShift },
 
     // todo(vmyshko): add rotation rules? knight-horse rule?
   ];
@@ -110,7 +126,7 @@ function generateMatrixQuiz() {
   console.log({ rules });
 
   const freeCellsForPoints = getPossibleMatrixCells();
-  for (let row = 0; row < mtxSize; row++) {
+  for (let row = 0; row < patternsInRow; row++) {
     const prevPoints = [];
     for (let ptColor of pointColors) {
       //new point for each row
@@ -126,7 +142,7 @@ function generateMatrixQuiz() {
     $patternArea.appendChild($patternMatrix);
 
     // skip 1st
-    for (let col = 1; col < mtxSize; col++) {
+    for (let col = 1; col < patternsInCol; col++) {
       const nextPoints = [];
 
       for (let [index, prevPoint] of prevPoints.entries()) {
