@@ -1,7 +1,5 @@
-import {
-  generateMovableQuestion,
-  renderMovableQuestion,
-} from "./movable-matrix.generator.js";
+import { generateMovableQuestion } from "./movable-matrix.generator.js";
+import { renderMovableQuestion } from "./matrix.renderer.js";
 
 const _movableConfigs = {
   //  desc here

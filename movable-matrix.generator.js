@@ -1,5 +1,4 @@
-import { getUid, wrapAnswerPattern } from "./common.js";
-import { wrapAnswers } from "./common.js";
+import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
 
 // todo(vmyshko): make it configurable? not sure...
@@ -33,28 +32,6 @@ class Point {
 
     return `'${color}':[${row},${col}];`;
   }
-}
-
-function createPaintedMatrix(points = []) {
-  const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
-  const $patternMatrix = patternTmpl.firstElementChild;
-
-  $patternMatrix.style.setProperty("--size", mtxSize);
-
-  Array(mtxSize ** 2)
-    .fill(null)
-    .forEach((_) => {
-      const matrixCellTmpl = $tmplMatrixCell.content.cloneNode(true); //fragment
-      const $matrixCell = matrixCellTmpl.firstElementChild;
-
-      $patternMatrix.appendChild($matrixCell);
-    });
-
-  for (let { index, color } of points) {
-    $patternMatrix.children[index].classList.add(color);
-  }
-
-  return $patternMatrix;
 }
 
 function getPossibleMatrixCells() {
@@ -169,7 +146,9 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   // ???
 
-  const answerPointGroups = [correctAnswerPoints];
+  const answers = [
+    { points: correctAnswerPoints, id: getUid(), isCorrect: true },
+  ];
 
   function serializePointGroup(pointGroup) {
     return pointGroup.reduce(
@@ -179,7 +158,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   }
 
   const uniqueGroups = new Set([serializePointGroup(correctAnswerPoints)]);
-  while (answerPointGroups.length < 6) {
+  while (answers.length < 6) {
     // todo(vmyshko): create unique wrong answers
     const incorrectPoints = [];
 
@@ -203,7 +182,11 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     }
 
     //add
-    answerPointGroups.push(incorrectPoints);
+    answers.push({
+      points: incorrectPoints,
+      id: getUid(),
+      isCorrect: false,
+    });
 
     //push if unique
   }
@@ -212,67 +195,11 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   return {
     patternsInRow,
     patternsInCol,
+    mtxSize,
     //
     questions,
-    answerPointGroups,
+    answers,
     seed,
     //
   };
-}
-
-export function renderMovableQuestion({
-  config,
-  questionData,
-  questionIndex,
-  quizAnswers,
-  updateProgressQuiz,
-}) {
-  //
-
-  const { patternsInRow, patternsInCol, questions, answerPointGroups, seed } =
-    questionData;
-
-  const random = new SeededRandom(seed + questionIndex);
-
-  // todo(vmyshko): put replace with append for fast rendering
-  $patternArea.replaceChildren(); //clear
-
-  $patternArea.style.setProperty("--size", patternsInRow);
-
-  //
-
-  questions.forEach(({ points, id }) => {
-    const $patternMatrix = createPaintedMatrix(points);
-    $patternArea.appendChild($patternMatrix);
-    // todo(vmyshko): apply id
-  });
-
-  // replace last pattern with ? and move it to answers
-  const $correctAnswerPattern = $patternArea.lastChild;
-
-  const patternQuestionMarkTmpl =
-    $tmplPatternQuestionMark.content.cloneNode(true); //fragment
-  const $patternQuestionMark = patternQuestionMarkTmpl.firstElementChild;
-
-  $patternQuestionMark.classList.add("pattern-matrix");
-  //new,old
-  $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
-
-  // *******
-  // ANSWERS
-  // *******
-
-  const answerPatterns = answerPointGroups.map((apg) =>
-    createPaintedMatrix(apg)
-  );
-
-  //   const answerLetters = "abcdef";
-  //   $answerList.replaceChildren();
-
-  // $correctAnswer -- answerPatterns[0]
-  wrapAnswers({
-    $answerList,
-    answerPatterns,
-    $tmplAnswer,
-  });
 }

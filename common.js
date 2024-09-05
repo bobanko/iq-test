@@ -28,6 +28,7 @@ export function wrapAnswers({
   answerPatterns,
   answerCallbackFn = () => void 0,
 }) {
+  // todo(vmyshko): why?
   console.warn("@deprecated use wrapAnswerPattern instead");
   // wrap answers
   const answerLetters = "abcdef";
