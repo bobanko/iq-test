@@ -16,7 +16,10 @@ timer.onUpdate((diff) => {
   const timeGivenMs = questions.length * oneMinMs;
 
   if (timeGivenMs <= diff) {
+    console.log("stopping timer", timer.getDiff());
+
     if (timer.isRunning) timer.stop();
+
     // todo(vmyshko): stop quiz
     return;
   }
