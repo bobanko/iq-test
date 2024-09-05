@@ -1,4 +1,4 @@
-export const svgFigs = {
+const svgFigs = {
   quarter: "./images/clock-quarter.svg#quarter",
   circle: "./images/clock-circle.svg#circle",
   square: "./images/clock-square.svg#square",
@@ -21,9 +21,23 @@ export const svgFrames = {
   pentagon: "./images/frame-pentagon.svg#frame",
   hexagon: "./images/frame-hexagon.svg#frame",
   circle: "./images/frame-circle.svg#frame",
+  // todo(vmyshko): add square?
 };
 
-export const defaultColors = ["red", "green", "blue", "yellow"];
+export const colors = {
+  red: "red",
+  green: "green",
+  blue: "blue",
+  yellow: "yellow",
+  black: "black",
+};
+
+export const defaultColors = [
+  colors.red,
+  colors.green,
+  colors.blue,
+  colors.yellow,
+];
 
 export const genConfigs = {
   //  custom letters
@@ -45,7 +59,7 @@ export const genConfigs = {
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 45, // min rotation step by rules
         skipZero: true, // no zero rotation by rules
-        colorsFrom: ["black", "red", "green"],
+        colorsFrom: [colors.black, colors.red, colors.green],
       },
     ],
 
