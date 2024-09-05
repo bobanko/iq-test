@@ -1,11 +1,5 @@
+import { getUid } from "./common.js";
 import { SeededRandom } from "./random.helpers.js";
-
-// todo(vmyshko): make it reusable, and more hashy
-const getUid = (() => {
-  let _id = 0;
-
-  return () => `${_id++}`;
-})();
 
 function normalizeDeg(deg) {
   return deg % 360;

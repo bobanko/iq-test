@@ -1,5 +1,12 @@
 import { SeededRandom } from "./helpers.js";
 
+// todo(vmyshko): make it reusable, and more hashy
+export const getUid = (() => {
+  let _id = 0;
+
+  return () => `${_id++}`;
+})();
+
 export function wrapAnswerPattern({ $tmplAnswer, $pattern, letter = "x" }) {
   const fragment = $tmplAnswer.content.cloneNode(true); //fragment
   const $answer = fragment.firstElementChild;

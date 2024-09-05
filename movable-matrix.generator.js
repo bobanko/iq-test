@@ -1,7 +1,9 @@
+import { getUid, wrapAnswerPattern } from "./common.js";
 import { wrapAnswers } from "./common.js";
 import { SeededRandom } from "./helpers.js";
 
-const patternCount = 9;
+// todo(vmyshko): make it configurable? not sure...
+const patternCount = 9; // 9 or 4 or ...
 const patternsInRow = patternCount ** 0.5;
 const patternsInCol = patternCount ** 0.5;
 const mtxSize = 3;
@@ -9,7 +11,7 @@ const mtxSize = 3;
 const difficultyLevel = 2; //3 is max, but why?
 
 // todo(vmyshko): extract?
-export class Point {
+class Point {
   get index() {
     return this.row * mtxSize + this.col;
   }
@@ -74,13 +76,8 @@ function applyRule(prevPoint, rule) {
   return nextPoint;
 }
 
-function generateMatrixQuiz() {
-  // todo(vmyshko): use proper seed
-  const random = new SeededRandom(Math.random());
-
-  $patternArea.replaceChildren(); //clear
-
-  $patternArea.style.setProperty("--size", patternsInRow);
+export function generateMovableQuestion({ config, seed, questionIndex }) {
+  const random = new SeededRandom(seed + questionIndex);
 
   // todo(vmyshko): gen rules..
   // todo(vmyshko): ..based on difficulty level (top/left/diagonals/..)
@@ -125,6 +122,8 @@ function generateMatrixQuiz() {
 
   console.log({ rules });
 
+  const questions = [];
+
   const freeCellsForPoints = getPossibleMatrixCells();
   for (let row = 0; row < patternsInRow; row++) {
     const prevPoints = [];
@@ -137,9 +136,7 @@ function generateMatrixQuiz() {
       prevPoints.push(currentPoint);
     } // ptColor
 
-    //first mtx in row
-    const $patternMatrix = createPaintedMatrix(prevPoints);
-    $patternArea.appendChild($patternMatrix);
+    questions.push({ points: prevPoints, id: getUid() });
 
     // skip 1st
     for (let col = 1; col < patternsInCol; col++) {
@@ -152,9 +149,6 @@ function generateMatrixQuiz() {
         nextPoints.push(nextPoint);
       }
 
-      const $patternMatrix = createPaintedMatrix(nextPoints);
-      $patternArea.appendChild($patternMatrix);
-
       //last block
       if (row === 2 && col === 2) {
         correctAnswerPoints.push(...nextPoints);
@@ -162,17 +156,9 @@ function generateMatrixQuiz() {
 
       prevPoints.splice(0);
       prevPoints.push(...nextPoints);
+      questions.push({ points: nextPoints, id: getUid() });
     } // col
   } // row
-
-  // replace last pattern with ? and move it to answers
-  const $correctAnswerPattern = $patternArea.lastChild;
-
-  const patternQuestionMarkTmpl =
-    $tmplPatternQuestionMark.content.cloneNode(true); //fragment
-  const $patternQuestionMark = patternQuestionMarkTmpl.firstElementChild;
-  //new,old
-  $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
 
   // ANSWERS
 
@@ -222,9 +208,66 @@ function generateMatrixQuiz() {
     //push if unique
   }
 
+  //questionData
+  return {
+    patternsInRow,
+    patternsInCol,
+    //
+    questions,
+    answerPointGroups,
+    seed,
+    //
+  };
+}
+
+export function renderMovableQuestion({
+  config,
+  questionData,
+  questionIndex,
+  quizAnswers,
+  updateProgressQuiz,
+}) {
+  //
+
+  const { patternsInRow, patternsInCol, questions, answerPointGroups, seed } =
+    questionData;
+
+  const random = new SeededRandom(seed + questionIndex);
+
+  // todo(vmyshko): put replace with append for fast rendering
+  $patternArea.replaceChildren(); //clear
+
+  $patternArea.style.setProperty("--size", patternsInRow);
+
+  //
+
+  questions.forEach(({ points, id }) => {
+    const $patternMatrix = createPaintedMatrix(points);
+    $patternArea.appendChild($patternMatrix);
+    // todo(vmyshko): apply id
+  });
+
+  // replace last pattern with ? and move it to answers
+  const $correctAnswerPattern = $patternArea.lastChild;
+
+  const patternQuestionMarkTmpl =
+    $tmplPatternQuestionMark.content.cloneNode(true); //fragment
+  const $patternQuestionMark = patternQuestionMarkTmpl.firstElementChild;
+
+  $patternQuestionMark.classList.add("pattern-matrix");
+  //new,old
+  $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
+
+  // *******
+  // ANSWERS
+  // *******
+
   const answerPatterns = answerPointGroups.map((apg) =>
     createPaintedMatrix(apg)
   );
+
+  //   const answerLetters = "abcdef";
+  //   $answerList.replaceChildren();
 
   // $correctAnswer -- answerPatterns[0]
   wrapAnswers({
@@ -233,7 +276,3 @@ function generateMatrixQuiz() {
     $tmplAnswer,
   });
 }
-
-$btnGenerate.addEventListener("click", generateMatrixQuiz);
-
-generateMatrixQuiz();

@@ -1,11 +1,3 @@
-.pattern-area {
-  --size: 3;
-  display: grid;
-  grid-template-columns: repeat(var(--size), 1fr);
-
-  --pattern-size: 100px;
-}
-
 .pattern-matrix {
   /* prevent outside recoloring */
 
@@ -15,6 +7,7 @@
 
   background-color: white;
 
+  box-sizing: border-box;
   border: 1px solid black;
   border-radius: 2px;
 
@@ -25,20 +18,6 @@
 .matrix-cell {
   background: var(--color, transparent);
   border: 1px solid black;
-}
-
-.pattern-question-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: var(--dimgray);
-  color: black;
-  border: 2px solid black;
-  border-radius: 2px;
-
-  width: var(--pattern-size);
-  height: var(--pattern-size);
 }
 
 /* mixed colors */
@@ -101,4 +80,25 @@
     black 52%,
     var(--blue) 52%
   );
+}
+
+/* common */
+
+.pattern-area {
+  --size: 3;
+  display: grid;
+  grid-template-columns: repeat(var(--size), 1fr);
+
+  --pattern-size: 100px;
+}
+
+.pattern-question-mark.pattern-matrix {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  background-color: var(--dimgray);
+  color: black;
+  border: 2px solid black;
+  border-radius: 2px;
 }
