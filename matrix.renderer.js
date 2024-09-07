@@ -1,4 +1,3 @@
-import { wrapAnswers } from "./quiz.js";
 import { SeededRandom } from "./random.helpers.js";
 
 function createPaintedMatrix({ points = [], mtxSize }) {
@@ -24,14 +23,7 @@ function createPaintedMatrix({ points = [], mtxSize }) {
 }
 
 // todo(vmyshko): this should be used to render any matrix, not only movable
-export function renderMovableQuestion({
-  config,
-  questionData,
-  questionIndex,
-  quizAnswers,
-}) {
-  //
-
+export function renderMovableQuestion({ config, questionData, questionIndex }) {
   const { patternsInRow, mtxSize, patternsInCol, questions, answers, seed } =
     questionData;
 
@@ -73,14 +65,5 @@ export function renderMovableQuestion({
     };
   });
 
-  wrapAnswers({
-    seed: seed + questionIndex,
-    quizAnswers,
-    $answerList,
-    $tmplAnswer,
-    answerPatterns,
-    questionIndex,
-  });
-
-  //
+  return answerPatterns;
 }

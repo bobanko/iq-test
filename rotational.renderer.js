@@ -1,5 +1,4 @@
 import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
-import { wrapAnswers } from "./quiz.js";
 import { defaultColors, svgFrames } from "./rotational.config.js";
 import { makeUnique } from "./rotational.generator.js";
 
@@ -68,7 +67,6 @@ export function renderRotationalQuestion({
   config,
   questionData,
   questionIndex,
-  quizAnswers,
 }) {
   async function rotateTo($elem, deg) {
     // to help user to understand rotations
@@ -168,14 +166,10 @@ export function renderRotationalQuestion({
     return { $pattern, id, isCorrect };
   });
 
-  wrapAnswers({
-    seed: seed + questionIndex,
-    quizAnswers,
-    $answerList,
-    $tmplAnswer,
-    answerPatterns,
-    questionIndex,
-  });
+  //debug
+  setTimeout(() => {
+    preventSvgCache();
+  }, 0);
 
-  preventSvgCache();
+  return answerPatterns;
 }

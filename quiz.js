@@ -127,9 +127,17 @@ function generateQuiz() {
         console.log("🔮", configName);
 
         // todo(vmyshko): based on current/config
-        config.renderer({
+        const answerPatterns = config.renderer({
           config,
           questionData,
+          questionIndex,
+        });
+
+        wrapAnswers({
+          seed: seed + questionIndex,
+          $answerList,
+          $tmplAnswer,
+          answerPatterns,
           questionIndex,
           quizAnswers,
         });
