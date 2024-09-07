@@ -2,10 +2,10 @@ import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
 
 // todo(vmyshko): make it configurable? not sure...
-const patternCount = 9; // 9 or 4 or ...
+const patternCount = 9; // 9 or 4 or ... pattern matix count
 const patternsInRow = patternCount ** 0.5;
 const patternsInCol = patternCount ** 0.5;
-const mtxSize = 3;
+const mtxSize = 3; //question matrix size
 
 const difficultyLevel = 2; //3 is max, but why?
 
