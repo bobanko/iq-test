@@ -1,5 +1,5 @@
-import { toggleAnswerSelect, wrapAnswerPattern } from "./common.js";
 import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
+import { wrapAnswers } from "./quiz.js";
 import { defaultColors, svgFrames } from "./rotational.config.js";
 import { makeUnique } from "./rotational.generator.js";
 
@@ -69,7 +69,6 @@ export function renderRotationalQuestion({
   questionData,
   questionIndex,
   quizAnswers,
-  updateProgressQuiz,
 }) {
   async function rotateTo($elem, deg) {
     // to help user to understand rotations
@@ -151,14 +150,13 @@ export function renderRotationalQuestion({
   // ANSWERS
   // *******
 
-  const answerPatterns = [];
-
-  for (let { degs, id } of answers) {
+  const answerPatterns = answers.map(({ degs, id, isCorrect }) => {
     const $pattern = $basePattern.cloneNode(true);
 
     // get parts
     const parts = [...$pattern.querySelectorAll(".rotational-part")];
 
+    // todo(vmyshko): extract answers appliance
     parts.forEach(($part, partIndex) => {
       const colors = config.figs[partIndex].colorsFrom ?? shuffledDefaultColors;
       // todo(vmyshko): apply rule? color?
@@ -167,48 +165,17 @@ export function renderRotationalQuestion({
       rotateTo($part, degs[partIndex]);
     });
 
-    answerPatterns.push({ $pattern, id });
-  }
-
-  const answerLetters = "abcdef";
-  $answerList.replaceChildren();
-
-  random.shuffle(answerPatterns).forEach(({ $pattern, id }, answerIndex) => {
-    const $answerButton = wrapAnswerPattern({
-      $tmplAnswer,
-      $pattern,
-      letter: answerLetters[answerIndex],
-    });
-    $answerButton.dataset.id;
-    $answerButton.dataset.id = id;
-
-    $answerButton.addEventListener("click", async () => {
-      toggleAnswerSelect({ $answer: $answerButton, $answerList });
-
-      quizAnswers[questionIndex] = id;
-      $questionList.children[questionIndex]?.classList.add("answered");
-
-      // todo(vmyshko): not the best solution, but quizAnswers collection is bad
-      const answeredCount = $questionList.querySelectorAll(".answered").length;
-
-      updateProgressQuiz({
-        answered: answeredCount,
-      });
-
-      // todo(vmyshko): bug when user is on last question and no nav happens, answers become disabled
-      [...$answerList.children].forEach(($btn) => ($btn.disabled = true));
-      // go to next question
-      await wait(500);
-      $questionList.children[questionIndex].nextSibling?.click();
-    });
-
-    $answerList.appendChild($answerButton);
+    return { $pattern, id, isCorrect };
   });
 
-  // select previously selected answer if possible
-  $answerList
-    .querySelector(`[data-id='${quizAnswers[questionIndex]}']`)
-    ?.classList.add("selected");
+  wrapAnswers({
+    seed: seed + questionIndex,
+    quizAnswers,
+    $answerList,
+    $tmplAnswer,
+    answerPatterns,
+    questionIndex,
+  });
 
   preventSvgCache();
 }

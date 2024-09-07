@@ -1,4 +1,6 @@
+import { wait } from "./helpers.js";
 import { quizQuestionConfigs } from "./quiz.config.js";
+import { SeededRandom } from "./random.helpers.js";
 
 import { Timer } from "./timer.js";
 
@@ -130,7 +132,6 @@ function generateQuiz() {
           questionData,
           questionIndex,
           quizAnswers,
-          updateProgressQuiz,
         });
 
         updateCurrentQuestionLabel({
@@ -183,3 +184,79 @@ $seed.addEventListener("click", () => {
 $btnFinishQuiz.addEventListener("click", () => {
   checkAnswers();
 });
+
+export function wrapAnswers({
+  seed,
+  $answerList,
+  $tmplAnswer,
+  answerPatterns,
+  quizAnswers,
+  questionIndex,
+}) {
+  const random = new SeededRandom(seed);
+
+  const answerLetters = "abcdef";
+  $answerList.replaceChildren();
+
+  random.shuffle(answerPatterns).forEach(({ $pattern, id }, answerIndex) => {
+    const $answerButton = wrapAnswerPattern({
+      $tmplAnswer,
+      $pattern,
+      letter: answerLetters[answerIndex],
+    });
+    $answerButton.dataset.id;
+    $answerButton.dataset.id = id;
+
+    $answerButton.addEventListener("click", async () => {
+      toggleAnswerSelect({ $answer: $answerButton, $answerList });
+
+      quizAnswers[questionIndex] = id;
+      $questionList.children[questionIndex]?.classList.add("answered");
+
+      // todo(vmyshko): not the best solution, but quizAnswers collection is bad
+      const answeredCount = $questionList.querySelectorAll(".answered").length;
+
+      updateProgressQuiz({
+        answered: answeredCount,
+      });
+
+      const $nextQuestion = $questionList.children[questionIndex].nextSibling;
+
+      if ($nextQuestion) {
+        // todo(vmyshko): bug when user is on last question and no nav happens, answers become disabled
+        [...$answerList.children].forEach(($btn) => ($btn.disabled = true));
+
+        await wait(500);
+        // go to next question
+        $questionList.children[questionIndex].nextSibling?.click();
+      }
+    });
+
+    $answerList.appendChild($answerButton);
+  });
+
+  // select previously selected answer if possible
+  $answerList
+    .querySelector(`[data-id='${quizAnswers[questionIndex]}']`)
+    ?.classList.add("selected");
+}
+
+function wrapAnswerPattern({ $tmplAnswer, $pattern, letter = "x" }) {
+  const fragment = $tmplAnswer.content.cloneNode(true); //fragment
+  const $answer = fragment.firstElementChild;
+
+  const $answerLetter = $answer.querySelector(".answer-letter");
+  $answerLetter.textContent = letter;
+
+  $answer.appendChild($pattern);
+
+  return $answer;
+}
+
+function toggleAnswerSelect({ $answer, $answerList }) {
+  $answerList
+    .querySelectorAll(".answer")
+    .forEach(($answer) => $answer.classList.remove("selected"));
+
+  $answer.classList.add("selected");
+}

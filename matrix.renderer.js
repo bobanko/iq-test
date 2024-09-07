@@ -1,5 +1,4 @@
-import { toggleAnswerSelect, wrapAnswerPattern } from "./common.js";
-import { wait } from "./helpers.js";
+import { wrapAnswers } from "./quiz.js";
 import { SeededRandom } from "./random.helpers.js";
 
 function createPaintedMatrix({ points = [], mtxSize }) {
@@ -30,7 +29,6 @@ export function renderMovableQuestion({
   questionData,
   questionIndex,
   quizAnswers,
-  updateProgressQuiz,
 }) {
   //
 
@@ -75,46 +73,14 @@ export function renderMovableQuestion({
     };
   });
 
-  // todo(vmyshko): below code copied from rotational.renderer -- refac and extract
-  const answerLetters = "abcdef";
-  $answerList.replaceChildren();
-
-  // $correctAnswer -- answerPatterns[0]
-
-  random.shuffle(answerPatterns).forEach(({ $pattern, id }, answerIndex) => {
-    const $answerButton = wrapAnswerPattern({
-      $tmplAnswer,
-      $pattern,
-      letter: answerLetters[answerIndex],
-    });
-    $answerButton.dataset.id;
-    $answerButton.dataset.id = id;
-
-    $answerButton.addEventListener("click", async () => {
-      toggleAnswerSelect({ $answer: $answerButton, $answerList });
-
-      quizAnswers[questionIndex] = id;
-      $questionList.children[questionIndex]?.classList.add("answered");
-
-      // todo(vmyshko): not the best solution, but quizAnswers collection is bad
-      const answeredCount = $questionList.querySelectorAll(".answered").length;
-
-      updateProgressQuiz({
-        answered: answeredCount,
-      });
-
-      // todo(vmyshko): bug when user is on last question and no nav happens, answers become disabled
-      [...$answerList.children].forEach(($btn) => ($btn.disabled = true));
-      // go to next question
-      await wait(500);
-      $questionList.children[questionIndex].nextSibling?.click();
-    });
-
-    $answerList.appendChild($answerButton);
+  wrapAnswers({
+    seed: seed + questionIndex,
+    quizAnswers,
+    $answerList,
+    $tmplAnswer,
+    answerPatterns,
+    questionIndex,
   });
 
-  // select previously selected answer if possible
-  $answerList
-    .querySelector(`[data-id='${quizAnswers[questionIndex]}']`)
-    ?.classList.add("selected");
+  //
 }
