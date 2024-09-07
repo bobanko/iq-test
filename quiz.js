@@ -114,6 +114,8 @@ function generateQuiz() {
 
   const _questions = questionConfigEntries.map(
     ([configName, config], questionIndex) => {
+      console.log(`🍀 generation of ${configName}`, { seed, config });
+
       const questionData = config.generator({
         config,
         seed,

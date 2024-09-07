@@ -46,7 +46,6 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
     return normalizeDeg(randomDeg);
   }
 
-  console.log("🍀 generation seed", { seed, config });
   // todo(vmyshko): make constructor for all gen helpers and init it here
 
   const rowsNum = 3;
