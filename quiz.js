@@ -87,6 +87,15 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
 
 const questions = [];
 function generateQuiz() {
+  // todo(vmyshko): debug
+
+  const $prevQuestion = $questionList.querySelector(".selected");
+
+  const questionIdexToSelect = $prevQuestion
+    ? [...$questionList.children].indexOf($prevQuestion)
+    : 0;
+  //---
+
   // basic question list init
   const seed = Math.random();
   // todo(vmyshko): add ability to input custom seed/ via url?
@@ -154,7 +163,9 @@ function generateQuiz() {
     total: questions.length,
   });
 
-  $questionList.firstElementChild.click();
+  // select question to start from
+
+  $questionList.children[questionIdexToSelect].click();
 
   timer.start();
 }
