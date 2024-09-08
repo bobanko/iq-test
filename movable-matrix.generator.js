@@ -1,13 +1,14 @@
 import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
+import { defaultColors } from "./rotational.config.js";
 
 // todo(vmyshko): make it configurable? not sure...
-const patternCount = 9; // 9 or 4 or ... pattern matix count
+const patternCount = 9; // 9 or 4 or ... patterns count
 const patternsInRow = patternCount ** 0.5;
 const patternsInCol = patternCount ** 0.5;
-const mtxSize = 3; //question matrix size
+const mtxSize = 3; //single pattern matrix size
 
-const difficultyLevel = 2; //3 is max, but why?
+const difficultyLevel = 1; //3 is max, but why?
 
 // todo(vmyshko): extract?
 class Point {
@@ -45,14 +46,6 @@ function getPossibleMatrixCells() {
     .flat();
 }
 
-function applyRule(prevPoint, rule) {
-  const nextPoint = new Point({ ...prevPoint });
-  //apply rule
-  nextPoint.shift({ ...rule });
-
-  return nextPoint;
-}
-
 export function generateMovableQuestion({ config, seed, questionIndex }) {
   const random = new SeededRandom(seed + questionIndex);
 
@@ -78,66 +71,72 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   ];
 
   const rules = [
-    //simple
     ...random.shuffle(simpleRules),
     ...random.shuffle(advancedRules),
   ];
 
-  const correctAnswerPoints = [];
-
   // todo(vmyshko): pt count depends on difficulty level
-  const pointColors = random.shuffle([
-    "green",
-    "red",
-    "blue",
-    "yellow",
-    //
-  ]);
+
+  const pointColors = random.shuffle(defaultColors);
+
   // remove extra colors based on difficulty
-  pointColors.splice(difficultyLevel);
-  rules.splice(difficultyLevel);
+  // pointColors.splice(difficultyLevel); // 1 to 4
+  // rules.splice(difficultyLevel); // 1 to 2 // todo(vmyshko): to check
 
   console.log({ rules });
 
-  const questions = [];
+  const patterns = []; // matixes
 
-  const freeCellsForPoints = getPossibleMatrixCells();
+  const basisPointsPerRow = [];
   for (let row = 0; row < patternsInRow; row++) {
-    const prevPoints = [];
-    for (let ptColor of pointColors) {
+    /// broken!!11
+
+    const freeCellsForPoints = getPossibleMatrixCells();
+
+    const currentRowBasicPoints = [];
+
+    for (let ptColor of pointColors.slice(0, difficultyLevel)) {
       //new point for each row
       const randomPoint = random.popFrom(freeCellsForPoints);
 
       const currentPoint = new Point({ ...randomPoint, color: ptColor });
 
-      prevPoints.push(currentPoint);
+      currentRowBasicPoints.push(currentPoint);
     } // ptColor
 
-    questions.push({ points: prevPoints, id: getUid() });
+    // todo(vmyshko): check for unique with prevs
+    basisPointsPerRow.push(currentRowBasicPoints);
+    //
 
-    // skip 1st
-    for (let col = 1; col < patternsInCol; col++) {
-      const nextPoints = [];
+    for (let patternCol = 0; patternCol < patternsInCol; patternCol++) {
+      const currentPattern = {
+        // apply rules
+        points: currentRowBasicPoints.map((point, pointIndex) => {
+          const resultPoint = new Point({
+            ...point,
+          });
 
-      for (let [index, prevPoint] of prevPoints.entries()) {
-        // todo(vmyshko): apply rule
-        const nextPoint = applyRule(prevPoint, rules[index]);
+          resultPoint.shift({
+            row: rules[pointIndex].row * patternCol,
+            col: rules[pointIndex].col * patternCol,
+          });
 
-        nextPoints.push(nextPoint);
-      }
+          return resultPoint;
+        }),
 
-      //last block
-      if (row === 2 && col === 2) {
-        correctAnswerPoints.push(...nextPoints);
-      }
+        id: getUid(),
+      };
 
-      prevPoints.splice(0);
-      prevPoints.push(...nextPoints);
-      questions.push({ points: nextPoints, id: getUid() });
+      patterns.push(currentPattern);
     } // col
   } // row
 
+  //last block
+  const correctAnswer = patterns.at(-1);
+  correctAnswer.isCorrect = true;
+  // *******
   // ANSWERS
+  // *******
 
   // todo(vmyshko):
   // move 1 *2
@@ -146,22 +145,16 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   // ???
 
-  const correctAnswer = {
-    points: correctAnswerPoints,
-    id: getUid(),
-    isCorrect: true,
-  };
-
   const answers = [correctAnswer];
 
-  function serializePointGroup(pointGroup) {
-    return pointGroup.reduce(
+  function serializePoints(points) {
+    return points.reduce(
       (acc, currentPoint) => acc + currentPoint.toString(),
       ""
     );
   }
 
-  const uniqueGroups = new Set([serializePointGroup(correctAnswerPoints)]);
+  const uniqueGroups = new Set([serializePoints(correctAnswer.points)]);
   while (answers.length < 6) {
     // todo(vmyshko): create unique wrong answers
     const incorrectPoints = [];
@@ -170,7 +163,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
     const possibleCells = getPossibleMatrixCells();
 
-    for (let ptColor of pointColors) {
+    for (let ptColor of pointColors.slice(0, correctAnswer.points.length)) {
       const randomFreeCell = random.popFrom(possibleCells);
 
       const randomPoint = new Point({ ...randomFreeCell, color: ptColor });
@@ -179,7 +172,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     }
 
     //check existance
-    if (uniqueGroups.has(serializePointGroup(incorrectPoints))) {
+    if (uniqueGroups.has(serializePoints(incorrectPoints))) {
       // points already exist
       // skip
       continue;
@@ -202,7 +195,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     patternsInCol,
     mtxSize,
     //
-    questions,
+    patterns,
     answers,
     correctAnswer,
     //
