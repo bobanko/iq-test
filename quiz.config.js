@@ -3,7 +3,10 @@ import { movableConfigs } from "./movable-matrix.config.js";
 
 // todo(vmyshko): config every question here? or in each type? shuffle here? no.
 export const quizQuestionConfigs = Object.fromEntries([
-  ...Object.entries(rotationalConfigs).slice(3, 6),
+  ...Object.entries(rotationalConfigs).filter(([configName]) =>
+    // todo(vmyshko): refac, move to local config? or keep here?
+    ["oneQuarter90", "twoQuarters90", "threeQuarters"].includes(configName)
+  ),
   ...Object.entries(movableConfigs),
 ]);
 
