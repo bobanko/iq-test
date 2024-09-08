@@ -60,7 +60,6 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
 
   console.log("rules", rules);
 
-  const correctDegs = [];
   const rowsDeltaDegs = []; // basic rnd rotations for all figs in specific row
   const mtxDegs = []; // absolute rotations for all figs in all rows/cols
 
@@ -111,15 +110,11 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
         );
 
         mtxDegs[row][col].push(currentDeg);
-
-        if (row === 2 && col == 2) {
-          //last pattern -- correct
-          correctDegs.push(currentDeg);
-        }
       }); //fig
     } //col
   } //row
 
+  const correctDegs = mtxDegs[rowsNum - 1][colsNum - 1];
   // *******
   // ANSWERS
   // *******
