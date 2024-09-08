@@ -8,8 +8,6 @@ const patternsInRow = patternCount ** 0.5;
 const patternsInCol = patternCount ** 0.5;
 const mtxSize = 3; //single pattern matrix size
 
-const difficultyLevel = 1; //3 is max, but why?
-
 // todo(vmyshko): extract?
 class Point {
   get index() {
@@ -49,18 +47,16 @@ function getPossibleMatrixCells() {
 export function generateMovableQuestion({ config, seed, questionIndex }) {
   const random = new SeededRandom(seed + questionIndex);
 
-  // todo(vmyshko): gen rules..
-  // todo(vmyshko): ..based on difficulty level (top/left/diagonals/..)
-
   const backwardShift = mtxSize - 1;
-  const simpleRules = [
+
+  const orthogonalRules = [
     { row: 0, col: 1 }, // right
     { row: 1, col: 0 }, // down
     { row: backwardShift, col: 0 }, // up
     { row: 0, col: backwardShift }, // left
   ];
 
-  const advancedRules = [
+  const diagonalRules = [
     //diagonals
     { row: 1, col: 1 },
     { row: 1, col: backwardShift },
@@ -70,18 +66,16 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     // todo(vmyshko): add rotation rules? knight-horse rule?
   ];
 
-  const rules = [
-    ...random.shuffle(simpleRules),
-    ...random.shuffle(advancedRules),
+  const ruleSets = [
+    [...random.shuffle([...orthogonalRules])],
+    [...random.shuffle([...diagonalRules])],
+    [...random.shuffle([...orthogonalRules, ...diagonalRules])], //both
+    //new to come
   ];
 
-  // todo(vmyshko): pt count depends on difficulty level
+  const rules = ruleSets[config.ruleSet];
 
   const pointColors = random.shuffle(defaultColors);
-
-  // remove extra colors based on difficulty
-  // pointColors.splice(difficultyLevel); // 1 to 4
-  // rules.splice(difficultyLevel); // 1 to 2 // todo(vmyshko): to check
 
   console.log({ rules });
 
@@ -89,13 +83,11 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   const basisPointsPerRow = [];
   for (let row = 0; row < patternsInRow; row++) {
-    /// broken!!11
-
     const freeCellsForPoints = getPossibleMatrixCells();
 
     const currentRowBasicPoints = [];
 
-    for (let ptColor of pointColors.slice(0, difficultyLevel)) {
+    for (let ptColor of pointColors.slice(0, config.colorCount)) {
       //new point for each row
       const randomPoint = random.popFrom(freeCellsForPoints);
 

@@ -4,32 +4,22 @@ import { renderMovableQuestion } from "./matrix.renderer.js";
 const _movableConfigs = {
   //  desc here
   easy1: {
-    // todo(vmyshko):
-    // each fig has colors arr, as svgs
-    // ? arr should be shared between figs, if you want unique figs took once?
-    // same for colors
-    // fig can be fixed/static, no rule for it, for static bgs, but startDeg still applies
-    // OR put static figs separately?
-    // fig order applies as z-index (naturally)
-    // mirroring should be avail. same as degs for each fig.
+    colorCount: 1, // how many cells will be painted
+    ruleSet: 2, // [TRDL movement, diagonal, both, ...]
 
-    figs: [
-      {
-        pickFrom: [],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-        // colorsFrom: ["black", "red", "green"],
-      },
-    ],
-
+    // todo(vmyshko):  below is config from rotational, it not used as-is -- remove
+    // UNUSED yet
     shiftColorsBetweenRows: false,
-    onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
   },
-  medium2: {},
-  hard3: {},
+  medium2: {
+    colorCount: 2, // how many cells will be painted
+    ruleSet: 1,
+  },
+  hard3: {
+    colorCount: 3, // how many cells will be painted
+    ruleSet: 0,
+  },
 };
 
 export const movableConfigs = Object.fromEntries(
