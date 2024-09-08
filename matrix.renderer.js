@@ -1,5 +1,3 @@
-import { SeededRandom } from "./random.helpers.js";
-
 function createPaintedMatrix({ points = [], mtxSize }) {
   const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
   const $patternMatrix = patternTmpl.firstElementChild;
@@ -24,10 +22,8 @@ function createPaintedMatrix({ points = [], mtxSize }) {
 
 // todo(vmyshko): this should be used to render any matrix, not only movable
 export function renderMovableQuestion({ config, questionData, questionIndex }) {
-  const { patternsInRow, mtxSize, patternsInCol, questions, answers, seed } =
+  const { patternsInRow, mtxSize, patternsInCol, patterns, answers, seed } =
     questionData;
-
-  const random = new SeededRandom(seed + questionIndex);
 
   // todo(vmyshko): put replace with append for fast rendering
   $patternArea.replaceChildren(); //clear
@@ -36,7 +32,7 @@ export function renderMovableQuestion({ config, questionData, questionIndex }) {
 
   //
 
-  questions.forEach(({ points, id }) => {
+  patterns.forEach(({ points, id }) => {
     const $patternMatrix = createPaintedMatrix({ points, mtxSize });
     $patternArea.appendChild($patternMatrix);
     // todo(vmyshko): apply id
@@ -65,5 +61,6 @@ export function renderMovableQuestion({ config, questionData, questionIndex }) {
     };
   });
 
+  // todo(vmyshko): it should return question patterns too
   return answerPatterns;
 }
