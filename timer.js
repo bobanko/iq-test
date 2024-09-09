@@ -2,6 +2,7 @@ export class Timer {
   interval = null;
   timeStart = null;
   _isRunning = false;
+  _intervalMs = 100;
 
   get isRunning() {
     return this._isRunning;
@@ -35,7 +36,7 @@ export class Timer {
     this.timeStart = new Date().getTime();
 
     // todo(vmyshko): mb increase update rate?
-    this.interval = setInterval(() => this._timerInterval(), 1000);
+    this.interval = setInterval(() => this._timerInterval(), this._intervalMs);
     this._timerInterval(); //first intstant run
   }
 
