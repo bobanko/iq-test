@@ -224,14 +224,17 @@ export function wrapAnswers({
 }) {
   const random = new SeededRandom(seed);
 
-  const answerLetters = "abcdef";
+  function getLetter(index) {
+    return String.fromCodePoint(index + 97);
+  }
+
   $answerList.replaceChildren();
 
   random.shuffle(answerPatterns).forEach(({ $pattern, id }, answerIndex) => {
     const $answerButton = wrapAnswerPattern({
       $tmplAnswer,
       $pattern,
-      letter: answerLetters[answerIndex],
+      letter: getLetter(answerIndex),
     });
     $answerButton.dataset.id;
     $answerButton.dataset.id = id;
