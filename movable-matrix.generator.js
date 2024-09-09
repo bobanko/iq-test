@@ -37,7 +37,9 @@ class Point {
   toString() {
     const { col, row, color } = this;
 
-    return `'${color}':[${row},${col}];`;
+    // return `'${color}':[${row},${col}];`;
+    // todo(vmyshko): would color ignorance lead to any bugs?
+    return `'ignore-color':[${row},${col}];`;
   }
 }
 
@@ -87,29 +89,44 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   const patterns = []; // matixes
 
-  const basisPointsPerRow = [];
+  const basicPointsPerRow = [];
 
+  // todo(vmyshko): maybe split row loop by two phases -- gen basic and apply rules
   for (let patternRow = 0; patternRow < patternsInCol; patternRow++) {
     // todo(vmyshko): rotate colors here if needed -- should be configurable
     pointColors.push(pointColors.shift());
     // ---
-    const currentRowBasicPoints = [];
 
-    const freeCellsForPoints = getPossibleMatrixCells();
-    for (let ptColor of pointColors.slice(0, config.colorCount)) {
-      //new point for each row
-      const randomPoint = random.popFrom(freeCellsForPoints);
+    function generateBasicPoints() {
+      const basicPoints = [];
+      const freeCellsForPoints = getPossibleMatrixCells();
+      for (let ptColor of pointColors.slice(0, config.colorCount)) {
+        //new point for each row
+        const randomPoint = random.popFrom(freeCellsForPoints);
 
-      const currentPoint = new Point({ ...randomPoint, color: ptColor });
+        const currentPoint = new Point({ ...randomPoint, color: ptColor });
 
-      currentRowBasicPoints.push(currentPoint);
-    } // ptColor
+        basicPoints.push(currentPoint);
+      } // ptColor
 
+      return basicPoints;
+    }
+
+    const currentRowBasicPoints = generateUniqueValues({
+      existingValues: basicPointsPerRow,
+
+      maxValuesCount: 1,
+      generateFn: generateBasicPoints,
+      getValueHashFn: (points) => points.toString(),
+    }).at(-1);
+
+    basicPointsPerRow.push(currentRowBasicPoints);
     // ---
+  } // row
 
-    // todo(vmyshko): check for unique with prevs
-    basisPointsPerRow.push(currentRowBasicPoints);
+  //
 
+  for (let currentRowBasicPoints of basicPointsPerRow) {
     // applying rules for full row
     for (let patternCol = 0; patternCol < patternsInRow; patternCol++) {
       const currentPattern = {
