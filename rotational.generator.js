@@ -7,13 +7,19 @@ function normalizeDeg(deg) {
 
 // todo(vmyshko): gen answers/anything!
 // todo(vmyshko): refac to have genFn and uniqueCheckFn only
+
+/**
+ * @deprecated use common/generateUniqueValues
+ */
 export function makeUnique({
-  genFn,
   prevValuesSet,
+  // maxValuesCount = 6,
+  genFn,
   serializeFn = (value) => value.toString(),
+  maxTriesCount = 100,
 }) {
-  const maxLoopCount = 100;
-  let loopCount = 0;
+  let triesCount = 0;
+
   do {
     const uniqueValue = genFn();
 
@@ -23,11 +29,11 @@ export function makeUnique({
       return uniqueValue;
     }
 
-    loopCount++;
-  } while (loopCount < maxLoopCount);
+    triesCount++;
+  } while (triesCount < maxTriesCount);
 
   throw Error(
-    `makeUnique: generation attempts reached ${loopCount}. aborting...`
+    `makeUnique: generation attempts reached ${triesCount}. aborting...`
   );
 }
 

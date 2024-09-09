@@ -45,6 +45,7 @@ function createPatternRotational({
     const $use = $svg.querySelector("use");
 
     try {
+      // todo(vmyshko): probably should be in generator
       const currentFig = onlyUniqueFigs
         ? makeUnique({
             prevValuesSet: figsUsed,
