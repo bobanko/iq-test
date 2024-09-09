@@ -11,9 +11,9 @@ const patternCount = 9; // 9 or 4 or ... patterns count
 const patternsInRow = patternCount ** 0.5;
 // const patternsInRow = 4;
 const patternsInCol = patternCount ** 0.5;
-// const patternsInCol = 4;
-
-const mtxSize = 2; //single pattern matrix size
+// const patternsInCol = 5;
+//
+const mtxSize = 3; //single pattern matrix size
 // todo(vmyshko): make it configurable, 2x2 looks nice
 
 // todo(vmyshko): extract?
@@ -37,9 +37,7 @@ class Point {
   toString() {
     const { col, row, color } = this;
 
-    // return `'${color}':[${row},${col}];`;
-    // todo(vmyshko): would color ignorance lead to any bugs?
-    return `'ignore-color':[${row},${col}];`;
+    return `'${color}':[${row},${col}];`;
   }
 }
 
@@ -85,60 +83,60 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   const rules = ruleSets[config.ruleSet];
 
-  const pointColors = random.shuffle(defaultColors);
-
   const patterns = []; // matixes
 
-  const basicPointsPerRow = [];
+  // ---
 
-  // todo(vmyshko): maybe split row loop by two phases -- gen basic and apply rules
-  for (let patternRow = 0; patternRow < patternsInCol; patternRow++) {
-    // todo(vmyshko): rotate colors here if needed -- should be configurable
-    pointColors.push(pointColors.shift());
-    // ---
+  function generateBasicPoints() {
+    const basicPoints = [];
+    const freeCellsForPoints = getPossibleMatrixCells();
 
-    function generateBasicPoints() {
-      const basicPoints = [];
-      const freeCellsForPoints = getPossibleMatrixCells();
-      for (let ptColor of pointColors.slice(0, config.colorCount)) {
-        //new point for each row
-        const randomPoint = random.popFrom(freeCellsForPoints);
+    // todo(vmyshko): rewrite to func approach? or not?
+    for (let pointIndex = 0; pointIndex < config.colorCount; pointIndex++) {
+      //new point for each row
+      const randomPoint = random.popFrom(freeCellsForPoints);
 
-        const currentPoint = new Point({ ...randomPoint, color: ptColor });
+      const currentPoint = new Point({ ...randomPoint });
 
-        basicPoints.push(currentPoint);
-      } // ptColor
+      basicPoints.push(currentPoint);
+    } // ptColor
 
-      return basicPoints;
-    }
+    return basicPoints;
+  }
 
-    const currentRowBasicPoints = generateUniqueValues({
-      existingValues: basicPointsPerRow,
+  const basicPointsPerRow = generateUniqueValues({
+    existingValues: [],
+    maxValuesCount: patternsInCol,
+    generateFn: generateBasicPoints,
+    getValueHashFn: (points) => points.toString(),
+  });
 
-      maxValuesCount: 1,
-      generateFn: generateBasicPoints,
-      getValueHashFn: (points) => points.toString(),
-    }).at(-1);
+  // ---
 
-    basicPointsPerRow.push(currentRowBasicPoints);
-    // ---
-  } // row
+  const pointColors = random.shuffle(defaultColors);
 
-  //
+  // pick rules
 
   for (let currentRowBasicPoints of basicPointsPerRow) {
+    // todo(vmyshko): rotate colors here if needed -- should be configurable
+    pointColors.push(pointColors.shift());
+    // rules.push(rules.shift());
+
     // applying rules for full row
     for (let patternCol = 0; patternCol < patternsInRow; patternCol++) {
       const currentPattern = {
         // apply rules
         points: currentRowBasicPoints.map((point, pointIndex) => {
+          // todo(vmyshko): should be random but unique for all points and same for point between rows
+          const currentRule = rules.at(pointIndex);
           const resultPoint = new Point({
             ...point,
+            color: pointColors.at(pointIndex),
           });
 
           resultPoint.shift({
-            row: rules[pointIndex].row * patternCol,
-            col: rules[pointIndex].col * patternCol,
+            row: currentRule.row * patternCol,
+            col: currentRule.col * patternCol,
           });
 
           return resultPoint;
