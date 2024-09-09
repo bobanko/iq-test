@@ -3,18 +3,16 @@ import { SeededRandom } from "./helpers.js";
 import { defaultColors } from "./rotational.config.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 
-const maxAnswerCount = 8; // todo(vmyshko): make global?
-// todo(vmyshko): make it configurable? not sure...
-const patternCount = 9; // 9 or 4 or ... patterns count
+const maxAnswerCount = 8; // todo(vmyshko): make configurable, but have default for this type
+
 // todo(vmyshko): maybe customize these as well? to make codebrak-like gameplay,
 // ...when you can add more rows for better understanding
-const patternsInRow = patternCount ** 0.5;
-// const patternsInRow = 4;
-const patternsInCol = patternCount ** 0.5;
-// const patternsInCol = 5;
-//
-const mtxSize = 3; //single pattern matrix size
+
+const patternsInRow = 3; // 2 is too low to understand pattern in last row
+const patternsInCol = 3; // can be reduced by gen-non-unique reason
+
 // todo(vmyshko): make it configurable, 2x2 looks nice
+const mtxSize = 3; //single pattern matrix size
 
 // todo(vmyshko): extract?
 class Point {
@@ -159,9 +157,12 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   function generateAnswer() {
     const incorrectPoints = [];
-    const possibleCells = getPossibleMatrixCells();
 
+    // todo(vmyshko): if cell overlap is allowed for question patterns,
+    // ... it should also be allowed for answers
+    // const possibleCells = getPossibleMatrixCells(); // keep no-cell-overlap
     for (let ptColor of pointColors.slice(0, correctAnswer.points.length)) {
+      const possibleCells = getPossibleMatrixCells(); // allow cell overlap
       const randomFreeCell = random.popFrom(possibleCells);
 
       const randomPoint = new Point({ ...randomFreeCell, color: ptColor });
