@@ -30,6 +30,18 @@ export function renderMovableQuestion({ config, questionData, questionIndex }) {
 
   $patternArea.style.setProperty("--size", patternsInRow);
 
+  {
+    // 100 + 10 + 100 + 10 + 100 + 10
+    const targetWidth = 340; //px - total width that we want to get
+    const maxPatternSize = 100;
+    const outerBorder = 10 * 2; //px
+    const gaps = 10 * (patternsInRow - 1);
+    const patternSize = (targetWidth - outerBorder - gaps) / patternsInRow;
+    $patternArea.style.setProperty(
+      "--pattern-size",
+      `${Math.min(patternSize, maxPatternSize)}px`
+    );
+  }
   //
 
   patterns.forEach(({ points, id }) => {
