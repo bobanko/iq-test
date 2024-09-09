@@ -114,13 +114,17 @@ function generateQuiz() {
 
   const _questions = questionConfigEntries.map(
     ([configName, config], questionIndex) => {
+      console.log(`🍀 generation start: %c${configName}`, "color: gold");
+
+      // "%cI am red %cI am green", "color: red", "color: green")
+
       const questionData = config.generator({
         config,
         seed,
         questionIndex,
       });
 
-      console.log(`🍀 generation of ${configName}`, {
+      console.log(`🍀 generation end: %c${configName}`, "color: gold", {
         seed,
         config,
         questionData,
