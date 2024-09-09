@@ -1,12 +1,20 @@
 import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
 import { defaultColors } from "./rotational.config.js";
+import { generateUniqueValues } from "./generate-unique-values.js";
 
+const maxAnswerCount = 8; // todo(vmyshko): make global?
 // todo(vmyshko): make it configurable? not sure...
 const patternCount = 9; // 9 or 4 or ... patterns count
+// todo(vmyshko): maybe customize these as well? to make codebrak-like gameplay,
+// ...when you can add more rows for better understanding
 const patternsInRow = patternCount ** 0.5;
+// const patternsInRow = 4;
 const patternsInCol = patternCount ** 0.5;
-const mtxSize = 3; //single pattern matrix size
+// const patternsInCol = 4;
+
+const mtxSize = 2; //single pattern matrix size
+// todo(vmyshko): make it configurable, 2x2 looks nice
 
 // todo(vmyshko): extract?
 class Point {
@@ -23,7 +31,7 @@ class Point {
 
   shift({ row, col }) {
     this.row = (this.row + row) % mtxSize; // only positive rules!
-    this.col = (this.col + col) % mtxSize; // todo(vmyshko): refac to allow neg rules
+    this.col = (this.col + col) % mtxSize; // todo(vmyshko): refac to allow neg rules?
   }
 
   toString() {
@@ -77,16 +85,17 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   const pointColors = random.shuffle(defaultColors);
 
-  console.log({ rules });
-
   const patterns = []; // matixes
 
   const basisPointsPerRow = [];
-  for (let row = 0; row < patternsInRow; row++) {
-    const freeCellsForPoints = getPossibleMatrixCells();
 
+  for (let patternRow = 0; patternRow < patternsInCol; patternRow++) {
+    // todo(vmyshko): rotate colors here if needed -- should be configurable
+    pointColors.push(pointColors.shift());
+    // ---
     const currentRowBasicPoints = [];
 
+    const freeCellsForPoints = getPossibleMatrixCells();
     for (let ptColor of pointColors.slice(0, config.colorCount)) {
       //new point for each row
       const randomPoint = random.popFrom(freeCellsForPoints);
@@ -96,11 +105,13 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
       currentRowBasicPoints.push(currentPoint);
     } // ptColor
 
+    // ---
+
     // todo(vmyshko): check for unique with prevs
     basisPointsPerRow.push(currentRowBasicPoints);
-    //
 
-    for (let patternCol = 0; patternCol < patternsInCol; patternCol++) {
+    // applying rules for full row
+    for (let patternCol = 0; patternCol < patternsInRow; patternCol++) {
       const currentPattern = {
         // apply rules
         points: currentRowBasicPoints.map((point, pointIndex) => {
@@ -126,33 +137,13 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   //last block
   const correctAnswer = patterns.at(-1);
   correctAnswer.isCorrect = true;
+
   // *******
   // ANSWERS
   // *******
 
-  // todo(vmyshko):
-  // move 1 *2
-  // move 2 *2
-  // move 1&2 *2 -- hard, can replace each other
-
-  // ???
-
-  const answers = [correctAnswer];
-
-  function serializePoints(points) {
-    return points.reduce(
-      (acc, currentPoint) => acc + currentPoint.toString(),
-      ""
-    );
-  }
-
-  const uniqueGroups = new Set([serializePoints(correctAnswer.points)]);
-  while (answers.length < 6) {
-    // todo(vmyshko): create unique wrong answers
+  function generateAnswer() {
     const incorrectPoints = [];
-
-    // todo(vmyshko): gen random
-
     const possibleCells = getPossibleMatrixCells();
 
     for (let ptColor of pointColors.slice(0, correctAnswer.points.length)) {
@@ -163,22 +154,21 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
       incorrectPoints.push(randomPoint);
     }
 
-    //check existance
-    if (uniqueGroups.has(serializePoints(incorrectPoints))) {
-      // points already exist
-      // skip
-      continue;
-    }
-
-    //add
-    answers.push({
+    return {
       points: incorrectPoints,
-      id: getUid(),
       isCorrect: false,
-    });
-
-    //push if unique
+      // todo(vmyshko):  this spoils uids by bad gen attempts
+      id: getUid(),
+    };
   }
+
+  const answers = generateUniqueValues({
+    existingValues: [correctAnswer],
+    maxValuesCount: maxAnswerCount - 1,
+    generateFn: generateAnswer,
+
+    getValueHashFn: ({ points }) => points.toString(),
+  });
 
   //questionData
   return {
