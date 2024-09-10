@@ -3,33 +3,25 @@ import { SeededRandom } from "./helpers.js";
 import { defaultColors } from "./rotational.config.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 
-const maxAnswerCount = 8; // todo(vmyshko): make configurable, but have default for this type
+// common
 
-// todo(vmyshko): maybe customize these as well? to make codebrak-like gameplay,
-// ...when you can add more rows for better understanding
+export function getPointFlatIndex({ point, mtxSize }) {
+  return point.row * mtxSize + point.col;
+}
 
-const patternsInRow = 3; // 2 is too low to understand pattern in last row
-const patternsInCol = 3; // can be reduced by gen-non-unique reason
+export function safeAddCoords({ point1, point2, mtxSize }) {
+  return {
+    row: (point1.row + point2.row) % mtxSize, // only positive rules!
+    col: (point1.col + point2.col) % mtxSize, // todo(vmyshko): refac to allow neg rules?
+  };
+}
 
-// todo(vmyshko): make it configurable, 2x2 looks nice
-const mtxSize = 3; //single pattern matrix size
-
-// todo(vmyshko): extract?
-class Point {
-  get index() {
-    return this.row * mtxSize + this.col;
-  }
-
+export class Point {
   constructor({ row, col, color = null }) {
     this.row = row;
     this.col = col;
 
     this.color = color;
-  }
-
-  shift({ row, col }) {
-    this.row = (this.row + row) % mtxSize; // only positive rules!
-    this.col = (this.col + col) % mtxSize; // todo(vmyshko): refac to allow neg rules?
   }
 
   toString() {
@@ -39,7 +31,7 @@ class Point {
   }
 }
 
-function getPossibleMatrixCells() {
+function getPossibleMatrixCells(mtxSize) {
   return Array(mtxSize)
     .fill(null)
     .map((_, row) =>
@@ -50,7 +42,29 @@ function getPossibleMatrixCells() {
     .flat();
 }
 
+/**
+ *
+ * @param {object} params
+ * @param {number} params.seed - generation seed
+ * @param {number} params.questionIndex - for better seeding
+ * @param {object} params.config
+ * @param {number} params.config.patternsInRow - patterns in single row [2-6]
+ * @param {number} params.config.patternsInCol - max row count [2-...]
+ * @param {number} params.config.maxAnswerCount - answers to be generated (with correct answer)
+ * @param {number} params.config.ruleSet - 0: orthogonal, 1: diagonal, 2: mixed
+ * @param {number} params.config.colorCount - number of colored cells to be generated
+ * @returns
+ */
 export function generateMovableQuestion({ config, seed, questionIndex }) {
+  const {
+    patternsInRow = 3, // 2 is too low to understand pattern in last row
+    patternsInCol = 3, // can be reduced by gen-non-unique reason
+    maxAnswerCount = 6, //over 8 will not fit
+    mtxSize = 3, // single pattern matrix size [2..5]
+    ruleSet = 0,
+    colorCount = 1,
+  } = config;
+
   const random = new SeededRandom(seed + questionIndex);
 
   const backwardShift = mtxSize - 1;
@@ -79,7 +93,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     //new to come
   ];
 
-  const rules = ruleSets[config.ruleSet];
+  const rules = ruleSets[ruleSet];
 
   const patterns = []; // matixes
 
@@ -87,10 +101,10 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   function generateBasicPoints() {
     const basicPoints = [];
-    const freeCellsForPoints = getPossibleMatrixCells();
+    const freeCellsForPoints = getPossibleMatrixCells(mtxSize);
 
     // todo(vmyshko): rewrite to func approach? or not?
-    for (let pointIndex = 0; pointIndex < config.colorCount; pointIndex++) {
+    for (let pointIndex = 0; pointIndex < colorCount; pointIndex++) {
       //new point for each row
       const randomPoint = random.popFrom(freeCellsForPoints);
 
@@ -127,14 +141,19 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
         points: currentRowBasicPoints.map((point, pointIndex) => {
           // todo(vmyshko): should be random but unique for all points and same for point between rows
           const currentRule = rules.at(pointIndex);
-          const resultPoint = new Point({
-            ...point,
-            color: pointColors.at(pointIndex),
+
+          const movedPoint = safeAddCoords({
+            point1: point,
+            point2: {
+              row: currentRule.row * patternCol,
+              col: currentRule.col * patternCol,
+            },
+            mtxSize,
           });
 
-          resultPoint.shift({
-            row: currentRule.row * patternCol,
-            col: currentRule.col * patternCol,
+          const resultPoint = new Point({
+            ...movedPoint,
+            color: pointColors.at(pointIndex),
           });
 
           return resultPoint;
@@ -160,9 +179,9 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
     // todo(vmyshko): if cell overlap is allowed for question patterns,
     // ... it should also be allowed for answers
-    // const possibleCells = getPossibleMatrixCells(); // keep no-cell-overlap
+    // const possibleCells = getPossibleMatrixCells(mtxSize); // keep no-cell-overlap
     for (let ptColor of pointColors.slice(0, correctAnswer.points.length)) {
-      const possibleCells = getPossibleMatrixCells(); // allow cell overlap
+      const possibleCells = getPossibleMatrixCells(mtxSize); // allow cell overlap
       const randomFreeCell = random.popFrom(possibleCells);
 
       const randomPoint = new Point({ ...randomFreeCell, color: ptColor });

@@ -1,3 +1,5 @@
+import { getPointFlatIndex } from "./movable-matrix.generator.js";
+
 function createPaintedMatrix({ points = [], mtxSize }) {
   const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
   const $patternMatrix = patternTmpl.firstElementChild;
@@ -13,8 +15,10 @@ function createPaintedMatrix({ points = [], mtxSize }) {
       $patternMatrix.appendChild($matrixCell);
     });
 
-  for (let { index, color } of points) {
-    $patternMatrix.children[index].classList.add(color);
+  for (let point of points) {
+    const flatIndex = getPointFlatIndex({ point, mtxSize });
+
+    $patternMatrix.children[flatIndex].classList.add(point.color);
   }
 
   return $patternMatrix;
