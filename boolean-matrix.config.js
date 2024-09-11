@@ -2,35 +2,33 @@ import { renderMatrixQuestion } from "./matrix.renderer.js";
 import { generateBooleanMatrixQuestion } from "./boolean-matrix.generator.js";
 
 const _booleanMatrixConfigs = {
+  xor: {
+    ruleSet: 4,
+    patternsInCol: 3,
+    mtxSize: 3,
+    // maxAnswerCount: 20,
+  },
   //  desc here
-  add2x2: {
-    colorCount: 1, // how many cells will be painted
+  add: {
     ruleSet: 0,
-    // TO IMPL
     patternsInCol: 3,
     mtxSize: 3,
     // maxAnswerCount: 20,
   },
-  sub2x2: {
-    colorCount: 1, // how many cells will be painted
+  sub: {
     ruleSet: 1,
-    // TO IMP
     patternsInCol: 3,
     mtxSize: 3,
     // maxAnswerCount: 20,
   },
-  colorDiff2x2: {
-    colorCount: 1, // how many cells will be painted
+  colorDiff: {
     ruleSet: 2,
-    // TO IMP
     patternsInCol: 3,
     mtxSize: 3,
     // maxAnswerCount: 20,
   },
-  colorAddSubColor2x2: {
-    colorCount: 1, // how many cells will be painted
+  addSubColor: {
     ruleSet: 3,
-    // TO IMP
     patternsInCol: 3,
     mtxSize: 3,
     // maxAnswerCount: 20,

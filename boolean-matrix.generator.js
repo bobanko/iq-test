@@ -219,6 +219,43 @@ export function generateAddAndSubRowPatterns({
   return [firstPattern, middlePattern, lastPattern];
 }
 
+export function generateXorRowPatterns({
+  basicPoints,
+  mtxSize,
+  random,
+  pointColors,
+}) {
+  // [9]  rnd | all@part | first XOR mid
+  // first col
+  const firstPattern = {
+    points: basicPoints,
+    id: getUid(),
+  };
+
+  // middle col
+  const allCells = getPossibleMatrixCells(mtxSize);
+
+  const middlePattern = {
+    points: random.popRangeFrom(allCells, random.fromRange(1, allCells.length)),
+    id: getUid(),
+  };
+
+  // last col
+  const lastPattern = {
+    points: copyPoints(xorPoints(firstPattern.points, middlePattern.points)),
+    id: getUid(),
+  };
+
+  const patternsInRow = [firstPattern, middlePattern, lastPattern];
+
+  // todo(vmyshko): color all points
+  patternsInRow.forEach((pattern) => {
+    colorPoints({ points: pattern.points, color: pointColors.at(0) });
+  });
+
+  return [firstPattern, middlePattern, lastPattern];
+}
+
 export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
   const patternsInRow = 3; //always 3 -- a+b=c --like
 
@@ -274,6 +311,7 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
     generateSubRowPatterns, //[8]
     generateColorDiffRowPatterns, //[7]
     generateAddAndSubRowPatterns, //[10]
+    generateXorRowPatterns, // [xor]
   ];
 
   function generateRowPatterns({ basicPoints, mtxSize, ruleSet = 0 }) {
