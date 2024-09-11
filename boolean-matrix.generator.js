@@ -1,0 +1,297 @@
+import { getUid } from "./common.js";
+import { SeededRandom } from "./helpers.js";
+import { defaultColors } from "./rotational.config.js";
+import { generateUniqueValues } from "./generate-unique-values.js";
+import { getPossibleMatrixCells, Point } from "./matrix.helpers.js";
+
+// OR
+function addPoints(points1, points2) {
+  // todo(vmyshko): remove dupes
+  // both from both
+  return [...points1, ...points2];
+}
+
+// A&!B
+function subPoints(points1, points2) {
+  // all from 1 but no from 2
+  return points1.filter(
+    (pt1) => !points2.some((pt2) => pt2.toString() === pt1.toString())
+  );
+}
+
+// AND
+function mulPoints(points1, points2) {
+  // only same from both
+  return points1.filter((pt1) =>
+    points2.some((pt2) => pt2.toString() === pt1.toString())
+  );
+}
+
+// XOR
+function xorPoints(points1, points2) {
+  //only unique from both
+  const mulResult = mulPoints(points1, points2);
+
+  return subPoints([...points1, ...points2], mulResult);
+}
+
+// NAND - !AND
+// NOR  - !OR
+// XNOR - !XOR
+
+function copyPoints(points) {
+  return points.map((pt) => new Point({ ...pt }));
+}
+
+function colorPoints({ points, color }) {
+  points.forEach((pt) => (pt.color = color));
+
+  return points;
+}
+
+export function generateAddRowPatterns({
+  basicPoints,
+  mtxSize,
+  random,
+  pointColors,
+}) {
+  // [9]  rnd | (all-first)@part | first + mid
+  // first col
+  const firstPattern = {
+    points: basicPoints,
+    id: getUid(),
+  };
+
+  // middle col
+  const freePointsLeft = subPoints(
+    getPossibleMatrixCells(mtxSize),
+    firstPattern.points
+  );
+
+  const middlePattern = {
+    points: random.popRangeFrom(
+      freePointsLeft,
+      random.fromRange(1, freePointsLeft.length)
+    ),
+    id: getUid(),
+  };
+
+  // last col
+  const lastPattern = {
+    points: [...firstPattern.points, ...middlePattern.points],
+
+    id: getUid(),
+  };
+
+  const patternsInRow = [firstPattern, middlePattern, lastPattern];
+
+  // todo(vmyshko): color all points
+  patternsInRow.forEach((pattern) => {
+    colorPoints({ points: pattern.points, color: pointColors.at(0) });
+  });
+
+  return [firstPattern, middlePattern, lastPattern];
+}
+
+export function generateSubRowPatterns({
+  basicPoints,
+  mtxSize,
+  random,
+  pointColors,
+}) {
+  // [8]  rnd | first@part | first - mid
+  const [firstPattern, middlePattern, lastPattern] = generateAddRowPatterns({
+    basicPoints,
+    mtxSize,
+    random,
+    pointColors,
+  });
+  // just reorder add patterns to get sub
+  return [lastPattern, firstPattern, middlePattern];
+}
+
+export function generateColorDiffRowPatterns({
+  basicPoints,
+  mtxSize,
+  random,
+  pointColors,
+}) {
+  // [7] rnd | first@part | mid + (first - mid)@recolor [!!!custom answer logic]
+
+  // todo(vmyshko): do not share points, create new for each pattern!!
+
+  colorPoints({ points: basicPoints, color: pointColors.at(0) });
+
+  // first col
+  const firstPattern = {
+    points: copyPoints(basicPoints),
+    id: getUid(),
+  };
+
+  // middle col | first@part
+  const middlePattern = {
+    points: random.popRangeFrom(
+      copyPoints(basicPoints),
+      random.fromRange(1, basicPoints.length - 1)
+    ),
+
+    id: getUid(),
+  };
+
+  // last col | mid + (first - mid)@recolor [!!!custom answer logic]
+
+  const colorDiffPoints = copyPoints(
+    subPoints(firstPattern.points, middlePattern.points)
+  );
+
+  const lastPattern = {
+    points: [
+      ...copyPoints(middlePattern.points),
+      ...colorPoints({
+        points: colorDiffPoints,
+        color: pointColors.at(1),
+      }),
+    ],
+
+    id: getUid(),
+  };
+
+  return [firstPattern, middlePattern, lastPattern];
+}
+
+// [10] rnd | first@part@recolor
+//          + (all-first)@part | first - first@part@recolor + (all - first)@part
+
+export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
+  const patternsInRow = 3; //always 3 -- a+b=c --like
+
+  const {
+    patternsInCol = 3, // can be reduced by gen-non-unique reason
+    maxAnswerCount = 6, //over 8 will not fit
+    mtxSize = 3, // single pattern matrix size [2..5]
+
+    ruleSet = 0, // add, mul, sub, xor? multicolor? highlight added/removed?
+  } = config;
+
+  const basicCellCountRange = [2, Math.round(mtxSize ** 2 / 2)]; //potential config val
+
+  const random = new SeededRandom(seed + questionIndex);
+
+  const patterns = [];
+  // ---
+
+  function generateBasicPoints(cellCountRange) {
+    const basicPoints = [];
+    const freeCellsForPoints = getPossibleMatrixCells(mtxSize);
+
+    // todo(vmyshko): rewrite to func approach? or not?
+    for (
+      let pointIndex = 0;
+      pointIndex < random.fromRange(...cellCountRange);
+      pointIndex++
+    ) {
+      //new point for each row
+      const randomPoint = random.popFrom(freeCellsForPoints);
+
+      const currentPoint = new Point({ ...randomPoint });
+
+      basicPoints.push(currentPoint);
+    } // ptColor
+
+    return basicPoints;
+  }
+
+  const basicPointsPerRow = generateUniqueValues({
+    existingValues: [],
+    maxValuesCount: patternsInCol,
+    generateFn: () => generateBasicPoints(basicCellCountRange),
+    getValueHashFn: (points) => points.toString(),
+  });
+
+  // ---
+
+  const pointColors = random.shuffle(defaultColors);
+
+  const ruleSets = [
+    generateAddRowPatterns,
+    generateSubRowPatterns,
+    generateColorDiffRowPatterns,
+  ];
+
+  function generateRowPatterns({ basicPoints, mtxSize, ruleSet = 0 }) {
+    return ruleSets[ruleSet]({
+      basicPoints,
+      mtxSize,
+      random,
+      pointColors,
+    });
+  }
+
+  for (let currentRowBasicPoints of basicPointsPerRow) {
+    const patternsInRow = generateRowPatterns({
+      basicPoints: currentRowBasicPoints,
+      mtxSize,
+      ruleSet,
+    });
+
+    patterns.push(...patternsInRow);
+  } // row
+
+  //last block
+  const correctAnswer = patterns.at(-1);
+  correctAnswer.isCorrect = true;
+
+  // *******
+  // ANSWERS
+  // *******
+
+  function generateAnswer(refPoints) {
+    const deviation = 0.5;
+    // todo(vmyshko): calc range based on first+second?
+    const points = generateBasicPoints([
+      Math.max(Math.floor(refPoints.length * (1 - deviation)), 1),
+      Math.min(Math.round(refPoints.length * (1 + deviation)), mtxSize ** 2),
+    ]);
+
+    const availableColors = refPoints.map((pt) => pt.color);
+    // todo(vmyshko): try to keep color proportions
+
+    points.forEach((pt) => {
+      pt.color = random.sample(availableColors);
+    });
+
+    return {
+      points,
+      isCorrect: false,
+      // todo(vmyshko):  this spoils uids by bad gen attempts
+      id: getUid(),
+    };
+  }
+
+  const answers = generateUniqueValues({
+    existingValues: [correctAnswer],
+    maxValuesCount: maxAnswerCount - 1,
+    generateFn: () => generateAnswer(correctAnswer.points),
+
+    getValueHashFn: ({ points }) =>
+      points.toSorted((pt1, pt2) => (pt1 > pt2 ? 1 : -1)).toString(),
+  });
+
+  console.log(
+    "a",
+    answers.map((a) => a.points.toString())
+  );
+
+  //
+  return {
+    seed,
+    patternsInRow,
+    patternsInCol,
+    mtxSize,
+    //
+    patterns,
+    answers,
+    correctAnswer,
+    //
+  };
+}
