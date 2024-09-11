@@ -2,12 +2,6 @@ import { renderMatrixQuestion } from "./matrix.renderer.js";
 import { generateBooleanMatrixQuestion } from "./boolean-matrix.generator.js";
 
 const _booleanMatrixConfigs = {
-  xor: {
-    ruleSet: 4,
-    patternsInCol: 3,
-    mtxSize: 3,
-    // maxAnswerCount: 20,
-  },
   //  desc here
   add: {
     ruleSet: 0,
@@ -29,6 +23,18 @@ const _booleanMatrixConfigs = {
   },
   addSubColor: {
     ruleSet: 3,
+    patternsInCol: 3,
+    mtxSize: 3,
+    // maxAnswerCount: 20,
+  },
+  xor: {
+    ruleSet: 4,
+    patternsInCol: 3,
+    mtxSize: 3,
+    // maxAnswerCount: 20,
+  },
+  sumAll3: {
+    ruleSet: 5,
     patternsInCol: 3,
     mtxSize: 3,
     // maxAnswerCount: 20,
