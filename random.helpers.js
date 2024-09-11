@@ -27,6 +27,15 @@ export class SeededRandom {
     return array.splice(randomIndex, 1)[0];
   }
 
+  popRangeFrom(array, count) {
+    const poppedItems = [];
+    for (let i = 0; i < count; i++) {
+      poppedItems.push(this.popFrom(array));
+    }
+
+    return poppedItems;
+  }
+
   shuffle(array) {
     const { random } = this;
 

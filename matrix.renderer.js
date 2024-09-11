@@ -1,4 +1,6 @@
-import { getPointFlatIndex } from "./movable-matrix.generator.js";
+function getPointFlatIndex({ point, mtxSize }) {
+  return point.row * mtxSize + point.col;
+}
 
 function createPaintedMatrix({ points = [], mtxSize }) {
   const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
@@ -24,8 +26,8 @@ function createPaintedMatrix({ points = [], mtxSize }) {
   return $patternMatrix;
 }
 
-// todo(vmyshko): this should be used to render any matrix, not only movable
-export function renderMovableQuestion({ config, questionData, questionIndex }) {
+// todo(vmyshko): this should be used to render any matrix, not only movable -- to check if qualify?
+export function renderMatrixQuestion({ config, questionData, questionIndex }) {
   const { patternsInRow, mtxSize, patternsInCol, patterns, answers, seed } =
     questionData;
 
@@ -36,14 +38,15 @@ export function renderMovableQuestion({ config, questionData, questionIndex }) {
 
   {
     // 100 + 10 + 100 + 10 + 100 + 10
-    const targetWidth = 340; //px - total width that we want to get
-    const maxPatternSize = 100;
-    const outerBorder = 10 * 2; //px
-    const gaps = 10 * (patternsInRow - 1);
-    const patternSize = (targetWidth - outerBorder - gaps) / patternsInRow;
+    const targetWidthPx = 340; //px - total width that we want to get
+    const maxPatternSizePx = 100;
+    const outerBorderPx = 10 * 2; //px
+    const gapsPx = 10 * (patternsInRow - 1);
+    const patternSizePx =
+      (targetWidthPx - outerBorderPx - gapsPx) / patternsInRow;
     $patternArea.style.setProperty(
       "--pattern-size",
-      `${Math.min(patternSize, maxPatternSize)}px`
+      `${Math.min(patternSizePx, maxPatternSizePx)}px`
     );
   }
   //

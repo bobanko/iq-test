@@ -2,44 +2,13 @@ import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
 import { defaultColors } from "./rotational.config.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
+import { getPossibleMatrixCells, Point } from "./matrix.helpers.js";
 
-// common
-
-export function getPointFlatIndex({ point, mtxSize }) {
-  return point.row * mtxSize + point.col;
-}
-
-export function safeAddCoords({ point1, point2, mtxSize }) {
+function safeAddCoords({ point1, point2, mtxSize }) {
   return {
     row: (point1.row + point2.row) % mtxSize, // only positive rules!
     col: (point1.col + point2.col) % mtxSize, // todo(vmyshko): refac to allow neg rules?
   };
-}
-
-export class Point {
-  constructor({ row, col, color = null }) {
-    this.row = row;
-    this.col = col;
-
-    this.color = color;
-  }
-
-  toString() {
-    const { col, row, color } = this;
-
-    return `'${color}':[${row},${col}];`;
-  }
-}
-
-function getPossibleMatrixCells(mtxSize) {
-  return Array(mtxSize)
-    .fill(null)
-    .map((_, row) =>
-      Array(mtxSize)
-        .fill(null)
-        .map((_, col) => new Point({ row, col }))
-    )
-    .flat();
 }
 
 /**

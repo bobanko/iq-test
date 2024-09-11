@@ -1,7 +1,7 @@
 import { generateMovableQuestion } from "./movable-matrix.generator.js";
-import { renderMovableQuestion } from "./matrix.renderer.js";
+import { renderMatrixQuestion } from "./matrix.renderer.js";
 
-const _movableConfigs = {
+const _movableMatrixConfigs = {
   //  desc here
   color1ruleMix: {
     colorCount: 1, // how many cells will be painted
@@ -9,6 +9,20 @@ const _movableConfigs = {
     // TO IMPL
     patternsInRow: 3,
     patternsInCol: 3,
+    //
+    mtxSize: 2,
+    maxAnswerCount: 7,
+    // todo(vmyshko):  below is config from rotational, it not used as-is -- remove
+    // UNUSED yet
+    shiftColorsBetweenRows: false,
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+  },
+  color1ruleMix2: {
+    colorCount: 1, // how many cells will be painted
+    ruleSet: 2, // [TRDL movement, diagonal, both, ...]
+    // TO IMPL
+    patternsInRow: 2,
+    patternsInCol: 2,
     //
     mtxSize: 2,
     maxAnswerCount: 7,
@@ -57,12 +71,12 @@ const _movableConfigs = {
   },
 };
 
-export const movableConfigs = Object.fromEntries(
-  Object.entries(_movableConfigs).map((entry) => {
+export const movableMatrixConfigs = Object.fromEntries(
+  Object.entries(_movableMatrixConfigs).map((entry) => {
     const [_key, value] = entry;
 
     value.generator = generateMovableQuestion;
-    value.renderer = renderMovableQuestion;
+    value.renderer = renderMatrixQuestion;
 
     return entry;
   })
