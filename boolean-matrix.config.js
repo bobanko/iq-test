@@ -27,6 +27,14 @@ const _booleanMatrixConfigs = {
     mtxSize: 3,
     // maxAnswerCount: 20,
   },
+  colorAddSubColor2x2: {
+    colorCount: 1, // how many cells will be painted
+    ruleSet: 3,
+    // TO IMP
+    patternsInCol: 3,
+    mtxSize: 3,
+    // maxAnswerCount: 20,
+  },
 };
 
 export const booleanMatrixConfigs = Object.fromEntries(

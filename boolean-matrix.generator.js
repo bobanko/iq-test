@@ -12,10 +12,13 @@ function addPoints(points1, points2) {
 }
 
 // A&!B
-function subPoints(points1, points2) {
+function subPoints(points1, points2, skipColor = false) {
   // all from 1 but no from 2
   return points1.filter(
-    (pt1) => !points2.some((pt2) => pt2.toString() === pt1.toString())
+    (pt1) =>
+      !points2.some(
+        (pt2) => pt2.toString(skipColor) === pt1.toString(skipColor)
+      )
   );
 }
 
@@ -65,7 +68,7 @@ export function generateAddRowPatterns({
   // middle col
   const freePointsLeft = subPoints(
     getPossibleMatrixCells(mtxSize),
-    firstPattern.points
+    basicPoints
   );
 
   const middlePattern = {
@@ -78,7 +81,7 @@ export function generateAddRowPatterns({
 
   // last col
   const lastPattern = {
-    points: [...firstPattern.points, ...middlePattern.points],
+    points: [...basicPoints, ...middlePattern.points],
 
     id: getUid(),
   };
@@ -118,8 +121,6 @@ export function generateColorDiffRowPatterns({
 }) {
   // [7] rnd | first@part | mid + (first - mid)@recolor [!!!custom answer logic]
 
-  // todo(vmyshko): do not share points, create new for each pattern!!
-
   colorPoints({ points: basicPoints, color: pointColors.at(0) });
 
   // first col
@@ -141,7 +142,7 @@ export function generateColorDiffRowPatterns({
   // last col | mid + (first - mid)@recolor [!!!custom answer logic]
 
   const colorDiffPoints = copyPoints(
-    subPoints(firstPattern.points, middlePattern.points)
+    subPoints(firstPattern.points, middlePattern.points, true)
   );
 
   const lastPattern = {
@@ -159,8 +160,64 @@ export function generateColorDiffRowPatterns({
   return [firstPattern, middlePattern, lastPattern];
 }
 
-// [10] rnd | first@part@recolor
-//          + (all-first)@part | first - first@part@recolor + (all - first)@part
+export function generateAddAndSubRowPatterns({
+  basicPoints,
+  mtxSize,
+  random,
+  pointColors,
+}) {
+  // [10] rnd | first@part@recolor
+  //          + (all-first)@part | first - first@part@recolor + (all - first)@part
+
+  // # first col
+  const firstPattern = {
+    points: copyPoints(basicPoints),
+    id: getUid(),
+  };
+
+  colorPoints({ points: firstPattern.points, color: pointColors.at(0) });
+
+  // ## middle col | first@part@recolor + (all-first)@part
+  // todo(vmyshko): need better naming
+  const firstPartToSub = random.popRangeFrom(
+    copyPoints(basicPoints),
+    random.fromRange(1, basicPoints.length - 1)
+  );
+
+  const allCells = getPossibleMatrixCells(mtxSize);
+  const notFirst = copyPoints(subPoints(allCells, basicPoints, true));
+
+  const notFirstPartToAdd = random.popRangeFrom(
+    copyPoints(notFirst),
+    random.fromRange(1, notFirst.length - 1)
+  );
+
+  colorPoints({ points: firstPartToSub, color: pointColors.at(1) });
+  colorPoints({ points: notFirstPartToAdd, color: pointColors.at(0) });
+
+  const middlePattern = {
+    points: copyPoints([...firstPartToSub, ...notFirstPartToAdd]),
+    id: getUid(),
+  };
+
+  // ### last col | first - first@part@recolor + (all - first)@part
+
+  const resultPoints = copyPoints([
+    ...subPoints(basicPoints, firstPartToSub, true),
+    ...notFirstPartToAdd,
+  ]);
+
+  console.log({ basicPoints, firstPartToSub, resultPoints });
+
+  colorPoints({ points: resultPoints, color: pointColors.at(0) });
+
+  const lastPattern = {
+    points: resultPoints,
+    id: getUid(),
+  };
+
+  return [firstPattern, middlePattern, lastPattern];
+}
 
 export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
   const patternsInRow = 3; //always 3 -- a+b=c --like
@@ -213,9 +270,10 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
   const pointColors = random.shuffle(defaultColors);
 
   const ruleSets = [
-    generateAddRowPatterns,
-    generateSubRowPatterns,
-    generateColorDiffRowPatterns,
+    generateAddRowPatterns, //[9]
+    generateSubRowPatterns, //[8]
+    generateColorDiffRowPatterns, //[7]
+    generateAddAndSubRowPatterns, //[10]
   ];
 
   function generateRowPatterns({ basicPoints, mtxSize, ruleSet = 0 }) {

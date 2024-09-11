@@ -6,10 +6,10 @@ export class Point {
     this.color = color;
   }
 
-  toString() {
+  toString(skipColor = false) {
     const { col, row, color } = this;
 
-    return `'${color}':[${row},${col}];`;
+    return `${skipColor ? "" : `'${color}':`}[${row},${col}]`;
   }
 }
 
