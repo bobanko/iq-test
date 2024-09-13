@@ -1,0 +1,16 @@
+.pattern-figure {
+  width: var(--pattern-size);
+  height: var(--pattern-size);
+
+  /* color: var(--color); */
+  /* //temp */
+  color: black;
+  background-color: white;
+  stroke-width: 5px;
+
+  border: 2px solid black;
+  border-radius: 2px;
+  box-sizing: border-box;
+
+  transition: all 500ms ease-in-out;
+}

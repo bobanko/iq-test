@@ -1,0 +1,10 @@
+<svg fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path id="8-lines-8" d="M2 2L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-7" d="M2 52H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-6" d="M2 102L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-5" d="M52 102V52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-4" d="M102 102L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-3" d="M102 52H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-2" d="M102 2L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+    <path id="8-lines-1" d="M52 2V52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

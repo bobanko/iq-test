@@ -6,6 +6,7 @@
     <title>IQ test</title>
     <link rel="icon" href="./iq.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./svg-figure.css" />
     <link rel="stylesheet" href="./rotational.css" />
     <link rel="stylesheet" href="./matrix.css" />
 
@@ -14,6 +15,18 @@
   <body class="inter-regular">
     <!-- templates -->
     <!-- todo(vmyshko): extract templates to corresponding question types somehow... -->
+    <template id="$tmplSvgUse">
+      <!-- seems only this way it works: svg+use+href -->
+      <svg>
+        <use href="" />
+      </svg>
+    </template>
+
+    <template id="$tmplPatternFigure">
+      <!-- todo(vmyshko): get rid of those 2 2 -->
+      <svg class="pattern-figure" viewBox="2 2 100 100"></svg>
+    </template>
+
     <!-- rotational templates -->
     <template id="$tmplRotationalPart">
       <svg class="rotational-part">
