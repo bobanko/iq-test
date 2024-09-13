@@ -9,6 +9,10 @@
   --body-bg-color: #c0c0c0;
 }
 
+::selection {
+  background-color: var(--yellow);
+}
+
 html {
   display: flex;
   flex-direction: column;
@@ -17,6 +21,8 @@ html {
   align-items: center;
   justify-content: space-around;
   background-color: gray;
+
+  width: 100vw;
 }
 
 body {
@@ -205,8 +211,12 @@ header {
 
 @media (orientation: portrait) {
   body {
-    width: 100%;
+    width: inherit;
+    /* border: 3px solid red; */
+    /* width: 100%; */
+    box-sizing: border-box;
   }
+
   .patterns-answers-container {
     flex-direction: column;
   }
@@ -282,8 +292,12 @@ header {
   color: black;
 }
 .pattern-question-mark:after {
+  display: flex;
+  align-items: center;
+
   content: "?";
   position: relative;
+  font-size: xxx-large;
 }
 
 /* // */
