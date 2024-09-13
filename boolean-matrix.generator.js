@@ -52,12 +52,7 @@ function colorPoints({ points, color }) {
   return points;
 }
 
-export function generateAddRowPatterns({
-  basicPoints,
-  mtxSize,
-  random,
-  pointColors,
-}) {
+function generateAddRowPatterns({ basicPoints, mtxSize, random, pointColors }) {
   // [9]  rnd | (all-first)@part | first + mid
   // first col
   const firstPattern = {
@@ -96,12 +91,7 @@ export function generateAddRowPatterns({
   return [firstPattern, middlePattern, lastPattern];
 }
 
-export function generateSubRowPatterns({
-  basicPoints,
-  mtxSize,
-  random,
-  pointColors,
-}) {
+function generateSubRowPatterns({ basicPoints, mtxSize, random, pointColors }) {
   // [8]  rnd | first@part | first - mid
   const [firstPattern, middlePattern, lastPattern] = generateAddRowPatterns({
     basicPoints,
@@ -113,7 +103,7 @@ export function generateSubRowPatterns({
   return [lastPattern, firstPattern, middlePattern];
 }
 
-export function generateColorDiffRowPatterns({
+function generateColorDiffRowPatterns({
   basicPoints,
   mtxSize,
   random,
@@ -160,7 +150,7 @@ export function generateColorDiffRowPatterns({
   return [firstPattern, middlePattern, lastPattern];
 }
 
-export function generateAddAndSubRowPatterns({
+function generateAddAndSubRowPatterns({
   basicPoints,
   mtxSize,
   random,
@@ -219,12 +209,7 @@ export function generateAddAndSubRowPatterns({
   return [firstPattern, middlePattern, lastPattern];
 }
 
-export function generateXorRowPatterns({
-  basicPoints,
-  mtxSize,
-  random,
-  pointColors,
-}) {
+function generateXorRowPatterns({ basicPoints, mtxSize, random, pointColors }) {
   // [9]  rnd | all@part | first XOR mid
   // first col
   const firstPattern = {
@@ -256,7 +241,7 @@ export function generateXorRowPatterns({
   return [firstPattern, middlePattern, lastPattern];
 }
 
-export function generateSumAll3RowPatterns({
+function generateSumAll3RowPatterns({
   basicPoints,
   mtxSize,
   random,
@@ -417,16 +402,9 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
       points.toSorted((pt1, pt2) => (pt1 > pt2 ? 1 : -1)).toString(),
   });
 
-  console.log(
-    "a",
-    answers.map((a) => a.points.toString())
-  );
-
   //
   return {
-    seed,
     patternsInRow,
-    patternsInCol,
     mtxSize,
     //
     patterns,
