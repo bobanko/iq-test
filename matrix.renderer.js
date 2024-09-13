@@ -26,10 +26,8 @@ function createPaintedMatrix({ points = [], mtxSize }) {
   return $patternMatrix;
 }
 
-// todo(vmyshko): this should be used to render any matrix, not only movable -- to check if qualify?
 export function renderMatrixQuestion({ config, questionData, questionIndex }) {
-  const { patternsInRow, mtxSize, patternsInCol, patterns, answers, seed } =
-    questionData;
+  const { patternsInRow, mtxSize, patterns, answers } = questionData;
 
   // todo(vmyshko): put replace with append for fast rendering
   $patternArea.replaceChildren(); //clear

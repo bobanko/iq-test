@@ -176,9 +176,8 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   //questionData
   return {
-    seed,
     patternsInRow,
-    patternsInCol,
+
     mtxSize,
     //
     patterns,
