@@ -1,0 +1,12 @@
+<svg width="106" height="106" viewBox="0 0 106 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="dice-8">
+<path id="1" d="M13 53H93" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="0" d="M53 93V13" stroke="var(--green)" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="7" fill="none" d="M103 103H3V3H103V103Z" stroke="rebeccapurple" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="5" cx="28" cy="28" r="5" stroke="rebeccapurple" stroke-width="15"/>
+<circle id="6" cx="53" cy="53" r="5" stroke="var(--green)" stroke-width="15"/>
+<circle id="2" cx="78" cy="28" r="5" stroke="rebeccapurple" stroke-width="15"/>
+<circle id="4" cx="28" cy="78" r="5" stroke="rebeccapurple" stroke-width="15"/>
+<circle id="3" cx="78" cy="78" r="5" stroke="rebeccapurple" stroke-width="15"/>
+</g>
+</svg>

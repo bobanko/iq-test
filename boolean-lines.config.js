@@ -27,12 +27,24 @@ const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
 const _booleanMatrixConfigs = {
+  dice8xor: {
+    ruleSet: ruleSets.random,
+    patternsInCol: 3,
+    figureLink: "./images/boolean-lines/dice-8.svg",
+    figureCount: 8,
+    // staticFigures: ["circle"],
+    viewBox: scaleViewBox("4 4 100 100", 0.7),
+    strokeWidth: (5 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8,
+  },
+
   dot4xor: {
     ruleSet: ruleSets.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-lines/dot-4.svg",
-    staticFigures: ["circle"],
     figureCount: 4,
+    staticFigures: ["circle"],
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
@@ -44,6 +56,7 @@ const _booleanMatrixConfigs = {
     patternsInCol: 3,
     figureLink: "./images/boolean-lines/circle-6.svg",
     figureCount: 6,
+    staticFigures: ["circle"],
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "var(--red)",
