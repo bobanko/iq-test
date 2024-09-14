@@ -1,33 +1,30 @@
 import { preventSvgCache } from "./helpers.js";
 
-const figureIds = [
-  // todo(vmyshko): generate this shit
-  "8-lines-1", //12
-  "8-lines-3", //3
-  "8-lines-5", //6
-  "8-lines-7", //9
-  "8-lines-2",
-  "8-lines-4",
-  "8-lines-6",
-  "8-lines-8",
-];
-
-const figLink = "./images/boolean-lines/8-lines-group.svg";
-
-function getFigureUrl({ link = figLink, index }) {
-  return `${link}#${figureIds[index]}`;
+function getFigureUrl({ link, index }) {
+  return `${link}#${index}`;
 }
 
-function createFigurePattern({ figures = [] }) {
+function createFigurePattern({ figures = [], config }) {
+  const {
+    viewBox = "0 0 100 100",
+    color = "black",
+    figureLink,
+    strokeWidth = 1,
+  } = config;
+
   // todo(vmyshko): is it ok to use svg as contaienr directly?
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true); //fragment
+
+  $svgPatternContainer.setAttribute("viewBox", viewBox);
+  $svgPatternContainer.style.setProperty("--color", color);
+  $svgPatternContainer.style.setProperty("stroke-width", strokeWidth);
 
   for (let figure of figures) {
     // todo(vmyshko): create svg figs and add to it
     const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
 
-    $use.href.baseVal = getFigureUrl({ index: figure });
+    $use.href.baseVal = getFigureUrl({ link: figureLink, index: figure });
 
     $svgPatternContainer.appendChild($use);
   }
@@ -46,7 +43,7 @@ export function renderFiguresQuestion({ config, questionData, questionIndex }) {
   //
 
   patterns.forEach(({ figures, id }) => {
-    const $figurePattern = createFigurePattern({ figures });
+    const $figurePattern = createFigurePattern({ figures, config });
     $patternArea.appendChild($figurePattern);
   });
 
@@ -68,7 +65,7 @@ export function renderFiguresQuestion({ config, questionData, questionIndex }) {
 
   const answerPatterns = answers.map(({ figures, id, isCorrect }) => {
     return {
-      $pattern: createFigurePattern({ figures }),
+      $pattern: createFigurePattern({ figures, config }),
       id,
       isCorrect,
     };

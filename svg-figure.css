@@ -2,11 +2,10 @@
   width: var(--pattern-size);
   height: var(--pattern-size);
 
-  /* color: var(--color); */
-  /* //temp */
-  color: black;
+  color: var(--color, black);
+
   background-color: white;
-  stroke-width: 5px;
+  stroke-width: 2px;
 
   border: 2px solid black;
   border-radius: 2px;
