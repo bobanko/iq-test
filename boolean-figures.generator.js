@@ -108,7 +108,11 @@ function getFreeFiguresIndexes(figureCount) {
     .map((_, index) => index);
 }
 
-export function generateBooleanLinesQuestion({ config, seed, questionIndex }) {
+export function generateBooleanFiguresQuestion({
+  config,
+  seed,
+  questionIndex,
+}) {
   const patternsInRow = 3; //always 3 -- a+b=c --like
 
   const {
