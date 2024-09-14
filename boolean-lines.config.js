@@ -27,6 +27,19 @@ const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
 const _booleanMatrixConfigs = {
+  crossDots8xor: {
+    // todo(vmyshko): impl mul-dots xor-lines [new feature]
+    ruleSet: ruleSets.random,
+    patternsInCol: 3,
+    figureLink: "./images/boolean-lines/cross-dots-8.svg",
+    figureCount: 8,
+    staticFigures: ["circle", "dot"],
+    viewBox: scaleViewBox("4 4 100 100", 0.7),
+    strokeWidth: (5 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8,
+  },
+
   dice8xor: {
     ruleSet: ruleSets.random,
     patternsInCol: 3,
