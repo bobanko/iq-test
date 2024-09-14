@@ -1,7 +1,7 @@
 import { preventSvgCache } from "./helpers.js";
 
-function getFigureUrl({ link, index }) {
-  return `${link}#${index}`;
+function getFigureUrl({ link, id }) {
+  return `${link}#${id}`;
 }
 
 function createFigurePattern({ figures = [], config }) {
@@ -10,6 +10,7 @@ function createFigurePattern({ figures = [], config }) {
     color = "black",
     figureLink,
     strokeWidth = 1,
+    staticFigures = [],
   } = config;
 
   // todo(vmyshko): is it ok to use svg as contaienr directly?
@@ -20,12 +21,17 @@ function createFigurePattern({ figures = [], config }) {
   $svgPatternContainer.style.setProperty("--color", color);
   $svgPatternContainer.style.setProperty("stroke-width", strokeWidth);
 
+  // pattern dynamic figures
   for (let figure of figures) {
-    // todo(vmyshko): create svg figs and add to it
     const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
+    $use.href.baseVal = getFigureUrl({ link: figureLink, id: figure });
+    $svgPatternContainer.appendChild($use);
+  }
 
-    $use.href.baseVal = getFigureUrl({ link: figureLink, index: figure });
-
+  // static decoration figures from config
+  for (let figure of staticFigures) {
+    const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
+    $use.href.baseVal = getFigureUrl({ link: figureLink, id: figure });
     $svgPatternContainer.appendChild($use);
   }
 

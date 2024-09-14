@@ -1,0 +1,9 @@
+<svg width="108" height="108" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="dot-4">
+<path id="1" d="M54 54L104 54" stroke="currentColor" stroke-linecap="round"/>
+<path id="0" d="M54 4V54" stroke="currentColor" stroke-linecap="round"/>
+<path id="2" d="M54 54L54 104" stroke="currentColor" stroke-linecap="round"/>
+<path id="3" d="M4 54H54" stroke="currentColor" stroke-linecap="round"/>
+<circle id="circle" cx="54" cy="54" r="1" stroke="currentColor" stroke-width="var(--stroke-width,40)"/>
+</g>
+</svg>
