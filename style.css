@@ -15,14 +15,11 @@
 
 html {
   display: flex;
-  flex-direction: column;
 
   min-height: 100%;
   align-items: center;
   justify-content: space-around;
   background-color: gray;
-
-  width: 100vw;
 }
 
 body {
