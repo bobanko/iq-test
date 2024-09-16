@@ -4,6 +4,24 @@ import { defaultColors } from "./rotational.config.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { getPossibleMatrixCells, Point } from "./matrix.helpers.js";
 
+export const ruleSets = {
+  addRowPatterns: 0, //[9]
+  subRowPatterns: 1, //[8]
+  colorDiffRowPatterns: 2, //[7]
+  addAndSubRowPatterns: 3, //[10]
+  xorRowPatterns: 4, // [xor]
+  sumAll3RowPatterns: 5, //[sum-all-3]
+};
+
+const ruleSetFns = {
+  [ruleSets.addRowPatterns]: generateAddRowPatterns, //[9]
+  [ruleSets.subRowPatterns]: generateSubRowPatterns, //[8]
+  [ruleSets.colorDiffRowPatterns]: generateColorDiffRowPatterns, //[7]
+  [ruleSets.addAndSubRowPatterns]: generateAddAndSubRowPatterns, //[10]
+  [ruleSets.xorRowPatterns]: generateXorRowPatterns, // [xor]
+  [ruleSets.sumAll3RowPatterns]: generateSumAll3RowPatterns, //[sum-all-3]
+};
+
 // OR
 function addPoints(points1, points2) {
   // todo(vmyshko): remove dupes
@@ -334,17 +352,8 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
 
   const pointColors = random.shuffle(defaultColors);
 
-  const ruleSets = [
-    generateAddRowPatterns, //[9]
-    generateSubRowPatterns, //[8]
-    generateColorDiffRowPatterns, //[7]
-    generateAddAndSubRowPatterns, //[10]
-    generateXorRowPatterns, // [xor]
-    generateSumAll3RowPatterns, //[sum-all-3]
-  ];
-
   function generateRowPatterns({ basicPoints, mtxSize, ruleSet = 0 }) {
-    return ruleSets[ruleSet]({
+    return ruleSetFns[ruleSet]({
       basicPoints,
       mtxSize,
       random,
