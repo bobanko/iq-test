@@ -18,18 +18,43 @@ function getFreeValues(valueCount) {
     .map((_, index) => index);
 }
 
+function mapValueToPattern(value) {
+  return {
+    value,
+    id: getUid(),
+  };
+}
+
 // ---
 
 // todo(vmyshko): probably rewrite to true-generators? which gens 1-by-1 row, and another one makes answers, or same?
 const generators = {
   // =====
   [progressionTypes.numToAbc]: {
-    rowGenerator: function* ({ basicValue, random, config }) {
-      //
-      yield ["a", "c", "f"].map((value) => ({ value, id: getUid() }));
-      yield [1, 3, 5].map((value) => ({ value, id: getUid() }));
+    rowGenerator: function* ({ random, config }) {
+      // patternsInCol -- max is 2 for this type
+
+      const col1 = 1;
+      const col2 = random.fromRange(
+        col1 + 1,
+        Math.floor(config.maxAnswerCount / 2)
+      );
+      const col3 = random.fromRange(col2 + 1, config.maxAnswerCount);
+
+      //1 ? 9
+
+      const row2 = [col1, col2, col3];
+      const row1 = row2.map((value) => getLetter(value - 1));
+
+      yield row1.map(mapValueToPattern);
+      yield row2.map(mapValueToPattern);
     },
-    answerGenerator: ({ random }) => random.fromRange(0, 10),
+    answerGenerator: ({ random, config }) =>
+      // todo(vmyshko): make it configurable to allow mix -- letters/numbers?
+      random.sample([
+        getLetter(random.fromRange(0, config.maxAnswerCount - 1)), //letter
+        random.fromRange(0, config.maxAnswerCount - 1), //number
+      ]),
   },
   // =====
   [progressionTypes.addToAbc]: {
@@ -58,10 +83,7 @@ const generators = {
           lastValueInRow,
           middleValueInRow,
           getLetter(firstValueInRow - 1),
-        ].map((value) => ({
-          value,
-          id: getUid(),
-        }));
+        ].map(mapValueToPattern);
       } //for
     },
     answerGenerator: ({ random, config }) =>
@@ -73,16 +95,48 @@ const generators = {
   // =====
   [progressionTypes.addProgression]: {
     rowGenerator: function* ({ random, config }) {
-      //
+      // patternsInCol -- max is 2 for this type?
+      const halfRangeMax = Math.floor(config.maxRange / 2);
+
+      const row1col3 = random.fromRange(3, halfRangeMax);
+
+      const step = Math.floor(row1col3 / 3);
+
+      const row1col2 = row1col3 - step;
+      const row1col1 = row1col2 - step;
+
+      const row1 = [row1col1, row1col2, row1col3];
+
+      yield row1.map(mapValueToPattern);
+
+      const row2col3 = random.fromRange(row1col3 + step * 3, config.maxRange);
+      const row2col2 = row2col3 - step;
+      const row2col1 = row2col2 - step;
+
+      const row2 = [row2col1, row2col2, row2col3];
+
+      yield row2.map(mapValueToPattern);
     },
-    answerGenerator: ({ random }) => random.fromRange(0, 10),
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(0, config.maxRange - 1), //number
   },
+  //based on addProgression
   [progressionTypes.subProgression]: {
     rowGenerator: function* ({ random, config }) {
-      //
+      const results = [
+        ...generators[progressionTypes.addProgression].rowGenerator({
+          random,
+          config,
+        }),
+      ];
+
+      yield results[0].reverse();
+      yield results[1].reverse();
     },
-    answerGenerator: ({ random }) => random.fromRange(0, 10),
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(0, config.maxRange - 1), //number
   },
+  //
 };
 
 export function generateNumberProgressionQuestion({
