@@ -1,0 +1,23 @@
+.pattern-value {
+  --bg-color: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: var(--pattern-size);
+  height: var(--pattern-size);
+
+  color: var(--color, black);
+
+  background-color: var(--bg-color);
+  font-weight: 400;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+  /* text-shadow: 2px 2px hsl(from var(--color) h calc(s - 0) calc(l - 20) / 0.6); */
+  text-transform: uppercase;
+
+  border: 2px solid black;
+  border-radius: 2px;
+  box-sizing: border-box;
+
+  transition: all 500ms ease-in-out;
+}
