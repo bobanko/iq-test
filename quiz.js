@@ -1,4 +1,4 @@
-import { wait } from "./helpers.js";
+import { getLetter, wait } from "./helpers.js";
 import { quizQuestionConfigs } from "./quiz.config.js";
 import { SeededRandom } from "./random.helpers.js";
 
@@ -223,10 +223,6 @@ export function wrapAnswers({
   questionIndex,
 }) {
   const random = new SeededRandom(seed);
-
-  function getLetter(index) {
-    return String.fromCodePoint(index + 97);
-  }
 
   $answerList.replaceChildren();
 
