@@ -2,6 +2,7 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
+// todo(vmyshko): rename this, its more visual config
 export const ruleSets = {
   random: 0,
   symmetric: 1,
