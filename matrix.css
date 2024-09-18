@@ -5,10 +5,11 @@
   display: grid;
   grid-template-columns: repeat(var(--size), 1fr);
 
-  background-color: white;
+  background-color: black;
+  gap: 2px;
 
   box-sizing: border-box;
-  border: 1px solid black;
+  border: 2px solid black;
   border-radius: 2px;
 
   width: var(--pattern-size);
@@ -17,7 +18,6 @@
 
 .matrix-cell {
   background: var(--color, transparent);
-  border: 1px solid black;
 }
 
 /* mixed colors */
