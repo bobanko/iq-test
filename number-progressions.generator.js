@@ -13,7 +13,7 @@ export const progressionTypes = {
 
   subPerRow: 8, // rand-rand=x; x3
   addThenDiv: 9, // rand .+x ./y
-  // mix2: 5, // rand .*2 -2; .*3 -3; .*4 .-4;
+  mulThenSubProgression: 10, // rand .*2 -2; .*3 -3; .*4 .-4;
   // mix3: 6, // rand.-12 .+9; x3
 };
 
@@ -203,6 +203,7 @@ const generators = {
     answerGenerator: ({ random, config }) =>
       random.fromRange(0, config.maxRange - 1), //number
   },
+  // =====
   [progressionTypes.addThenDiv]: {
     rowGenerator: function* ({ random, config }) {
       // 1st  = mid - rnd#3
@@ -237,6 +238,38 @@ const generators = {
     },
     answerGenerator: ({ random, config }) =>
       random.fromRange(0, config.maxRange - 1), //number
+  },
+  // =====
+  [progressionTypes.mulThenSubProgression]: {
+    rowGenerator: function* ({ random, config }) {
+      // 1st  = rnd#1
+      // mid  = 1st * 2 // [..3,4]
+      // last = mid - 2 // [..3,4]
+
+      const freeValues = getFreeValues(config.maxRange).map((x) => x + 1);
+
+      for (let rowIndex = 0; rowIndex < config.patternsInCol; rowIndex++) {
+        // stop generation, if no unique values left
+        if (!freeValues.length) return;
+
+        const modifier = rowIndex + 2;
+
+        // last value in row
+        const firstValueInRow = random.popFrom(freeValues);
+
+        // middle col
+        const middleValueInRow = firstValueInRow * modifier;
+
+        // last value
+        const lastValueInRow = middleValueInRow - modifier;
+
+        yield [firstValueInRow, middleValueInRow, lastValueInRow].map(
+          mapValueToPattern
+        );
+      } //for
+    },
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(1, config.maxRange * 4 - 4), //number
   },
 };
 

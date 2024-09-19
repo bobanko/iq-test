@@ -43,12 +43,22 @@ const _numberProgressionConfigs = {
     maxRange: 30,
   },
 
+  // todo(vmyshko): not sure about config.maxRange for those... should it be configurable at all?
+  // same for row/col
   addThenDiv: {
     progressionType: progressionTypes.addThenDiv,
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 20,
+  },
+
+  mulThenSubProgression: {
+    progressionType: progressionTypes.mulThenSubProgression,
+    patternsInRow: 3,
+    patternsInCol: 3,
+    maxAnswerCount: 6,
+    maxRange: 10,
   },
 };
 
