@@ -28,6 +28,13 @@ const _numberProgressionConfigs = {
     maxAnswerCount: 6,
     maxRange: 20,
   },
+  subIncrementAll: {
+    progressionType: progressionTypes.subIncrementAll,
+    patternsInRow: 3,
+    patternsInCol: 3,
+    maxAnswerCount: 6,
+    maxRange: 10,
+  },
 };
 
 export const numberProgressionConfigs = Object.fromEntries(

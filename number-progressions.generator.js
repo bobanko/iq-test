@@ -8,6 +8,8 @@ export const progressionTypes = {
   addToAbc: 1, //16 -- 1+2=c
   addProgression: 2, //17 -- rand+n+n
   subProgression: 3, //18 -- rand-n-n
+  // extra
+  subIncrementAll: 7, // rand.-1 .-2; (.-3) .-4 .-5; (-6) .-7 .-8;
 };
 
 // helpers
@@ -136,7 +138,35 @@ const generators = {
     answerGenerator: ({ random, config }) =>
       random.fromRange(0, config.maxRange - 1), //number
   },
-  //
+  // =====
+  [progressionTypes.subIncrementAll]: {
+    rowGenerator: function* ({ random, config }) {
+      const patternCount = config.patternsInCol * config.patternsInRow;
+
+      // the last one to dicsover
+
+      const maxDecrement = (patternCount * (patternCount - 1)) / 2;
+
+      const randomShift = random.fromRange(0, config.maxRange);
+
+      for (let patternIndex = 0; patternIndex < patternCount; patternIndex++) {
+        const decrement = patternCount - patternIndex;
+        // +1+2+3+4+5
+        // +1+3+6+10+15
+
+        // 39-2
+        // 39 - ((patternIndex * (patternIndex + 1)) / 2 + 1) // -0,-1,-3,-6,10,15,21,28,..36,
+        // 39 - ((patternIndex * (patternIndex + 1)) / 2 + 1) // -0,-1,-2,-3,-4,-5,-6,-7,..-8,
+        // 39 - ((patternIndex * (patternIndex + 1)) / 2 + 1) // 38,37,35,32,28,23,17,10,..2
+
+        yield [
+          maxDecrement + randomShift - ((patternIndex + 1) * patternIndex) / 2,
+        ].map(mapValueToPattern);
+      } //for
+    },
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(0, config.maxRange - 1), //number
+  },
 };
 
 export function generateNumberProgressionQuestion({
