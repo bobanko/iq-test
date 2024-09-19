@@ -12,8 +12,7 @@ export const progressionTypes = {
   subIncrementAll: 7, // rand.-1 .-2; (.-3) .-4 .-5; (-6) .-7 .-8;
 
   subPerRow: 8, // rand-rand=x; x3
-
-  // mixedProgression: 4, // rand .+x ./y
+  addThenDiv: 9, // rand .+x ./y
   // mix2: 5, // rand .*2 -2; .*3 -3; .*4 .-4;
   // mix3: 6, // rand.-12 .+9; x3
 };
@@ -195,6 +194,41 @@ const generators = {
 
         // last value
         const lastValueInRow = firstValueInRow - middleValueInRow;
+
+        yield [firstValueInRow, middleValueInRow, lastValueInRow].map(
+          mapValueToPattern
+        );
+      } //for
+    },
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(0, config.maxRange - 1), //number
+  },
+  [progressionTypes.addThenDiv]: {
+    rowGenerator: function* ({ random, config }) {
+      // 1st  = mid - rnd#3
+      // mid  = last * 2 //or more? rnd#2
+      // last = rnd#1
+
+      const lastMidMultiplier = 2; // 3 -- too complex
+      // todo(vmyshko): impl negative diff?
+      const firstMidDiff = random.fromRange(1, 10);
+
+      const freeValues = getFreeValues(config.maxRange - firstMidDiff).map(
+        (x) => x + 1
+      );
+
+      for (let rowIndex = 0; rowIndex < config.patternsInCol; rowIndex++) {
+        // stop generation, if no unique values left
+        if (!freeValues.length) return;
+
+        // last value in row
+        const lastValueInRow = random.popFrom(freeValues) + firstMidDiff;
+
+        // middle col
+        const middleValueInRow = lastValueInRow * lastMidMultiplier;
+
+        // last value
+        const firstValueInRow = middleValueInRow - firstMidDiff;
 
         yield [firstValueInRow, middleValueInRow, lastValueInRow].map(
           mapValueToPattern
