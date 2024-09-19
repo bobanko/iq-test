@@ -35,6 +35,13 @@ const _numberProgressionConfigs = {
     maxAnswerCount: 6,
     maxRange: 10,
   },
+  subPerRow: {
+    progressionType: progressionTypes.subPerRow,
+    patternsInRow: 3,
+    patternsInCol: 3,
+    maxAnswerCount: 6,
+    maxRange: 30,
+  },
 };
 
 export const numberProgressionConfigs = Object.fromEntries(

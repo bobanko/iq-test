@@ -10,6 +10,12 @@ export const progressionTypes = {
   subProgression: 3, //18 -- rand-n-n
   // extra
   subIncrementAll: 7, // rand.-1 .-2; (.-3) .-4 .-5; (-6) .-7 .-8;
+
+  subPerRow: 8, // rand-rand=x; x3
+
+  // mixedProgression: 4, // rand .+x ./y
+  // mix2: 5, // rand .*2 -2; .*3 -3; .*4 .-4;
+  // mix3: 6, // rand.-12 .+9; x3
 };
 
 // helpers
@@ -63,7 +69,7 @@ const generators = {
     rowGenerator: function* ({ random, config }) {
       // 1st  = gen a,b,c
       // mid  = random.from(0, answer)
-      // last = mid - first
+      // last =  first - mid
 
       const freeValues = getFreeValues(config.maxAnswerCount).map((x) => x + 1);
 
@@ -125,6 +131,7 @@ const generators = {
   //based on addProgression
   [progressionTypes.subProgression]: {
     rowGenerator: function* ({ random, config }) {
+      // todo(vmyshko): not the bestest solution to reuse generator
       const results = [
         ...generators[progressionTypes.addProgression].rowGenerator({
           random,
@@ -162,6 +169,36 @@ const generators = {
         yield [
           maxDecrement + randomShift - ((patternIndex + 1) * patternIndex) / 2,
         ].map(mapValueToPattern);
+      } //for
+    },
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(0, config.maxRange - 1), //number
+  },
+  // =====
+  [progressionTypes.subPerRow]: {
+    rowGenerator: function* ({ random, config }) {
+      // 1st  = gen a,b,c
+      // mid  = random.from(0, answer)
+      // last = first - mid
+
+      const freeValues = getFreeValues(config.maxRange).map((x) => x + 1);
+
+      for (let rowIndex = 0; rowIndex < config.patternsInCol; rowIndex++) {
+        // stop generation, if no unique values left
+        if (!freeValues.length) return;
+
+        // last value in row
+        const firstValueInRow = random.popFrom(freeValues);
+
+        // middle col
+        const middleValueInRow = random.fromRange(1, firstValueInRow - 1);
+
+        // last value
+        const lastValueInRow = firstValueInRow - middleValueInRow;
+
+        yield [firstValueInRow, middleValueInRow, lastValueInRow].map(
+          mapValueToPattern
+        );
       } //for
     },
     answerGenerator: ({ random, config }) =>
