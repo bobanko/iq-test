@@ -35,6 +35,7 @@ export function renderMatrixQuestion({ config, questionData, questionIndex }) {
   $patternArea.style.setProperty("--size", patternsInRow);
 
   {
+    // todo(vmyshko): extract this to common, cause other question-types should reset this
     // 100 + 10 + 100 + 10 + 100 + 10
     const targetWidthPx = 340; //px - total width that we want to get
     const maxPatternSizePx = 100;
