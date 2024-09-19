@@ -60,6 +60,14 @@ const _numberProgressionConfigs = {
     maxAnswerCount: 6,
     maxRange: 10,
   },
+
+  subThenAdd: {
+    progressionType: progressionTypes.subThenAdd,
+    patternsInRow: 3,
+    patternsInCol: 3,
+    maxAnswerCount: 6,
+    maxRange: 15, //maxDiff
+  },
 };
 
 export const numberProgressionConfigs = Object.fromEntries(

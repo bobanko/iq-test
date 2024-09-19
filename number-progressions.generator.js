@@ -10,11 +10,10 @@ export const progressionTypes = {
   subProgression: 3, //18 -- rand-n-n
   // extra
   subIncrementAll: 7, // rand.-1 .-2; (.-3) .-4 .-5; (-6) .-7 .-8;
-
   subPerRow: 8, // rand-rand=x; x3
   addThenDiv: 9, // rand .+x ./y
   mulThenSubProgression: 10, // rand .*2 -2; .*3 -3; .*4 .-4;
-  // mix3: 6, // rand.-12 .+9; x3
+  subThenAdd: 11, // rand.-12 .+9; x3
 };
 
 // helpers
@@ -270,6 +269,37 @@ const generators = {
     },
     answerGenerator: ({ random, config }) =>
       random.fromRange(1, config.maxRange * 4 - 4), //number
+  },
+  // =====
+  [progressionTypes.subThenAdd]: {
+    rowGenerator: function* ({ random, config }) {
+      // 1st  = rnd-row#1
+      // mid  = 1st - rnd-glob#2
+      // last = mid + rnd-glob#3
+
+      // todo(vmyshko): make +- | -+ randomness?
+      const maxDiff = config.maxRange;
+      const firstMidDiff = random.fromRange(1, maxDiff);
+      const midLastDiff = random.fromRange(1, maxDiff);
+      const freeValues = getFreeValues(100 - maxDiff * 2).map(
+        (x) => x + maxDiff
+      );
+
+      for (let rowIndex = 0; rowIndex < config.patternsInCol; rowIndex++) {
+        // middle col
+        const middleValueInRow = random.popFrom(freeValues);
+        // 1st value
+        const firstValueInRow = middleValueInRow + firstMidDiff;
+        // last value
+        const lastValueInRow = middleValueInRow + midLastDiff;
+
+        yield [firstValueInRow, middleValueInRow, lastValueInRow].map(
+          mapValueToPattern
+        );
+      } //for
+    },
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(config.maxRange, 100 - config.maxRange), //number
   },
 };
 
