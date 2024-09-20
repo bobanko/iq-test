@@ -53,7 +53,7 @@ function xorPoints(points1, points2) {
   //only unique from both
   const mulResult = mulPoints(points1, points2);
 
-  return subPoints([...points1, ...points2], mulResult);
+  return subPoints(addPoints(points1, points2), mulResult);
 }
 
 // NAND - !AND
@@ -94,14 +94,14 @@ function generateAddRowPatterns({ basicPoints, mtxSize, random, pointColors }) {
 
   // last col
   const lastPattern = {
-    points: [...basicPoints, ...middlePattern.points],
+    points: addPoints(basicPoints, middlePattern.points),
 
     id: getUid(),
   };
 
   const patternsInRow = [firstPattern, middlePattern, lastPattern];
 
-  // todo(vmyshko): color all points
+  // color all points
   patternsInRow.forEach((pattern) => {
     colorPoints({ points: pattern.points, color: pointColors.at(0) });
   });
@@ -154,13 +154,13 @@ function generateColorDiffRowPatterns({
   );
 
   const lastPattern = {
-    points: [
-      ...copyPoints(middlePattern.points),
-      ...colorPoints({
+    points: addPoints(
+      copyPoints(middlePattern.points),
+      colorPoints({
         points: colorDiffPoints,
         color: pointColors.at(1),
-      }),
-    ],
+      })
+    ),
 
     id: getUid(),
   };
@@ -204,16 +204,15 @@ function generateAddAndSubRowPatterns({
   colorPoints({ points: notFirstPartToAdd, color: pointColors.at(0) });
 
   const middlePattern = {
-    points: copyPoints([...firstPartToSub, ...notFirstPartToAdd]),
+    points: copyPoints(addPoints(firstPartToSub, notFirstPartToAdd)),
     id: getUid(),
   };
 
   // ### last col | first - first@part@recolor + (all - first)@part
 
-  const resultPoints = copyPoints([
-    ...subPoints(basicPoints, firstPartToSub, true),
-    ...notFirstPartToAdd,
-  ]);
+  const resultPoints = copyPoints(
+    addPoints(subPoints(basicPoints, firstPartToSub, true), notFirstPartToAdd)
+  );
 
   console.log({ basicPoints, firstPartToSub, resultPoints });
 
