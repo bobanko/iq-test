@@ -91,6 +91,7 @@ const _rotationalConfigs = {
 
   //  1 quarter 45deg
   oneQuarter45: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -135,6 +136,7 @@ const _rotationalConfigs = {
 
   //  2 quarters 90deg diff deg (no overlap)
   twoQuarters90: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -187,6 +189,7 @@ const _rotationalConfigs = {
 
   // 1 fig
   oneFig90: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.circle, svgFigs.square, svgFigs.arrow],
@@ -204,6 +207,7 @@ const _rotationalConfigs = {
 
   //  2 fig 45deg
   oneFig45: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.circle, svgFigs.square, svgFigs.arrow],
@@ -267,6 +271,7 @@ const _rotationalConfigs = {
   // clock 3
   // todo(vmyshko): redraw square/circle + and/or add arrows as alt
   clock459090: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.arrow],
@@ -368,6 +373,7 @@ const _rotationalConfigs = {
   },
 
   hexagonSector1: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.hexSector60],
@@ -424,6 +430,7 @@ const _rotationalConfigs = {
   },
 
   hexagonSector3: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.hexSector60],
@@ -499,6 +506,7 @@ const _rotationalConfigs = {
   },
 
   quarterFigs15mensa: {
+    skip: true,
     figs: [
       // todo(vmyshko): maybe make kinda groups between figs, to no-overlap, unique-color, etc.
       // like a group/arr which is shared between figs, and depletes from it,
@@ -539,12 +547,14 @@ const _rotationalConfigs = {
 };
 
 export const rotationalConfigs = Object.fromEntries(
-  Object.entries(_rotationalConfigs).map((entry) => {
-    const [_key, value] = entry;
+  Object.entries(_rotationalConfigs)
+    .map((entry) => {
+      const [_key, value] = entry;
 
-    value.generator = generateRotationalQuestion;
-    value.renderer = renderRotationalQuestion;
+      value.generator = generateRotationalQuestion;
+      value.renderer = renderRotationalQuestion;
 
-    return entry;
-  })
+      return entry;
+    })
+    .filter((entry) => !entry[1].skip)
 );
