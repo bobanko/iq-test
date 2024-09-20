@@ -317,8 +317,6 @@ export function generateNumberProgressionQuestion({
 
   const random = new SeededRandom(seed + questionIndex);
 
-  const patterns = [];
-
   //---
 
   const rowPatterns = [
@@ -328,7 +326,7 @@ export function generateNumberProgressionQuestion({
     }),
   ];
 
-  patterns.push(...rowPatterns.flat());
+  const patterns = [...rowPatterns.flat()];
 
   //last block
   const correctAnswer = patterns.at(-1);

@@ -144,6 +144,11 @@ header {
   gap: 10px;
 }
 
+.pattern-area,
+.answer-list {
+  transition: opacity 100ms ease-in-out;
+}
+
 .pattern-row {
   display: flex;
   flex-direction: row;

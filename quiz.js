@@ -77,9 +77,19 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
   $questionButton.textContent = text;
   $questionList.appendChild($questionButton);
 
-  $questionButton.addEventListener("click", () => {
+  $questionButton.addEventListener("click", async () => {
     questionButtonClick($questionButton);
+
+    console.log("start");
+    $patternArea.style.opacity = 0;
+    $answerList.style.opacity = 0;
+    // await wait(10);
     callbackFn($questionButton);
+    // await wait(10);
+    $patternArea.style.opacity = 1;
+    $answerList.style.opacity = 1;
+
+    console.log("end");
   });
 }
 
@@ -88,10 +98,11 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
 const questions = [];
 function generateQuiz() {
   // todo(vmyshko): debug
+  $quizStats.textContent = "";
 
   const $prevQuestion = $questionList.querySelector(".selected");
 
-  const questionIdexToSelect = $prevQuestion
+  const questionIndexToSelect = $prevQuestion
     ? [...$questionList.children].indexOf($prevQuestion)
     : 0;
   //---
@@ -175,7 +186,7 @@ function generateQuiz() {
 
   // select question to start from
 
-  $questionList.children[questionIdexToSelect].click();
+  $questionList.children[questionIndexToSelect].click();
 
   timer.start();
 }
@@ -183,11 +194,23 @@ function generateQuiz() {
 function checkAnswers() {
   // todo(vmyshko): grab answers and check them!111
 
+  // todo(vmyshko): debug
+  const stats = {
+    isAnswered: 0,
+    isCorrect: 0,
+    total: 0,
+  };
+
   questions.forEach(({ questionIndex, questionData }) => {
     const isCorrect =
       questionData.correctAnswer.id === quizAnswers[questionIndex];
 
     const isAnswered = quizAnswers[questionIndex] !== undefined;
+
+    // todo(vmyshko): debug
+    stats.total++;
+    if (isAnswered) stats.isAnswered++;
+    if (isCorrect) stats.isCorrect++;
 
     if (!isAnswered) return;
 
@@ -197,7 +220,13 @@ function checkAnswers() {
     );
 
     $questionList.children[questionIndex].classList.toggle("wrong", !isCorrect);
-  });
+  }); //forEach
+
+  // todo(vmyshko): debug
+  $quizStats.textContent = `
+  🟢${stats.isCorrect} 
+  🔴${stats.isAnswered - stats.isCorrect} 
+  ⚪️${stats.total - stats.isAnswered}`;
 }
 
 // apply handlers
