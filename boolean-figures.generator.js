@@ -2,15 +2,14 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
-// todo(vmyshko): rename this, its more visual config
-export const ruleSets = {
+export const figureGenRules = {
   random: 0,
   symmetric: 1,
 };
 
 const figureGenerators = {
-  [ruleSets.random]: generateRandomFigures,
-  [ruleSets.symmetric]: generateSymmetricFigures,
+  [figureGenRules.random]: generateRandomFigures,
+  [figureGenRules.symmetric]: generateSymmetricFigures,
 };
 
 // A&!B
@@ -90,7 +89,7 @@ function generateXorRowPatterns({ basicFigures, figureCount, random, config }) {
   // middle col
 
   const middlePattern = {
-    figures: figureGenerators[config.ruleSet]({ random, config }),
+    figures: figureGenerators[config.figureGenRule]({ random, config }),
     id: getUid(),
   };
 
@@ -131,7 +130,8 @@ export function generateBooleanFiguresQuestion({
   const basicFiguresPerRow = generateUniqueValues({
     existingValues: [],
     maxValuesCount: patternsInCol,
-    generateFn: () => figureGenerators[config.ruleSet]({ random, config }),
+    generateFn: () =>
+      figureGenerators[config.figureGenRule]({ random, config }),
     getValueHashFn: (figs) => figs.toSorted().toString(),
   });
   //
@@ -162,7 +162,7 @@ export function generateBooleanFiguresQuestion({
     maxValuesCount: maxAnswerCount - 1,
     generateFn: () => {
       return {
-        figures: figureGenerators[config.ruleSet]({ random, config }),
+        figures: figureGenerators[config.figureGenRule]({ random, config }),
         id: getUid(),
       };
     },

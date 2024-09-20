@@ -1,6 +1,6 @@
 import {
   generateBooleanFiguresQuestion,
-  ruleSets,
+  figureGenRules,
 } from "./boolean-figures.generator.js";
 import { scaleViewBox } from "./common.js";
 import { renderFiguresQuestion } from "./figures.renderer.js";
@@ -11,7 +11,7 @@ const alternateViewBox = "2 2 100 100";
 const _booleanFiguresConfigs = {
   crossDots8xor: {
     // todo(vmyshko): impl mul-dots xor-lines [new feature]
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/cross-dots-8.svg",
     figureCount: 8,
@@ -23,7 +23,7 @@ const _booleanFiguresConfigs = {
   },
 
   dice8xor: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/dice-8.svg",
     figureCount: 8,
@@ -35,7 +35,7 @@ const _booleanFiguresConfigs = {
   },
 
   dot4xor: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/dot-4.svg",
     figureCount: 4,
@@ -47,7 +47,7 @@ const _booleanFiguresConfigs = {
   },
 
   circle6xor: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/circle-6.svg",
     figureCount: 6,
@@ -59,7 +59,7 @@ const _booleanFiguresConfigs = {
   },
 
   triangles8xor: {
-    ruleSet: ruleSets.symmetric,
+    figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/triangles-8.svg",
     figureCount: 8,
@@ -70,7 +70,7 @@ const _booleanFiguresConfigs = {
   },
 
   arc12xor: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/arc-12.svg",
     figureCount: 12,
@@ -81,7 +81,7 @@ const _booleanFiguresConfigs = {
   },
 
   arc4xor: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/arc-4.svg",
     figureCount: 4,
@@ -92,7 +92,7 @@ const _booleanFiguresConfigs = {
   },
 
   pentagon10xor: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/pentagon-10.svg",
     figureCount: 10,
@@ -103,7 +103,7 @@ const _booleanFiguresConfigs = {
   },
 
   hex12xor: {
-    ruleSet: ruleSets.symmetric,
+    figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/hex-12.svg",
     figureCount: 12,
@@ -114,7 +114,7 @@ const _booleanFiguresConfigs = {
   },
 
   xor12orto: {
-    ruleSet: ruleSets.symmetric,
+    figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/12-lines-orto.svg",
     figureCount: 12,
@@ -125,7 +125,7 @@ const _booleanFiguresConfigs = {
   },
 
   xor16symmetric: {
-    ruleSet: ruleSets.symmetric, // todo(vmyshko): use enums for other configs as well
+    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): use enums for other configs as well
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/16-lines.svg",
     figureCount: 16,
@@ -135,7 +135,7 @@ const _booleanFiguresConfigs = {
     maxAnswerCount: 8,
   },
   flake_xor8: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/16-lines.svg",
     figureCount: 8,
@@ -145,7 +145,7 @@ const _booleanFiguresConfigs = {
     color: "crimson",
   },
   flake_xor4cut8: {
-    ruleSet: ruleSets.random,
+    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     // maxAnswerCount: 20,
     figureLink: "./images/boolean-figures/16-lines.svg",
