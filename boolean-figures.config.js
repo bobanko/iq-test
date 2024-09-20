@@ -2,26 +2,8 @@ import {
   generateBooleanFiguresQuestion,
   ruleSets,
 } from "./boolean-figures.generator.js";
+import { scaleViewBox } from "./common.js";
 import { renderFiguresQuestion } from "./figures.renderer.js";
-
-/**
- *
- * @param {string} viewBox like '0 0 100 100'
- * @param {number} scale 0.5 is 50%, 1.5 is 150%
- * @returns scaled viewBox
- */
-function scaleViewBox(viewBox, scale) {
-  const [x, y, width, height] = viewBox.split(" ").map((value) => +value);
-
-  return [
-    x + (width - width / scale) / 2,
-    y + (height - height / scale) / 2,
-    width / scale,
-    height / scale,
-  ]
-    .map((value) => value.toFixed(2))
-    .join(" ");
-}
 
 const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
