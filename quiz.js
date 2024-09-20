@@ -154,14 +154,39 @@ function generateQuiz() {
       text: `${questionIndex + 1}`,
       callbackFn: () => {
         const config = quizQuestionConfigs[configName];
+
         console.log("🔮", configName);
 
+        const $patternQuestionMark =
+          $tmplPatternQuestionMark.content.cloneNode(true).firstElementChild;
+
+        $patternQuestionMark.classList.add("pattern-matrix");
+
         // todo(vmyshko): based on current/config
-        const answerPatterns = config.renderer({
+        const {
+          questionPatterns,
+          answerPatterns,
+          $questionMark = $patternQuestionMark,
+        } = config.renderer({
           config,
           questionData,
           questionIndex,
         });
+
+        // todo(vmyshko): put replace with append for fast rendering
+        $patternArea.style.setProperty(
+          "--size",
+          questionData.patternsInRow ?? 3
+        );
+
+        $patternArea.replaceChildren(...questionPatterns);
+        // todo(vmyshko): this should be done (once) outside for all renderers
+        // replace last pattern with ? and move it to answers
+        const $correctAnswerPattern = $patternArea.lastChild;
+
+        //new,old
+        $patternArea.replaceChild($questionMark, $correctAnswerPattern);
+        ///end-----------
 
         wrapAnswers({
           seed: seed + questionIndex,

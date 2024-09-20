@@ -91,7 +91,7 @@ export function renderRotationalQuestion({
   const random = new SeededRandom(seed + questionIndex);
   // todo(vmyshko): those who can't overlap -- rotate as pair
 
-  const patterns = [];
+  const questionPatterns = [];
 
   const $basePattern = createPatternRotational({ config, seed });
 
@@ -126,24 +126,16 @@ export function renderRotationalQuestion({
         rotateTo($part, currentDeg);
       });
 
-      patterns.push($pattern);
+      questionPatterns.push($pattern);
     } //col
   } //row
 
-  $patternArea.style.setProperty("--size", rowsNum);
-  $patternArea.replaceChildren(...patterns);
-
-  // replace last pattern with ? and move it to answers
-  const $correctAnswerPattern = patterns.at(-1);
-
+  // todo(vmyshko): this is custom question-mark, return it?
   const $patternQuestionMark = createPatternRotationalBase({
     svgFrame: config.svgFrame,
   });
 
   $patternQuestionMark.classList.add("pattern-question-mark");
-
-  //new,old
-  $patternArea.replaceChild($patternQuestionMark, $correctAnswerPattern);
 
   // *******
   // ANSWERS
@@ -172,5 +164,9 @@ export function renderRotationalQuestion({
     preventSvgCache();
   }, 0);
 
-  return answerPatterns;
+  return {
+    questionPatterns,
+    $questionMark: $patternQuestionMark,
+    answerPatterns,
+  };
 }
