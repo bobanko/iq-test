@@ -15,7 +15,7 @@ function createFigurePattern({ figures = [], config }) {
 
   // svg as container
   const $svgPatternContainer =
-    $tmplPatternFigure.content.firstElementChild.cloneNode(true); //fragment
+    $tmplPatternFigure.content.firstElementChild.cloneNode(true);
 
   $svgPatternContainer.setAttribute("viewBox", viewBox);
   $svgPatternContainer.style.setProperty("--color", color);

@@ -1,9 +1,8 @@
 function createValuePattern({ value = "", config }) {
   const { color = "black" } = config;
 
-  // todo(vmyshko): is it ok to use svg as contaienr directly?
   const $patternContainer =
-    $tmplPatternValue.content.firstElementChild.cloneNode(true); //fragment
+    $tmplPatternValue.content.firstElementChild.cloneNode(true);
 
   $patternContainer.textContent = value;
   $patternContainer.style.setProperty("--color", color);

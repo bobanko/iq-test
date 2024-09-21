@@ -71,8 +71,8 @@ function questionButtonClick($currentButton) {
 }
 
 function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
-  const questionButtonTmpl = $tmplQuestionButton.content.cloneNode(true); //fragment
-  const $questionButton = questionButtonTmpl.firstElementChild;
+  const $questionButton =
+    $tmplQuestionButton.content.firstElementChild.cloneNode(true);
 
   $questionButton.textContent = text;
   $questionList.appendChild($questionButton);
@@ -158,7 +158,7 @@ function generateQuiz() {
         console.log("🔮", configName);
 
         const $patternQuestionMark =
-          $tmplPatternQuestionMark.content.cloneNode(true).firstElementChild;
+          $tmplPatternQuestionMark.content.firstElementChild.cloneNode(true);
 
         $patternQuestionMark.classList.add("pattern-matrix");
 
@@ -324,8 +324,7 @@ export function wrapAnswers({
 }
 
 function wrapAnswerPattern({ $tmplAnswer, $pattern, letter = "x" }) {
-  const fragment = $tmplAnswer.content.cloneNode(true); //fragment
-  const $answer = fragment.firstElementChild;
+  const $answer = $tmplAnswer.content.firstElementChild.cloneNode(true);
 
   const $answerLetter = $answer.querySelector(".answer-letter");
   $answerLetter.textContent = letter;

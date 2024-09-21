@@ -3,16 +3,16 @@ function getPointFlatIndex({ point, mtxSize }) {
 }
 
 function createPaintedMatrix({ points = [], mtxSize }) {
-  const patternTmpl = $tmplPatternMatrix.content.cloneNode(true); //fragment
-  const $patternMatrix = patternTmpl.firstElementChild;
+  const $patternMatrix =
+    $tmplPatternMatrix.content.firstElementChild.cloneNode(true);
 
   $patternMatrix.style.setProperty("--size", mtxSize);
 
   Array(mtxSize ** 2)
     .fill(null)
     .forEach((_) => {
-      const matrixCellTmpl = $tmplMatrixCell.content.cloneNode(true); //fragment
-      const $matrixCell = matrixCellTmpl.firstElementChild;
+      const $matrixCell =
+        $tmplMatrixCell.content.firstElementChild.cloneNode(true);
 
       $patternMatrix.appendChild($matrixCell);
     });

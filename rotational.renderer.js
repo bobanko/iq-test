@@ -3,8 +3,8 @@ import { defaultColors, svgFrames } from "./rotational.config.js";
 import { makeUnique } from "./rotational.generator.js";
 
 function createPatternRotationalBase({ svgFrame = svgFrames.circle }) {
-  const patternTmpl = $tmplPatternRotational.content.cloneNode(true); //fragment
-  const $pattern = patternTmpl.firstElementChild;
+  const $pattern =
+    $tmplPatternRotational.content.firstElementChild.cloneNode(true);
 
   const $partContainer = $pattern.querySelector(".part-container");
 
@@ -40,8 +40,7 @@ function createPatternRotational({
       skipZero = true, // no zero rotation by rules
     } = fig;
 
-    const partTmpl = $tmplRotationalPart.content.cloneNode(true); //fragment
-    const $svg = partTmpl.firstElementChild;
+    const $svg = $tmplRotationalPart.content.firstElementChild.cloneNode(true);
     const $use = $svg.querySelector("use");
 
     try {

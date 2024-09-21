@@ -203,16 +203,16 @@ function processEquation() {
   for (let formula of formulas) {
     const parts = formula.split(" ");
 
-    const fragment = $tmplPatternRow.content.cloneNode(true); //fragment
-    const $patternRow = fragment.firstElementChild;
+    const $patternRow =
+      $tmplPatternRow.content.firstElementChild.cloneNode(true);
 
     for (let part of parts) {
       const isVariable = "xyzcq".includes(part);
       const isOperator = "+-*=".includes(part);
 
       if (isVariable) {
-        const fragment = $tmplPatternPart.content.cloneNode(true); //fragment
-        const $patternPart = fragment.firstElementChild;
+        const $patternPart =
+          $tmplPatternPart.content.firstElementChild.cloneNode(true);
 
         if (part === "c") {
           $patternPart.textContent = variables[part];
@@ -231,8 +231,8 @@ function processEquation() {
       }
 
       if (isOperator) {
-        const fragment = $tmplPatternOperator.content.cloneNode(true); //fragment
-        const $patternOperator = fragment.firstElementChild;
+        const $patternOperator =
+          $tmplPatternOperator.content.firstElementChild.cloneNode(true);
 
         $patternOperator.textContent = part;
 
@@ -262,8 +262,8 @@ function processEquation() {
   console.log(actualAnswers);
 
   const answerPatterns = actualAnswers.map((answerText) => {
-    const fragment = $tmplPatternPart.content.cloneNode(true); //fragment
-    const $patternPart = fragment.firstElementChild;
+    const $patternPart =
+      $tmplPatternPart.content.firstElementChild.cloneNode(true);
 
     $patternPart.textContent = answerText;
     $patternPart.classList.add(varColors["q"]);
