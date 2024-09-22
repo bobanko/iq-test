@@ -3,7 +3,7 @@
 
   --color: white;
   display: grid;
-  grid-template-columns: repeat(var(--size), 1fr);
+  grid-template-columns: repeat(var(--size), 0fr);
 
   background-color: black;
   gap: 2px;
@@ -87,12 +87,12 @@
 .pattern-area {
   --size: 3;
   display: grid;
-  grid-template-columns: repeat(var(--size), 1fr);
+  grid-template-columns: repeat(var(--size), 0fr);
 
   --pattern-size: 100px;
 }
 
-.pattern-question-mark.pattern-matrix {
+.pattern-question-mark {
   display: flex;
   align-items: center;
   justify-content: center;

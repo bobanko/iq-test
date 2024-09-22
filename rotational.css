@@ -1,11 +1,3 @@
-/* //todo: extract */
-.pattern-area {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-
-  --pattern-size: 100px;
-}
-
 .pattern-rotational {
   position: relative;
 

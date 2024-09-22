@@ -6,8 +6,11 @@
     <title>IQ test</title>
     <link rel="icon" href="./iq.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./svg-figure.css" />
+    <!-- todo(vmyshko): import inside main style.css -->
+    <link rel="stylesheet" href="./pattern-figure.css" />
     <link rel="stylesheet" href="./pattern-value.css" />
+    <link rel="stylesheet" href="./pattern-formula.css" />
+
     <link rel="stylesheet" href="./rotational.css" />
     <link rel="stylesheet" href="./matrix.css" />
 
@@ -21,6 +24,10 @@
       <svg>
         <use href="" />
       </svg>
+    </template>
+
+    <template id="$tmplPatternFormula">
+      <div class="pattern-formula"></div>
     </template>
 
     <template id="$tmplPatternFigure">
