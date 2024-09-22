@@ -317,8 +317,6 @@ export function generateNumberProgressionQuestion({
 
   const random = new SeededRandom(seed + questionIndex);
 
-  //---
-
   const rowPatterns = [
     ...generators[config.progressionType].rowGenerator({
       random,
@@ -352,7 +350,7 @@ export function generateNumberProgressionQuestion({
     getValueHashFn: ({ value }) => value.toString(),
   });
 
-  //
+  // todo(vmyshko): review, whether all those are in use?
   return {
     seed,
     patternsInRow,

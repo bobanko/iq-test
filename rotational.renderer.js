@@ -129,7 +129,6 @@ export function renderRotationalQuestion({
     } //col
   } //row
 
-  // todo(vmyshko): this is custom question-mark, return it?
   const $patternQuestionMark = createPatternRotationalBase({
     svgFrame: config.svgFrame,
   });

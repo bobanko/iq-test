@@ -115,7 +115,7 @@ export function generateShuffleFiguresQuestion({
     getValueHashFn: ({ figures }) => figures.toString(),
   });
 
-  //
+  // todo(vmyshko): review, do those all are used?
   return {
     seed,
     patternsInRow,
