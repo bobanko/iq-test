@@ -341,3 +341,9 @@ function toggleAnswerSelect({ $answer, $answerList }) {
 
   $answer.classList.add("selected");
 }
+
+$debugCheckbox.addEventListener("change", (event) => {
+  document.body.classList.toggle("debug", $debugCheckbox.checked);
+});
+
+$debugCheckbox.click();
