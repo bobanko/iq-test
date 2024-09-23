@@ -13,7 +13,6 @@
 .debug .pattern-formula-variable,
 .pattern-formula-variable:hover,
 .pattern-formula-variable.white,
-.pattern-formula-variable.blue,
 .pattern-formula-variable.yellow {
   color: black;
 }

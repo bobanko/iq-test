@@ -113,19 +113,48 @@ function* formulaGenerator({ random, config }) {
     }),
   ];
 
+  function isUniqueAnswer([operator, varA, varB]) {
+    const answer = operator.fn(varA.value, varB.value);
+
+    if ([varA.value, varB.value].includes(answer)) return false;
+
+    return true;
+  }
+
+  if (xyCombs.length === 0) debugger;
+
   {
-    const [firstOp, varA, varB] = random.popFrom(xyCombs);
+    const [firstOp, varA, varB] = random.popWhere(xyCombs, isUniqueAnswer);
 
     variables.z.value = firstOp.fn(varA.value, varB.value);
 
     yield [varA, firstOp, varB, operators.eqal, variables.z];
+    console.log([varA, firstOp, varB, operators.eqal, variables.z]);
   }
+
   // 2nd row
+
   {
+    // const [firstOp, varA, varB] = random.popWhere(xyCombs, isUniqueAnswer);
     const [firstOp, varA, varB] = random.popFrom(xyCombs);
+
     variables.firstConst.value = firstOp.fn(varA.value, varB.value);
 
-    yield [varA, firstOp, varB, operators.eqal, variables.firstConst];
+    if (
+      [variables.x, variables.y, variables.z].some(
+        (variable) => variable.value === variables.firstConst.value
+      )
+    ) {
+      // firstConst is same as one of the xyz -- replace?
+
+      const varToReplaceBy = [variables.x, variables.y, variables.z].find(
+        (variable) => variable.value === variables.firstConst.value
+      );
+      yield [varA, firstOp, varB, operators.eqal, varToReplaceBy];
+    } else {
+      yield [varA, firstOp, varB, operators.eqal, variables.firstConst];
+    }
+    console.log([varA, firstOp, varB, operators.eqal, variables.firstConst]);
   }
 
   // 3rd row
@@ -141,6 +170,7 @@ function* formulaGenerator({ random, config }) {
     variables.answerConst.value = firstOp.fn(varA.value, varB.value);
 
     yield [varA, firstOp, varB, operators.eqal, variables.answerConst];
+    console.log([varA, firstOp, varB, operators.eqal, variables.answerConst]);
   }
 }
 

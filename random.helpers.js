@@ -27,6 +27,29 @@ export class SeededRandom {
     return array.splice(randomIndex, 1)[0];
   }
 
+  /**
+   * pops random element that meets condition
+   * @param {array} array to pop from
+   * @param {Function} conditionFn if return true - element will be popped out
+   * @returns popped element that meets condition
+   */
+  popWhere(array, conditionFn) {
+    const shuffledArray = this.shuffle(array);
+
+    for (let attemptValue of shuffledArray) {
+      if (conditionFn(attemptValue)) {
+        const indexToDelete = array.indexOf(attemptValue);
+        array.splice(indexToDelete, 1);
+
+        return attemptValue;
+      }
+    }
+
+    console.warn("no elements met condition", array);
+
+    return null;
+  }
+
   popRangeFrom(array, count) {
     const poppedItems = [];
     for (let i = 0; i < count; i++) {
