@@ -2,9 +2,22 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  user-select: none;
 }
 
-.pattern-formula-value,
+.pattern-formula-variable {
+  color: transparent;
+  text-shadow: none !important;
+}
+
+.debug .pattern-formula-variable,
+.pattern-formula-variable:hover,
+.pattern-formula-variable.white,
+.pattern-formula-variable.blue,
+.pattern-formula-variable.yellow {
+  color: black;
+}
+
 .pattern-formula-variable {
   width: var(--row-height);
   height: var(--row-height);

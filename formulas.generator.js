@@ -10,77 +10,161 @@ function getFreeValues(valueCount) {
     .map((_, index) => index);
 }
 
-const variables = [
-  { value: "r", color: "red" },
-  { value: "g", color: "green" },
-  { value: "b", color: "blue" },
-  { value: "y", color: "yellow" },
-];
+function getDivisors(intValue) {
+  const result = [];
+  for (let i = 2; i <= intValue / 2; i++) {
+    if (intValue % i == 0) {
+      result.push(i);
+    }
+  }
+  return result;
+}
 
-const freeOps = ["+", "-", "×", "÷", "="];
+function isAdjacent(a, b) {
+  if (getDivisors(a).includes(b)) {
+    return true;
+  }
+  if (getDivisors(b).includes(a)) {
+    return true;
+  }
+
+  if (a + b <= 10) return true;
+
+  return false;
+}
+
+function* getPossibleCombinations({ varA, varB, maxAnswer = 20 }) {
+  const divA = getDivisors(varA.value);
+  const divB = getDivisors(varB.value);
+
+  //div
+  if (divA.includes(varB.value)) {
+    yield [operators.div, varA, varB];
+  }
+  if (divB.includes(varA.value)) {
+    yield [operators.div, varB, varA];
+  }
+
+  //mul
+  if (varA.value * varB.value <= maxAnswer) {
+    yield [operators.mul, varA, varB];
+    // yield [operators.mul, varB, varA];
+  }
+
+  //sub
+  if (varA.value > varB.value) {
+    yield [operators.sub, varA, varB];
+  } else {
+    //b>a
+    yield [operators.sub, varB, varA];
+  }
+
+  //add
+  if (varA.value + varB.value <= maxAnswer) {
+    yield [operators.add, varA, varB];
+  }
+}
+
+const operators = {
+  add: { value: "+", fn: (a, b) => a + b },
+  sub: { value: "-", fn: (a, b) => a - b },
+  mul: { value: "×", fn: (a, b) => a * b },
+  div: { value: "÷", fn: (a, b) => a / b },
+  eqal: { value: "=", fn: (a, b) => a === b },
+};
 
 // todo(vmyshko): probably only one generator
-const generators = {
-  // =====
-  ["formulaTypes.random"]: {
-    rowGenerator: function* ({ random, config }) {
-      // 1st  =
-      // op1  =
-      // mid  =
-      // op2  =
-      // last =
+function* formulaGenerator({ random, config }) {
+  const freeValues = getFreeValues(9).map((x) => x + 1);
 
-      const freeValues = getFreeValues(10).map((x) => x + 1);
+  const variables = {
+    x: { color: "red", label: "x", value: null },
+    y: { color: "green", label: "y", value: null },
+    z: { color: "blue", label: "z", value: null },
+    firstConst: { color: "yellow", label: "c", value: null },
+    answerConst: { color: "white", label: null, value: null },
+  };
 
-      for (let rowIndex = 0; rowIndex < config.patternsInCol; rowIndex++) {
-        // stop generation, if no unique values left
-        if (!freeValues.length) return;
+  // 1st row
+  // todo(vmyshko): limit not both high, at least 2 formulas
+  // 1 -- _,2,3,4,5,6,7,8,9,
+  // 2 -- 1,_,3,4,5,6,7,8,_
+  // 3 -- 1,2,_,4,5,6,7,_,9
+  // 4 -- 1,2,3,_,_,6,_,8,_
+  // 5 -- 1,2,3,4
+  // 6 -- 1,2,3,4
+  // 7 -- 1,2,3
+  // 8 -- 1,2,4
+  // 9 -- 1,_,3
+  // ---
+  // 10 - 1,2,_ //exclude
+  variables.x.value = random.popFrom(freeValues);
 
-        const firstOp = random.sample(freeOps);
-        const lastOp = random.sample(freeOps);
+  do {
+    // todo(vmyshko): fix
+    variables.y.value = random.popFrom(freeValues);
+  } while (!isAdjacent(variables.x.value, variables.y.value));
 
-        // first value
-        const firstValueInRow = random.sample(variables);
+  const xyCombs = [
+    ...getPossibleCombinations({
+      varA: variables.x,
+      varB: variables.y,
+      maxAnswer: 10,
+    }),
+  ];
 
-        // middle col
-        const middleValueInRow = random.sample(variables);
+  {
+    const [firstOp, varA, varB] = random.popFrom(xyCombs);
 
-        // last value
-        const lastValueInRow = random.sample(variables);
+    variables.z.value = firstOp.fn(varA.value, varB.value);
 
-        yield [
-          {
-            ...firstValueInRow,
-            type: "var",
-            id: getUid(),
-          },
-          {
-            value: firstOp,
-            type: "op",
-            id: getUid(),
-          },
-          {
-            ...middleValueInRow,
-            type: "var",
-            id: getUid(),
-          },
-          {
-            value: lastOp,
-            type: "op",
-            id: getUid(),
-          }, //
-          {
-            ...lastValueInRow,
-            type: "var",
-            id: getUid(),
-          },
-        ];
-      } //for
-    },
-    answerGenerator: ({ random, config }) =>
-      random.fromRange(0, config.maxAnswerCount - 1), //number
-  },
-};
+    yield [varA, firstOp, varB, operators.eqal, variables.z];
+  }
+  // 2nd row
+  {
+    const [firstOp, varA, varB] = random.popFrom(xyCombs);
+    variables.firstConst.value = firstOp.fn(varA.value, varB.value);
+
+    yield [varA, firstOp, varB, operators.eqal, variables.firstConst];
+  }
+
+  // 3rd row
+  {
+    const xoryzCombs = [
+      ...getPossibleCombinations({
+        varA: random.sample([variables.x, variables.y]),
+        varB: variables.z,
+      }),
+    ];
+
+    const [firstOp, varA, varB] = random.popFrom(xoryzCombs);
+    variables.answerConst.value = firstOp.fn(varA.value, varB.value);
+
+    yield [varA, firstOp, varB, operators.eqal, variables.answerConst];
+  }
+}
+
+// todo(vmyshko): fix slippage
+// should be in range:
+// FROM: answer-[0,6]
+// TO:   answer+[0,6]
+// where 6 is random, but FROM should be > 0
+function generateAnswer({ random, config, correctAnswer }) {
+  const { maxAnswerCount = 6 } = config;
+  var answerValue = correctAnswer.value;
+
+  const shiftage = random.fromRange(
+    Math.max(answerValue - maxAnswerCount, 0),
+    answerValue + maxAnswerCount
+  );
+
+  return {
+    ...correctAnswer,
+    value: shiftage,
+    isCorrect: false,
+    id: getUid(),
+  };
+}
 
 export function generateFormulasQuestion({ config, seed, questionIndex }) {
   const patternsInRow = 5; //always 5 = 3 vars + 2 ops -- a+b=c --like
@@ -94,7 +178,7 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
   const random = new SeededRandom(seed + questionIndex);
 
   const rowPatterns = [
-    ...generators[config.formulaType].rowGenerator({
+    ...formulaGenerator({
       random,
       config,
     }),
@@ -105,6 +189,7 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
   //last block
   const correctAnswer = patterns.at(-1);
   correctAnswer.isCorrect = true;
+  correctAnswer.id = getUid();
 
   // *******
   // ANSWERS
@@ -114,15 +199,11 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
     existingValues: [correctAnswer],
     maxValuesCount: maxAnswerCount - 1,
     generateFn: () => {
-      return {
-        // todo(vmyshko): rewrite to normal gen based on gen type and config?
-        value: generators[config.formulaType].answerGenerator({
-          random,
-          config,
-        }),
-        type: "value",
-        id: getUid(),
-      };
+      return generateAnswer({
+        correctAnswer,
+        random,
+        config,
+      });
     },
     getValueHashFn: ({ value }) => value.toString(),
   });

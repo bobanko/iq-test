@@ -2,10 +2,10 @@ import { generateFormulasQuestion } from "./formulas.generator.js";
 import { renderFormulasQuestion } from "./formulas.renderer.js";
 
 const _formulasConfigs = {
-  triangles8xor: {
+  defaultFormula: {
     formulaType: "formulaTypes.random",
     patternsInCol: 3,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
   },
 };
 

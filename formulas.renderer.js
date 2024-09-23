@@ -1,17 +1,25 @@
-function createFormulaPattern({ value = "", type, color = "white", config }) {
+function createFormulaPattern({ value = "", color = "white", config }) {
   const $patternContainer =
     $tmplPatternFormula.content.firstElementChild.cloneNode(true);
 
   const classes = {
-    ["op"]: "pattern-formula-operator",
-    ["value"]: "pattern-formula-value",
-    ["var"]: "pattern-formula-variable",
+    operator: "pattern-formula-operator",
+    operand: "pattern-formula-variable",
   };
 
-  $patternContainer.classList.add(classes[type] ?? "value");
+  const operators = ["+", "-", "×", "÷", "="];
+
+  const isOperator = operators.includes(value);
+
+  $patternContainer.classList.add(
+    isOperator ? classes.operator : classes.operand
+  );
 
   $patternContainer.textContent = value;
-  $patternContainer.classList.add(color);
+
+  if (!isOperator) {
+    $patternContainer.classList.add(color);
+  }
 
   return $patternContainer;
 }
