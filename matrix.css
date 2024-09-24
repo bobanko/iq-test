@@ -3,7 +3,7 @@
 
   --color: white;
   display: grid;
-  grid-template-columns: repeat(var(--size), 0fr);
+  grid-template-columns: repeat(var(--size), 1fr);
 
   background-color: black;
   gap: 2px;
