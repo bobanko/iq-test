@@ -28,6 +28,7 @@ function createFormulaPattern({
     isOperator ? classes.operator : isVar ? classes.var : classes.const
   );
 
+  // todo(vmyshko): emojis should be random, how? without random
   const emojis = ["🍆", "🦀", "👾", "🐞", "🐷", "🐸", "🐹", "🦊", "🌚", "🍄"];
 
   if (!isOperator) {
