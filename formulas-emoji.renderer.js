@@ -1,3 +1,9 @@
+const emojiSets = [
+  ["🐖", "🐘", "🐙"], //animals#1
+  ["🐓", "🦀", "🐻"], //animals#2
+  ["🦒", "🐧", "🦉"], //animals#3
+];
+
 function createFormulaPattern({
   value = "",
   label = null,
@@ -7,13 +13,13 @@ function createFormulaPattern({
   const $patternContainer =
     $tmplPatternFormula.content.firstElementChild.cloneNode(true);
 
-  const operators = ["+", "-", "×", "÷", "="];
-
   const classes = {
     operator: "pattern-formula-operator",
-    var: "pattern-formula-variable",
+    var: "pattern-formula-variable-emoji",
     const: "pattern-formula-const",
   };
+
+  const operators = ["+", "-", "×", "÷", "="];
 
   const isOperator = operators.includes(value);
   const isVar = label != null;
@@ -22,7 +28,13 @@ function createFormulaPattern({
     isOperator ? classes.operator : isVar ? classes.var : classes.const
   );
 
-  $patternContainer.textContent = value;
+  const emojis = ["🍆", "🦀", "👾", "🐞", "🐷", "🐸", "🐹", "🦊", "🌚", "🍄"];
+
+  if (!isOperator) {
+    $patternContainer.textContent = isVar ? emojis[value] : value;
+  } else {
+    $patternContainer.textContent = value;
+  }
 
   if (!isOperator) {
     $patternContainer.classList.add(color);
@@ -31,7 +43,7 @@ function createFormulaPattern({
   return $patternContainer;
 }
 
-export function renderFormulasQuestion({ config, questionData }) {
+export function renderFormulasEmojiQuestion({ config, questionData }) {
   const { patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((pattern) => {
@@ -50,7 +62,6 @@ export function renderFormulasQuestion({ config, questionData }) {
   const $patternQuestionMark = createFormulaPattern({
     type: "value",
     config,
-    //
   });
 
   $patternQuestionMark.classList.add("pattern-question-mark");

@@ -7,7 +7,7 @@
 
 .pattern-formula-variable {
   color: transparent;
-  text-shadow: none !important;
+  text-shadow: none;
 }
 
 .debug .pattern-formula-variable,
@@ -15,15 +15,17 @@
 .pattern-formula-variable.white,
 .pattern-formula-variable.yellow {
   color: black;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 }
 
+.pattern-formula-const,
+.pattern-formula-variable-emoji,
 .pattern-formula-variable {
   width: var(--row-height);
   height: var(--row-height);
 
   background-color: var(--color, transparent);
   text-transform: uppercase;
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 
   font-weight: normal;
 
@@ -42,6 +44,20 @@
       hsl(from var(--color) h calc(s - 30) calc(l - 10)),
     inset 0 calc(var(--shadow-diff) + var(--shadow-offset)) 0 0
       hsl(from var(--color) h calc(s - 0) calc(l + 9));
+}
+
+.pattern-formula-const {
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+}
+
+.pattern-area .pattern-formula-variable-emoji:not(.pattern-question-mark) {
+  background: none;
+  box-shadow: none;
+  border: none;
+  padding: 0;
+  width: auto;
+  font-size: 75px;
+  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 }
 
 .pattern-formula-operator {

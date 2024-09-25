@@ -2,6 +2,10 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
+export const formulaGenerators = {
+  formulaGenerator,
+  formulaEmojiGenerator,
+};
 // helpers
 
 function getFreeValues(valueCount) {
@@ -81,7 +85,7 @@ function* formulaGenerator({ random, config }) {
     x: { color: "red", label: "x", value: null },
     y: { color: "green", label: "y", value: null },
     z: { color: "blue", label: "z", value: null },
-    firstConst: { color: "yellow", label: "c", value: null },
+    firstConst: { color: "yellow", label: null, value: null },
     answerConst: { color: "white", label: null, value: null },
   };
 
@@ -150,6 +154,8 @@ function* formulaGenerator({ random, config }) {
       const varToReplaceBy = [variables.x, variables.y, variables.z].find(
         (variable) => variable.value === variables.firstConst.value
       );
+
+      // todo(vmyshko): if no const -- open blue?
       yield [varA, firstOp, varB, operators.eqal, varToReplaceBy];
     } else {
       yield [varA, firstOp, varB, operators.eqal, variables.firstConst];
@@ -161,16 +167,123 @@ function* formulaGenerator({ random, config }) {
   {
     const xoryzCombs = [
       ...getPossibleCombinations({
-        varA: random.sample([variables.x, variables.y]),
+        // varA: random.sample([variables.x, variables.y]),
+        varA: variables.y,
         varB: variables.z,
+        maxAnswer: 10,
       }),
     ];
 
-    const [firstOp, varA, varB] = random.popFrom(xoryzCombs);
+    const [firstOp, varA, varB] = random.popWhere(
+      xoryzCombs,
+      ([operator, varA, varB]) => {
+        // skip mul for x*1 equasions
+        if ([varA.value, varB.value].includes(1) && operator === operators.mul)
+          return false;
+
+        const answer = operator.fn(varA.value, varB.value);
+
+        if ([varA.value, varB.value].includes(answer)) return false;
+
+        return true;
+      }
+    );
+
     variables.answerConst.value = firstOp.fn(varA.value, varB.value);
 
     yield [varA, firstOp, varB, operators.eqal, variables.answerConst];
+    // yield [varA, firstOp, varB, operators.eqal, variables.answerConst];
     console.log([varA, firstOp, varB, operators.eqal, variables.answerConst]);
+  }
+}
+
+function* formulaEmojiGenerator({ random, config }) {
+  //
+  const freeValues = getFreeValues(9).map((x) => x + 1);
+
+  const variables = {
+    x: { color: "red", label: "x", value: null },
+    y: { color: "green", label: "y", value: null },
+    z: { color: "blue", label: "z", value: null },
+  };
+
+  // 1st row
+  {
+    variables.x.value = random.popFrom(freeValues);
+
+    const firstOp =
+      variables.x.value < 5
+        ? //allow mul only for lower x values
+          random.sample([operators.add, operators.mul])
+        : operators.add;
+
+    const answerConst = {
+      color: "white",
+      value: firstOp.fn(variables.x.value, variables.x.value),
+    };
+
+    yield [variables.x, firstOp, variables.x, operators.eqal, answerConst];
+  }
+  // 2nd row
+  {
+    variables.y.value = random.popFrom(freeValues);
+
+    const xyCombs = [
+      ...getPossibleCombinations({
+        varA: variables.x,
+        varB: variables.y,
+        maxAnswer: 20,
+      }),
+    ];
+
+    const [firstOp, varA, varB] = random.sample(xyCombs);
+
+    const answerConst = {
+      color: "white",
+      value: firstOp.fn(varA.value, varB.value),
+    };
+
+    yield [varA, firstOp, varB, operators.eqal, answerConst];
+  }
+  // 3rd row
+  {
+    variables.z.value = random.popFrom(freeValues);
+
+    const yzCombs = [
+      ...getPossibleCombinations({
+        varA: variables.y,
+        varB: variables.z,
+        maxAnswer: 20,
+      }),
+    ];
+
+    const [firstOp, varA, varB] = random.sample(yzCombs);
+
+    const answerConst = {
+      color: "white",
+      value: firstOp.fn(varA.value, varB.value),
+    };
+
+    yield [varA, firstOp, varB, operators.eqal, answerConst];
+  }
+  // 4th row
+  {
+    const zxCombs = [
+      ...getPossibleCombinations({
+        varA: variables.z,
+        varB: variables.x,
+        maxAnswer: 20,
+      }),
+    ];
+
+    const [firstOp, varA, varB] = random.sample(zxCombs);
+
+    const answerConst = {
+      color: "white",
+      value: firstOp.fn(varA.value, varB.value),
+    };
+
+    yield [varA, firstOp, varB, operators.eqal, answerConst];
   }
 }
 
@@ -200,7 +313,6 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
   const patternsInRow = 5; //always 5 = 3 vars + 2 ops -- a+b=c --like
 
   const {
-    patternsInCol = 3, // can be reduced by gen-non-unique reason
     maxAnswerCount = 6, //over 8 will not fit
     figureCount, // single pattern figure count [2..n]
   } = config;
@@ -208,7 +320,7 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
   const random = new SeededRandom(seed + questionIndex);
 
   const rowPatterns = [
-    ...formulaGenerator({
+    ...config.formulaGenerator({
       random,
       config,
     }),
@@ -242,7 +354,6 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
   return {
     seed,
     patternsInRow,
-    patternsInCol,
     figureCount,
     //
     patterns,
