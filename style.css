@@ -263,9 +263,12 @@ header {
   display: flex;
   align-items: center;
   justify-content: center;
+  border: 2px solid black;
+  border-style: dashed;
 
   color: black;
 }
+
 .pattern-question-mark:after {
   display: flex;
   align-items: center;
