@@ -52,7 +52,7 @@ export class SeededRandom {
 
   popRangeFrom(array, count) {
     const poppedItems = [];
-    for (let i = 0; i < count; i++) {
+    for (let i = 0; i < count && array.length > 0; i++) {
       poppedItems.push(this.popFrom(array));
     }
 
