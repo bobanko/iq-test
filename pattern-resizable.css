@@ -1,0 +1,13 @@
+.pattern-resizable {
+  width: var(--pattern-size);
+  height: var(--pattern-size);
+
+  color: var(--color, black);
+
+  background-color: white;
+  stroke-width: 2px;
+
+  border: 2px solid black;
+  border-radius: 2px;
+  box-sizing: border-box;
+}

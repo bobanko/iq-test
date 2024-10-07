@@ -2,6 +2,7 @@
 @import url(./fonts.css);
 @import url(./helpers.css);
 @import url(./palette.css);
+@import url(./patterns.css);
 
 :root {
   --row-height: 75px;
@@ -134,7 +135,7 @@ header {
 
 .pattern-area {
   display: grid;
-  grid-template-columns: repeat(3, 0fr);
+  grid-template-columns: repeat(var(--size), 0fr);
 
   --pattern-size: 100px;
 
