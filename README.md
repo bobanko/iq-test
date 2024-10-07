@@ -23,6 +23,9 @@ this one is scam, but has stylish questions
 **WARNING**: DO NOT pay for that!  
 https://iqboost.mobi/
 
+**WARNING**: one more SCAMMY iq test with unique questions
+https://iqcenter.net/
+
 some more tests to discover:
 https://www.123test.com/classical-intelligence-test/?d=1
 
