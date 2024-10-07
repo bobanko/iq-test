@@ -5,11 +5,14 @@ import { booleanFiguresConfigs } from "./boolean-figures.config.js";
 import { numberProgressionConfigs } from "./number-progressions.config.js";
 import { shuffleFiguresConfigs } from "./shuffle-figures.config.js";
 import { formulasConfigs } from "./formulas.config.js";
+import { resizableConfigs } from "./resizable.config.js";
 
 // todo(vmyshko): config every question here? or in each type? shuffle here? no.
 export const quizQuestionConfigs = Object.fromEntries([
   // todo(vmyshko): refac, move to local config? or keep here?
   // ["oneQuarter90", "twoQuarters90", "threeQuarters"].includes(configName)
+
+  ...Object.entries(resizableConfigs),
 
   ...Object.entries(formulasConfigs),
 

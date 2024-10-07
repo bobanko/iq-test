@@ -12,4 +12,6 @@
   box-sizing: border-box;
 
   transition: all 500ms ease-in-out;
+
+  --strokeColor: hsl(from var(--color) h s calc(l - 15));
 }
