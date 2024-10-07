@@ -37,35 +37,43 @@ function isAdjacent(a, b) {
   return false;
 }
 
+function isUniqueAnswer([operator, varA, varB]) {
+  const answer = operator.fn(varA.value, varB.value);
+
+  if ([varA.value, varB.value].includes(answer)) return false;
+
+  return true;
+}
+
 function* getPossibleCombinations({ varA, varB, maxAnswer = 20 }) {
-  const divA = getDivisors(varA.value);
-  const divB = getDivisors(varB.value);
+  // todo(vmyshko): refac to more generic clean approach?
 
   //div
+  const divA = getDivisors(varA.value);
   if (divA.includes(varB.value)) {
-    yield [operators.div, varA, varB];
+    yield [operators.div, varA, varB, operators.div.fn(varA.value, varB.value)];
   }
+  const divB = getDivisors(varB.value);
   if (divB.includes(varA.value)) {
-    yield [operators.div, varB, varA];
+    yield [operators.div, varB, varA, operators.div.fn(varB.value, varA.value)];
   }
 
-  //mul
+  //mul -- limit max answer
   if (varA.value * varB.value <= maxAnswer) {
-    yield [operators.mul, varA, varB];
-    // yield [operators.mul, varB, varA];
+    yield [operators.mul, varA, varB, operators.mul.fn(varA.value, varB.value)];
   }
 
-  //sub
+  //sub -- only positive answers
   if (varA.value > varB.value) {
-    yield [operators.sub, varA, varB];
+    yield [operators.sub, varA, varB, operators.sub.fn(varA.value, varB.value)];
   } else {
     //b>a
-    yield [operators.sub, varB, varA];
+    yield [operators.sub, varB, varA, operators.sub.fn(varB.value, varA.value)];
   }
 
-  //add
+  //add -- limit max answer
   if (varA.value + varB.value <= maxAnswer) {
-    yield [operators.add, varA, varB];
+    yield [operators.add, varA, varB, operators.add.fn(varA.value, varB.value)];
   }
 }
 
@@ -77,7 +85,6 @@ const operators = {
   eqal: { value: "=", fn: (a, b) => a === b },
 };
 
-// todo(vmyshko): probably only one generator
 function* formulaGenerator({ random, config }) {
   const freeValues = getFreeValues(9).map((x) => x + 1);
 
@@ -89,111 +96,83 @@ function* formulaGenerator({ random, config }) {
     answerConst: { color: "white", label: null, value: null },
   };
 
-  // 1st row
-  // todo(vmyshko): limit not both high, at least 2 formulas
-  // 1 -- _,2,3,4,5,6,7,8,9,
-  // 2 -- 1,_,3,4,5,6,7,8,_
-  // 3 -- 1,2,_,4,5,6,7,_,9
-  // 4 -- 1,2,3,_,_,6,_,8,_
-  // 5 -- 1,2,3,4
-  // 6 -- 1,2,3,4
-  // 7 -- 1,2,3
-  // 8 -- 1,2,4
-  // 9 -- 1,_,3
-  // ---
-  // 10 - 1,2,_ //exclude
+  // 9,5,4 -- only 2 combs
   variables.x.value = random.popFrom(freeValues);
+  variables.y.value = random.popFrom(freeValues);
+  variables.z.value = random.popFrom(freeValues);
 
-  do {
-    // todo(vmyshko): fix
-    variables.y.value = random.popFrom(freeValues);
-  } while (!isAdjacent(variables.x.value, variables.y.value));
+  const maxAnswer = 10;
 
   const xyCombs = [
     ...getPossibleCombinations({
       varA: variables.x,
       varB: variables.y,
-      maxAnswer: 10,
+      maxAnswer,
     }),
   ];
 
-  function isUniqueAnswer([operator, varA, varB]) {
-    const answer = operator.fn(varA.value, varB.value);
+  const xzCombs = [
+    ...getPossibleCombinations({
+      varA: variables.x,
+      varB: variables.z,
+      maxAnswer,
+    }),
+  ];
 
-    if ([varA.value, varB.value].includes(answer)) return false;
+  const yzCombs = [
+    ...getPossibleCombinations({
+      varA: variables.y,
+      varB: variables.z,
+      maxAnswer,
+    }),
+  ];
 
-    return true;
+  const combPool = [...xyCombs, ...xzCombs, ...yzCombs];
+
+  function processAnswer([firstOp, varA, varB, answerValue]) {
+    const xyz = [variables.x, variables.y, variables.z];
+    const answerVar = xyz.find(({ value }) => value === answerValue);
+    const answer = answerVar ?? {
+      color: "white",
+      value: answerValue,
+    };
+
+    return { operator: firstOp, varA, varB, answer };
   }
 
-  if (xyCombs.length === 0) debugger;
+  const combSlice = random.popRangeFrom(combPool, 4);
 
-  {
-    const [firstOp, varA, varB] = random.popWhere(xyCombs, isUniqueAnswer);
+  const sortedCombs = combSlice
+    .map(processAnswer)
+    .toSorted(({ answer: answer1 }, { answer: answer2 }) => {
+      return (answer2.label ?? "").localeCompare(answer1.label ?? "");
+    });
 
-    variables.z.value = firstOp.fn(varA.value, varB.value);
+  let xyzFound = false;
+  for (let comb of sortedCombs) {
+    const { operator, varA, varB, answer } = comb;
 
-    yield [varA, firstOp, varB, operators.eqal, variables.z];
-    console.log([varA, firstOp, varB, operators.eqal, variables.z]);
-  }
-
-  // 2nd row
-
-  {
-    // const [firstOp, varA, varB] = random.popWhere(xyCombs, isUniqueAnswer);
-    const [firstOp, varA, varB] = random.popFrom(xyCombs);
-
-    variables.firstConst.value = firstOp.fn(varA.value, varB.value);
-
+    // todo(vmyshko): remove x+y=z -> z-y=x;
     if (
-      [variables.x, variables.y, variables.z].some(
-        (variable) => variable.value === variables.firstConst.value
-      )
+      [varA, varB, answer]
+        .map((v) => v.label)
+        .toSorted()
+        .join("") === "xyz"
     ) {
-      // firstConst is same as one of the xyz -- replace?
-
-      const varToReplaceBy = [variables.x, variables.y, variables.z].find(
-        (variable) => variable.value === variables.firstConst.value
-      );
-
-      // todo(vmyshko): if no const -- open blue?
-      yield [varA, firstOp, varB, operators.eqal, varToReplaceBy];
-    } else {
-      yield [varA, firstOp, varB, operators.eqal, variables.firstConst];
-    }
-    console.log([varA, firstOp, varB, operators.eqal, variables.firstConst]);
-  }
-
-  // 3rd row
-  {
-    const xoryzCombs = [
-      ...getPossibleCombinations({
-        // varA: random.sample([variables.x, variables.y]),
-        varA: variables.y,
-        varB: variables.z,
-        maxAnswer: 10,
-      }),
-    ];
-
-    const [firstOp, varA, varB] = random.popWhere(
-      xoryzCombs,
-      ([operator, varA, varB]) => {
-        // skip mul for x*1 equasions
-        if ([varA.value, varB.value].includes(1) && operator === operators.mul)
-          return false;
-
-        const answer = operator.fn(varA.value, varB.value);
-
-        if ([varA.value, varB.value].includes(answer)) return false;
-
-        return true;
+      if (xyzFound) {
+        console.log("found dupe xyz");
+        continue;
       }
+      xyzFound = true;
+    }
+
+    console.log(
+      [variables.x.value, variables.y.value, variables.z.value],
+      comb
     );
 
-    variables.answerConst.value = firstOp.fn(varA.value, varB.value);
-
-    yield [varA, firstOp, varB, operators.eqal, variables.answerConst];
-    // yield [varA, firstOp, varB, operators.eqal, variables.answerConst];
-    console.log([varA, firstOp, varB, operators.eqal, variables.answerConst]);
+    // todo(vmyshko): yield obj instead of tuple/arr
+    yield [varA, operator, varB, operators.eqal, answer];
   }
 }
 
