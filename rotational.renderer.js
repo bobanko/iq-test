@@ -1,5 +1,6 @@
+import { defaultColors } from "./common.config.js";
 import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
-import { defaultColors, svgFrames } from "./rotational.config.js";
+import { svgFrames } from "./rotational.config.js";
 import { makeUnique } from "./rotational.generator.js";
 
 function createPatternRotationalBase({ svgFrame = svgFrames.circle }) {

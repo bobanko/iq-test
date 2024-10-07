@@ -1,8 +1,9 @@
 import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
-import { defaultColors } from "./rotational.config.js";
+
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { getPossibleMatrixCells, Point } from "./matrix.helpers.js";
+import { defaultColors } from "./common.config.js";
 
 export const ruleSets = {
   addRowPatterns: 0, //[9]

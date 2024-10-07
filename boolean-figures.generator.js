@@ -147,8 +147,6 @@ export function generateBooleanFiguresQuestion({
     patterns.push(...rowPatterns);
   });
 
-  //   const pointColors = random.shuffle(defaultColors);
-
   //last block
   const correctAnswer = patterns.at(-1);
   correctAnswer.isCorrect = true;

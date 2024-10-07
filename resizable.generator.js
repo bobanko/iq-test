@@ -1,7 +1,7 @@
 import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
-import { colors, defaultColors } from "./rotational.config.js";
+import { colors, defaultColors } from "./common.config.js";
 
 // todo(vmyshko): do i need this? or apply only varcolors by default? boolean-figures may be affected
 function varColor(color) {

@@ -1,6 +1,8 @@
 import { renderRotationalQuestion } from "./rotational.renderer.js";
 import { generateRotationalQuestion } from "./rotational.generator.js";
 
+import { colors } from "./common.config.js";
+
 const svgFigs = {
   quarter: "./images/clock-quarter.svg#quarter",
   circle: "./images/clock-circle.svg#circle",
@@ -26,21 +28,6 @@ export const svgFrames = {
   circle: "./images/frame-circle.svg#frame",
   // todo(vmyshko): add square?
 };
-
-export const colors = {
-  red: "red",
-  green: "green",
-  blue: "blue",
-  yellow: "yellow",
-  black: "black",
-};
-
-export const defaultColors = [
-  colors.red,
-  colors.green,
-  colors.blue,
-  colors.yellow,
-];
 
 const _rotationalConfigs = {
   //  custom letters
