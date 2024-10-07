@@ -1,10 +1,11 @@
+import { scaleViewBox } from "./common.js";
 import { preventSvgCache } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
 }
 
-function createFigurePattern({ figures = [], config }) {
+function createFigurePattern({ figureConfig, config }) {
   const {
     viewBox = "0 0 100 100",
     color = "black",
@@ -13,12 +14,24 @@ function createFigurePattern({ figures = [], config }) {
     staticFigures = [],
   } = config;
 
+  const {
+    figures = [],
+
+    color: figureColor,
+    scaleX = 1,
+    scaleY = 1,
+  } = figureConfig;
+
   // svg as container
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true);
 
-  $svgPatternContainer.setAttribute("viewBox", viewBox);
-  $svgPatternContainer.style.setProperty("--color", color);
+  $svgPatternContainer.setAttribute(
+    "viewBox",
+    scaleViewBox(viewBox, scaleX, scaleY)
+  );
+
+  $svgPatternContainer.style.setProperty("--color", figureColor ?? color);
   $svgPatternContainer.style.setProperty("stroke-width", strokeWidth);
 
   // pattern dynamic figures
@@ -41,15 +54,19 @@ function createFigurePattern({ figures = [], config }) {
 export function renderFiguresQuestion({ config, questionData, questionIndex }) {
   const { patterns, answers } = questionData;
 
-  const questionPatterns = patterns.map(({ figures, id }) =>
-    createFigurePattern({ figures, config })
+  const questionPatterns = patterns.map((figureConfig) =>
+    createFigurePattern({ figureConfig, config })
   );
 
-  const answerPatterns = answers.map(({ figures, id, isCorrect }) => ({
-    $pattern: createFigurePattern({ figures, config }),
-    id,
-    isCorrect,
-  }));
+  const answerPatterns = answers.map((figureConfig) => {
+    const { id, isCorrect } = figureConfig;
+
+    return {
+      $pattern: createFigurePattern({ figureConfig, config }),
+      id,
+      isCorrect,
+    };
+  });
 
   //debug
   setTimeout(() => {
