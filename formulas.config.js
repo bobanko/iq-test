@@ -6,6 +6,7 @@ import {
 import { renderFormulasQuestion } from "./formulas.renderer.js";
 
 const _formulasConfigs = {
+  // todo(vmyshko): fix unsolvables for this
   // defaultFormula: {
   //   formulaType: "formulaTypes.random",
   //   patternsInCol: 3,
@@ -22,6 +23,7 @@ const _formulasConfigs = {
     formulaGenerator: formulaGenerators.formulaEmojiGenerator,
     renderer: renderFormulasEmojiQuestion,
   },
+  //same but different renderer
   spanishFormula: {
     formulaType: "formulaTypes.random",
     patternsInCol: 3,
