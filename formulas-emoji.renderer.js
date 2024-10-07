@@ -1,13 +1,10 @@
-const emojiSets = [
-  ["🐖", "🐘", "🐙"], //animals#1
-  ["🐓", "🦀", "🐻"], //animals#2
-  ["🦒", "🐧", "🦉"], //animals#3
-];
+import { SeededRandom } from "./random.helpers.js";
 
 function createFormulaPattern({
   value = "",
   label = null,
   color = "white",
+  seed,
   config,
 }) {
   const $patternContainer =
@@ -28,11 +25,30 @@ function createFormulaPattern({
     isOperator ? classes.operator : isVar ? classes.var : classes.const
   );
 
-  // todo(vmyshko): emojis should be random, how? without random
-  const emojis = ["🍆", "🦀", "👾", "🐞", "🐷", "🐸", "🐹", "🦊", "🌚", "🍄"];
+  const emojiSets = [
+    ["🐸", "🐹", "🦊"],
+    ["🍩", "🍆", "🍑"], //food#1
+    ["🥦", "🌽", "🥕"],
+    ["🍉", "🍒", "🫐"],
+
+    // todo(vmyshko): pick better animals
+    // ["🐖", "🐘", "🐙"], //animals#1
+    // ["🐓", "🦀", "🐻"], //animals#2
+    // ["🦒", "🐧", "🦉"], //animals#3
+
+    //random sets
+    // ["👾", "🐞", "🌚"],
+    // ["🐷", "🍄", "🤖"],
+  ];
+
+  const random = new SeededRandom(seed);
+
+  const emojiSet = random.sample(emojiSets);
 
   if (!isOperator) {
-    $patternContainer.textContent = isVar ? emojis[value] : value;
+    $patternContainer.textContent = isVar
+      ? emojiSet["xyz".indexOf(label)]
+      : value;
   } else {
     $patternContainer.textContent = value;
   }
@@ -45,22 +61,23 @@ function createFormulaPattern({
 }
 
 export function renderFormulasEmojiQuestion({ config, questionData }) {
-  const { patterns, answers } = questionData;
+  const { patterns, answers, seed } = questionData;
 
   const questionPatterns = patterns.map((pattern) => {
-    return createFormulaPattern({ ...pattern, config });
+    return createFormulaPattern({ ...pattern, seed, config });
   });
 
   const answerPatterns = answers.map((pattern) => {
     const { id, isCorrect } = pattern;
     return {
-      $pattern: createFormulaPattern({ ...pattern, config }),
+      $pattern: createFormulaPattern({ ...pattern, seed, config }),
       id,
       isCorrect,
     };
   });
 
   const $patternQuestionMark = createFormulaPattern({
+    seed,
     type: "value",
     config,
   });
