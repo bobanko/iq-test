@@ -152,6 +152,10 @@ export function renderRotationalQuestion({
       // todo(vmyshko): apply rule? color?
       $part.classList.add(colors[partIndex]);
 
+      // todo(vmyshko): should it come from config?
+      const viewBox = "0 0 100 100";
+      $part.setAttribute("viewBox", viewBox);
+
       rotateTo($part, degs[partIndex]);
     });
 

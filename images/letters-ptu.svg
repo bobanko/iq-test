@@ -1,0 +1,23 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="letters-ptu">
+<rect x="1" y="1" width="98" height="98" rx="49" stroke="black" stroke-width="2"/>
+
+<g id="letter-p" fill="none" stroke="var(--color)" viewBox="0 0 100 100">
+<line id="Line 13" x1="63.5" y1="25" x2="63.5" y2="75"  stroke-width="5"/>
+<line id="Line 14" x1="36.5" y1="75" x2="36.5" y2="25"  stroke-width="5"/>
+<line id="Line 15" x1="25" y1="26.2617" x2="75" y2="26.2617"  stroke-width="5"/>
+</g>
+
+<g id="letter-u" fill="none" stroke="var(--color)" viewBox="0 0 100 100">
+<path id="Vector" d="M30 70V50C30 38.9543 38.9543 30 50 30C61.0457 30 70 38.9543 70 50V70"  stroke-width="5"/>
+<circle id="Ellipse 2" cx="49.9997" cy="50.0003" r="5.66667" transform="rotate(-90 49.9997 50.0003)" stroke-width="3"/>
+</g>
+
+<g id="letter-t" fill="none" stroke="var(--color)" viewBox="0 0 100 100">
+<circle id="Ellipse 1" cx="50" cy="50" r="23.5" transform="rotate(-180 50 50)" stroke-width="4"/>
+<line id="Line 13_2" x1="35" y1="41" x2="65" y2="41" stroke-width="5"/>
+<line id="Line 14_2" x1="50.5" y1="64" x2="50.5" y2="39" stroke-width="5"/>
+</g>
+
+</g>
+</svg>

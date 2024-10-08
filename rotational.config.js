@@ -11,9 +11,9 @@ const svgFigs = {
   arrowAlt: "./images/clock-arrow-alt.svg#arrow-alt",
 
   //letters
-  letterP: "./images/letter-p.svg#letter",
-  letterU: "./images/letter-u.svg#letter",
-  letterT: "./images/letter-t.svg#letter",
+  letterP: "./images/letters-ptu.svg#letter-p",
+  letterT: "./images/letters-ptu.svg#letter-t",
+  letterU: "./images/letters-ptu.svg#letter-u",
 
   // static
   hexFlake: "./images/hex-snowflake.svg#frame",
