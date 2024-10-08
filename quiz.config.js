@@ -12,14 +12,12 @@ export const quizQuestionConfigs = Object.fromEntries([
   // todo(vmyshko): refac, move to local config? or keep here?
   // ["oneQuarter90", "twoQuarters90", "threeQuarters"].includes(configName)
 
+  ...Object.entries(shuffleFiguresConfigs),
+
   ...Object.entries(resizableConfigs),
-
   ...Object.entries(formulasConfigs),
-
   ...Object.entries(numberProgressionConfigs),
-
   ...Object.entries(booleanFiguresConfigs),
-  // ...Object.entries(shuffleFiguresConfigs),
   ...Object.entries(booleanMatrixConfigs),
   ...Object.entries(rotationalConfigs),
   ...Object.entries(movableMatrixConfigs),

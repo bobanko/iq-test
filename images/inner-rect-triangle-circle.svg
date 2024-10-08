@@ -1,0 +1,11 @@
+<svg width="106" height="106" viewBox="0 0 106 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="inner-square-triangle-circle">
+<path id="rect" d="M103 103H3V3H103V103Z" fill="var(--color)" stroke="var(--strokeColor)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="circle" cx="53" cy="53" r="50" fill="var(--color)" stroke="var(--strokeColor)" stroke-width="5"/>
+<path id="triangle" d="M103 83H3L53 3L103 83Z" fill="var(--color)" stroke="var(--strokeColor)" stroke-width="5" stroke-linejoin="round"/>
+
+<path id="inner-rect" d="M71 71H36V36H71V71Z" fill="white" stroke="var(--strokeColor)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="inner-circle" cx="53.5" cy="53.5" r="22.5" fill="white" stroke="var(--strokeColor)" stroke-width="5"/>
+<path id="inner-triangle" d="M78 71H28L53 31L78 71Z" fill="white" stroke="var(--strokeColor)" stroke-width="5" stroke-linejoin="round"/>
+</g>
+</svg>
