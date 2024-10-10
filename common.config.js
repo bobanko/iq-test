@@ -6,6 +6,8 @@ export const colors = {
   black: "black",
 };
 
+export const rgbColors = [colors.red, colors.green, colors.blue];
+
 export const defaultColors = [
   colors.red,
   colors.green,

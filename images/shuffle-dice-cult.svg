@@ -1,0 +1,114 @@
+<svg width="106" height="106" viewBox="0 0 106 106" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="shuffle-dice-cult">
+
+
+
+
+<g id="one" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
+<circle id="6" cx="53" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<path id="line" d="M30 85L90 41" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_2" d="M30 85L53 13" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_3" d="M77 85L53 13" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_4" d="M16 41H90" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_5" d="M77 85L16 41" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+
+<g id="two" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
+<path id="line_6" d="M53 39L66 22" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_7" d="M41 22L47 30.5L53 39" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_8" d="M16 39C16 39 20.5 33.5 28 33.5C35.5 33.5 41 39 41 39" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_9" d="M66 38.5C66 38.5 70.5 33 78 33C85.5 33 91 38.5 91 38.5" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_10" d="M66 66C66 66 70.5 71.5 78 71.5C85.5 71.5 91 66 91 66" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_11" d="M16 66C16 66 20.5 71.5 28 71.5C35.5 71.5 41 66 41 66" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_12" d="M53 66L66 83" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_13" d="M41 83L47 74.5L53 66" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_14" d="M49.5 47L57 59" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_15" d="M49 59L53 53L57 47" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="6_2" cx="76" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="11" cx="29" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+</g>
+
+<g id="three" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
+<path id="Vector" d="M72.6626 84.4708L81.0071 76.1263M81.1332 83.6703L85.1709 87.708C87.0096 89.5467 90.1345 89.6833 91.1109 87.2732C91.8277 85.5037 91.9069 83.3175 89.8151 81.2258C87.559 78.9697 84.095 80.9958 81.1332 83.6703ZM81.1332 83.6703L68.0264 70.5635M81.1332 83.6703C78.0093 86.4912 75.444 90.0336 75.444 90.0336" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="Vector_2" d="M22.5295 33.3374L30.874 24.9929M23.3301 24.8668L19.2924 20.8291C17.4536 18.9903 17.3171 15.8654 19.7272 14.889C21.4967 14.1722 23.6829 14.093 25.7746 16.1848C28.0307 18.441 26.0046 21.905 23.3301 24.8668ZM23.3301 24.8668L36.437 37.9736M23.3301 24.8668C20.5091 27.9907 16.9668 30.556 16.9668 30.556" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="6_3" cx="53" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="2" cx="76" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="4" cx="29" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+</g>
+
+<g id="four" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
+<g id="cross">
+<path id="11_2" d="M20 61L28 53" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="12" d="M20 45L28 53" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_2">
+<path id="11_3" d="M79 53L87 45" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="12_2" d="M79 53L87 61" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_3">
+<path id="14" d="M53 33L47 25" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="15" d="M59 25L53 33" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_4">
+<path id="12_3" d="M53 73L59 81" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="13" d="M47 81L53 73" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_5">
+<path id="12_4" d="M42 41L64 65" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="13_2" d="M42 65L64 41" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<circle id="5" cx="29" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="2_2" cx="76" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="4_2" cx="29" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="3" cx="76" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+</g>
+
+<g id="five" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
+<path id="line_16" d="M72 53L77 53" fill="none" stroke="var(--color1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_17" d="M13 93L19 87" fill="none" stroke="var(--color1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_18" d="M88 19L94 13" fill="none" stroke="var(--color1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_19" d="M13 13L19 19" fill="none" stroke="var(--color1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_20" d="M88 87L94 93" fill="none" stroke="var(--color1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_21" d="M29 53L34 53" fill="none" stroke="var(--color1)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<g id="cross_6">
+<path id="11_4" d="M16 57L24 49" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="12_5" d="M16 49L24 57" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_7">
+<path id="11_5" d="M84 57L92 49" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="12_6" d="M84 49L92 57" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_8">
+<path id="12_7" d="M49 13L59 28" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="13_3" d="M49 28L59 13" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<g id="cross_9">
+<path id="12_8" d="M49 79L59 94" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="13_4" d="M49 94L59 79" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+</g>
+<path id="9" d="M54 35L54 40" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="10" d="M54 69L54 74" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="5_2" cx="29" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="6_4" cx="53" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="2_3" cx="76" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="4_3" cx="29" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="3_2" cx="76" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+</g>
+
+<g id="six" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
+<path id="line_22" d="M47 46L61 46" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="line_23" d="M47 59L61 59" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="10_2" d="M54 22L54 83" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+<circle id="5_3" cx="29" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="6_5" cx="76" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="11_6" cx="29" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="2_4" cx="76" cy="30" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="4_4" cx="29" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+<circle id="3_3" cx="76" cy="76" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
+</g>
+
+<path id="frame" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.5);
+--color-frame-fill: hsla(from var(--color) h calc(s) calc(l) /0.4);"
+ d="M103 103H3V3H103V103Z" fill="var(--color-frame-fill)" stroke="var(--color-lines)" stroke-width="6" />
+</g>
+</svg>
