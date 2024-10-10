@@ -156,7 +156,7 @@ export const shuffleFiguresConfigs = {
     ],
     colorGroups: [
       {
-        colors: ["blue"],
+        colors: ["black"],
         shuffleType: shuffleTypes.unique123,
       },
     ],
