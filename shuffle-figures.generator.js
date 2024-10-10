@@ -86,6 +86,31 @@ export const shuffleTypes = {
     }
   },
 
+  shiftedBy: (shift = 0) =>
+    function* shifted123({ items, random, config }) {
+      const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+      const shuffledItems = [...items];
+
+      // todo(vmyshko): these should be separated
+      // todo(vmyshko): ...but random should concat both
+      const mainDiagIndex = ({ rowIndex, colIndex, itemsCount }) =>
+        itemsCount - rowIndex + colIndex;
+      const secondaryDiagIndex = ({ rowIndex, colIndex }) =>
+        rowIndex * shift + colIndex;
+
+      const indexFn = secondaryDiagIndex;
+
+      for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+        for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+          yield shuffledItems[
+            indexFn({ rowIndex, colIndex, itemsCount: shuffledItems.length }) %
+              shuffledItems.length
+          ];
+        }
+      }
+    },
+
   // todo(vmyshko):  impl shifted progressions
 };
 
@@ -163,11 +188,10 @@ export function generateShuffleFiguresQuestion({
 }) {
   //
   const {
+    patternsInRow = 3,
     maxAnswerCount = 6, //over 8 will not fit
     figureCount, // single pattern figure count [2..n]
   } = config;
-
-  const patternsInRow = 3;
 
   const random = new SeededRandom(seed + questionIndex);
 
