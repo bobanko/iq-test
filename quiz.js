@@ -28,8 +28,8 @@ timer.onUpdate((diff) => {
 
   $timer.textContent = timeStr;
 
-  $progressTime.max = timeGivenMs;
-  $progressTime.value = diff;
+  $progressTime.max = timeGivenMs / 1000;
+  $progressTime.value = Math.floor(diff / 1000);
 });
 
 // ***
