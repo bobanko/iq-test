@@ -1,31 +1,48 @@
 import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
-import { colors, defaultColors } from "./common.config.js";
 
 // todo(vmyshko): do i need this? or apply only varcolors by default? boolean-figures may be affected
 function varColor(color) {
   return `var(--${color})`;
 }
 
-const outerFigs = ["circle", "rect", "triangle"];
-const innerFigs = ["inner-circle", "inner-rect", "inner-triangle"];
+function* shuffleFiguresGenerator({ random, config }) {
+  // todo(vmyshko): set some default color if no presented?
+  const { figureGroups, colors = ["black"], rotations = [0] } = config;
 
-function* shuffleFiguresGenerator({ random }) {
+  // todo(vmyshko): get from config?
   for (let row of [1, 2, 3]) {
-    const possibleFigColors = [colors.red, colors.blue, colors.green];
+    const possibleFigColors = [...colors];
 
-    const possibleOuterFigs = [...outerFigs];
-    const possibleInnerFigs = [...innerFigs];
+    const figureGroupsPool = figureGroups.map((fg) => random.shuffle([...fg]));
+    const rotationsPool = [...rotations];
 
+    // todo(vmyshko): get from config?
     for (let col of [1, 2, 3]) {
-      const randomOuterFig = random.popFrom(possibleOuterFigs);
-      const randomInnerFig = random.popFrom(possibleInnerFigs);
-      const randomFigColor = varColor(random.popFrom(possibleFigColors));
+      const colorIsStatic = possibleFigColors.length === 1;
+
+      const randomFigColor = varColor(
+        colorIsStatic
+          ? possibleFigColors.at(0)
+          : random.popFrom(possibleFigColors)
+      );
+
+      const rotation = random.popFrom(rotationsPool);
+
+      const pickedFigs = figureGroupsPool.reduce(
+        (acc, figGroup) => [
+          ...acc,
+          // todo(vmyshko): extract to separate fn, into random.helpers
+          figGroup[(col + row) % figGroup.length],
+        ],
+        []
+      );
 
       yield [
         {
-          figures: [randomOuterFig, randomInnerFig],
+          rotation,
+          figures: pickedFigs,
           color: randomFigColor,
         },
       ];
@@ -34,12 +51,21 @@ function* shuffleFiguresGenerator({ random }) {
 }
 
 function generateAnswer({ random, config, correctAnswer }) {
-  const outerFig = random.sample(outerFigs);
-  const innerFig = random.sample(innerFigs);
+  const { figureGroups, rotations = [0] } = config;
+
+  const figureGroupsPool = figureGroups.map((fg) => [...fg]);
+
+  const pickedFigs = figureGroupsPool.reduce(
+    (acc, figGroup) => [...acc, random.popFrom(figGroup)],
+    []
+  );
+
+  const rotation = random.sample(rotations);
 
   return {
     color: correctAnswer.color,
-    figures: [outerFig, innerFig],
+    rotation,
+    figures: pickedFigs,
     isCorrect: false,
     id: getUid(),
   };
@@ -88,7 +114,8 @@ export function generateShuffleFiguresQuestion({
         config,
       });
     },
-    getValueHashFn: ({ figures }) => `${figures.toString()}`,
+    getValueHashFn: ({ figures, rotation }) =>
+      `${figures.toString()};${rotation}`,
   });
 
   // todo(vmyshko): review, do those all are used?
