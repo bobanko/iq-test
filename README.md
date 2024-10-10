@@ -65,3 +65,12 @@ matrix-move
 
 formulas
 [ ] fix ambigous answers -- when multiple are correct, no + + + formulas, less \*1 formulas
+
+---
+
+conceptions:
+
+cumulative IQ -- user passes test 1 or more times, iq updates, like: 5/10, 12/20, 17/30, 24/40; etc.
+like taxi rating. user can see iq per pass, or cumulative, avg per week, month, year, etc.
+
+-
