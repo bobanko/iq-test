@@ -1,8 +1,14 @@
 import { scaleViewBox } from "./common.js";
-import { preventSvgCache } from "./helpers.js";
+import { preventSvgCache, wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
+}
+
+async function rotateTo($elem, deg) {
+  // to help user to understand rotations
+  await wait(0);
+  $elem.style.transform = `rotate(${deg}deg)`;
 }
 
 function createFigurePattern({ figureConfig, config }) {
@@ -16,7 +22,7 @@ function createFigurePattern({ figureConfig, config }) {
 
   const {
     figures = [],
-
+    rotation = 0,
     color: figureColor,
     scaleX = 1,
     scaleY = 1,
@@ -25,15 +31,19 @@ function createFigurePattern({ figureConfig, config }) {
   // svg as container
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true);
+  // const $svgPatternContainer = $svgPatternContainerDiv.firstElementChild;
 
   $svgPatternContainer.setAttribute(
     "viewBox",
     scaleViewBox(viewBox, scaleX, scaleY)
   );
 
+  rotateTo($svgPatternContainer, rotation);
+
   $svgPatternContainer.style.setProperty("--color", figureColor ?? color);
   $svgPatternContainer.style.setProperty("stroke-width", strokeWidth);
 
+  // todo(vmyshko): impl separate coloring for each part?
   // pattern dynamic figures
   for (let figure of figures) {
     const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
@@ -73,6 +83,5 @@ export function renderFiguresQuestion({ config, questionData, questionIndex }) {
     preventSvgCache();
   }, 0);
 
-  // todo(vmyshko): it should return question patterns too
   return { questionPatterns, answerPatterns };
 }
