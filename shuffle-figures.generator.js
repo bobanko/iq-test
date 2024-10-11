@@ -4,13 +4,16 @@ import { SeededRandom } from "./random.helpers.js";
 
 // todo(vmyshko): refac to reuse same code? only yield differs (mostly)
 export const shuffleTypes = {
+  // single for all cols/rows but basically random
   single: ({ items }) =>
     function* ({ random, config }) {
       const { patternsInCol = 3, patternsInRow = 3 } = config;
 
+      const shuffledItems = random.shuffle(items);
+
       for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
         for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
-          yield items.at(0);
+          yield shuffledItems.at(0);
         }
       }
     },
