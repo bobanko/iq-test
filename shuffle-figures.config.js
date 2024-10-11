@@ -9,26 +9,6 @@ import { colors, defaultColors, rgbColors } from "./common.config.js";
 const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
-// shuffle types:
-//1: progression|fixed|static
-//2: random
-//3: unique - 123,231,312; or 123,312,231;
-
-// vars:
-// 1-figure
-// 2-figs
-// fig+color
-// fig+rotation
-// color+rotation
-// fig+color+rotation
-
-// SAMPLE DRAFT
-// modifiers: [
-//   { type: "color", values: ["red", "green", "blue"] },
-//   { type: "figure", values: ["triangle", "rect", "circle"] },
-//   { type: "rotation", values: [0, 90, 180] },
-// ],
-
 export const shuffleFiguresConfigs = {
   // twoFigsRectTriangleCircle: {
   //   patternsInCol: 3,
@@ -79,27 +59,46 @@ export const shuffleFiguresConfigs = {
 
     figureLink: "./images/shuffle-dice-cult.svg",
 
-    figureGroups: [
+    // -----
+    // todo(vmyshko):
+    // figure-renderer should get (per pattern):
+    // multiple parts: {
+    //  figures = [],
+    //  color: figureColor,
+    //  rotation = 0,
+    // }
+
+    // figure-pattern, has:
+    // ..multiple figure-parts:
+    //    figure-part (svg), has:
+    //       figures: [1..n],(use-s)
+    //       color: '',
+    //       rotation: 0,
+
+    figureParts: [
       {
-        figures: ["frame"],
-        shuffleType: shuffleTypes.unique123,
+        // todo(vmyshko): probably it would be better not to call any fns in config
+        // ...then will be possible to get raw data in generator if needed (for answer generation)
+        //generators?
+        figures: [
+          shuffleTypes.single({ items: ["frame"] }),
+          shuffleTypes.shiftedBy({
+            shift: 2,
+            items: ["one", "two", "three", "four", "five", "six"],
+          }),
+        ],
+        color: shuffleTypes.shiftedBy({
+          items: [colors.yellow, colors.red, colors.blue],
+          shift: 2,
+        }),
+        // todo(vmyshko): or ignore for defaults
+        rotation: shuffleTypes.single({ items: [0] }),
       },
-      {
-        figures: ["one", "two", "three", "four", "five", "six"],
-        shuffleType: shuffleTypes.shiftedBy(2),
-      },
-    ],
-    colorGroups: [
-      {
-        colors: [colors.yellow, colors.red, colors.blue],
-        shuffleType: shuffleTypes.shiftedBy(2),
-      },
-    ],
-    rotationGroups: [
-      {
-        rotations: [0],
-        shuffleType: shuffleTypes.shiftedBy(0),
-      },
+      // {
+      //   figures: [],
+      //   color: "",
+      //   rotation: "",
+      // },
     ],
 
     generator: generateShuffleFiguresQuestion,
@@ -114,23 +113,14 @@ export const shuffleFiguresConfigs = {
 
     figureLink: "./images/shuffle-icons.svg",
 
-    figureGroups: [
+    figureParts: [
       {
-        figures: ["battery", "drop", "signal"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    colorGroups: [
-      {
-        colors: ["blue"],
-        colors: [...rgbColors],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    rotationGroups: [
-      {
-        rotations: [0, 90, 180],
-        shuffleType: shuffleTypes.unique123,
+        figures: [
+          shuffleTypes.unique123({ items: ["battery", "drop", "signal"] }),
+        ],
+        color: shuffleTypes.unique123({ items: [...rgbColors] }),
+        // todo(vmyshko): or ignore for defaults
+        rotation: shuffleTypes.unique123({ items: [0, 90, 180] }),
       },
     ],
 
@@ -138,147 +128,147 @@ export const shuffleFiguresConfigs = {
     renderer: renderFiguresQuestion,
   },
 
-  colRotHalves: {
-    patternsInCol: 3,
-    patternsInCol: 2,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    viewBox: scaleViewBox(alternateViewBox, 1),
-    viewBox: scaleViewBox("0 0 104 104", 1),
-    maxAnswerCount: 8,
+  // colRotHalves: {
+  //   patternsInCol: 3,
+  //   patternsInCol: 2,
+  //   viewBox: scaleViewBox(defaultViewBox, 1),
+  //   viewBox: scaleViewBox(alternateViewBox, 1),
+  //   viewBox: scaleViewBox("0 0 104 104", 1),
+  //   maxAnswerCount: 8,
 
-    figureLink: "./images/shuffle-halves.svg",
+  //   figureLink: "./images/shuffle-halves.svg",
 
-    figureGroups: [
-      {
-        figures: ["shuffle-halves"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    colorGroups: [
-      {
-        colors: [...defaultColors],
-        colors: [...rgbColors],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    rotationGroups: [
-      {
-        // rotations: [0, 90, 180],
-        rotations: [0, 180],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
+  //   figureGroups: [
+  //     {
+  //       figures: ["shuffle-halves"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
+  //   colorGroups: [
+  //     {
+  //       colors: [...defaultColors],
+  //       colors: [...rgbColors],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
+  //   rotationGroups: [
+  //     {
+  //       // rotations: [0, 90, 180],
+  //       rotations: [0, 180],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
 
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
-  },
+  //   generator: generateShuffleFiguresQuestion,
+  //   renderer: renderFiguresQuestion,
+  // },
 
-  figRotSpades: {
-    patternsInCol: 3,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    viewBox: scaleViewBox("0 0 106 106", 1),
-    maxAnswerCount: 8,
+  // figRotSpades: {
+  //   patternsInCol: 3,
+  //   viewBox: scaleViewBox(defaultViewBox, 1),
+  //   viewBox: scaleViewBox("0 0 106 106", 1),
+  //   maxAnswerCount: 8,
 
-    figureLink: "./images/shuffle-spades.svg",
+  //   figureLink: "./images/shuffle-spades.svg",
 
-    figureGroups: [
-      {
-        figures: ["spade-1", "spade-2", "spade-3"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    colorGroups: [
-      {
-        colors: ["black"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    rotationGroups: [
-      {
-        rotations: [0, 90, 180],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
+  //   figureGroups: [
+  //     {
+  //       figures: ["spade-1", "spade-2", "spade-3"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
+  //   colorGroups: [
+  //     {
+  //       colors: ["black"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
+  //   rotationGroups: [
+  //     {
+  //       rotations: [0, 90, 180],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
 
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
-  },
+  //   generator: generateShuffleFiguresQuestion,
+  //   renderer: renderFiguresQuestion,
+  // },
 
-  figRotLetters: {
-    patternsInCol: 3,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    // viewBox: scaleViewBox("0 0 80 80", 1),
-    maxAnswerCount: 8,
+  // figRotLetters: {
+  //   patternsInCol: 3,
+  //   viewBox: scaleViewBox(defaultViewBox, 1),
+  //   // viewBox: scaleViewBox("0 0 80 80", 1),
+  //   maxAnswerCount: 8,
 
-    figureLink: "./images/letters-ptu.svg",
+  //   figureLink: "./images/letters-ptu.svg",
 
-    figureGroups: [
-      {
-        figures: ["letter-p", "letter-t", "letter-u"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    colorGroups: [
-      {
-        colors: ["black"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
-    // colors: [...defaultColors],
-    rotationGroups: [
-      {
-        rotations: [0, 90, 180],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
+  //   figureGroups: [
+  //     {
+  //       figures: ["letter-p", "letter-t", "letter-u"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
+  //   colorGroups: [
+  //     {
+  //       colors: ["black"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
+  //   // colors: [...defaultColors],
+  //   rotationGroups: [
+  //     {
+  //       rotations: [0, 90, 180],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
 
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
-  },
+  //   generator: generateShuffleFiguresQuestion,
+  //   renderer: renderFiguresQuestion,
+  // },
 
-  fig1_RectTriangleCircle: {
-    patternsInCol: 3,
-    viewBox: scaleViewBox("0 0 106 106", 0.8),
-    maxAnswerCount: 8,
+  // fig1_RectTriangleCircle: {
+  //   patternsInCol: 3,
+  //   viewBox: scaleViewBox("0 0 106 106", 0.8),
+  //   maxAnswerCount: 8,
 
-    shuffleType: shuffleTypes.unique123,
+  //   shuffleType: shuffleTypes.unique123,
 
-    figureLink: "./images/inner-rect-triangle-circle.svg",
+  //   figureLink: "./images/inner-rect-triangle-circle.svg",
 
-    // patternsInCol: 2,
+  //   // patternsInCol: 2,
 
-    figureGroups: [
-      {
-        figures: ["circle", "rect", "triangle"],
-        shuffleType: shuffleTypes.unique123,
-      },
-      // todo(vmyshko): add colors /rotations per fig group?
-      {
-        figures: ["inner-circle", "inner-rect", "inner-triangle"],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
+  //   figureGroups: [
+  //     {
+  //       figures: ["circle", "rect", "triangle"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //     // todo(vmyshko): add colors /rotations per fig group?
+  //     {
+  //       figures: ["inner-circle", "inner-rect", "inner-triangle"],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
 
-    colorGroups: [
-      {
-        // todo(vmyshko): can be more than 3
-        colors: [...rgbColors],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
+  //   colorGroups: [
+  //     {
+  //       // todo(vmyshko): can be more than 3
+  //       colors: [...rgbColors],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
 
-    rotationGroups: [
-      {
-        rotations: [0],
-        shuffleType: shuffleTypes.unique123,
-      },
-    ],
+  //   rotationGroups: [
+  //     {
+  //       rotations: [0],
+  //       shuffleType: shuffleTypes.unique123,
+  //     },
+  //   ],
 
-    //rotations? groups?
+  //   //rotations? groups?
 
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
-  },
+  //   generator: generateShuffleFiguresQuestion,
+  //   renderer: renderFiguresQuestion,
+  // },
 
   // fig2_RectTriangleCircle: {
   //   patternsInCol: 3,
