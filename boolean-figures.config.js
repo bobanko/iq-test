@@ -14,7 +14,7 @@ const _booleanFiguresConfigs = {
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/cross-dots-8.svg",
-    figureCount: 8,
+    figureCount: 8, // todo(vmyshko): replace by fig-name array, like in shuffle
     staticFigures: ["circle", "dot"],
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
@@ -59,7 +59,7 @@ const _booleanFiguresConfigs = {
   },
 
   triangles8xor: {
-    figureGenRule: figureGenRules.symmetric,
+    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/triangles-8.svg",
     figureCount: 8,
