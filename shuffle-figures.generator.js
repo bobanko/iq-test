@@ -104,7 +104,7 @@ export const shuffleTypes = {
       }
     },
 
-  shiftedBy: ({ items, shift = 0 }) =>
+  shiftedBy: ({ items, shift = 0, colShift = 0 }) =>
     function* shifted123({ random, config }) {
       const { patternsInCol = 3, patternsInRow = 3 } = config;
 
@@ -115,7 +115,7 @@ export const shuffleTypes = {
       const mainDiagIndex = ({ rowIndex, colIndex, itemsCount }) =>
         itemsCount - rowIndex + colIndex;
       const secondaryDiagIndex = ({ rowIndex, colIndex }) =>
-        rowIndex * shift + colIndex;
+        rowIndex * shift + colIndex + colShift;
 
       const indexFn = secondaryDiagIndex;
 
@@ -137,17 +137,40 @@ function varColor(color) {
   return `var(--${color})`;
 }
 
+// todo(vmyshko): too complex, refac... but how?
+function* defaultColorGen({ config }) {
+  const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+      yield "black";
+    }
+  }
+}
+
+function* defaultRotationGen({ config }) {
+  const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+      yield 0;
+    }
+  }
+}
+
 function* shuffleFiguresGenerator({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
   // todo(vmyshko): set some default color if no presented?
   const { figureParts } = config;
 
   // init all gens
-  const figurePartsGens = figureParts.map(({ figures, color, rotation }) => ({
-    figures: figures.map((fig) => fig({ random, config })),
-    color: color({ random, config }),
-    rotation: rotation({ random, config }),
-  }));
+  const figurePartsGens = figureParts.map(
+    ({ figures, color = defaultColorGen, rotation = defaultRotationGen }) => ({
+      figures: figures.map((fig) => fig({ random, config })),
+      color: color({ random, config }),
+      rotation: rotation({ random, config }),
+    })
+  );
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
@@ -168,11 +191,13 @@ function generateAnswer({ random, config, correctAnswer }) {
   const { figureParts, colorGroups, rotationGroups } = config;
 
   // init all gens
-  const figurePartsGens = figureParts.map(({ figures, color, rotation }) => ({
-    figures: figures.map((fig) => fig({ random, config })),
-    color: color({ random, config }),
-    rotation: rotation({ random, config }),
-  }));
+  const figurePartsGens = figureParts.map(
+    ({ figures, color = defaultColorGen, rotation = defaultRotationGen }) => ({
+      figures: figures.map((fig) => fig({ random, config })),
+      color: color({ random, config }),
+      rotation: rotation({ random, config }),
+    })
+  );
 
   const firstFigurePartGen = figurePartsGens.at(0);
 
