@@ -5,49 +5,78 @@ import {
 import { scaleViewBox } from "./common.js";
 import { renderFiguresQuestion } from "./figures.renderer.js";
 import { colors, defaultColors, rgbColors } from "./common.config.js";
+import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
+import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns.generator.js";
 
 const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
+// todo(vmyshko): maybe invent new config strucure for nested svgs with variability?
+// the main idea is infinite-nesting blocks to build any svg structure
+// use smth similar to react-templates but with generative blocks?
+// SAMPLE:
+// double-triangles
+
+{
+  /* <pattern-fig>
+  <block rot: [0,180]>
+  #triangle, rot:0, color: red,
+  #triangle, rot:180, color: blue
+  #diagonal
+  </block>
+  
+  </pattern-fig> */
+}
+
+//pattern
+
+// figurePattern
+// id
+// rotation [0,180]
+// [
+// figure: triangle-top [fixed]
+//  color: red [gen]
+
+// triangle-bottom [fixed]
+//  color: blue [gen]
+
+// diagonal [fixed]
+// ]
+
 export const shuffleFiguresConfigs = {
-  // twoFigsRectTriangleCircle: {
-  //   patternsInCol: 3,
-  //   viewBox: scaleViewBox(alternateViewBox, 0.8),
-  //   maxAnswerCount: 8,
+  rotColorTriangles: {
+    patternsInCol: 3,
+    viewBox: scaleViewBox(defaultViewBox, 1),
+    maxAnswerCount: 8,
 
-  //   figureLink: "./images/inner-rect-triangle-circle.svg",
+    figureLink: "./images/shuffle-2-triangles.svg",
 
-  //   figureGroups: [
-  //     ["circle", "rect", "triangle"],
-  //     ["inner-circle", "inner-rect", "inner-triangle"],
-  //   ],
-  //   colors: [...defaultColors],
-  //   // colors: ["blue"],
-  //   // rotations: [0, 90, 180, 270],
+    figureParts: [
+      {
+        figures: [shuffleTypes.single({ items: ["triangle-top"] })],
+        color: shuffleTypes.shiftedBy({
+          shift: 2,
+          items: [colors.blue, colors.red, colors.yellow],
+        }),
+        // rotation: shuffleTypes.rowProgression({ items: [0, 180] }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["triangle-bottom"] })],
+        color: shuffleTypes.shiftedBy({
+          shift: 2,
+          colShift: 2,
+          items: [colors.blue, colors.red, colors.yellow],
+        }),
+        // rotation: shuffleTypes.rowProgression({ items: [180, 0] }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["diagonal"] })],
+      },
+    ],
 
-  //   generator: generateShuffleFiguresQuestion,
-  //   renderer: renderFiguresQuestion,
-  // },
-
-  // rotColorTriangles: {
-  //   patternsInCol: 2,
-  //   viewBox: scaleViewBox(defaultViewBox, 1),
-  //   maxAnswerCount: 8,
-
-  //   figureLink: "./images/shuffle-2-triangles.svg",
-
-  //   figureGroups: [
-  //     ["triangle-top"],
-  //     //  ["triangle-bottom"],
-
-  //     ["diagonal"],
-  //   ],
-  //   colors: [...defaultColors],
-  //   rotations: [0, 180],
-
-  //   generator: generateShuffleFiguresQuestion,
-  //   renderer: renderFiguresQuestion,
-  // },
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
 
   // exact match with base test
   figDice: {
