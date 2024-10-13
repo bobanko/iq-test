@@ -2,12 +2,17 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
+const defaultPatternCount = { patternsInCol: 3, patternsInRow: 3 };
+
 // todo(vmyshko): refac to reuse same code? only yield differs (mostly)
 export const shuffleTypes = {
   // single for all cols/rows but basically random
   single: ({ items }) =>
     function* ({ random, config }) {
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       const shuffledItems = random.shuffle(items);
 
@@ -25,7 +30,10 @@ export const shuffleTypes = {
    */
   rowProgression: ({ items }) =>
     function* rowProgression({ random, config }) {
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       const shuffledItems = random.shuffle(items);
 
@@ -43,7 +51,10 @@ export const shuffleTypes = {
    */
   colProgression: ({ items }) =>
     function* colProgression({ random, config }) {
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       const shuffledItems = random.shuffle(items);
 
@@ -59,7 +70,10 @@ export const shuffleTypes = {
   random: ({ items }) =>
     function* random({ random, config }) {
       // todo(vmyshko): impl
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
         const shuffledItems = random.shuffle(items);
@@ -81,7 +95,10 @@ export const shuffleTypes = {
    */
   unique123: ({ items }) =>
     function* unique123({ random, config }) {
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       const shuffledItems = random.shuffle(items);
 
@@ -106,7 +123,10 @@ export const shuffleTypes = {
 
   shiftedBy: ({ items, shift = 0, colShift = 0 }) =>
     function* shifted123({ random, config }) {
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       const shuffledItems = [...items];
 
@@ -139,7 +159,10 @@ function varColor(color) {
 
 // todo(vmyshko): too complex, refac... but how?
 function* defaultColorGen({ config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
+  const { patternsInCol, patternsInRow } = {
+    ...defaultPatternCount,
+    ...config,
+  };
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
@@ -149,7 +172,10 @@ function* defaultColorGen({ config }) {
 }
 
 function* defaultRotationGen({ config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
+  const { patternsInCol, patternsInRow } = {
+    ...defaultPatternCount,
+    ...config,
+  };
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
@@ -159,7 +185,10 @@ function* defaultRotationGen({ config }) {
 }
 
 function* shuffleFiguresGenerator({ random, config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
+  const { patternsInCol, patternsInRow } = {
+    ...defaultPatternCount,
+    ...config,
+  };
   // todo(vmyshko): set some default color if no presented?
   const { figureParts } = config;
 
