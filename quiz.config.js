@@ -10,7 +10,6 @@ import { resizableConfigs } from "./resizable.config.js";
 // todo(vmyshko): config every question here? or in each type? shuffle here? no.
 export const quizQuestionConfigs = Object.fromEntries([
   // todo(vmyshko): refac, move to local config? or keep here?
-  // ["oneQuarter90", "twoQuarters90", "threeQuarters"].includes(configName)
 
   ...Object.entries(shuffleFiguresConfigs),
 
