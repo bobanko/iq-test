@@ -172,7 +172,6 @@ export function generateBooleanFiguresQuestion({
     seed,
     patternsInRow,
     patternsInCol,
-    figureCount,
     //
     patterns,
     answers,

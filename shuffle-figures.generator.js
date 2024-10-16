@@ -306,7 +306,6 @@ export function generateShuffleFiguresQuestion({
   return {
     seed,
     patternsInRow,
-    figureCount,
     //
     patterns,
     answers,

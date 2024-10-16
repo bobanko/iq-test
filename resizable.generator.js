@@ -125,7 +125,6 @@ export function generateResizableQuestion({ config, seed, questionIndex }) {
   return {
     seed,
     patternsInRow,
-    figureCount,
     //
     patterns,
     answers,
