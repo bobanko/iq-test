@@ -5,6 +5,7 @@ import { SeededRandom } from "./random.helpers.js";
 import { Timer } from "./timer.js";
 
 // globals
+const patternsInRowDefault = 3;
 const timer = new Timer();
 
 timer.onUpdate((diff) => {
@@ -153,15 +154,13 @@ function generateQuiz() {
   questions.forEach(({ questionData, configName, questionIndex }) => {
     addQuestionButton({
       text: `${questionIndex + 1}`,
-      callbackFn: () => {
+      callbackFn: function _selectQuestion() {
         const config = quizQuestionConfigs[configName];
 
         console.log("🔮", configName);
 
         const $patternQuestionMark =
           $tmplPatternQuestionMark.content.firstElementChild.cloneNode(true);
-
-        $patternQuestionMark.classList.add("pattern-matrix");
 
         // todo(vmyshko): based on current/config
         const {
@@ -177,8 +176,25 @@ function generateQuiz() {
         // todo(vmyshko): put replace with append for fast rendering
         $patternArea.style.setProperty(
           "--size",
-          questionData.patternsInRow ?? 3
+          questionData.patternsInRow ?? patternsInRowDefault
         );
+
+        {
+          const { patternsInRow = patternsInRowDefault } = questionData;
+          // todo(vmyshko): extract this to common, cause other question-types should reset this
+          // 100 + 10 + 100 + 10 + 100 + 10
+          const targetWidthPx = 340; //px - total width that we want to get
+          const maxPatternSizePx = 100;
+          const outerBorderPx = 10 * 2; //px
+          const gapsPx = 10 * (patternsInRow - 1);
+          const patternSizePx =
+            (targetWidthPx - outerBorderPx - gapsPx) / patternsInRow;
+
+          $patternArea.style.setProperty(
+            "--pattern-size",
+            `${Math.min(patternSizePx, maxPatternSizePx)}px`
+          );
+        }
 
         $patternArea.replaceChildren(...questionPatterns);
         // todo(vmyshko): this should be done (once) outside for all renderers
@@ -277,7 +293,7 @@ export function wrapAnswers({
   quizAnswers,
   questionIndex,
 }) {
-  const random = new SeededRandom(seed);
+  const random = new SeededRandom(seed + questionIndex);
 
   $answerList.replaceChildren();
 

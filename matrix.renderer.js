@@ -27,24 +27,7 @@ function createPaintedMatrix({ points = [], mtxSize }) {
 }
 
 export function renderMatrixQuestion({ config, questionData, questionIndex }) {
-  const { patternsInRow, mtxSize, patterns, answers } = questionData;
-
-  // todo(vmyshko): remove from renderer?
-  {
-    // todo(vmyshko): extract this to common, cause other question-types should reset this
-    // 100 + 10 + 100 + 10 + 100 + 10
-    const targetWidthPx = 340; //px - total width that we want to get
-    const maxPatternSizePx = 100;
-    const outerBorderPx = 10 * 2; //px
-    const gapsPx = 10 * (patternsInRow - 1);
-    const patternSizePx =
-      (targetWidthPx - outerBorderPx - gapsPx) / patternsInRow;
-    $patternArea.style.setProperty(
-      "--pattern-size",
-      `${Math.min(patternSizePx, maxPatternSizePx)}px`
-    );
-  }
-  //
+  const { mtxSize, patterns, answers } = questionData;
 
   const questionPatterns = patterns.map(({ points, id }) => {
     return createPaintedMatrix({ points, mtxSize });
