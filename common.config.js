@@ -4,6 +4,7 @@ export const colors = {
   blue: "blue",
   yellow: "yellow",
   black: "black",
+  white: "white",
 };
 
 export const rgbColors = [colors.red, colors.green, colors.blue];
