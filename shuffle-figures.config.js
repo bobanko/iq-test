@@ -11,9 +11,62 @@ import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns
 const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
+// todo(vmyshko): currently, shift is used for most multi-color
+// it (or any other similar) should provide randomness,
+// and color uniqueness inside 1 figure -- no duplicates
+// maybe shiftage between pre-generated unique color-pairs? tripples?
+
+// todo(vmyshko): allow to disable background for pattern, to use it from svg
+
 // todo(vmyshko): maybe invent new config strucure for nested svgs with variability?
 // the main idea is infinite-nesting blocks to build any svg structure
 // use smth similar to react-templates but with generative blocks?
+
+// what do i want?
+// group figures into blocks
+// color/rotate full block
+// generate props for blocks
+// put blocks into blocks
+// rotate block parts
+
+// it can be sepatated by:
+// figure -- just <use> with link
+// block -- rotation + color, is container for figures/uses
+
+// SAMPLE -- quarters
+/* 
+
+block:
+  block:
+    fig: 'q-1'
+    rot: 0
+  block:
+    fig: 'q-1'
+    rot: 180
+  color: red
+  rot: 0
+
+block:
+  block:
+    fig: 'q-1'
+    rot: 0
+  block:
+    fig: 'q-1'
+    rot: 180
+  color: blue!
+  rot: 180!
+
+  in js:
+
+  const block = {
+    items: {
+    },
+    rot: 0,
+
+  }
+
+*/
+
 // SAMPLE:
 // double-triangles
 
@@ -42,8 +95,111 @@ const alternateViewBox = "2 2 100 100";
 
 // diagonal [fixed]
 // ]
-
+const quarterColors = [colors.yellow, colors.blue, colors.red, colors.black];
+const frameColors = [colors.blue, colors.red, colors.white];
 export const shuffleFiguresConfigs = {
+  color3Frames: {
+    patternsInCol: 3,
+    viewBox: scaleViewBox(defaultViewBox, 1.1),
+    maxAnswerCount: 8,
+
+    figureLink: "./images/shuffle-frames.svg",
+
+    figureParts: [
+      {
+        figures: [shuffleTypes.single({ items: ["fill-outer"] })],
+        color: shuffleTypes.unique123({
+          shift: 2,
+          items: frameColors,
+        }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["fill-middle"] })],
+        color: shuffleTypes.unique123({
+          shift: 2,
+          colShift: 1,
+          items: frameColors,
+        }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["fill-inner"] })],
+        color: shuffleTypes.unique123({
+          shift: 2,
+          colShift: 2,
+          items: frameColors,
+        }),
+      },
+
+      // {
+      //   figures: [shuffleTypes.single({ items: ["frame-outer"] })],
+      // },
+      {
+        figures: [shuffleTypes.single({ items: ["frame-middle"] })],
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["frame-inner"] })],
+      },
+    ],
+
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  rotColorQuarters: {
+    patternsInCol: 3,
+    viewBox: scaleViewBox(defaultViewBox, 0.8),
+    maxAnswerCount: 8,
+
+    figureLink: "./images/shuffle-quarters.svg",
+
+    figureParts: [
+      {
+        figures: [shuffleTypes.single({ items: ["quarter-1"] })],
+        color: shuffleTypes.shiftedBy({
+          shift: 2,
+          items: quarterColors,
+        }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["quarter-2"] })],
+        // rotation: shuffleTypes.single({ items: [180] }),
+        color: shuffleTypes.shiftedBy({
+          shift: 2,
+          colShift: 1,
+          items: quarterColors,
+        }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["quarter-3"] })],
+        color: shuffleTypes.shiftedBy({
+          shift: 2,
+          items: quarterColors,
+        }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["quarter-4"] })],
+        color: shuffleTypes.shiftedBy({
+          shift: 2,
+          colShift: 1,
+          items: quarterColors,
+        }),
+      },
+
+      {
+        figures: [shuffleTypes.single({ items: ["line-h"] })],
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["line-v"] })],
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["circle"] })],
+      },
+    ],
+
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
   rotColorTriangles: {
     patternsInCol: 3,
     viewBox: scaleViewBox(defaultViewBox, 1),
