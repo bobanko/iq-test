@@ -40,8 +40,6 @@ function createFigurePattern({ figureConfig, config }) {
 
     const { figures = [], rotation = 0, color: figureColor } = figurePart;
 
-    rotateTo($svgPart, rotation);
-
     // todo(vmyshko): impl separate coloring for each part?
     // pattern dynamic figures
 
@@ -50,6 +48,7 @@ function createFigurePattern({ figureConfig, config }) {
 
       $use.style.setProperty("--color", figureColor ?? color);
       $use.style.setProperty("stroke-width", strokeWidth);
+      rotateTo($use, rotation);
 
       $use.href.baseVal = getFigureUrl({ link: figureLink, id: figure });
       $svgPart.appendChild($use);
