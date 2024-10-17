@@ -123,6 +123,10 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
   } //row
 
   const correctDegs = mtxDegs[patternsInCol - 1][patternsInRow - 1];
+
+  // delete correct from patterns
+  mtxDegs[patternsInCol - 1][patternsInRow - 1] = null;
+
   // *******
   // ANSWERS
   // *******

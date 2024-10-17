@@ -72,6 +72,8 @@ function createCustomQuestionMark({ config }) {
   });
 
   $patternQuestionMark.classList.add("pattern-question-mark");
+
+  return $patternQuestionMark;
 }
 
 export function renderRotationalQuestion({
@@ -122,6 +124,14 @@ export function renderRotationalQuestion({
     // ***
 
     for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+      if (mtxDegs[rowIndex][colIndex] === null) {
+        //question-mark
+
+        const $patternQuestionMark = createCustomQuestionMark({ config });
+        questionPatterns.push($patternQuestionMark);
+        continue;
+      }
+
       const $pattern = $basePattern.cloneNode(true);
 
       // get parts
@@ -142,7 +152,6 @@ export function renderRotationalQuestion({
     } //col
   } //row
 
-  const $patternQuestionMark = createCustomQuestionMark({ config });
   // *******
   // ANSWERS
   // *******
