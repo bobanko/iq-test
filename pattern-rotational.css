@@ -12,12 +12,6 @@
   /* border-radius: calc(var(--pattern-size) / 2); */
 }
 
-.pattern-rotational.pattern-question-mark {
-  border: none;
-  background: none;
-  stroke-dasharray: 5 2;
-}
-
 .pattern-rotational.pattern-question-mark .frame-fill {
   fill: var(--dimgray);
 }
