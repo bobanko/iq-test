@@ -66,11 +66,17 @@ matrix-move
 formulas
 [ ] fix ambigous answers -- when multiple are correct, no + + + formulas, less \*1 formulas
 
----
+[ ] add skins with diff colors palettes
 
-conceptions:
+[ ] fix styles when clicking on answered answer (yellow becomes gray)
+
+## conceptions:
 
 cumulative IQ -- user passes test 1 or more times, iq updates, like: 5/10, 12/20, 17/30, 24/40; etc.
 like taxi rating. user can see iq per pass, or cumulative, avg per week, month, year, etc.
+
+to record how people pass test and talks /w video?
+examples:
+'kvadratiki ebanie','kakim nahoi obrazom, prosto perevernula'(c)kris
 
 -
