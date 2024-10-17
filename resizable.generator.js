@@ -99,7 +99,7 @@ export function generateResizableQuestion({ config, seed, questionIndex }) {
   const patterns = [...rowPatterns.flat()];
 
   //last block
-  const correctAnswer = patterns.at(-1);
+  const [correctAnswer] = patterns.splice(-1, 1, null);
   correctAnswer.isCorrect = true;
   correctAnswer.id = getUid();
 

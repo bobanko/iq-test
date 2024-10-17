@@ -249,7 +249,7 @@ export function generateShuffleFigurePatternsQuestion({
 
   const random = new SeededRandom(seed + questionIndex);
 
-  const figurePatterns = [
+  const patterns = [
     ...shuffleFiguresGenerator({
       random,
       config,
@@ -257,7 +257,7 @@ export function generateShuffleFigurePatternsQuestion({
   ];
 
   //last block
-  const correctAnswer = figurePatterns.at(-1);
+  const [correctAnswer] = patterns.splice(-1, 1, null);
   correctAnswer.isCorrect = true;
   correctAnswer.id = getUid();
 
@@ -289,7 +289,7 @@ export function generateShuffleFigurePatternsQuestion({
     seed,
     patternsInRow,
     //
-    patterns: figurePatterns,
+    patterns,
     answers,
     correctAnswer,
     //

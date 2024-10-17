@@ -1,3 +1,5 @@
+import { createQuestionMark } from "./common.renderer.js";
+
 function getPointFlatIndex({ point, mtxSize }) {
   return point.row * mtxSize + point.col;
 }
@@ -29,10 +31,11 @@ function createPaintedMatrix({ points = [], mtxSize }) {
 export function renderMatrixQuestion({ config, questionData, questionIndex }) {
   const { mtxSize, patterns, answers } = questionData;
 
-  const questionPatterns = patterns.map(({ points, id }) => {
-    return createPaintedMatrix({ points, mtxSize });
-    // todo(vmyshko): apply id
-  });
+  const questionPatterns = patterns.map((pattern) =>
+    pattern
+      ? createPaintedMatrix({ points: pattern.points, mtxSize })
+      : createQuestionMark()
+  );
 
   // *******
   // ANSWERS

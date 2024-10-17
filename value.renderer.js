@@ -1,4 +1,7 @@
-function createValuePattern({ value = "", config }) {
+import { createQuestionMark } from "./common.renderer.js";
+
+function createValuePattern({ pattern, config }) {
+  const { value } = pattern;
   const { color = "black" } = config;
 
   const $patternContainer =
@@ -13,13 +16,13 @@ function createValuePattern({ value = "", config }) {
 export function renderValuesQuestion({ config, questionData }) {
   const { patterns, answers } = questionData;
 
-  const questionPatterns = patterns.map(({ value, id }) => {
-    return createValuePattern({ value, config });
-  });
+  const questionPatterns = patterns.map((pattern) =>
+    pattern ? createValuePattern({ pattern, config }) : createQuestionMark()
+  );
 
   const answerPatterns = answers.map(({ value, id, isCorrect }) => {
     return {
-      $pattern: createValuePattern({ value, config }),
+      $pattern: createValuePattern({ pattern: { value }, config }),
       id,
       isCorrect,
     };

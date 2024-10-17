@@ -159,15 +159,8 @@ function generateQuiz() {
 
         console.log("🔮", configName);
 
-        const $patternQuestionMark =
-          $tmplPatternQuestionMark.content.firstElementChild.cloneNode(true);
-
         // todo(vmyshko): based on current/config
-        const {
-          questionPatterns,
-          answerPatterns,
-          $questionMark = $patternQuestionMark,
-        } = config.renderer({
+        const { questionPatterns, answerPatterns } = config.renderer({
           config,
           questionData,
           questionIndex,
@@ -184,7 +177,7 @@ function generateQuiz() {
           // todo(vmyshko): extract this to common, cause other question-types should reset this
           // 100 + 10 + 100 + 10 + 100 + 10
           const targetWidthPx = 340; //px - total width that we want to get
-          const maxPatternSizePx = 100;
+          const maxPatternSizePx = 320;
           const outerBorderPx = 10 * 2; //px
           const gapsPx = 10 * (patternsInRow - 1);
           const patternSizePx =
@@ -197,13 +190,8 @@ function generateQuiz() {
         }
 
         $patternArea.replaceChildren(...questionPatterns);
-        // todo(vmyshko): this should be done (once) outside for all renderers
-        // replace last pattern with ? and move it to answers
-        const $correctAnswerPattern = $patternArea.lastChild;
 
-        //new,old
-        $patternArea.replaceChild($questionMark, $correctAnswerPattern);
-        ///end-----------
+        //--- end -----------
 
         wrapAnswers({
           seed: seed + questionIndex,

@@ -1,3 +1,5 @@
+import { createQuestionMark } from "./common.renderer.js";
+
 function createFormulaPattern({
   value = "",
   label = null,
@@ -34,9 +36,11 @@ function createFormulaPattern({
 export function renderFormulasQuestion({ config, questionData }) {
   const { patterns, answers } = questionData;
 
-  const questionPatterns = patterns.map((pattern) => {
-    return createFormulaPattern({ ...pattern, config });
-  });
+  const questionPatterns = patterns.map((pattern) =>
+    pattern
+      ? createFormulaPattern({ ...pattern, config })
+      : createQuestionMark({ classList: ["pattern-formula"] })
+  );
 
   const answerPatterns = answers.map((pattern) => {
     const { id, isCorrect } = pattern;
@@ -47,17 +51,8 @@ export function renderFormulasQuestion({ config, questionData }) {
     };
   });
 
-  const $patternQuestionMark = createFormulaPattern({
-    type: "value",
-    config,
-    //
-  });
-
-  $patternQuestionMark.classList.add("pattern-question-mark");
-
   return {
     questionPatterns,
-    $questionMark: $patternQuestionMark,
     answerPatterns,
   };
 }

@@ -1,4 +1,5 @@
 import { scaleViewBox } from "./common.js";
+import { createQuestionMark } from "./common.renderer.js";
 import { preventSvgCache, wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
@@ -31,7 +32,6 @@ function createFigurePattern({ figureConfig, config }) {
   // svg as container
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true);
-  // const $svgPatternContainer = $svgPatternContainerDiv.firstElementChild;
 
   $svgPatternContainer.setAttribute(
     "viewBox",
@@ -65,7 +65,9 @@ export function renderFiguresQuestion({ config, questionData, questionIndex }) {
   const { patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((figureConfig) =>
-    createFigurePattern({ figureConfig, config })
+    figureConfig
+      ? createFigurePattern({ figureConfig, config })
+      : createQuestionMark()
   );
 
   const answerPatterns = answers.map((figureConfig) => {

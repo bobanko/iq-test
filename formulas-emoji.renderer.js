@@ -1,3 +1,4 @@
+import { createQuestionMark } from "./common.renderer.js";
 import { SeededRandom } from "./random.helpers.js";
 
 function createFormulaPattern({
@@ -41,6 +42,7 @@ function createFormulaPattern({
     // ["🐷", "🍄", "🤖"],
   ];
 
+  // todo(vmyshko): add questionIndex to seed?
   const random = new SeededRandom(seed);
 
   const emojiSet = random.sample(emojiSets);
@@ -63,12 +65,15 @@ function createFormulaPattern({
 export function renderFormulasEmojiQuestion({ config, questionData }) {
   const { patterns, answers, seed } = questionData;
 
-  const questionPatterns = patterns.map((pattern) => {
-    return createFormulaPattern({ ...pattern, seed, config });
-  });
+  const questionPatterns = patterns.map((pattern) =>
+    pattern
+      ? createFormulaPattern({ ...pattern, seed, config })
+      : createQuestionMark({ classList: ["pattern-formula"] })
+  );
 
   const answerPatterns = answers.map((pattern) => {
     const { id, isCorrect } = pattern;
+
     return {
       $pattern: createFormulaPattern({ ...pattern, seed, config }),
       id,
@@ -76,17 +81,8 @@ export function renderFormulasEmojiQuestion({ config, questionData }) {
     };
   });
 
-  const $patternQuestionMark = createFormulaPattern({
-    seed,
-    type: "value",
-    config,
-  });
-
-  $patternQuestionMark.classList.add("pattern-question-mark");
-
   return {
     questionPatterns,
-    $questionMark: $patternQuestionMark,
     answerPatterns,
   };
 }

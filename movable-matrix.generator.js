@@ -136,7 +136,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   } // row
 
   //last block
-  const correctAnswer = patterns.at(-1);
+  const [correctAnswer] = patterns.splice(-1, 1, null);
   correctAnswer.isCorrect = true;
 
   // *******

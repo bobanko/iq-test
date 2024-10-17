@@ -1,4 +1,5 @@
 import { scaleViewBox } from "./common.js";
+import { createQuestionMark } from "./common.renderer.js";
 import { preventSvgCache, wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
@@ -75,7 +76,9 @@ export function renderFigurePatternsQuestion({
   const { patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((figureConfig) =>
-    createFigurePattern({ figureConfig, config })
+    figureConfig
+      ? createFigurePattern({ figureConfig, config })
+      : createQuestionMark()
   );
 
   const answerPatterns = answers.map((figureConfig) => {
