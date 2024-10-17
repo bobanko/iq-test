@@ -54,8 +54,8 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
 
   // todo(vmyshko): make constructor for all gen helpers and init it here
 
-  const rowsNum = 3;
-  const colsNum = 3;
+  const patternsInCol = 3;
+  const patternsInRow = 3;
 
   // gen rules
   // todo(vmyshko): make unique rules, no dupes
@@ -69,7 +69,7 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
   const rowsDeltaDegs = []; // basic rnd rotations for all figs in specific row
   const mtxDegs = []; // absolute rotations for all figs in all rows/cols
 
-  for (let row = 0; row < rowsNum; row++) {
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     // row
 
     // todo(vmyshko): make this for each fig
@@ -104,23 +104,25 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
 
     // *** cols ***
 
-    mtxDegs[row] = [];
+    mtxDegs[rowIndex] = [];
 
-    for (let col = 0; col < colsNum; col++) {
-      mtxDegs[row][col] = [];
+    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+      mtxDegs[rowIndex][colIndex] = [];
 
       config.figs.forEach((fig, figIndex) => {
         // todo(vmyshko): grab last pattern degs as answer degs
         const currentDeg = normalizeDeg(
-          fig.startDeg + rowsDeltaDegs[row][figIndex] + rules[figIndex] * col
+          fig.startDeg +
+            rowsDeltaDegs[rowIndex][figIndex] +
+            rules[figIndex] * colIndex
         );
 
-        mtxDegs[row][col].push(currentDeg);
+        mtxDegs[rowIndex][colIndex].push(currentDeg);
       }); //fig
     } //col
   } //row
 
-  const correctDegs = mtxDegs[rowsNum - 1][colsNum - 1];
+  const correctDegs = mtxDegs[patternsInCol - 1][patternsInRow - 1];
   // *******
   // ANSWERS
   // *******
@@ -196,11 +198,14 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
 
   return {
     seed,
-    rowsNum,
-    colsNum,
-    config,
 
+    patternsInRow,
+    patternsInCol,
+
+    config,
     mtxDegs,
+    // todo(vmyshko): refac to
+    //patterns
     answers,
     correctAnswer,
   };

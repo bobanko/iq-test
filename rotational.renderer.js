@@ -26,8 +26,10 @@ function createPatternRotational({
     canOverlap = true, // [2 and more] figs can overlap each other - have same deg
     svgFrame = svgFrames.circle,
   },
+
   seed,
 }) {
+  // todo(vmyshko): add questionIndex to seed
   const random = new SeededRandom(seed);
   const $pattern = createPatternRotationalBase({ svgFrame });
   const $partContainer = $pattern.querySelector(".part-container");
@@ -64,6 +66,14 @@ function createPatternRotational({
   return $pattern;
 }
 
+function createCustomQuestionMark({ config }) {
+  const $patternQuestionMark = createPatternRotationalBase({
+    svgFrame: config.svgFrame,
+  });
+
+  $patternQuestionMark.classList.add("pattern-question-mark");
+}
+
 export function renderRotationalQuestion({
   config,
   questionData,
@@ -77,8 +87,8 @@ export function renderRotationalQuestion({
 
   const {
     //
-    rowsNum,
-    colsNum,
+    patternsInRow,
+    patternsInCol,
     //
     mtxDegs,
     answers,
@@ -97,7 +107,9 @@ export function renderRotationalQuestion({
 
   const shuffledDefaultColors = random.shuffle(defaultColors);
 
-  for (let row = 0; row < rowsNum; row++) {
+  //create patterns
+
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     // row
 
     if (config.shiftColorsBetweenRows) {
@@ -109,7 +121,7 @@ export function renderRotationalQuestion({
 
     // ***
 
-    for (let col = 0; col < colsNum; col++) {
+    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
       const $pattern = $basePattern.cloneNode(true);
 
       // get parts
@@ -122,7 +134,7 @@ export function renderRotationalQuestion({
         // todo(vmyshko): apply rule? color?
         $part.classList.add(colors[partIndex]);
 
-        const currentDeg = mtxDegs[row][col][partIndex];
+        const currentDeg = mtxDegs[rowIndex][colIndex][partIndex];
         rotateTo($part, currentDeg);
       });
 
@@ -130,12 +142,7 @@ export function renderRotationalQuestion({
     } //col
   } //row
 
-  const $patternQuestionMark = createPatternRotationalBase({
-    svgFrame: config.svgFrame,
-  });
-
-  $patternQuestionMark.classList.add("pattern-question-mark");
-
+  const $patternQuestionMark = createCustomQuestionMark({ config });
   // *******
   // ANSWERS
   // *******
@@ -169,7 +176,6 @@ export function renderRotationalQuestion({
 
   return {
     questionPatterns,
-    $questionMark: $patternQuestionMark,
     answerPatterns,
   };
 }
