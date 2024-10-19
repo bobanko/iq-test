@@ -14,13 +14,13 @@ export const quizQuestionConfigs = Object.fromEntries([
 
   ...Object.entries(cutoutConfigs),
 
-  // ...Object.entries(shuffleFiguresConfigs),
-  // ...Object.entries(resizableConfigs),
+  ...Object.entries(shuffleFiguresConfigs),
+  ...Object.entries(resizableConfigs),
 
-  // ...Object.entries(formulasConfigs),
-  // ...Object.entries(numberProgressionConfigs),
-  // ...Object.entries(booleanFiguresConfigs),
-  // ...Object.entries(booleanMatrixConfigs),
+  ...Object.entries(formulasConfigs),
+  ...Object.entries(numberProgressionConfigs),
+  ...Object.entries(booleanFiguresConfigs),
+  ...Object.entries(booleanMatrixConfigs),
   ...Object.entries(rotationalConfigs),
-  // ...Object.entries(movableMatrixConfigs),
+  ...Object.entries(movableMatrixConfigs),
 ]);
