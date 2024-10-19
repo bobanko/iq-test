@@ -1,0 +1,28 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cutout-lines-mod" clip-path="url(#clip0_866_2596)">
+<g id="pattern">
+<rect id="background" width="320" height="320" fill="#247D86"/>
+<g id="lines-d">
+<line id="line-6" x1="-22.3016" y1="174.518" x2="339.698" y2="130.518" stroke="#00BC62" stroke-width="5"/>
+<line id="line-5" x1="-22.2981" y1="148.518" x2="335.702" y2="105.518" stroke="#00BC62" stroke-width="5"/>
+<line id="line-2" x1="18.1432" y1="-13.2871" x2="233.143" y2="344.713" stroke="#FF5455" stroke-width="5"/>
+<line id="line-4" x1="154.444" y1="-13.5252" x2="232.444" y2="349.475" stroke="#FFDF32" stroke-width="5"/>
+<line id="line-3" x1="132.446" y1="-19.517" x2="210.446" y2="349.483" stroke="#FF5455" stroke-width="5"/>
+<line id="line-1" x1="-8.85242" y1="-10.2798" x2="196.148" y2="333.72" stroke="#FFDF32" stroke-width="5"/>
+</g>
+</g>
+<g id="questions">
+<rect id="question-f" x="136.5" y="98.5" width="79" height="79" stroke="black"/>
+<rect id="question-e" x="59.5" y="108.5" width="79" height="79" stroke="black"/>
+<rect id="question-d" x="99.5" y="101.5" width="79" height="79" stroke="black"/>
+<rect id="question-c" x="73.5" y="83.5" width="79" height="79" stroke="black"/>
+<rect id="question-b" x="89.5" y="68.5" width="79" height="79" stroke="black"/>
+<rect id="question-a" x="108.5" y="137.5" width="79" height="79" stroke="black"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_866_2596">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+</defs>
+</svg>

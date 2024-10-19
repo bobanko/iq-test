@@ -1,0 +1,32 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cutout-star" clip-path="url(#clip0_866_2551)">
+<g id="pattern">
+<rect id="background" width="320" height="320" fill="#FFDF32"/>
+<path id="star" d="M160.476 20.5537L192.422 118.875C193.158 121.141 195.27 122.675 197.653 122.675L301.034 122.675C301.204 122.675 301.287 122.722 301.336 122.761C301.401 122.811 301.47 122.898 301.509 123.021C301.549 123.143 301.545 123.254 301.522 123.333C301.505 123.393 301.465 123.48 301.328 123.58L217.691 184.346C215.763 185.746 214.956 188.229 215.693 190.495L247.639 288.816C247.692 288.978 247.673 289.071 247.652 289.13C247.624 289.207 247.562 289.299 247.458 289.375C247.354 289.451 247.247 289.482 247.165 289.484C247.102 289.486 247.007 289.475 246.87 289.375L163.233 228.609C161.305 227.209 158.695 227.209 156.767 228.609L73.1302 289.375C72.9927 289.475 72.898 289.486 72.8353 289.484C72.7533 289.482 72.6465 289.451 72.5424 289.375C72.4383 289.299 72.376 289.207 72.3483 289.13C72.3271 289.071 72.3082 288.978 72.3607 288.816L104.307 190.495C105.044 188.229 104.237 185.746 102.309 184.346L18.6722 123.58C18.5348 123.48 18.4951 123.393 18.4775 123.333C18.4545 123.254 18.4508 123.143 18.4906 123.021C18.5304 122.898 18.5987 122.811 18.6635 122.761C18.7132 122.722 18.7962 122.675 18.9661 122.675L122.347 122.675C124.73 122.675 126.842 121.141 127.578 118.875L159.524 20.5537C159.577 20.3921 159.647 20.3276 159.699 20.2922C159.767 20.2461 159.871 20.2082 160 20.2082C160.129 20.2082 160.233 20.2461 160.301 20.2922C160.353 20.3276 160.423 20.3921 160.476 20.5537Z" fill="#00C8DC" stroke="black" stroke-width="5"/>
+</g>
+<g id="questions">
+<rect id="question-14" x="242" y="87" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-14_2" x="2" y="87" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-14_3" x="122" y="2" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-14_4" x="42" y="242" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-13" x="42" y="108" width="76" height="76" stroke="#FF5455" stroke-width="4"/>
+<rect id="question-12" x="86" y="82" width="76" height="76" stroke="#00BC62" stroke-width="4"/>
+<rect id="question-11" x="180" y="202" width="76" height="76" stroke="#FF5455" stroke-width="4"/>
+<rect id="question-10" x="158" y="82" width="76" height="76" stroke="#00BC62" stroke-width="4"/>
+<rect id="question-9" x="122" y="192" width="76" height="76" stroke="#00BC62" stroke-width="4"/>
+<rect id="question-8" x="208" y="102" width="76" height="76" stroke="#FF5455" stroke-width="4"/>
+<rect id="question-7" x="208" y="239" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-6" x="62" y="148" width="76" height="76" stroke="#00BC62" stroke-width="4"/>
+<rect id="question-5" x="122" y="131" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-4" x="67" y="205" width="76" height="76" stroke="#FF5455" stroke-width="4"/>
+<rect id="question-3" x="180" y="152" width="76" height="76" stroke="#00BC62" stroke-width="4"/>
+<rect id="question-2" x="122" y="33" width="76" height="76" stroke="#FF5455" stroke-width="4"/>
+<rect id="question-1" x="2" y="2" width="76" height="76" stroke="#00C8DC" stroke-width="4"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_866_2551">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+</defs>
+</svg>

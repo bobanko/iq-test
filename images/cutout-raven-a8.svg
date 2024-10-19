@@ -1,0 +1,29 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cutout-raven-a8" clip-path="url(#clip0_834_2465)">
+<g id="pattern">
+<rect id="background" width="320" height="320" fill="#FFDF32"/>
+<line id="Line 29" y1="240" x2="320" y2="240" stroke="black" stroke-width="4"/>
+<line id="Line 28" y1="93" x2="320" y2="93" stroke="black" stroke-width="4"/>
+<line id="Line 24" y1="70" x2="320" y2="70" stroke="black" stroke-width="4"/>
+<line id="Line 3" x1="240" y1="-8.74228e-08" x2="240" y2="320" stroke="black" stroke-width="4"/>
+<line id="Line 2" x1="91" y1="-8.74228e-08" x2="91" y2="320" stroke="black" stroke-width="4"/>
+<line id="Line 1" x1="68" y1="-8.74228e-08" x2="68" y2="320" stroke="black" stroke-width="4"/>
+</g>
+<g id="questions">
+<rect id="question-9" x="202" y="202" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-8" x="202" y="122" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-7" x="202" y="42" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-6" x="122" y="202" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-5" x="122" y="122" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-4" x="122" y="42" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-3" x="42" y="202" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-2" x="42" y="122" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+<rect id="question-1" x="42" y="42" width="76" height="76" stroke="#EB00FF" stroke-width="4"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_834_2465">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+</defs>
+</svg>
