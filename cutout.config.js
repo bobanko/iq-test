@@ -9,6 +9,28 @@ const figsFn = (prefix, count = 1) =>
     .map((_, index) => `${prefix}${index + 1}`);
 
 export const cutoutConfigs = {
+  cutout_4figs: {
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-4figs.svg",
+    figures: ["pattern"],
+
+    cutoutSize: 80,
+    cutoutPoints: [
+      [145, 120],
+      [225, 120],
+      [121, 120],
+      [59, 120],
+      [121, 197],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 5,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+
   cutout_linesOrig: {
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-lines-orig.svg",

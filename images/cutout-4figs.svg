@@ -1,0 +1,23 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cutout-4figs" opacity="0.7" clip-path="url(#clip0_834_2392)">
+<g id="pattern">
+<rect id="background" width="320" height="320" fill="#00C8DC" fill-opacity="0.2"/>
+<circle id="Ellipse 3" cx="98.5" cy="97.5" r="62.5" fill="#00C8DC"/>
+<path id="Polygon 2" d="M230 40L299.282 160H160.718L230 40Z" fill="#00BC62"/>
+<rect id="Rectangle 31" x="36" y="160" width="125" height="125" fill="#00BC62"/>
+<path id="Polygon 3" d="M225.5 285L161.304 236.977L185.824 159.273L265.176 159.273L289.696 236.977L225.5 285Z" fill="#00C8DC"/>
+</g>
+<g id="questions">
+<rect id="question-1" x="145" y="120" width="80" height="80" stroke="black" stroke-width="4"/>
+<rect id="question-1_2" x="225" y="120" width="80" height="80" stroke="black" stroke-width="4"/>
+<rect id="question-1_3" x="121" y="120" width="80" height="80" stroke="black" stroke-width="4"/>
+<rect id="question-1_4" x="59" y="120" width="80" height="80" stroke="black" stroke-width="4"/>
+<rect id="question-1_5" x="121" y="197" width="80" height="80" stroke="black" stroke-width="4"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_834_2392">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+</defs>
+</svg>
