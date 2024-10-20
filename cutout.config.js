@@ -34,14 +34,16 @@ export const cutoutConfigs = {
     figureLink: "./images/cutout-go.svg",
     figures: ["pattern"],
 
-    cutoutSize: 80,
+    cutoutSize: 76,
     cutoutPoints: [
-      [17, 179],
-      [17, 126],
-      [17, 73],
-      [12, 179],
-      [12, 126],
-      [12, 73],
+      [179, 179],
+      [179, 126],
+      [179, 73],
+
+      [126, 179],
+      // [126, 126], center
+      [126, 73],
+
       [73, 179],
       [73, 126],
       [73, 73],
