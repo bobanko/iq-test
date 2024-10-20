@@ -29,21 +29,22 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
   cutout_go: {
-    viewBox: defaultCutoutViewBox,
+    // todo(vmyshko): something is off, investigate
+    viewBox: "4 4 320 320",
     figureLink: "./images/cutout-go.svg",
     figures: ["pattern"],
 
     cutoutSize: 80,
     cutoutPoints: [
-      [178, 174],
-      [178, 122],
-      [178, 67],
-      [122, 174],
-      [122, 122],
-      [122, 67],
-      [71, 174],
-      [71, 122],
-      [71, 67],
+      [17, 179],
+      [17, 126],
+      [17, 73],
+      [12, 179],
+      [12, 126],
+      [12, 73],
+      [73, 179],
+      [73, 126],
+      [73, 73],
     ],
 
     patternsInCol: 1,
