@@ -9,6 +9,50 @@ const figsFn = (prefix, count = 1) =>
     .map((_, index) => `${prefix}${index + 1}`);
 
 export const cutoutConfigs = {
+  // todo(vmyshko): impl color change
+  // todo(vmyshko): impl answer rotation
+  // todo(vmyshko): impl altering patterns(figures
+  cutout_raysBox: {
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-rays-box.svg",
+    figures: ["pattern"],
+    variants: figsFn("lines-", 6),
+
+    cutoutSize: 140,
+    cutoutPoints: [[121 - 30, 116 - 30]],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+  cutout_go: {
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-go.svg",
+    figures: ["pattern"],
+
+    cutoutSize: 80,
+    cutoutPoints: [
+      [178, 174],
+      [178, 122],
+      [178, 67],
+      [122, 174],
+      [122, 122],
+      [122, 67],
+      [71, 174],
+      [71, 122],
+      [71, 67],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
   cutout_4figs: {
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-4figs.svg",

@@ -20,6 +20,7 @@ function createCutoutMask({ x, y, size, width = size, height = size }) {
 
 function createPatternBase({ figureConfig, config }) {
   const { figureLink, figures = [] } = config;
+  const { variant = null } = figureConfig;
 
   // svg as container
   const $svgPatternContainer =
@@ -32,13 +33,19 @@ function createPatternBase({ figureConfig, config }) {
     $svgPatternContainer.appendChild($use);
   }
 
+  if (variant) {
+    const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
+    $use.href.baseVal = getFigureUrl({ link: figureLink, id: variant });
+    $svgPatternContainer.appendChild($use);
+  }
+
   return $svgPatternContainer;
 }
 
 function createQuestionPattern({ figureConfig, config }) {
   const { viewBox, figureLink, cutoutSize, figures = [] } = config;
 
-  const { cutout } = figureConfig;
+  const { cutout, variant } = figureConfig;
 
   // svg as container
   const $questionPattern = createPatternBase({ figureConfig, config });

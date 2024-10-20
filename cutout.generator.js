@@ -10,9 +10,11 @@ function varColor(color) {
 
 function cutoutGenerator({ random, config }) {
   const randomCutout = random.sample(config.cutoutPoints);
+  const randomVariant = random.sample(config.variants || []);
 
   return {
     cutout: randomCutout,
+    variant: randomVariant,
   };
 }
 
@@ -63,7 +65,7 @@ export function generateCutoutQuestion({ config, seed, questionIndex }) {
         config,
       });
     },
-    getValueHashFn: ({ cutout }) => `${cutout};`,
+    getValueHashFn: ({ cutout, variant }) => `${cutout};${variant};`,
   });
 
   // todo(vmyshko): review, do those all are used?

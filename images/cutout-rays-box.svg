@@ -1,0 +1,47 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cutout-box" clip-path="url(#clip0_886_2701)">
+<g id="pattern">
+<rect id="background" width="320" height="320" fill="#003EDC"/>
+<rect id="rect-1" x="27" y="97" width="266" height="120" fill="#FF5455"/>
+</g>
+<g id="Mask group">
+<mask id="mask0_886_2701" style="mask-type:alpha" maskUnits="userSpaceOnUse" x="27" y="97" width="266" height="120">
+<rect id="rect-1_2" x="27" y="97" width="266" height="120" fill="#FF5455"/>
+</mask>
+<g mask="url(#mask0_886_2701)">
+<g id="variants">
+<g id="lines-6">
+<line id="Line 2" x1="66.2426" y1="289.983" x2="250.488" y2="26.8528" stroke="#FFDF32" stroke-width="4"/>
+<line id="Line 1" x1="69.5192" y1="26.8528" x2="253.765" y2="289.983" stroke="#FFDF32" stroke-width="4"/>
+</g>
+<g id="lines-1">
+<line id="Line 2_2" x1="45.0174" y1="271.721" x2="272.156" y2="44.5821" stroke="#FFDF32" stroke-width="4"/>
+<line id="Line 1_2" x1="47.8459" y1="44.5829" x2="274.984" y2="271.721" stroke="#FFDF32" stroke-width="4"/>
+</g>
+<g id="lines-2">
+<line id="Line 2_3" x1="27.2894" y1="250.049" x2="290.419" y2="65.8036" stroke="#FFDF32" stroke-width="4"/>
+<line id="Line 1_3" x1="29.5837" y1="65.8051" x2="292.714" y2="250.051" stroke="#FFDF32" stroke-width="4"/>
+</g>
+<g id="lines-3">
+<line id="Line 2_4" x1="13.5932" y1="225.631" x2="304.72" y2="89.8763" stroke="#FFDF32" stroke-width="4"/>
+<line id="Line 1_4" x1="15.2837" y1="89.8759" x2="306.41" y2="225.63" stroke="#FFDF32" stroke-width="4"/>
+</g>
+<g id="lines-4">
+<line id="Line 2_5" x1="4.34369" y1="199.204" x2="314.621" y2="116.065" stroke="#FFDF32" stroke-width="4"/>
+<line id="Line 1_5" x1="5.37897" y1="116.065" x2="315.656" y2="199.204" stroke="#FFDF32" stroke-width="4"/>
+</g>
+<g id="lines-5">
+<line id="Line 2_6" x1="-0.174311" y1="171.57" x2="319.826" y2="143.574" stroke="#FFDF32" stroke-width="4"/>
+<line id="Line 1_6" x1="0.174311" y1="143.575" x2="320.174" y2="171.571" stroke="#FFDF32" stroke-width="4"/>
+</g>
+</g>
+</g>
+</g>
+<rect id="question" x="121" y="116" width="78" height="78" stroke="black" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0_886_2701">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+</defs>
+</svg>
