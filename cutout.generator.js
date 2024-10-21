@@ -1,12 +1,6 @@
 import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
-import { colors, defaultColors } from "./common.config.js";
-
-// todo(vmyshko): do i need this? or apply only varcolors by default? boolean-figures may be affected
-function varColor(color) {
-  return `var(--${color})`;
-}
 
 function cutoutGenerator({ random, config }) {
   const randomCutout = random.sample(config.cutoutPoints);
