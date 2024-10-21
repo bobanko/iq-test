@@ -1,4 +1,5 @@
 import { getUid } from "./common.js";
+import { varColor } from "./common.renderer.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
@@ -135,11 +136,6 @@ export const shuffleTypes = {
 
   // todo(vmyshko):  impl shifted progressions
 };
-
-// todo(vmyshko): do i need this? or apply only varcolors by default? boolean-figures may be affected
-function varColor(color) {
-  return `var(--${color})`;
-}
 
 // todo(vmyshko): too complex, refac... but how?
 function* defaultColorGen({ config }) {
