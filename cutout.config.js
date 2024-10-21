@@ -12,6 +12,64 @@ export const cutoutConfigs = {
   // todo(vmyshko): impl color change
   // todo(vmyshko): impl answer rotation
   // todo(vmyshko): impl altering patterns(figures
+  cutout_spikes: {
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-spikes.svg",
+    figures: [
+      "pattern",
+      // "questions"
+    ],
+    // variants: figsFn("lines-", 6),
+
+    cutoutSize: 78,
+    cutoutPoints: [
+      [221, 201],
+      [221, 41],
+      [21, 201],
+      [221, 121],
+      [21, 41],
+      [21, 121],
+      [121, 81],
+      [121, 161],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+
+  cutout_circles: {
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-circles.svg",
+    figures: [
+      "pattern",
+      //"questions"
+    ],
+    // variants: figsFn("lines-", 6),
+
+    cutoutSize: 78,
+    cutoutPoints: [
+      [169, 121],
+      [239, 121],
+      [73, 121],
+      [3, 121],
+      [121, 73],
+      [121, 3],
+      [121, 169],
+      [121, 239],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+
   cutout_raysBox: {
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-rays-box.svg",

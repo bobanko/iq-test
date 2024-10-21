@@ -1,0 +1,34 @@
+<svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="cutout-spikes" clip-path="url(#clip0_901_2838)">
+<g id="pattern">
+<rect id="background" width="320" height="320" fill="#FFDF32"/>
+<g id="spikes-1">
+<path id="Vector" d="M300.342 -50L280 369.954L320 370L300.342 -50Z" fill="black"/>
+<path id="Vector_2" d="M260.342 -50L240 369.954L280 370L260.342 -50Z" fill="black"/>
+<path id="Vector_3" d="M220.342 -50L200 369.954L240 370L220.342 -50Z" fill="black"/>
+<path id="Vector_4" d="M180.342 -50L160 369.954L200 370L180.342 -50Z" fill="black"/>
+</g>
+<g id="spikes-2">
+<path id="Vector_5" d="M140.342 370L120 -49.9539L160 -50L140.342 370Z" fill="black"/>
+<path id="Vector_6" d="M100.342 370L80 -49.9539L120 -50L100.342 370Z" fill="black"/>
+<path id="Vector_7" d="M60.3416 370L40 -49.9539L80 -50L60.3416 370Z" fill="black"/>
+<path id="Vector_8" d="M20.3416 370L0 -49.9539L40 -50L20.3416 370Z" fill="black"/>
+</g>
+</g>
+<g id="questions">
+<rect id="question-1"   fill="none" x="221" y="201" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_2" fill="none" x="221" y="41" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_3" fill="none" x="21" y="201" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_4" fill="none" x="221" y="121" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_5" fill="none" x="21" y="41" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_6" fill="none" x="21" y="121" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_7" fill="none" x="121" y="81" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+<rect id="question-1_8" fill="none" x="121" y="161" width="78" height="78" stroke="#EB00FF" stroke-width="2"/>
+</g>
+</g>
+<defs>
+<clipPath id="clip0_901_2838">
+<rect width="320" height="320" fill="white"/>
+</clipPath>
+</defs>
+</svg>
