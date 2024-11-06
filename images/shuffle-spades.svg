@@ -1,6 +1,29 @@
 <svg width="106" height="106" viewBox="0 0 106 106" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M103 103H3V3H103V103Z" stroke="#00C8DC" stroke-width="6" stroke-linecap="round" stroke-linejoin="round"/>
-<text id="spade-1" fill="black" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="50" letter-spacing="0em"><tspan x="28" y="74.5">&#x2660;&#xfe0f;</tspan></text>
-<text id="spade-2" fill="black" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="35" letter-spacing="0.35em"><tspan x="12" y="68.55">&#x2660;&#xfe0f;&#x2660;&#xfe0f;</tspan></text>
-<text id="spade-3" fill="black" xml:space="preserve" style="white-space: pre" font-family="Inter" font-size="25" letter-spacing="0.25em"><tspan x="9" y="64.25">&#x2660;&#xfe0f;&#x2660;&#xfe0f;&#x2660;&#xfe0f;</tspan></text>
+<style>
+svg text{
+    font-family: Apple Color Emoji, "Segoe UI Emoji";
+    text-anchor: middle;
+    dominant-baseline: middle;
+}
+</style>
+
+
+<text id="spade-1" x="50%" y="50%" font-size="140%">♠️</text>
+<text id="spade-2" x="50%" y="50%" font-size="80%">♠️♠️</text>
+<text id="spade-3" x="50%" y="50%" font-size="70%">♠️♠️♠️</text>
+
+<text id="heart-1" x="50%" y="50%" font-size="140%">♥️</text>
+<text id="heart-2" x="50%" y="50%" font-size="80%">♥️♥️</text>
+<text id="heart-3" x="50%" y="50%" font-size="70%">♥️♥️♥️</text>
+
+<text id="club-1" x="50%" y="50%" font-size="140%">♣️</text>
+<text id="club-2" x="50%" y="50%" font-size="80%">♣️♣️</text>
+<text id="club-3" x="50%" y="50%" font-size="70%">♣️♣️♣️</text>
+
+<text id="diamond-1" x="50%" y="50%" font-size="140%">♣️</text>
+<text id="diamond-2" x="50%" y="50%" font-size="80%">♥️♠️</text>
+<!-- <text id="diamond-3" x="50%" y="50%" font-size="60%">♦️♣️♦️</text> -->
+
+<text id="diamond-3" x="50%" y="50%" font-size="70%" textLength="100" lengthAdjust="spacing">♦️♣️♦️</text>
+
 </svg>
