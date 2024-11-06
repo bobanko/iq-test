@@ -14,6 +14,14 @@
   background-color: var(--yellow);
 }
 
+@font-face {
+  /* used to display emoji on windows */
+  font-family: "Segoe UI Emoji";
+  src: local("Segoe UI Emoji");
+
+  size-adjust: 80%;
+}
+
 html {
   display: flex;
 
