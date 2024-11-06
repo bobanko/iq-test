@@ -22,7 +22,10 @@ function createPaintedMatrix({ points = [], mtxSize }) {
   for (let point of points) {
     const flatIndex = getPointFlatIndex({ point, mtxSize });
 
-    $patternMatrix.children[flatIndex].classList.add(point.color);
+    $patternMatrix.children[flatIndex].style.setProperty(
+      "--color",
+      point.color
+    );
   }
 
   return $patternMatrix;

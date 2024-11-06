@@ -1,5 +1,4 @@
 import { getUid } from "./common.js";
-import { varColor } from "./common.renderer.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
@@ -7,7 +6,11 @@ const defaultPatternCount = { patternsInCol: 3, patternsInRow: 3 };
 
 // todo(vmyshko): refac to reuse same code? only yield differs (mostly)
 export const shuffleTypes = {
-  // single for all cols/rows but basically random
+  /**
+   * single for all cols/rows but basically random
+   * @param {*} param0
+   * @returns same item for all rows/cols but basically random
+   */
   single: ({ items }) =>
     function* ({ random, config }) {
       const { patternsInCol, patternsInRow } = {
@@ -28,6 +31,7 @@ export const shuffleTypes = {
    * @example row1: [A, A, A];
    *          row2: [B, B, B];
    *          row3: [C, C, C];
+   * @returns same item for same row
    */
   rowProgression: ({ items }) =>
     function* rowProgression({ random, config }) {
@@ -122,14 +126,18 @@ export const shuffleTypes = {
       }
     },
 
-  shiftedBy: ({ items, shift = 0, colShift = 0 }) =>
+  /**
+   *
+   * @returns items shifted by col/row shift
+   */
+  shiftedBy: ({ items, shift = 0, colShift = 0, shuffle = false }) =>
     function* shifted123({ random, config }) {
       const { patternsInCol, patternsInRow } = {
         ...defaultPatternCount,
         ...config,
       };
 
-      const shuffledItems = [...items];
+      const shuffledItems = shuffle ? random.shuffle(items) : [...items];
 
       // todo(vmyshko): these should be separated
       // todo(vmyshko): ...but random should concat both
@@ -204,7 +212,7 @@ function* shuffleFiguresGenerator({ random, config }) {
       yield [
         {
           figures: firstFigurePartGen.figures.map((f) => f.next().value),
-          color: varColor(firstFigurePartGen.color.next().value),
+          color: firstFigurePartGen.color.next().value,
           rotation: firstFigurePartGen.rotation.next().value,
         },
       ];
@@ -244,7 +252,7 @@ function generateAnswer({ random, config, correctAnswer }) {
   const rotationPool = [...firstFigurePartGen.rotation];
 
   return {
-    color: varColor(random.sample(colorPool)),
+    color: random.sample(colorPool),
     rotation: random.sample(rotationPool),
     figures: random.sample(figureGroupsPool),
     isCorrect: false,

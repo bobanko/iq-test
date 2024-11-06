@@ -1,5 +1,4 @@
 import { getUid } from "./common.js";
-import { varColor } from "./common.renderer.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 
@@ -180,7 +179,7 @@ function* shuffleFiguresGenerator({ random, config }) {
         figureParts: figurePartsGens.map((figurePartGen) => {
           return {
             figures: figurePartGen.figures.map((f) => f.next().value),
-            color: varColor(figurePartGen.color.next().value),
+            color: figurePartGen.color.next().value,
             rotation: figurePartGen.rotation.next().value,
           };
         }),
@@ -223,7 +222,7 @@ function generateAnswer({ random, config, correctAnswer }) {
       const rotationPool = [...figurePartGen.rotation];
 
       return {
-        color: varColor(random.sample(colorPool)),
+        color: random.sample(colorPool),
         rotation: random.sample(rotationPool),
         figures: random.sample(figureGroupsPool),
       };

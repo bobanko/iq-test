@@ -142,7 +142,7 @@ export function renderRotationalQuestion({
           config.figs[partIndex].colorsFrom ?? shuffledDefaultColors;
 
         // todo(vmyshko): apply rule? color?
-        $part.classList.add(colors[partIndex]);
+        $part.style.setProperty("--color", colors[partIndex]);
 
         const currentDeg = mtxDegs[rowIndex][colIndex][partIndex];
         rotateTo($part, currentDeg);
@@ -166,7 +166,7 @@ export function renderRotationalQuestion({
     parts.forEach(($part, partIndex) => {
       const colors = config.figs[partIndex].colorsFrom ?? shuffledDefaultColors;
       // todo(vmyshko): apply rule? color?
-      $part.classList.add(colors[partIndex]);
+      $part.style.setProperty("--color", colors[partIndex]);
 
       // todo(vmyshko): should it come from config?
       const viewBox = "0 0 100 100";

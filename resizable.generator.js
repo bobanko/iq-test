@@ -2,7 +2,6 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 import { colors, defaultColors } from "./common.config.js";
-import { varColor } from "./common.renderer.js";
 
 const upscaleFactor = 1.9;
 
@@ -26,7 +25,7 @@ function* resizableGenerator({ random }) {
 
   for (let scaleType of random.shuffle(scaleTypes)) {
     const randomFig = random.popFrom(possibleFigs);
-    const randomFigColor = varColor(random.popFrom(possibleFigColors));
+    const randomFigColor = random.popFrom(possibleFigColors);
 
     // base fig
     yield [
@@ -43,7 +42,7 @@ function* resizableGenerator({ random }) {
         scaleX: upscaleFactor,
         scaleY: upscaleFactor,
 
-        color: varColor(resizeLineColor),
+        color: resizeLineColor,
       },
     ];
     // upscaled fig
