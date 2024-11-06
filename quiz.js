@@ -352,3 +352,14 @@ $debugCheckbox.addEventListener("change", (event) => {
 });
 
 $debugCheckbox.click();
+
+function bindingsOnKeypress({ key }) {
+  const keyBindingsMap = new Map([
+    ["ArrowRight", () => $btnNextQuestion.click()],
+    ["ArrowLeft", () => $btnPrevQuestion.click()],
+  ]);
+
+  keyBindingsMap.get(key)?.();
+}
+
+document.addEventListener("keydown", bindingsOnKeypress);
