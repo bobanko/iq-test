@@ -41,6 +41,35 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
+  cutout_circlesStroked: {
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-circles-stroke.svg",
+    figures: [
+      "pattern",
+      //"questions"
+    ],
+    // variants: figsFn("lines-", 6),
+
+    cutoutSize: 78,
+    cutoutPoints: [
+      [169, 121],
+      [239, 121],
+      [73, 121],
+      [3, 121],
+      [121, 73],
+      [121, 3],
+      [121, 169],
+      [121, 239],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+
   cutout_circles: {
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-circles.svg",
