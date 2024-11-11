@@ -138,7 +138,7 @@ export const shuffleFiguresConfigs = {
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
 
-    noDefaultFrame: true,
+    questionMarkFigure: "frame-outer",
 
     figureLink: "./images/shuffle-frames.svg",
 
@@ -211,7 +211,7 @@ export const shuffleFiguresConfigs = {
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
 
-    noDefaultFrame: true,
+    questionMarkFigure: "frame-outer",
 
     figureLink: "./images/shuffle-frames.svg",
 
@@ -283,7 +283,7 @@ export const shuffleFiguresConfigs = {
     patternsInCol: 3,
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
-    noDefaultFrame: true,
+    questionMarkFigure: "circle",
 
     figureLink: "./images/shuffle-quarters.svg",
 
@@ -426,11 +426,8 @@ export const shuffleFiguresConfigs = {
   rotIcons: {
     patternsInCol: 2, // hard to solve
     patternsInCol: 3,
-    // todo(vmyshko): scaled viewbox fails with rotation -- investigate
     viewBox: defaultViewBox,
     scale: 0.7,
-    // viewBox: defaultViewBox,
-    // noDefaultFrame: true,
 
     maxAnswerCount: 8,
 

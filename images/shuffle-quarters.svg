@@ -9,6 +9,6 @@
 
 <path id="line-h" d="M1 50H99" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path id="line-v" d="M50 99V1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="circle" d="M50 1C77.0619 1 99 22.9381 99 50C99 77.0619 77.0619 99 50 99C22.9381 99 1 77.0619 1 50C1 22.9381 22.9381 1 50 1Z" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="circle" d="M50 1C77.0619 1 99 22.9381 99 50C99 77.0619 77.0619 99 50 99C22.9381 99 1 77.0619 1 50C1 22.9381 22.9381 1 50 1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>

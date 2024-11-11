@@ -1,9 +1,54 @@
+import { colors } from "./common.config.js";
 import { scaleViewBox } from "./common.js";
-import { createQuestionMark } from "./common.renderer.js";
 import { preventSvgCache, wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
+}
+
+// todo(vmyshko): move classlist to config
+function createQuestionMark({ config }) {
+  const $patternQuestionMark =
+    $tmplPatternQuestionMark.content.firstElementChild.cloneNode(true);
+
+  if (!config.questionMarkFigure) return $patternQuestionMark;
+
+  // custom border frame for question-mark
+  /// -----
+
+  const {
+    viewBox = "0 0 100 100",
+    figureLink,
+    questionMarkFigure = null,
+  } = config;
+
+  const classList = ["no-default-frame", "pattern-absolute"];
+
+  // svg as container
+  const $svgPatternContainer =
+    $tmplPatternFigure.content.firstElementChild.cloneNode(true);
+
+  $patternQuestionMark.appendChild($svgPatternContainer);
+
+  $svgPatternContainer.setAttribute("viewBox", viewBox);
+
+  const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
+
+  $use.href.baseVal = getFigureUrl({
+    link: figureLink,
+    id: questionMarkFigure,
+  });
+
+  $use.style.setProperty("--color", colors.dimgray);
+  $use.style.setProperty("--stroke-width", 3);
+
+  const $svgPart = $svgPatternContainer;
+  $svgPart.appendChild($use);
+
+  //additional classes
+  classList.forEach((_class) => $svgPatternContainer.classList.add(_class));
+
+  return $patternQuestionMark;
 }
 
 function createFigurePattern({ figureConfig, config }) {
@@ -12,7 +57,7 @@ function createFigurePattern({ figureConfig, config }) {
     color = "black",
     figureLink,
     staticFigures = [],
-    noDefaultFrame = false,
+    questionMarkFigure = null,
     noRotationAnimation = false,
     scale = 1,
   } = config;
@@ -34,8 +79,10 @@ function createFigurePattern({ figureConfig, config }) {
     const $svgPart = $svgPatternContainer;
     $svgPart.classList.add("pattern-figure");
 
-    if (noDefaultFrame) {
+    if (questionMarkFigure) {
       $svgPart.classList.add("no-default-frame");
+
+      // todo(vmyshko): add custom frame here
     }
 
     $svgPart.setAttribute("viewBox", scaleViewBox(viewBox, scaleX, scaleY));
@@ -92,17 +139,13 @@ function createFigurePattern({ figureConfig, config }) {
   return $svgPatternContainer;
 }
 
-export function renderFigurePatternsQuestion({
-  config,
-  questionData,
-  questionIndex,
-}) {
+export function renderFigurePatternsQuestion({ config, questionData }) {
   const { patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((figureConfig) =>
     figureConfig
       ? createFigurePattern({ figureConfig, config })
-      : createQuestionMark()
+      : createQuestionMark({ config })
   );
 
   const answerPatterns = answers.map((figureConfig) => {

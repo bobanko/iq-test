@@ -4,3 +4,9 @@
 /* @import url(./pattern-resizable.css); */
 @import url(./pattern-rotational.css);
 @import url(./pattern-value.css);
+
+.pattern-absolute {
+  position: absolute;
+  width: var(--pattern-size);
+  height: var(--pattern-size);
+}

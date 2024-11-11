@@ -22,7 +22,8 @@
   /* variables here */
   /* anything rotatable!!! */
   /* --color is fallback, should be -fill */
-  fill: var(--fill, var(--color));
+
+  fill: var(--fill, var(--color, none));
   stroke: var(--stroke);
   stroke-width: var(--stroke-width);
   transform: rotate(var(--rotate, 0deg)) scale(var(--scale, 1));
@@ -31,7 +32,8 @@
 }
 
 /* todo(vmyshko): make it better! */
-.pattern-figure.no-default-frame {
+.pattern-figure.no-default-frame,
+.pattern-question-mark.no-default-frame {
   border: none;
   background: none;
 }

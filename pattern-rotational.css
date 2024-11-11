@@ -40,12 +40,6 @@
   stroke-width: 2px;
 }
 
-.rotational-static {
-  position: absolute;
-  width: var(--pattern-size);
-  height: var(--pattern-size);
-}
-
 .part-container {
   isolation: isolate;
   /* overflow: hidden; */

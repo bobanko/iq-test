@@ -293,9 +293,10 @@ header {
 .pattern-question-mark:not(:empty) {
   border: none;
   background: none;
-  stroke-dasharray: 5 2;
   stroke: black;
-  stroke-width: 2px;
+  stroke-dasharray: 6 3;
+  stroke-dashoffset: 6;
+  stroke-width: 3px;
 }
 
 /* // */
