@@ -12,12 +12,30 @@
   box-sizing: border-box;
 
   transition: all 500ms ease-in-out;
-
-  --strokeColor: hsl(from var(--color) h s calc(l - 15));
 }
 
 .pattern-figure > svg,
 .pattern-figure > use {
+  /* todo: dunno how to handle different colors: put inside svgs or use vars from here? */
+
   transition: all 500ms ease-in-out;
   transform-origin: center;
+  /* variables here */
+  /* anything rotatable!!! */
+  /* --color is fallback, should be -fill */
+  fill: var(--fill, var(--color));
+  stroke: var(--stroke);
+  stroke-width: var(--stroke-width);
+  transform: rotate(var(--rotate, 0deg));
+}
+
+/* todo(vmyshko): make it better! */
+.pattern-figure.no-default-frame {
+  border: none;
+  background: none;
+}
+
+.answer-list .pattern-figure.no-default-frame {
+  /* for no frame figs */
+  background-color: #a2a2a2;
 }
