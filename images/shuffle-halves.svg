@@ -1,8 +1,8 @@
 <svg width="104" height="104" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="shuffle-halves">
 <g id="Vector">
-<path d="M2 102H102V52H52H2V102Z" fill="currentColor" />
-<path d="M2 102H102M2 102V2H102V102M2 102V52H52H102V102" stroke="currentColor" fill="none" stroke-width="4" stroke-linecap="square" />
+<path d="M2 102H102V52H52H2V102Z" fill="var(--color)" />
+<path d="M2 102H102M2 102V2H102V102M2 102V52H52H102V102" stroke="var(--color)" fill="none" stroke-width="4" stroke-linecap="square" />
 </g>
 </g>
 </svg>
