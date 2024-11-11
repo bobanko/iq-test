@@ -98,6 +98,38 @@ block:
 const quarterColors = [colors.yellow, colors.blue, colors.red, colors.black];
 const frameColors = [colors.blue, colors.red, colors.white];
 export const shuffleFiguresConfigs = {
+  // star from tg
+  rotStarTg: {
+    patternsInCol: 3,
+    patternsInCol: 3,
+    viewBox: defaultViewBox,
+    maxAnswerCount: 8,
+
+    figureLink: "./images/rotation-star-tg.svg",
+
+    figureParts: [
+      {
+        figures: [
+          shuffleTypes.single({ items: ["background"] }),
+          shuffleTypes.single({ items: ["star-bg"] }),
+        ],
+        color: shuffleTypes.single({
+          // todo(vmyshko): move blue-2 to colors? use material colors?
+          items: ["#008DF4", colors.red],
+        }),
+      },
+      {
+        figures: [shuffleTypes.single({ items: ["star-arrow"] })],
+        rotation: shuffleTypes.unique123({
+          items: [0, 360 / 5, (360 / 5) * 2, (360 / 5) * 3, (360 / 5) * 4],
+        }),
+      },
+    ],
+
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
   color3Frames: {
     patternsInCol: 3,
     viewBox: scaleViewBox(defaultViewBox, 1.1),
@@ -108,25 +140,29 @@ export const shuffleFiguresConfigs = {
     figureParts: [
       {
         figures: [shuffleTypes.single({ items: ["fill-outer"] })],
-        color: shuffleTypes.unique123({
+        color: shuffleTypes.shiftedBy({
           shift: 2,
+          colShift: 0,
           items: frameColors,
+          // shuffle: true,
         }),
       },
       {
         figures: [shuffleTypes.single({ items: ["fill-middle"] })],
-        color: shuffleTypes.unique123({
+        color: shuffleTypes.shiftedBy({
           shift: 2,
           colShift: 1,
           items: frameColors,
+          // shuffle: true,
         }),
       },
       {
         figures: [shuffleTypes.single({ items: ["fill-inner"] })],
-        color: shuffleTypes.unique123({
+        color: shuffleTypes.shiftedBy({
           shift: 2,
           colShift: 2,
           items: frameColors,
+          // shuffle: true,
         }),
       },
 
@@ -214,7 +250,6 @@ export const shuffleFiguresConfigs = {
           shift: 2,
           items: [colors.blue, colors.red, colors.yellow],
         }),
-        // rotation: shuffleTypes.rowProgression({ items: [0, 180] }),
       },
       {
         figures: [shuffleTypes.single({ items: ["triangle-bottom"] })],
@@ -223,7 +258,6 @@ export const shuffleFiguresConfigs = {
           colShift: 2,
           items: [colors.blue, colors.red, colors.yellow],
         }),
-        // rotation: shuffleTypes.rowProgression({ items: [180, 0] }),
       },
       {
         figures: [shuffleTypes.single({ items: ["diagonal"] })],
@@ -337,8 +371,7 @@ export const shuffleFiguresConfigs = {
 
   figRotSpades: {
     patternsInCol: 3,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    viewBox: scaleViewBox("0 0 106 106", 1),
+    viewBox: defaultViewBox,
     maxAnswerCount: 8,
 
     figureLink: "./images/shuffle-spades.svg",
@@ -346,7 +379,14 @@ export const shuffleFiguresConfigs = {
     figureParts: [
       {
         figures: [
-          shuffleTypes.unique123({ items: ["spade-1", "spade-2", "spade-3"] }),
+          // todo(vmyshko): make possible random between sets
+          // shuffleTypes.unique123({ items: ["spade-1", "spade-2", "spade-3"] }),
+          // shuffleTypes.unique123({ items: ["heart-1", "heart-2", "heart-3"] }),
+          // shuffleTypes.unique123({ items: ["club-1", "club-2", "club-3"] }),
+          // todo(vmyshko):  diamonds are bad for rotation
+          shuffleTypes.unique123({
+            items: ["diamond-1", "diamond-2", "diamond-3"],
+          }),
         ],
 
         color: shuffleTypes.single({ items: ["black"] }),
@@ -388,8 +428,6 @@ export const shuffleFiguresConfigs = {
     viewBox: scaleViewBox("0 0 106 106", 0.8),
     maxAnswerCount: 8,
 
-    shuffleType: shuffleTypes.unique123,
-
     figureLink: "./images/inner-rect-triangle-circle.svg",
 
     // patternsInCol: 2,
@@ -420,23 +458,16 @@ export const shuffleFiguresConfigs = {
     viewBox: scaleViewBox("0 0 106 106", 0.8),
     maxAnswerCount: 8,
 
-    shuffleType: shuffleTypes.rowProgression,
-
     figureLink: "./images/inner-rect-triangle-circle.svg",
 
     figureParts: [
       {
         figures: [
           shuffleTypes.unique123({ items: ["circle", "rect", "triangle"] }),
-
-          // shuffleTypes.unique123({
-          //   items: ["inner-circle", "inner-rect", "inner-triangle"],
-          // }),
         ],
 
-        color: shuffleTypes.single({ items: [...rgbColors] }),
-        color: shuffleTypes.single({ items: [colors.blue] }),
-        rotation: shuffleTypes.single({ items: [0] }),
+        // color: shuffleTypes.single({ items: [colors.blue] }),
+        color: shuffleTypes.rowProgression({ items: [...rgbColors] }),
       },
     ],
 
