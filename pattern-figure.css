@@ -16,7 +16,8 @@
   --strokeColor: hsl(from var(--color) h s calc(l - 15));
 }
 
-.pattern-figure > svg {
+.pattern-figure > svg,
+.pattern-figure > use {
   transition: all 500ms ease-in-out;
   transform-origin: center;
 }
