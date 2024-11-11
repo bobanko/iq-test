@@ -1,3 +1,4 @@
+// todo(vmyshko): rename to colors.config?
 export const colors = {
   red: "var(--red)",
   green: "var(--green)",
@@ -5,6 +6,9 @@ export const colors = {
   yellow: "var(--yellow)",
   black: "var(--black)",
   white: "var(--white)",
+  gray: "var(--gray)",
+  dimgray: "var(--dimgray)",
+  dark: "var(--dark)",
 };
 
 export const rgbColors = [colors.red, colors.green, colors.blue];
