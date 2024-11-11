@@ -19,14 +19,15 @@
   /* todo: dunno how to handle different colors: put inside svgs or use vars from here? */
 
   transition: all 500ms ease-in-out;
-  transform-origin: center;
   /* variables here */
   /* anything rotatable!!! */
   /* --color is fallback, should be -fill */
   fill: var(--fill, var(--color));
   stroke: var(--stroke);
   stroke-width: var(--stroke-width);
-  transform: rotate(var(--rotate, 0deg));
+  transform: rotate(var(--rotate, 0deg)) scale(var(--scale, 1));
+
+  transform-origin: var(--transform-origin, center);
 }
 
 /* todo(vmyshko): make it better! */

@@ -13,6 +13,8 @@ function createFigurePattern({ figureConfig, config }) {
     figureLink,
     staticFigures = [],
     noDefaultFrame = false,
+    noRotationAnimation = false,
+    scale = 1,
   } = config;
 
   const { figureParts, scaleX = 1, scaleY = 1 } = figureConfig;
@@ -41,6 +43,8 @@ function createFigurePattern({ figureConfig, config }) {
     const {
       figures = [],
       rotation = 0,
+      // todo(vmyshko):  impl scale for each figpart?
+      // scale = 1,
       color: figureColor,
       strokeWidth,
     } = figurePart;
@@ -56,9 +60,19 @@ function createFigurePattern({ figureConfig, config }) {
 
       (async () => {
         // to help user to understand rotations
-        await wait(0);
+        if (!noRotationAnimation) await wait(0);
+
+        $use.style.setProperty("--scale", `${scale}`);
 
         $use.style.setProperty("--rotate", `${rotation}deg`);
+
+        // calc transform origin based on viewBox
+        const [x1, y1, x2, y2] = viewBox.split(" ");
+
+        $use.style.setProperty(
+          "--transform-origin",
+          `${(x2 - x1) / 2}px ${(y2 - y1) / 2}px`
+        );
       })();
 
       $use.href.baseVal = getFigureUrl({ link: figureLink, id: figure });
