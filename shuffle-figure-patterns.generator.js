@@ -108,7 +108,9 @@ export const shuffleTypes = {
       }
     },
 
-  shiftedBy: ({ items, shift = 0, colShift = 0 }) =>
+  // todo(vmyshko): copy documentation
+
+  shiftedBy: ({ items, rowShift = 0, colShift = 0 }) =>
     function* shifted123({ random, config }) {
       const { patternsInCol = 3, patternsInRow = 3 } = config;
 
@@ -119,7 +121,7 @@ export const shuffleTypes = {
       const mainDiagIndex = ({ rowIndex, colIndex, itemsCount }) =>
         itemsCount - rowIndex + colIndex;
       const secondaryDiagIndex = ({ rowIndex, colIndex }) =>
-        rowIndex * shift + colIndex + colShift;
+        rowIndex * rowShift + colIndex + colShift;
 
       const indexFn = secondaryDiagIndex;
 
@@ -137,43 +139,44 @@ export const shuffleTypes = {
 };
 
 // todo(vmyshko): too complex, refac... but how?
-function* defaultColorGen({ config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
 
-  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
-    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
-      yield "black";
+const getDefaultValueGen = (defaultValue) =>
+  function* defaultValueGen({ config }) {
+    const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+    for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+      for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+        yield defaultValue;
+      }
     }
-  }
-}
+  };
 
-function* defaultRotationGen({ config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
-
-  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
-    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
-      yield 0;
-    }
-  }
-}
+const defaultColor = "transparent";
 
 function* shuffleFiguresGenerator({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
-  // todo(vmyshko): set some default color if no presented?
   const { figureParts } = config;
 
   // init all gens
+  // todo(vmyshko): get rid of default gens? or make them generic?
   const figurePartsGens = figureParts.map(
-    ({ figures, color = defaultColorGen, rotation = defaultRotationGen }) => ({
+    ({
+      figures,
+      color = getDefaultValueGen(defaultColor),
+      rotation = getDefaultValueGen(0),
+      strokeWidth = getDefaultValueGen(0),
+    }) => ({
       figures: figures.map((fig) => fig({ random, config })),
       color: color({ random, config }),
       rotation: rotation({ random, config }),
+      strokeWidth: strokeWidth({ random, config }),
     })
   );
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
       // todo(vmyshko): make possible to get multiple figureParts -- update figures.renderer first!
+      // seems it already works
 
       yield {
         figureParts: figurePartsGens.map((figurePartGen) => {
@@ -181,6 +184,7 @@ function* shuffleFiguresGenerator({ random, config }) {
             figures: figurePartGen.figures.map((f) => f.next().value),
             color: figurePartGen.color.next().value,
             rotation: figurePartGen.rotation.next().value,
+            strokeWidth: figurePartGen.strokeWidth.next().value,
           };
         }),
       };
@@ -191,12 +195,20 @@ function* shuffleFiguresGenerator({ random, config }) {
 function generateAnswer({ random, config, correctAnswer }) {
   const { figureParts, colorGroups, rotationGroups } = config;
 
+  // todo(vmyshko): get rid of this copy-pasta
+
   // init all gens
   const figurePartsGens = figureParts.map(
-    ({ figures, color = defaultColorGen, rotation = defaultRotationGen }) => ({
+    ({
+      figures,
+      color = getDefaultValueGen(defaultColor),
+      rotation = getDefaultValueGen(0),
+      strokeWidth = getDefaultValueGen(0),
+    }) => ({
       figures: figures.map((fig) => fig({ random, config })),
       color: color({ random, config }),
       rotation: rotation({ random, config }),
+      strokeWidth: strokeWidth({ random, config }),
     })
   );
 
@@ -218,12 +230,16 @@ function generateAnswer({ random, config, correctAnswer }) {
           allFigsArrs.reduce((acc, arr) => [...acc, arr[index]], [])
         );
 
+      // todo(vmyshko): these all should be generic
       const colorPool = [...figurePartGen.color];
       const rotationPool = [...figurePartGen.rotation];
+      const strokeWidthPool = [...figurePartGen.strokeWidth];
 
       return {
         color: random.sample(colorPool),
         rotation: random.sample(rotationPool),
+        strokeWidth: random.sample(strokeWidthPool),
+        //----
         figures: random.sample(figureGroupsPool),
       };
     }),
@@ -273,8 +289,9 @@ export function generateShuffleFigurePatternsQuestion({
     getValueHashFn: ({ figureParts = [] }) =>
       figureParts
         .map(
-          ({ figures, rotation = 0, color = "black" }) =>
-            `${figures.toString()};${color};${rotation};`
+          // todo(vmyshko): why defaults are not set yet? re-check!
+          ({ figures, rotation = 0, color = defaultColor, strokeWidth = 0 }) =>
+            `${figures.toString()};${color};${rotation};${strokeWidth}`
         )
         .toString(),
   });
