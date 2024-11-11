@@ -6,19 +6,13 @@ function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
 }
 
-async function rotateTo($elem, deg) {
-  // to help user to understand rotations
-  await wait(0);
-  $elem.style.transform = `rotate(${deg}deg)`;
-}
-
 function createFigurePattern({ figureConfig, config }) {
   const {
     viewBox = "0 0 100 100",
     color = "black",
     figureLink,
-    strokeWidth = 1,
     staticFigures = [],
+    noDefaultFrame = false,
   } = config;
 
   const { figureParts, scaleX = 1, scaleY = 1 } = figureConfig;
@@ -37,9 +31,19 @@ function createFigurePattern({ figureConfig, config }) {
     // const $svgPart = document.createElement("svg");
     const $svgPart = $svgPatternContainer;
     $svgPart.classList.add("pattern-figure");
+
+    if (noDefaultFrame) {
+      $svgPart.classList.add("no-default-frame");
+    }
+
     $svgPart.setAttribute("viewBox", scaleViewBox(viewBox, scaleX, scaleY));
 
-    const { figures = [], rotation = 0, color: figureColor } = figurePart;
+    const {
+      figures = [],
+      rotation = 0,
+      color: figureColor,
+      strokeWidth,
+    } = figurePart;
 
     // todo(vmyshko): impl separate coloring for each part?
     // pattern dynamic figures
@@ -48,8 +52,14 @@ function createFigurePattern({ figureConfig, config }) {
       const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
 
       $use.style.setProperty("--color", figureColor ?? color);
-      $use.style.setProperty("stroke-width", strokeWidth);
-      rotateTo($use, rotation);
+      $use.style.setProperty("--stroke-width", strokeWidth);
+
+      (async () => {
+        // to help user to understand rotations
+        await wait(0);
+
+        $use.style.setProperty("--rotate", `${rotation}deg`);
+      })();
 
       $use.href.baseVal = getFigureUrl({ link: figureLink, id: figure });
       $svgPart.appendChild($use);
