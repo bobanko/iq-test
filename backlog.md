@@ -1,10 +1,19 @@
 ## TO-DO
 
+urgent/ideas
+
+[ ] both color and rotation should be just variables,
+also it should be possible easily add new ones -- like stroke-width
+[ ] color can be splitted to stroke and fill vars!11
+[ ] make it possible for multiple shuffles share one set, to make uniqueness,
+maybe same sub-seed? or global secret key to share same collection?
+
 ui
 
 [ ] probably make questions switch animation as slider LtoR,
 so user can swipe questions. it can be hard to impl instant swap,
 when there are 40 questions, so ...
+[ ] add skins with diff colors palettes
 
 [ ] when answered - move to unanswered question, if 0 -- propose to finish.
 
@@ -14,25 +23,24 @@ rotational
 
 [ ] custom image rotation type (plane/knight/pencil) -- think about it
 [ ] non90deg shuffles - 6star, 5star -- draw mocks
-[ ] shuffled types: rotational + stupid shuffle in one -- think about it
 
 other
 [ ] make more custom settings for easier gen test
-[ ] make hash based random to reprod cases from other users etc.
-[ ] make level select -- 20x, can select, see wrong/correct, navigation, progress, timer?
+[ ] allow to set hash to reprod cases from other users etc.
+[ ] update all svgs from using currentColor to var(--color), cause currentColor does not work for use somewhy
 
 matrix-move
-[ ] fix questions to do-not-overlap
+[ ] fix questions to do-not-overlap (displays triangles now)
 
 formulas
 [ ] fix ambigous answers -- when multiple are correct, no + + + formulas, less \*1 formulas
 
-[ ] add skins with diff colors palettes
-
-[ ] fix styles when clicking on answered answer (yellow becomes gray)
-
 ---
 
+[x] fix styles when clicking on answered answer (yellow becomes gray)
+[x] make hash based random
+[x] shuffled types: rotational + stupid shuffle in one -- think about it
+[x] make level select -- 20x, can select, see wrong/correct, navigation, progress, timer?
 [x] make (wrong) answers  
 [x] fix do-not-repeat between rows  
 [x] make types:  
@@ -54,12 +62,11 @@ examples:
 
 -
 
-# 16-oct notes
+# 16-oct'24 notes
 
 ## color3Frames
 
-colors per pattern should be unique
-same for answers?
+colors per pattern should be unique. same for answers?
 allow default bg to be hidden? [1]
 
 ## rotColorQuarters
@@ -85,7 +92,7 @@ rotate only icons, not bg [2]
 ## colRotHalves
 
 rotate only icons, not bg [2]
-svg fix white corners
+[x] svg fix white corners
 fix gen logic with rotations
 
 ## figRotSpades
@@ -103,7 +110,7 @@ fix red color borders to be more recognizable (maybe brown-ish?)
 
 ## fig1_RectTriangleCircle
 
-add more answers? rotate triangle?
+[x] add more answers? rotate triangle? //color added
 
 ## default_resize
 
