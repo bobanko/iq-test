@@ -8,6 +8,21 @@ import { Timer } from "./timer.js";
 const patternsInRowDefault = 3;
 const timer = new Timer();
 
+const clockEmojis = [
+  "🕛",
+  "🕐",
+  "🕑",
+  "🕒",
+  "🕓",
+  "🕔",
+  "🕕",
+  "🕖",
+  "🕗",
+  "🕘",
+  "🕙",
+  "🕚",
+];
+
 timer.onUpdate((diff) => {
   const oneMinMs = 60 * 1000;
   const timeGivenMs = questions.length * oneMinMs;
@@ -26,6 +41,9 @@ timer.onUpdate((diff) => {
     second: "numeric",
     hour12: false,
   });
+
+  $timerIcon.textContent =
+    clockEmojis[Math.floor(diff / 1000) % clockEmojis.length];
 
   $timer.textContent = timeStr;
 
