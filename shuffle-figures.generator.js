@@ -69,11 +69,22 @@ export const shuffleTypes = {
         }
       }
     },
+
+  // todo(vmyshko): impl truly random!11
   /**
    * truly random, items can repeat in row/col
    */
-  random: ({ items }) =>
-    function* random({ random, config }) {
+
+  /**
+   *
+   * @returns random unique items per row, rows can repeat
+   * @example
+   * [A, B, C]
+   * [B, C, A]
+   * [B, C, A]
+   */
+  randomInRow: ({ items }) =>
+    function* randomInRow({ random, config }) {
       // todo(vmyshko): impl
       const { patternsInCol, patternsInRow } = {
         ...defaultPatternCount,
@@ -88,7 +99,33 @@ export const shuffleTypes = {
       }
     },
   /**
-   * returns unique sequence per each row/col
+   *
+   * @returns random unique items per col, cols can repeat
+   * @example
+   * [A, B, B]
+   * [B, C, C]
+   * [C, A, A]
+   */
+  randomInCol: ({ items }) =>
+    function* randomInCol({ random, config }) {
+      const { patternsInCol, patternsInRow } = {
+        ...defaultPatternCount,
+        ...config,
+      };
+
+      const colsShuffledItems = Array(patternsInCol)
+        .fill(items)
+        .map((items) => random.shuffle(items));
+
+      for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+        for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+          yield colsShuffledItems[colIndex][rowIndex % items.length];
+        }
+      }
+    },
+
+  /**
+   * @returns unique sequence per each row/col
    * @example row1: [A, B, C];
    *          row2: [B, C, A];
    *          row3: [C, A, B];
@@ -129,8 +166,24 @@ export const shuffleTypes = {
   /**
    *
    * @returns items shifted by col/row shift
+   * todo: explain this:
+   *
+   * rowIndex * rowShift + colIndex + colShift;
+   *
+   * todo: update example -- this is copy from above
+   * @example rowShift = 0, colShift = 0
+   *          row1: [A, B, C];
+   *          row2: [A, B, C];
+   *          row1: [A, B, C];
+   * OR
+   * @example rowShift = 1, colShift = 1
+   *          row1: [1, 2, 3];
+   *          row2: [2, 3, 4];
+   *          row3: [3, 4, 5];
+   *
+   *
    */
-  shiftedBy: ({ items, shift = 0, colShift = 0, shuffle = false }) =>
+  shiftedBy: ({ items, rowShift = 0, colShift = 0, shuffle = false }) =>
     function* shifted123({ random, config }) {
       const { patternsInCol, patternsInRow } = {
         ...defaultPatternCount,
@@ -143,8 +196,9 @@ export const shuffleTypes = {
       // todo(vmyshko): ...but random should concat both
       const mainDiagIndex = ({ rowIndex, colIndex, itemsCount }) =>
         itemsCount - rowIndex + colIndex;
+
       const secondaryDiagIndex = ({ rowIndex, colIndex }) =>
-        rowIndex * shift + colIndex + colShift;
+        rowIndex * rowShift + colIndex + colShift;
 
       const indexFn = secondaryDiagIndex;
 
@@ -204,6 +258,8 @@ function* shuffleFiguresGenerator({ random, config }) {
       rotation: rotation({ random, config }),
     })
   );
+
+  // todo(vmyshko): no need to use generator here, use array instead
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
