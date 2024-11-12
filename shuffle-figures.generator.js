@@ -308,9 +308,9 @@ function generateAnswer({ random, config, correctAnswer }) {
   const rotationPool = [...firstFigurePartGen.rotation];
 
   return {
+    figures: random.sample(figureGroupsPool),
     color: random.sample(colorPool),
     rotation: random.sample(rotationPool),
-    figures: random.sample(figureGroupsPool),
     isCorrect: false,
     id: getUid(),
   };
