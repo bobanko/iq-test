@@ -31,6 +31,10 @@ function* cropFiguresGenerator({ random, config }) {
           color: color2,
           rotation,
         },
+        {
+          figures: [figures[2]],
+          rotation,
+        },
       ],
     };
 
@@ -55,6 +59,10 @@ function* cropFiguresGenerator({ random, config }) {
         {
           figures: [figures[1]],
           color: color2,
+          rotation,
+        },
+        {
+          figures: [figures[2]],
           rotation,
         },
         //
@@ -92,6 +100,10 @@ function generateAnswer({ random, config, correctAnswer }) {
       {
         figures: [figures[1]],
         color: random.sample(figureColors),
+        rotation,
+      },
+      {
+        figures: [figures[2]],
         rotation,
       },
       //

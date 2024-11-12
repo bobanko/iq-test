@@ -15,7 +15,7 @@ export const cropFiguresConfigs = {
 
     figureLink: "./images/xor-halves.svg",
 
-    figures: ["half-1", "half-2"],
+    figures: ["half-1", "half-2", "separator"],
     figureColors: [...defaultColors],
     cropFigures: [
       "cutout-1",
@@ -24,6 +24,9 @@ export const cropFiguresConfigs = {
       "cutout-4",
       "cutout-5",
       "cutout-6",
+      "cutout-7",
+      "cutout-8",
+      "cutout-9",
     ],
 
     generator: generateCropFigurePatternsQuestion,
