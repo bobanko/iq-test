@@ -67,31 +67,25 @@ function createFigurePattern({ figureConfig, config }) {
   // svg as container
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true);
-  // const $svgPatternContainer = $svgPatternContainerDiv.firstElementChild;
 
-  $svgPatternContainer.setAttribute(
-    "viewBox",
-    scaleViewBox(viewBox, scaleX, scaleY)
-  );
+  $svgPatternContainer.setAttribute("viewBox", viewBox);
 
   for (let figurePart of figureParts) {
-    // const $svgPart = document.createElement("svg");
     const $svgPart = $svgPatternContainer;
     $svgPart.classList.add("pattern-figure");
 
     if (questionMarkFigure) {
       $svgPart.classList.add("no-default-frame");
-
-      // todo(vmyshko): add custom frame here
     }
 
-    $svgPart.setAttribute("viewBox", scaleViewBox(viewBox, scaleX, scaleY));
+    $svgPart.setAttribute("viewBox", viewBox);
 
     const {
       figures = [],
       rotation = 0,
-      // todo(vmyshko):  impl scale for each figpart?
-      // scale = 1,
+      scale,
+      scaleX,
+      scaleY,
       color: figureColor,
       strokeWidth,
       stroke,
@@ -111,9 +105,15 @@ function createFigurePattern({ figureConfig, config }) {
         // to help user to understand rotations
         if (!noRotationAnimation) await wait(0);
 
-        // todo(vmyshko): do not set default values, skip setters
+        //scales
+        if (Number.isFinite(scale))
+          $use.style.setProperty("--scale", `${scale}`);
+        if (Number.isFinite(scaleX))
+          $use.style.setProperty("--scaleX", `${scaleX}`);
+        if (Number.isFinite(scaleY))
+          $use.style.setProperty("--scaleY", `${scaleY}`);
 
-        $use.style.setProperty("--scale", `${scale}`);
+        // todo(vmyshko): do not set default values, skip setters
 
         $use.style.setProperty("--rotate", `${rotation}deg`);
 

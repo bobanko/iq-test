@@ -26,7 +26,8 @@
   fill: var(--fill, var(--color, none));
   stroke: var(--stroke);
   stroke-width: var(--stroke-width);
-  transform: rotate(var(--rotate, 0deg)) scale(var(--scale, 1));
+  transform: rotate(var(--rotate, 0deg))
+    scale3d(var(--scaleX, var(--scale, 1)), var(--scaleY, var(--scale, 1)), 1);
 
   transform-origin: var(--transform-origin, center);
 }

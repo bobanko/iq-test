@@ -5,6 +5,8 @@ import { colors, defaultColors } from "./common.config.js";
 
 const upscaleFactor = 1.9;
 
+const strokeWidth = 5;
+
 const figsToScale = ["circle", "rect", "star", "triangle"];
 
 const scaleTypes = [
@@ -17,10 +19,11 @@ const scaleTypes = [
   },
 ];
 
-function* resizableGenerator({ random }) {
-  const resizeLineColor = colors.red;
-  const possibleFigColors = defaultColors.filter((c) => c !== resizeLineColor);
+const resizeLineColor = colors.red;
+const figColors = defaultColors.filter((c) => c !== resizeLineColor);
 
+function* resizableGenerator({ config, random }) {
+  const possibleFigColors = [...figColors];
   const possibleFigs = [...figsToScale];
 
   for (let scaleType of random.shuffle(scaleTypes)) {
@@ -28,48 +31,64 @@ function* resizableGenerator({ random }) {
     const randomFigColor = random.popFrom(possibleFigColors);
 
     // base fig
-    yield [
-      {
-        figures: [randomFig],
-        color: randomFigColor,
-      },
-    ];
+    yield {
+      figureParts: [
+        {
+          figures: [randomFig],
+          color: randomFigColor,
+          scale: config.scale,
+          strokeWidth,
+        },
+      ],
+    };
+
     // scale direction
-    yield [
-      {
-        figures: scaleType.figures,
-
-        scaleX: upscaleFactor,
-        scaleY: upscaleFactor,
-
-        color: resizeLineColor,
-      },
-    ];
+    yield {
+      figureParts: [
+        {
+          figures: scaleType.figures,
+          scale: config.scale * upscaleFactor,
+          color: resizeLineColor,
+          strokeWidth,
+        },
+      ],
+    };
     // upscaled fig
 
-    yield [
-      {
-        figures: [randomFig],
-        color: randomFigColor,
-
-        scaleX: scaleType.scaleX,
-        scaleY: scaleType.scaleY,
-      },
-    ];
+    yield {
+      figureParts: [
+        {
+          figures: [randomFig],
+          color: randomFigColor,
+          scale: config.scale,
+          scaleX: scaleType.scaleX * config.scale,
+          scaleY: scaleType.scaleY * config.scale,
+          strokeWidth,
+        },
+      ],
+    };
   } //for
 }
 
-function generateAnswer({ random, config, correctAnswer }) {
+function generateAnswer({ random, config }) {
   const figure = random.sample(figsToScale);
 
+  const possibleFigColors = [...figColors];
+  const randomFigColor = random.popFrom(possibleFigColors);
+
   return {
-    // ...correctAnswer,
-    color: correctAnswer.color,
-    scaleX: random.sample([1, upscaleFactor]),
-    scaleY: random.sample([1, upscaleFactor]),
-    figures: [figure],
     isCorrect: false,
     id: getUid(),
+    figureParts: [
+      {
+        figures: [figure],
+        color: randomFigColor,
+        scale: config.scale,
+        scaleX: random.sample([1, upscaleFactor]) * config.scale,
+        scaleY: random.sample([1, upscaleFactor]) * config.scale,
+        strokeWidth,
+      },
+    ],
   };
 }
 
@@ -84,14 +103,12 @@ export function generateResizableQuestion({ config, seed, questionIndex }) {
 
   const random = new SeededRandom(seed + questionIndex);
 
-  const rowPatterns = [
+  const patterns = [
     ...resizableGenerator({
       random,
       config,
     }),
   ];
-
-  const patterns = [...rowPatterns.flat()];
 
   //last block
   const [correctAnswer] = patterns.splice(-1, 1, null);
@@ -112,8 +129,21 @@ export function generateResizableQuestion({ config, seed, questionIndex }) {
         config,
       });
     },
-    getValueHashFn: ({ figures, scaleX = 1, scaleY = 1 }) =>
-      `${figures.toString()};${scaleX};${scaleY}`,
+    getValueHashFn: ({ figureParts = [] }) =>
+      figureParts
+        .map(
+          // todo(vmyshko): why defaults are not set yet? re-check!
+          ({
+            figures,
+            rotation = 0,
+            color = "",
+            scaleX = 1,
+            scaleY = 1,
+            strokeWidth = 0,
+          }) =>
+            `${figures.toString()};${color};${rotation};${strokeWidth};${scaleX};${scaleY}`
+        )
+        .toString(),
   });
 
   // todo(vmyshko): review, do those all are used?
