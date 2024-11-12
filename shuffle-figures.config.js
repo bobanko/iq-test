@@ -2,14 +2,11 @@ import {
   generateShuffleFiguresQuestion,
   shuffleTypes,
 } from "./shuffle-figures.generator.js";
-import { scaleViewBox } from "./common.js";
-import { renderFiguresQuestion } from "./figures.renderer.js";
-import { colors, defaultColors, rgbColors } from "./common.config.js";
+import { colors, rgbColors } from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns.generator.js";
 
 const defaultViewBox = "0 0 100 100";
-const alternateViewBox = "2 2 100 100";
 
 // todo(vmyshko): currently, shift is used for most multi-color
 // it (or any other similar) should provide randomness,
@@ -337,7 +334,7 @@ export const shuffleFiguresConfigs = {
 
   rotColorTriangles: {
     patternsInCol: 3,
-    viewBox: scaleViewBox(defaultViewBox, 1),
+    viewBox: defaultViewBox,
     maxAnswerCount: 8,
 
     figureLink: "./images/shuffle-2-triangles.svg",
@@ -371,8 +368,8 @@ export const shuffleFiguresConfigs = {
   figDice: {
     patternsInCol: 3,
     patternsInRow: 3,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    viewBox: scaleViewBox("0 0 106 106", 1),
+
+    viewBox: "0 0 106 106",
     maxAnswerCount: 8,
 
     figureLink: "./images/shuffle-dice-cult.svg",
@@ -419,8 +416,8 @@ export const shuffleFiguresConfigs = {
       // },
     ],
 
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   rotIcons: {
@@ -453,9 +450,7 @@ export const shuffleFiguresConfigs = {
   colRotHalves: {
     patternsInCol: 3,
     patternsInCol: 2,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    viewBox: scaleViewBox(alternateViewBox, 1),
-    viewBox: scaleViewBox("0 0 104 104", 1),
+    viewBox: "0 0 104 104",
     maxAnswerCount: 8,
 
     noRotationAnimation: true,
@@ -505,8 +500,7 @@ export const shuffleFiguresConfigs = {
 
   figRotLetters: {
     patternsInCol: 3,
-    viewBox: scaleViewBox(defaultViewBox, 1),
-    // viewBox: scaleViewBox("0 0 80 80", 1),
+    viewBox: defaultViewBox,
     maxAnswerCount: 8,
 
     figureLink: "./images/letters-ptu.svg",
@@ -533,7 +527,8 @@ export const shuffleFiguresConfigs = {
 
   fig2_RectTriangleCircle: {
     patternsInCol: 3,
-    viewBox: scaleViewBox("0 0 106 106", 0.8),
+    viewBox: "0 0 106 106",
+    scale: 0.8,
     maxAnswerCount: 8,
 
     figureLink: "./images/inner-rect-triangle-circle.svg",
@@ -556,14 +551,14 @@ export const shuffleFiguresConfigs = {
     ],
 
     //rotations? groups?
-
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   fig1_RectTriangleCircle: {
     patternsInCol: 3,
-    viewBox: scaleViewBox("0 0 106 106", 0.8),
+    viewBox: "0 0 106 106",
+    scale: 0.8,
     maxAnswerCount: 8,
 
     figureLink: "./images/inner-rect-triangle-circle.svg",
@@ -578,8 +573,7 @@ export const shuffleFiguresConfigs = {
         color: shuffleTypes.rowProgression({ items: [...rgbColors] }),
       },
     ],
-
-    generator: generateShuffleFiguresQuestion,
-    renderer: renderFiguresQuestion,
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 };
