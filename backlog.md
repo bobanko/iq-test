@@ -69,11 +69,11 @@ examples:
 ## color3Frames
 
 colors per pattern should be unique. same for answers?
-allow default bg to be hidden? [1]
+[x] allow default bg to be hidden? [1]
 
 ## rotColorQuarters
 
-no bg, allow custom bg [1]
+[x] no bg, allow custom bg [1]
 
 ## rotColorTriangles
 
@@ -90,18 +90,18 @@ more prominent colors?
 
 ## rotIcons
 
-rotate only icons, not bg [2]
+[x] rotate only icons, not bg [2]
 
 ## colRotHalves
 
-rotate only icons, not bg [2]
+[x] rotate only icons, not bg [2]
 [x] svg fix white corners
 fix gen logic with rotations
 
 ## figRotSpades
 
-allow other icons - hearts, clubs, diamonds
-fix for windows
+[x] allow other icons - hearts, clubs, diamonds
+[x] fix for windows
 
 ## figRotLetters
 
