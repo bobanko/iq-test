@@ -2,7 +2,6 @@ import { scaleViewBox } from "./common.js";
 import { renderFiguresQuestion } from "./figures.renderer.js";
 import { generateResizableQuestion } from "./resizable.generator.js";
 
-const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
 export const resizableConfigs = {
