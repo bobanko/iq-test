@@ -94,6 +94,7 @@ function createFigurePattern({ figureConfig, config }) {
       // scale = 1,
       color: figureColor,
       strokeWidth,
+      stroke,
     } = figurePart;
 
     // todo(vmyshko): impl separate coloring for each part?
@@ -103,11 +104,14 @@ function createFigurePattern({ figureConfig, config }) {
       const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
 
       $use.style.setProperty("--color", figureColor ?? color);
-      $use.style.setProperty("--stroke-width", strokeWidth);
+      if (strokeWidth) $use.style.setProperty("--stroke-width", strokeWidth);
+      if (stroke) $use.style.setProperty("--stroke", stroke);
 
       (async () => {
         // to help user to understand rotations
         if (!noRotationAnimation) await wait(0);
+
+        // todo(vmyshko): do not set default values, skip setters
 
         $use.style.setProperty("--scale", `${scale}`);
 
