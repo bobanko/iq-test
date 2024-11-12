@@ -26,10 +26,10 @@ rotational
 [ ] non90deg shuffles - 6star, 5star -- draw mocks
 
 other
-[ ] make more custom settings for easier gen test
-[ ] allow to set hash to reprod cases from other users etc.
+[ ] make more custom settings for easier gen test(?)
+[x] allow to set hash/seed to reprod cases from other users etc.
 [x] update all svgs from using var(--color) to var(--color), cause var(--color) does not work for use somewhy
-[ ] get rid of fill/stroke from svgs at all, it should be set from outside using vars and common styles (styles already implemented)
+[ ] get rid of fill/stroke from svgs at all, it should be set from outside using vars and common styles (styles already implemented) figure-patterns.render supports such behavior
 
 matrix-move
 [ ] fix questions to do-not-overlap (displays triangles now)

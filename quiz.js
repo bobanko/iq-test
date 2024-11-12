@@ -114,8 +114,60 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
 
 // ***
 
+// todo(vmyshko): extract to helpers
+function updateHashParameter(key, value) {
+  // Get current hash and remove the leading "#" symbol
+  const hash = window.location.hash.substring(1);
+
+  // Convert the hash string into an object of key-value pairs
+  const params = new URLSearchParams(hash);
+
+  // Update or add the specified parameter
+  params.set(key, value);
+
+  // Update the hash in the URL
+  window.location.hash = params.toString();
+
+  // const params = new URLSearchParams(window.location.href);
+  // params.set('#seed ', seed);
+}
+
+function getHashParameter(key) {
+  // Get the current hash and remove the leading "#" symbol
+  const hash = window.location.hash.substring(1);
+
+  // Use URLSearchParams to parse the hash parameters
+  const params = new URLSearchParams(hash);
+
+  // Return the value of the specified parameter
+  return params.get(key);
+}
+
+function generateButtonClick() {
+  const seed = Math.random();
+
+  updateHashParameter("seed", seed);
+}
+
+function windowOnLoad() {
+  const seed = +getHashParameter("seed");
+
+  if (!Number.isFinite(seed) || seed === 0) {
+    generateButtonClick();
+    return;
+  }
+
+  generateQuiz({ seed });
+}
+
+function onHashChanged() {
+  const seed = +getHashParameter("seed");
+
+  generateQuiz({ seed });
+}
+
 const questions = [];
-function generateQuiz() {
+function generateQuiz({ seed }) {
   // todo(vmyshko): debug
   $quizStats.textContent = "";
 
@@ -127,8 +179,9 @@ function generateQuiz() {
   //---
 
   // basic question list init
-  const seed = Math.random();
   // todo(vmyshko): add ability to input custom seed/ via url?
+  console.log({ seed });
+
   $seed.value = seed;
 
   // todo(vmyshko):  gen questions
@@ -279,8 +332,10 @@ function checkAnswers() {
 
 // apply handlers
 
-$btnGenerate.addEventListener("click", () => generateQuiz());
-$btnGenerate.click();
+$btnGenerate.addEventListener("click", () => generateButtonClick());
+
+window.addEventListener("hashchange", onHashChanged);
+window.addEventListener("load", windowOnLoad);
 
 $seed.addEventListener("click", () => {
   $seed.select();
