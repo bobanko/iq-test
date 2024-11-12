@@ -3,26 +3,12 @@ import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 import { colors, defaultColors } from "./common.config.js";
 
-const upscaleFactor = 1.9;
-
-const strokeWidth = 5;
-
-const figsToScale = ["circle", "rect", "star", "triangle"];
-
-const scaleTypes = [
-  { figures: ["horizontal"], scaleX: upscaleFactor },
-  { figures: ["vertical"], scaleY: upscaleFactor },
-  {
-    figures: ["horizontal", "vertical"],
-    scaleX: upscaleFactor,
-    scaleY: upscaleFactor,
-  },
-];
-
 const resizeLineColor = colors.red;
 const figColors = defaultColors.filter((c) => c !== resizeLineColor);
 
 function* resizableGenerator({ config, random }) {
+  const { figsToScale, scaleTypes, upscaleFactor, strokeWidth } = config;
+
   const possibleFigColors = [...figColors];
   const possibleFigs = [...figsToScale];
 
@@ -71,6 +57,8 @@ function* resizableGenerator({ config, random }) {
 }
 
 function generateAnswer({ random, config }) {
+  const { figsToScale, upscaleFactor, strokeWidth } = config;
+
   const figure = random.sample(figsToScale);
 
   const possibleFigColors = [...figColors];

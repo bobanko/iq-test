@@ -3,14 +3,28 @@ import { generateResizableQuestion } from "./resizable.generator.js";
 
 const alternateViewBox = "2 2 100 100";
 
+const upscaleFactor = 1.9;
 export const resizableConfigs = {
   default_resize: {
     patternsInCol: 3,
     figureLink: "./images/pattern-resizable.svg",
 
+    figsToScale: ["circle", "rect", "star", "triangle"],
+
+    upscaleFactor,
+    scaleTypes: [
+      { figures: ["horizontal"], scaleX: upscaleFactor },
+      { figures: ["vertical"], scaleY: upscaleFactor },
+      {
+        figures: ["horizontal", "vertical"],
+        scaleX: upscaleFactor,
+        scaleY: upscaleFactor,
+      },
+    ],
+
     viewBox: alternateViewBox,
     scale: 0.9 / 2,
-    strokeWidth: (3 / 0.9).toFixed(2),
+    strokeWidth: 5,
 
     maxAnswerCount: 8,
 
