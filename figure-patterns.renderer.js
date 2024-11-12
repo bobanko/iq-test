@@ -59,7 +59,7 @@ function createFigurePattern({ figureConfig, config }) {
     staticFigures = [],
     questionMarkFigure = null,
     noRotationAnimation = false,
-    scale = 1,
+    scale: configScale = 1,
   } = config;
 
   const { figureParts, scaleX = 1, scaleY = 1 } = figureConfig;
@@ -83,7 +83,7 @@ function createFigurePattern({ figureConfig, config }) {
     const {
       figures = [],
       rotation = 0,
-      scale,
+      scale = configScale,
       scaleX,
       scaleY,
       color: figureColor,
