@@ -1,0 +1,14 @@
+<svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+<g id="xor-halves">
+<path id="frame" d="M99.5 0.5V99.5H0.5V0.5H99.5Z" stroke="#EB00FF" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="half-2" d="M100 100H0V50H100V100Z" fill="var(--color)"/>
+<path id="half-1" d="M100 50H0V0H100V50Z" fill="var(--color)"/>
+
+<path id="cutout-2" fill="var(--color)" d="M85 88H16C14.3431 88 13 86.6569 13 85V16C13 14.3431 14.3431 13 16 13H85C86.6569 13 88 14.3431 88 16V85C88 86.6569 86.6569 88 85 88Z" />
+<circle id="cutout-4" fill="var(--color)" cx="50.5" cy="50.5" r="37.5" />
+<path id="cutout-1" fill="var(--color)" d="M72 75H28C26.3431 75 25 73.6569 25 72V28C25 26.3431 26.3431 25 28 25H72C73.6569 25 75 26.3431 75 28V72C75 73.6569 73.6569 75 72 75Z" />
+<circle id="cutout-3" fill="var(--color)" cx="50" cy="50" r="25" />
+<path id="cutout-6" fill="var(--color)" d="M62 65H38C36.3431 65 35 63.6569 35 62V38C35 36.3431 36.3431 35 38 35H62C63.6569 35 65 36.3431 65 38V62C65 63.6569 63.6569 65 62 65Z" />
+<circle id="cutout-5" fill="var(--color)" cx="50" cy="50" r="15" />
+</g>
+</svg>
