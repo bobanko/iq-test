@@ -2,8 +2,9 @@
 
 urgent/ideas
 
-[ ] both color and rotation should be just variables,
-also it should be possible easily add new ones -- like stroke-width
+[x] both color and rotation should be just variables,
+[ ] also it should be possible easily add new ones
+[x] -- like stroke-width
 [ ] color can be splitted to stroke and fill vars!11
 [ ] make it possible for multiple shuffles share one set, to make uniqueness,
 maybe same sub-seed? or global secret key to share same collection?
@@ -27,7 +28,8 @@ rotational
 other
 [ ] make more custom settings for easier gen test
 [ ] allow to set hash to reprod cases from other users etc.
-[ ] update all svgs from using currentColor to var(--color), cause currentColor does not work for use somewhy
+[x] update all svgs from using var(--color) to var(--color), cause var(--color) does not work for use somewhy
+[ ] get rid of fill/stroke from svgs at all, it should be set from outside using vars and common styles (styles already implemented)
 
 matrix-move
 [ ] fix questions to do-not-overlap (displays triangles now)
@@ -80,6 +82,7 @@ try to recreate origin
 
 ## figDice
 
+fix dice bg -- now it semi-transparent, so it needs white bg to look good
 come up with new variants, not only 123,345,56(7)
 make graphics more crisp
 rounded corners for cubes (10px-20px)

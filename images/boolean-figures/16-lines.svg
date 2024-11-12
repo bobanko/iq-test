@@ -1,20 +1,20 @@
 <svg width="104" height="104" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="16-lines">
-<path id="7" d="M2 2L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="3" d="M2 52H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="9" d="M2 102H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="14" d="M52 102H102" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="15" d="M2 2H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="5" d="M2 102L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="1" d="M52 102V52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="6" d="M102 102L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="2" d="M102 52H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="8" d="M102 2H52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="4" d="M102 2L52 52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="0" d="M52 2V52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="10" d="M102 2V52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="12" d="M102 52V102" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="13" d="M2 2V52" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
-<path id="11" d="M2 52V102" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="7" d="M2 2L52 52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="3" d="M2 52H52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="9" d="M2 102H52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="14" d="M52 102H102" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="15" d="M2 2H52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="5" d="M2 102L52 52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="1" d="M52 102V52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="6" d="M102 102L52 52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="2" d="M102 52H52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="8" d="M102 2H52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="4" d="M102 2L52 52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="0" d="M52 2V52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="10" d="M102 2V52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="12" d="M102 52V102" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="13" d="M2 2V52" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
+<path id="11" d="M2 52V102" stroke="var(--color)" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>
