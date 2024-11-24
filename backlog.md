@@ -64,6 +64,12 @@ examples:
 
 -
 
+# 14-nov'24 notes
+
+## cutout_spikes
+
+make able to set colors for different image parts, like in shuffle
+
 # 16-oct'24 notes
 
 ## color3Frames
