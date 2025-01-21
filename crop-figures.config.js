@@ -1,7 +1,6 @@
-import { defaultColors, rgbColors } from "./common.config.js";
+import { defaultColors } from "./common.config.js";
 import { generateCropFigurePatternsQuestion } from "./crop-figures.generator.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
-import { shuffleTypes } from "./shuffle-figure-patterns.generator.js";
 
 const defaultViewBox = "0 0 100 100";
 
@@ -10,6 +9,7 @@ export const cropFiguresConfigs = {
     patternsInCol: 3,
     patternsInCol: 3,
     viewBox: defaultViewBox,
+    noRotationAnimation: true,
 
     maxAnswerCount: 8,
 
