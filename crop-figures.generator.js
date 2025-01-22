@@ -2,6 +2,7 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 import { colors } from "./common.config.js";
+import { xorFigures } from "./boolean-figures.generator.js";
 
 function* cropFiguresGenerator({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
@@ -359,6 +360,175 @@ export function generateCropFigurePatternsQuestionAlt({
             `${figures.toString()};${color};${rotation};${strokeWidth}`
         )
         .toString(),
+  });
+
+  // todo(vmyshko): review, do those all are used?
+  return {
+    seed,
+    patternsInRow,
+    //
+    patterns,
+    answers,
+    correctAnswer,
+    //
+  };
+}
+
+//.. and some more copypasta
+
+const bgCircleFig = {
+  figures: ["circle"],
+  color: "white",
+};
+
+const frameCircleFig = {
+  figures: ["circle"],
+  color: "transparent",
+  strokeWidth: 2,
+};
+
+function* cropFiguresGeneratorXorCustom({ random, config }) {
+  const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+  const { figures, figureColors } = config;
+
+  const [color1, color2] = random.popRangeFrom([...figureColors], 2);
+
+  // to keep rows unique
+  const possibleFigCounts = [2, 3, 4];
+
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+    const quarterFigsCount = random.popFrom(possibleFigCounts);
+    // fig count to xor
+    const xorFigsCount = random.fromRange(1, quarterFigsCount - 1);
+
+    const randomFigs = random.popRangeFrom([...figures], quarterFigsCount);
+
+    // basic figure
+    yield {
+      figureParts: [
+        bgCircleFig,
+        {
+          figures: randomFigs,
+          color: color1,
+        },
+        frameCircleFig,
+      ],
+    };
+
+    const figsToXor = random.popRangeFrom([...randomFigs], xorFigsCount);
+
+    // figure to xor
+    yield {
+      figureParts: [
+        bgCircleFig,
+        {
+          figures: figsToXor,
+          color: color2,
+        },
+        frameCircleFig,
+      ],
+    };
+    // 3rd col - just extra crop fig
+    yield {
+      figureParts: [
+        bgCircleFig,
+        {
+          //sort for proper hash check
+          figures: xorFigures(randomFigs, figsToXor).sort(),
+          color: color1,
+        },
+        frameCircleFig,
+      ],
+    };
+  } //row
+}
+
+function generateAnswerXorCustom({ random, config, correctAnswer }) {
+  const { figureParts, colorGroups, rotationGroups } = config;
+
+  const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+  const { figures, figureColors } = config;
+
+  // todo(vmyshko): some figs looks same after 90 rot (circle and square) so skip rotation
+  const bgRotation = random.sample([0, 90]);
+  // todo(vmyshko): get rid of this copy-pasta
+
+  const { color: color1 } = correctAnswer.figureParts[1];
+
+  const quarterFigsCount = random.fromRange(1, 4);
+  const randomFigs = random.popRangeFrom([...figures], quarterFigsCount);
+
+  return {
+    isCorrect: false,
+    id: getUid(),
+    figureParts:
+      // full bg
+      [
+        bgCircleFig,
+        {
+          //sort for proper hash check
+          figures: randomFigs.sort(),
+          color: color1,
+        },
+        frameCircleFig,
+      ],
+  };
+}
+
+export function generateCropFigurePatternsQuestionXorCustom({
+  config,
+  seed,
+  questionIndex,
+}) {
+  //
+  const {
+    patternsInRow = 3,
+    maxAnswerCount = 6, //over 8 will not fit
+    figureCount, // single pattern figure count [2..n]
+  } = config;
+
+  const random = new SeededRandom(seed + questionIndex);
+
+  const patterns = [
+    ...cropFiguresGeneratorXorCustom({
+      random,
+      config,
+    }),
+  ];
+
+  //last block
+  const [correctAnswer] = patterns.splice(-1, 1, null);
+  correctAnswer.isCorrect = true;
+  correctAnswer.id = getUid();
+
+  // *******
+  // ANSWERS
+  // *******
+
+  const answers = generateUniqueValues({
+    existingValues: [correctAnswer],
+    maxValuesCount: maxAnswerCount - 1,
+    generateFn: () => {
+      return generateAnswerXorCustom({
+        correctAnswer,
+        random,
+        config,
+      });
+    },
+    getValueHashFn: ({ figureParts = [] }) => {
+      const hash = figureParts
+        .map(
+          // todo(vmyshko): why defaults are not set yet? re-check!
+          ({ figures, rotation = 0, color = "", strokeWidth = 0 }) =>
+            `${figures.toString()};${color};${rotation};${strokeWidth}`
+        )
+        .toString();
+      console.log(figureParts, hash);
+
+      return hash;
+    },
   });
 
   // todo(vmyshko): review, do those all are used?

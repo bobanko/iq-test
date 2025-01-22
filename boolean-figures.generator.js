@@ -25,7 +25,7 @@ function mulFigures(figures1, figures2) {
 }
 
 // XOR
-function xorFigures(figures1, figures2) {
+export function xorFigures(figures1, figures2) {
   //only unique from both
   const mulResult = mulFigures(figures1, figures2);
 
