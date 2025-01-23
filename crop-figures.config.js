@@ -11,7 +11,7 @@ const defaultViewBox = "0 0 100 100";
 
 export const cropFiguresConfigs = {
   // todo(vmyshko): this is totally different variant type, so extract with gen/render
-  sumRowsColsFigures: {
+  colRowSumFigures: {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
@@ -21,12 +21,9 @@ export const cropFiguresConfigs = {
 
     figureLink: "./images/card-suits.svg",
 
-    figures: [
-      "spade-1",
-      "heart-1",
-      // "diamond-1", "club-1"
-    ],
-    figureColors: [...defaultColors],
+    figures: ["spade-1", "heart-1", "diamond-1", "club-1"],
+    figureCountToUse: 2,
+    colRowFigSum: 4, // possible 3*9=27 positions
 
     generator: generateCropFigurePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,

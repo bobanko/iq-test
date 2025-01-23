@@ -545,24 +545,30 @@ export function generateCropFigurePatternsQuestionXorCustom({
 
 // ... and more!
 
-// todo(vmyshko): extract to config
-const colRowFigSum = 4; // how many figures in row/col
+const possiblePositions = [
+  [0, 0],
+  [0, 50],
+  [0, 100],
+
+  [50, 0],
+  [50, 50],
+  [50, 100],
+
+  [100, 0],
+  [100, 50],
+  [100, 100],
+];
+
+const maxFigsPerCell = possiblePositions.length;
 
 function randomizeFigurePositions({ figures, random }) {
   const colRowFigScale = 0.35;
-  const possiblePositions = [
-    [0, 0],
-    [0, 50],
-    [0, 100],
 
-    [50, 0],
-    [50, 50],
-    [50, 100],
-
-    [100, 0],
-    [100, 50],
-    [100, 100],
-  ];
+  if (figures.length > maxFigsPerCell) {
+    throw new Error(
+      `Too many figures to fit in cell: ${figures.length}, max ${maxFigsPerCell}`
+    );
+  }
 
   const figPositions = random.popRangeFrom(
     [...possiblePositions],
@@ -580,26 +586,44 @@ function randomizeFigurePositions({ figures, random }) {
 function* cropFiguresGenerator_colRowSum({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
 
-  const { figures, figureColors } = config;
+  const { figures, figureColors, figureCountToUse, colRowFigSum } = config;
+
+  const figsToUse = random.popRangeFrom([...figures], figureCountToUse);
 
   // todo(vmyshko): try to keep col sums also equal to colRowFigSum, but how?
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
-    const allRowFigs = figures
+    const allRowFigs = figsToUse
       .map((fig) => Array(colRowFigSum).fill(fig))
       .flat();
 
+    // 1st col
     const col1figs = random
-      .popRangeFrom(allRowFigs, random.fromRange(1, 4))
+      .popRangeFrom(
+        allRowFigs,
+        random.fromRange(
+          // not less than, if too many figs
+          Math.max(1, allRowFigs.length - maxFigsPerCell * 2),
+          // minus 2 - to keep at least 1&1 for rest 2 columns
+          Math.min(allRowFigs.length - 2, maxFigsPerCell)
+        )
+      )
       .sort();
 
-    // basic figure
     yield {
       figureParts: randomizeFigurePositions({ figures: col1figs, random }),
     };
 
     // 2nd col
     const col2figs = random
-      .popRangeFrom(allRowFigs, random.fromRange(1, 4))
+      .popRangeFrom(
+        allRowFigs,
+        random.fromRange(
+          // not less than ???, last column can handle
+          Math.max(1, allRowFigs.length - maxFigsPerCell),
+          // minus 1 to keep at least 1 for 3rd column
+          Math.min(allRowFigs.length - 1, maxFigsPerCell)
+        )
+      )
       .sort();
 
     // figure to xor
@@ -619,16 +643,23 @@ function* cropFiguresGenerator_colRowSum({ random, config }) {
 function generateAnswer_colRowSum({ random, config, correctAnswer }) {
   const { figureParts, colorGroups, rotationGroups } = config;
 
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
+  const { patternsInCol = 3, patternsInRow = 3, colRowFigSum } = config;
 
-  const { figures } = config;
+  const { figures, figureCountToUse } = config;
 
   // todo(vmyshko): get rid of this copy-pasta
 
-  const allRowFigs = figures.map((fig) => Array(colRowFigSum).fill(fig)).flat();
+  const figsToUse = random.popRangeFrom([...figures], figureCountToUse);
 
-  // divided by two to keep it similar to real answer
-  const randomAnswerFigsCount = random.fromRange(1, allRowFigs.length / 2);
+  const allRowFigs = figsToUse
+    .map((fig) => Array(colRowFigSum).fill(fig))
+    .flat();
+
+  const randomAnswerFigsCount = random.fromRange(
+    // todo(vmyshko): fit answers to be  similar to correct
+    Math.max(1, allRowFigs.length - maxFigsPerCell * 2),
+    Math.min(allRowFigs.length / 3, maxFigsPerCell)
+  );
 
   const randomFigs = random
     .popRangeFrom(allRowFigs, randomAnswerFigsCount)
