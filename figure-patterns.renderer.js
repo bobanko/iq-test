@@ -89,6 +89,8 @@ function createFigurePattern({ figureConfig, config }) {
       color: figureColor,
       strokeWidth,
       stroke,
+      transformX,
+      transformY,
     } = figurePart;
 
     // todo(vmyshko): impl separate coloring for each part?
@@ -120,10 +122,18 @@ function createFigurePattern({ figureConfig, config }) {
         // calc transform origin based on viewBox
         const [x1, y1, x2, y2] = viewBox.split(" ");
 
+        //center of viewBox
         $use.style.setProperty(
           "--transform-origin",
           `${(x2 - x1) / 2}px ${(y2 - y1) / 2}px`
         );
+
+        if (Number.isFinite(transformX) && Number.isFinite(transformY)) {
+          $use.style.setProperty(
+            "--transform-origin",
+            `${transformX}px ${transformY}px`
+          );
+        }
       })();
 
       $use.href.baseVal = getFigureUrl({ link: figureLink, id: figure });
