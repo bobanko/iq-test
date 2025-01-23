@@ -542,3 +542,167 @@ export function generateCropFigurePatternsQuestionXorCustom({
     //
   };
 }
+
+// ... and more!
+
+// todo(vmyshko): extract to config
+const colRowFigSum = 4; // how many figures in row/col
+
+function randomizeFigurePositions({ figures, random }) {
+  const colRowFigScale = 0.35;
+  const possiblePositions = [
+    [0, 0],
+    [0, 50],
+    [0, 100],
+
+    [50, 0],
+    [50, 50],
+    [50, 100],
+
+    [100, 0],
+    [100, 50],
+    [100, 100],
+  ];
+
+  const figPositions = random.popRangeFrom(
+    [...possiblePositions],
+    figures.length
+  );
+
+  return figures.map((fig, i) => ({
+    figures: [fig],
+    scale: colRowFigScale,
+    transformX: figPositions[i][0],
+    transformY: figPositions[i][1],
+  }));
+}
+
+function* cropFiguresGenerator_colRowSum({ random, config }) {
+  const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+  const { figures, figureColors } = config;
+
+  // todo(vmyshko): try to keep col sums also equal to colRowFigSum, but how?
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+    const allRowFigs = figures
+      .map((fig) => Array(colRowFigSum).fill(fig))
+      .flat();
+
+    const col1figs = random
+      .popRangeFrom(allRowFigs, random.fromRange(1, 4))
+      .sort();
+
+    // basic figure
+    yield {
+      figureParts: randomizeFigurePositions({ figures: col1figs, random }),
+    };
+
+    // 2nd col
+    const col2figs = random
+      .popRangeFrom(allRowFigs, random.fromRange(1, 4))
+      .sort();
+
+    // figure to xor
+    yield {
+      figureParts: randomizeFigurePositions({ figures: col2figs, random }),
+    };
+
+    // 3rd col - just extra crop fig
+
+    const col3figs = allRowFigs.sort();
+    yield {
+      figureParts: randomizeFigurePositions({ figures: col3figs, random }),
+    };
+  } //row
+}
+
+function generateAnswer_colRowSum({ random, config, correctAnswer }) {
+  const { figureParts, colorGroups, rotationGroups } = config;
+
+  const { patternsInCol = 3, patternsInRow = 3 } = config;
+
+  const { figures } = config;
+
+  // todo(vmyshko): get rid of this copy-pasta
+
+  const allRowFigs = figures.map((fig) => Array(colRowFigSum).fill(fig)).flat();
+
+  // divided by two to keep it similar to real answer
+  const randomAnswerFigsCount = random.fromRange(1, allRowFigs.length / 2);
+
+  const randomFigs = random
+    .popRangeFrom(allRowFigs, randomAnswerFigsCount)
+    .sort();
+
+  return {
+    isCorrect: false,
+    id: getUid(),
+    figureParts: randomizeFigurePositions({ figures: randomFigs, random }),
+  };
+}
+
+export function generateCropFigurePatternsQuestion_colRowSum({
+  config,
+  seed,
+  questionIndex,
+}) {
+  //
+  const {
+    patternsInRow = 3,
+    maxAnswerCount = 6, //over 8 will not fit
+    figureCount, // single pattern figure count [2..n]
+  } = config;
+
+  const random = new SeededRandom(seed + questionIndex);
+
+  const patterns = [
+    ...cropFiguresGenerator_colRowSum({
+      random,
+      config,
+    }),
+  ];
+
+  //last block
+  const [correctAnswer] = patterns.splice(-1, 1, null);
+  correctAnswer.isCorrect = true;
+  correctAnswer.id = getUid();
+
+  // *******
+  // ANSWERS
+  // *******
+
+  const answers = generateUniqueValues({
+    existingValues: [correctAnswer],
+    maxValuesCount: maxAnswerCount - 1,
+    generateFn: () => {
+      return generateAnswer_colRowSum({
+        correctAnswer,
+        random,
+        config,
+      });
+    },
+    getValueHashFn: ({ figureParts = [] }) => {
+      const hash = figureParts
+        .map(
+          // todo(vmyshko): why defaults are not set yet? re-check!
+          ({ figures, rotation = 0, color = "", strokeWidth = 0 }) =>
+            `${figures.toString()};${color};${rotation};${strokeWidth}`
+        )
+        .toString();
+      console.log(figureParts, hash);
+
+      return hash;
+    },
+  });
+
+  // todo(vmyshko): review, do those all are used?
+  return {
+    seed,
+    patternsInRow,
+    //
+    patterns,
+    answers,
+    correctAnswer,
+    //
+  };
+}

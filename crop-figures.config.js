@@ -1,6 +1,7 @@
 import { colors, defaultColors } from "./common.config.js";
 import {
   generateCropFigurePatternsQuestion,
+  generateCropFigurePatternsQuestion_colRowSum,
   generateCropFigurePatternsQuestionAlt,
   generateCropFigurePatternsQuestionXorCustom,
 } from "./crop-figures.generator.js";
@@ -9,6 +10,28 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 const defaultViewBox = "0 0 100 100";
 
 export const cropFiguresConfigs = {
+  // todo(vmyshko): this is totally different variant type, so extract with gen/render
+  sumRowsColsFigures: {
+    patternsInCol: 3,
+    patternsInRow: 3,
+    viewBox: defaultViewBox,
+    noRotationAnimation: true,
+
+    maxAnswerCount: 8,
+
+    figureLink: "./images/card-suits.svg",
+
+    figures: [
+      "spade-1",
+      "heart-1",
+      // "diamond-1", "club-1"
+    ],
+    figureColors: [...defaultColors],
+
+    generator: generateCropFigurePatternsQuestion_colRowSum,
+    renderer: renderFigurePatternsQuestion,
+  },
+
   // todo(vmyshko): probably it does not fully match config for crops (no cropFigs), so extract
   xorQuarters: {
     patternsInCol: 3,
