@@ -14,6 +14,8 @@ export const progressionTypes = {
   addThenDiv: 9, // rand .+x ./y
   mulThenSubProgression: 10, // rand .*2 -2; .*3 -3; .*4 .-4;
   subThenAdd: 11, // rand.-12 .+9; x3
+
+  equalSumPerRowCol: 12, // 1+2+3=6; 3+2+1=6; 1+3+2=6; same for cols
 };
 
 // helpers
@@ -300,6 +302,45 @@ const generators = {
     },
     answerGenerator: ({ random, config }) =>
       random.fromRange(config.maxRange, 100 - config.maxRange), //number
+  },
+  [progressionTypes.equalSumPerRowCol]: {
+    rowGenerator: function* ({ random, config }) {
+      const { colRowSum } = config;
+
+      // first row
+      const cell_00 = random.fromRange(1, colRowSum - 2);
+
+      // first row rest
+      const cell_01 = random.fromRange(1, colRowSum - cell_00 - 1);
+      const cell_02 = colRowSum - cell_00 - cell_01;
+
+      //first col rest
+      const cell_10 = random.fromRange(1, colRowSum - cell_00 - 1);
+      const cell_20 = colRowSum - cell_00 - cell_10;
+
+      // center cell
+      const cell_11 = random.fromRange(
+        // todo(vmyshko): min range is unknown for now, i set safe min for now (less combinations)
+        Math.min(cell_02, cell_20),
+        colRowSum - Math.max(cell_01, cell_10) - 1
+      );
+
+      // last middle cells
+      const cell_12 = colRowSum - cell_11 - cell_10;
+      const cell_21 = colRowSum - cell_11 - cell_01;
+
+      // last cell
+      const cell_22 = colRowSum - cell_02 - cell_12;
+
+      // ----------------
+
+      // todo(vmyshko): should return one by one, not rows? (for all progressions)
+      yield [cell_00, cell_01, cell_02].map(mapValueToPattern);
+      yield [cell_10, cell_11, cell_12].map(mapValueToPattern);
+      yield [cell_20, cell_21, cell_22].map(mapValueToPattern);
+    },
+    answerGenerator: ({ random, config }) =>
+      random.fromRange(1, config.colRowSum), //number
   },
 };
 

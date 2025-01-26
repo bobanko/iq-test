@@ -5,6 +5,14 @@ import {
 import { renderValuesQuestion } from "./value.renderer.js";
 
 const _numberProgressionConfigs = {
+  equalSumPerRowCol: {
+    progressionType: progressionTypes.equalSumPerRowCol,
+    patternsInRow: 3,
+    patternsInCol: 3,
+    maxAnswerCount: 6,
+    // todo(vmyshko): sum can be random
+    colRowSum: 8,
+  },
   //  desc here
   numToAbc: {
     progressionType: progressionTypes.numToAbc,
