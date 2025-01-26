@@ -547,21 +547,21 @@ export function generateCropFigurePatternsQuestionXorCustom({
 
 const possiblePositions = [
   [0, 0],
-  [0, 50],
-  [0, 100],
-
   [50, 0],
-  [50, 50],
-  [50, 100],
-
   [100, 0],
+
+  [0, 50],
+  [50, 50],
   [100, 50],
+
+  [0, 100],
+  [50, 100],
   [100, 100],
 ];
 
 const maxFigsPerCell = possiblePositions.length;
 
-function randomizeFigurePositions({ figures, random }) {
+function shuffleFigsPositions({ figures, random }) {
   const colRowFigScale = 0.35;
 
   if (figures.length > maxFigsPerCell) {
@@ -574,6 +574,8 @@ function randomizeFigurePositions({ figures, random }) {
     [...possiblePositions],
     figures.length
   );
+  // todo(vmyshko): for debug
+  // const figPositions = [...possiblePositions];
 
   return figures.map((fig, i) => ({
     figures: [fig],
@@ -583,61 +585,111 @@ function randomizeFigurePositions({ figures, random }) {
   }));
 }
 
+function getFirstCellFigures({ figsAvailable, random }) {
+  const firstCellFigs = random
+    .popRangeFrom(
+      [...figsAvailable],
+      random.fromRange(
+        // not less than, if too many figs
+        Math.max(1, figsAvailable.length - maxFigsPerCell * 2),
+        // minus 2 - to keep at least 1&1 for rest 2 columns
+        Math.min(figsAvailable.length - 2, maxFigsPerCell)
+      )
+    )
+    .sort();
+
+  return firstCellFigs;
+}
+
+function getSecondCellFigures({ figsAvailable, random }) {
+  const secondCellFigs = random
+    .popRangeFrom(
+      figsAvailable,
+      random.fromRange(
+        // not less than ???, last column can handle
+        Math.max(1, figsAvailable.length - maxFigsPerCell),
+        // minus 1 to keep at least 1 for 3rd column
+        Math.min(figsAvailable.length - 1, maxFigsPerCell)
+      )
+    )
+    .sort();
+
+  return secondCellFigs;
+}
+
+/**
+ * removes elements from basicArray
+ * @param {Array} basicArray array to remove items from
+ * @param {Array} elementsToRemove elements to remove from basicArray
+ * @returns items from basicArray without elementsToRemove
+ */
+function subArrays(basicArray, elementsToRemove) {
+  const resultArray = [...basicArray];
+
+  elementsToRemove.forEach((element) => {
+    resultArray.splice(resultArray.indexOf(element), 1);
+  });
+
+  return resultArray;
+}
+
+function generateNumberMatrix({ random, config }) {
+  const { colRowSum } = config;
+
+  // first row
+  const cell_00 = random.fromRange(1, colRowSum - 2);
+
+  // first row rest
+  const cell_01 = random.fromRange(1, colRowSum - cell_00 - 1);
+  const cell_02 = colRowSum - cell_00 - cell_01;
+
+  //first col rest
+  const cell_10 = random.fromRange(1, colRowSum - cell_00 - 1);
+  const cell_20 = colRowSum - cell_00 - cell_10;
+
+  // center cell
+  const cell_11 = random.fromRange(
+    // todo(vmyshko): min range is unknown for now, i set safe min for now (less combinations)
+    Math.min(cell_02, cell_20),
+    colRowSum - Math.max(cell_01, cell_10) - 1
+  );
+
+  // last middle cells
+  const cell_12 = colRowSum - cell_11 - cell_10;
+  const cell_21 = colRowSum - cell_11 - cell_01;
+
+  // last cell
+  const cell_22 = colRowSum - cell_02 - cell_12;
+
+  return [
+    [cell_00, cell_01, cell_02],
+    [cell_10, cell_11, cell_12],
+    [cell_20, cell_21, cell_22],
+  ];
+}
+
 function* cropFiguresGenerator_colRowSum({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
+  const { figures, figureTypesCountToUse, colRowSum } = config;
 
-  const { figures, figureColors, figureCountToUse, colRowFigSum } = config;
+  const figNamesToUse = random.popRangeFrom(
+    [...figures],
+    figureTypesCountToUse
+  );
 
-  const figsToUse = random.popRangeFrom([...figures], figureCountToUse);
+  const figName = random.sample(figNamesToUse);
 
-  // todo(vmyshko): try to keep col sums also equal to colRowFigSum, but how?
-  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
-    const allRowFigs = figsToUse
-      .map((fig) => Array(colRowFigSum).fill(fig))
-      .flat();
+  const mtxNumbers = generateNumberMatrix({ random, config });
 
-    // 1st col
-    const col1figs = random
-      .popRangeFrom(
-        allRowFigs,
-        random.fromRange(
-          // not less than, if too many figs
-          Math.max(1, allRowFigs.length - maxFigsPerCell * 2),
-          // minus 2 - to keep at least 1&1 for rest 2 columns
-          Math.min(allRowFigs.length - 2, maxFigsPerCell)
-        )
-      )
-      .sort();
+  const figRows = mtxNumbers
+    .map((row) => row.map((cellNumber) => Array(cellNumber).fill(figName)))
+    .flat();
 
+  for (let cellFigs of figRows) {
     yield {
-      figureParts: randomizeFigurePositions({ figures: col1figs, random }),
+      figureParts: shuffleFigsPositions({ figures: cellFigs, random }),
     };
-
-    // 2nd col
-    const col2figs = random
-      .popRangeFrom(
-        allRowFigs,
-        random.fromRange(
-          // not less than ???, last column can handle
-          Math.max(1, allRowFigs.length - maxFigsPerCell),
-          // minus 1 to keep at least 1 for 3rd column
-          Math.min(allRowFigs.length - 1, maxFigsPerCell)
-        )
-      )
-      .sort();
-
-    // figure to xor
-    yield {
-      figureParts: randomizeFigurePositions({ figures: col2figs, random }),
-    };
-
-    // 3rd col - just extra crop fig
-
-    const col3figs = allRowFigs.sort();
-    yield {
-      figureParts: randomizeFigurePositions({ figures: col3figs, random }),
-    };
-  } //row
+  }
 }
 
 function generateAnswer_colRowSum({ random, config, correctAnswer }) {
@@ -645,11 +697,12 @@ function generateAnswer_colRowSum({ random, config, correctAnswer }) {
 
   const { patternsInCol = 3, patternsInRow = 3, colRowFigSum } = config;
 
-  const { figures, figureCountToUse } = config;
+  const { figures, figureTypesCountToUse } = config;
 
   // todo(vmyshko): get rid of this copy-pasta
 
-  const figsToUse = random.popRangeFrom([...figures], figureCountToUse);
+  const figsToUse = figures;
+  // random.popRangeFrom([...figures], figureTypesCountToUse);
 
   const allRowFigs = figsToUse
     .map((fig) => Array(colRowFigSum).fill(fig))
@@ -668,7 +721,7 @@ function generateAnswer_colRowSum({ random, config, correctAnswer }) {
   return {
     isCorrect: false,
     id: getUid(),
-    figureParts: randomizeFigurePositions({ figures: randomFigs, random }),
+    figureParts: shuffleFigsPositions({ figures: randomFigs, random }),
   };
 }
 
