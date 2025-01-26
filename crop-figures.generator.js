@@ -561,7 +561,8 @@ const possiblePositions = [
 
 const maxFigsPerCell = possiblePositions.length;
 
-function shuffleFigsPositions({ figures, random }) {
+function makeFigureParts({ figures, random, config }) {
+  const { shufflePositions = true } = config;
   const colRowFigScale = 0.35;
 
   if (figures.length > maxFigsPerCell) {
@@ -570,10 +571,10 @@ function shuffleFigsPositions({ figures, random }) {
     );
   }
 
-  const figPositions = random.popRangeFrom(
-    [...possiblePositions],
-    figures.length
-  );
+  const figPositions = shufflePositions
+    ? random.popRangeFrom([...possiblePositions], figures.length)
+    : [...possiblePositions];
+
   // todo(vmyshko): for debug
   // const figPositions = [...possiblePositions];
 
@@ -677,17 +678,26 @@ function* cropFiguresGenerator_colRowSum({ random, config }) {
     figureTypesCountToUse
   );
 
-  const figName = random.sample(figNamesToUse);
+  const figGroupsCells = figNamesToUse.map((figName) => {
+    const mtxNumbers = generateNumberMatrix({ random, config });
 
-  const mtxNumbers = generateNumberMatrix({ random, config });
+    const figCells = mtxNumbers
+      .map((row) => row.map((cellNumber) => Array(cellNumber).fill(figName)))
+      .flat();
 
-  const figRows = mtxNumbers
-    .map((row) => row.map((cellNumber) => Array(cellNumber).fill(figName)))
-    .flat();
+    return figCells;
+  });
 
-  for (let cellFigs of figRows) {
+  const result = Array.from({ length: 9 }, (_, i) =>
+    figGroupsCells
+      .map((arr) => arr[i] || null)
+      .flat()
+      .sort()
+  );
+
+  for (let cellFigs of result) {
     yield {
-      figureParts: shuffleFigsPositions({ figures: cellFigs, random }),
+      figureParts: makeFigureParts({ figures: cellFigs, random, config }),
     };
   }
 }
@@ -695,33 +705,31 @@ function* cropFiguresGenerator_colRowSum({ random, config }) {
 function generateAnswer_colRowSum({ random, config, correctAnswer }) {
   const { figureParts, colorGroups, rotationGroups } = config;
 
-  const { patternsInCol = 3, patternsInRow = 3, colRowFigSum } = config;
+  const { patternsInCol = 3, patternsInRow = 3, colRowSum } = config;
 
   const { figures, figureTypesCountToUse } = config;
 
   // todo(vmyshko): get rid of this copy-pasta
 
-  const figsToUse = figures;
-  // random.popRangeFrom([...figures], figureTypesCountToUse);
+  const figsToUse = random.popRangeFrom([...figures], figureTypesCountToUse);
 
-  const allRowFigs = figsToUse
-    .map((fig) => Array(colRowFigSum).fill(fig))
-    .flat();
+  const randomAnswerFigs = figsToUse
+    .map((fig) => {
+      const figCount = random.fromRange(
+        // todo(vmyshko): fit answers to be  similar to correct
+        Math.max(1, colRowSum - maxFigsPerCell * 2),
+        Math.min(colRowSum / 3, maxFigsPerCell)
+      );
 
-  const randomAnswerFigsCount = random.fromRange(
-    // todo(vmyshko): fit answers to be  similar to correct
-    Math.max(1, allRowFigs.length - maxFigsPerCell * 2),
-    Math.min(allRowFigs.length / 3, maxFigsPerCell)
-  );
-
-  const randomFigs = random
-    .popRangeFrom(allRowFigs, randomAnswerFigsCount)
+      return Array(figCount).fill(fig);
+    })
+    .flat()
     .sort();
 
   return {
     isCorrect: false,
     id: getUid(),
-    figureParts: shuffleFigsPositions({ figures: randomFigs, random }),
+    figureParts: makeFigureParts({ figures: randomAnswerFigs, random, config }),
   };
 }
 

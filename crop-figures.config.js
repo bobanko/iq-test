@@ -24,6 +24,7 @@ export const cropFiguresConfigs = {
     figures: ["spade-1", "heart-1", "diamond-1", "club-1"],
     figureTypesCountToUse: 2,
     colRowSum: 4, // possible 3*9=27 positions
+    // shufflePositions: false,
 
     generator: generateCropFigurePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,
