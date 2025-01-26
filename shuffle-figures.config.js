@@ -96,6 +96,7 @@ const quarterColors = [colors.yellow, colors.blue, colors.red, colors.dark];
 const frameColors = [colors.blue, colors.red, colors.white];
 export const shuffleFiguresConfigs = {
   // star from tg
+  // todo(vmyshko): this one seems broken, rotation logic is not clear and random
   rotStarTg: {
     patternsInCol: 3,
     patternsInCol: 3,
