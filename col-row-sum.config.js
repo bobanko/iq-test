@@ -1,6 +1,6 @@
 import { defaultViewBox } from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
-import { generatePatternsQuestion_colRowSum } from "./formula-col-row-sum.generator.js";
+import { generatePatternsQuestion_colRowSum } from "./col-row-sum.generator.js";
 
 export const colRowSumFiguresConfigs = {
   colSubFigsMany: {
