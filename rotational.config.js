@@ -439,35 +439,6 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  // todo(vmyshko): added for anisya
-  sisiAnisiCircle: {
-    figs: [
-      {
-        pickFrom: [svgFigs.circle],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 360 / 6, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      //static
-      // {
-      //   pickFrom: [svgHrefs.frameHexagon],
-      //   startDeg: 30, // initial rotation, before rules: 0, -45
-      //   stepDeg: 0, // min rotation step by rules
-      //   skipZero: false, // no zero rotation by rules
-      // },
-    ],
-
-    svgFrame: svgFrames.circle,
-
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: false, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
-  },
-
   hexagonSector1: {
     skip: true,
     figs: [
