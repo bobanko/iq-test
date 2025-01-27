@@ -1,3 +1,4 @@
+import { defaultViewBox } from "./common.config.js";
 import { scaleViewBox } from "./common.js";
 import { createQuestionMark } from "./common.renderer.js";
 import { preventSvgCache, wait } from "./helpers.js";
@@ -14,7 +15,7 @@ async function rotateTo($elem, deg) {
 
 function createFigurePattern({ figureConfig, config }) {
   const {
-    viewBox = "0 0 100 100",
+    viewBox = defaultViewBox,
     color = "black",
     figureLink,
     strokeWidth = 1,

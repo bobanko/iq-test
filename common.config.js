@@ -19,3 +19,5 @@ export const defaultColors = [
   colors.blue,
   colors.yellow,
 ];
+
+export const defaultViewBox = "0 0 100 100";

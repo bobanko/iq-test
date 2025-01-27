@@ -2,11 +2,9 @@ import {
   generateShuffleFiguresQuestion,
   shuffleTypes,
 } from "./shuffle-figures.generator.js";
-import { colors, rgbColors } from "./common.config.js";
+import { colors, defaultViewBox, rgbColors } from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns.generator.js";
-
-const defaultViewBox = "0 0 100 100";
 
 // todo(vmyshko): currently, shift is used for most multi-color
 // it (or any other similar) should provide randomness,

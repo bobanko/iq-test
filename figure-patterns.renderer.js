@@ -1,5 +1,4 @@
-import { colors } from "./common.config.js";
-import { scaleViewBox } from "./common.js";
+import { colors, defaultViewBox } from "./common.config.js";
 import { preventSvgCache, wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
@@ -17,7 +16,7 @@ function createQuestionMark({ config }) {
   /// -----
 
   const {
-    viewBox = "0 0 100 100",
+    viewBox = defaultViewBox,
     figureLink,
     questionMarkFigure = null,
   } = config;
@@ -53,7 +52,7 @@ function createQuestionMark({ config }) {
 
 function createFigurePattern({ figureConfig, config }) {
   const {
-    viewBox = "0 0 100 100",
+    viewBox = defaultViewBox,
     color = "black",
     figureLink,
     staticFigures = [],

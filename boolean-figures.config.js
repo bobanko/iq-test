@@ -2,10 +2,10 @@ import {
   generateBooleanFiguresQuestion,
   figureGenRules,
 } from "./boolean-figures.generator.js";
+import { defaultViewBox } from "./common.config.js";
 import { scaleViewBox } from "./common.js";
 import { renderFiguresQuestion } from "./figures.renderer.js";
 
-const defaultViewBox = "0 0 100 100";
 const alternateViewBox = "2 2 100 100";
 
 const _booleanFiguresConfigs = {

@@ -1,4 +1,4 @@
-import { defaultColors } from "./common.config.js";
+import { defaultColors, defaultViewBox } from "./common.config.js";
 import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
 import { svgFrames } from "./rotational.config.js";
 import { makeUnique } from "./rotational.generator.js";
@@ -169,8 +169,7 @@ export function renderRotationalQuestion({
       $part.style.setProperty("--color", colors[partIndex]);
 
       // todo(vmyshko): should it come from config?
-      const viewBox = "0 0 100 100";
-      $part.setAttribute("viewBox", viewBox);
+      $part.setAttribute("viewBox", defaultViewBox);
 
       rotateTo($part, degs[partIndex]);
     });
