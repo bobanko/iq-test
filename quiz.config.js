@@ -9,10 +9,13 @@ import { resizableConfigs } from "./resizable.config.js";
 import { cutoutConfigs } from "./cutout.config.js";
 import { cropFiguresConfigs } from "./crop-figures.config.js";
 import { colRowSumFiguresConfigs } from "./col-row-sum.config.js";
+import { rowSubFiguresConfigs } from "./row-sub-figs.config.js";
 
 // todo(vmyshko): config every question here? or in each type? shuffle here? no.
 export const quizQuestionConfigs = Object.fromEntries([
   // todo(vmyshko): refac, move to local config? or keep here?
+
+  ...Object.entries(rowSubFiguresConfigs),
 
   ...Object.entries(colRowSumFiguresConfigs),
   ...Object.entries(cropFiguresConfigs),
