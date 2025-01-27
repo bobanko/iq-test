@@ -29,7 +29,7 @@ export const svgFrames = {
   // todo(vmyshko): add square?
 };
 
-const _rotationalConfigs = {
+export const rotationalConfigs = {
   //  custom letters
   letters45: {
     // todo(vmyshko): put colors to use, shared between figs? how?
@@ -57,6 +57,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   //  1 quarter (/arrow/circle/custom) 90deg
@@ -74,6 +77,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 4, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   //  1 quarter 45deg
@@ -92,6 +98,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   // todo(vmyshko): rotate both figs in one direction, same deg
@@ -119,6 +128,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   //  2 quarters 90deg diff deg (no overlap)
@@ -143,6 +155,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   //  3 quarters 90deg diff deg
@@ -172,6 +187,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   // 1 fig
@@ -190,6 +208,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 4, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   //  2 fig 45deg
@@ -208,6 +229,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   // clock 2
@@ -231,6 +255,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
   // true clock 45/45
   twoArrowClock: {
@@ -253,6 +280,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   // clock 3
@@ -284,6 +314,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   quarterFig90: {
@@ -306,6 +339,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   pentagon: {
@@ -332,6 +368,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 5, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   hexagonCircle: {
@@ -357,6 +396,38 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+
+  // todo(vmyshko): added for anisya
+  sisiCircle: {
+    figs: [
+      {
+        pickFrom: [svgFigs.circle],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 360 / 6, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      //static
+      // {
+      //   pickFrom: [svgHrefs.frameHexagon],
+      //   startDeg: 30, // initial rotation, before rules: 0, -45
+      //   stepDeg: 0, // min rotation step by rules
+      //   skipZero: false, // no zero rotation by rules
+      // },
+    ],
+
+    svgFrame: svgFrames.circle,
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   hexagonSector1: {
@@ -384,6 +455,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
   hexagonSector2: {
     figs: [
@@ -414,6 +488,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   hexagonSector3: {
@@ -452,6 +529,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   triadSector: {
@@ -490,6 +570,9 @@ const _rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 
   quarterFigs15mensa: {
@@ -530,18 +613,8 @@ const _rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
   },
 };
-
-export const rotationalConfigs = Object.fromEntries(
-  Object.entries(_rotationalConfigs)
-    .map((entry) => {
-      const [_key, value] = entry;
-
-      value.generator = generateRotationalQuestion;
-      value.renderer = renderRotationalQuestion;
-
-      return entry;
-    })
-    .filter((entry) => !entry[1].skip)
-);
