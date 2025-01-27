@@ -24,8 +24,11 @@
       }
 
       .box {
-        width: 150px;
-        height: 150px;
+        --pattern-size: 150px;
+
+        width: var(--pattern-size);
+        height: var(--pattern-size);
+
         position: relative;
         transform-style: preserve-3d; /* Enable 3D transformations */
         animation: rotateBox 5s infinite linear;
@@ -36,8 +39,8 @@
         width: 150px;
         height: 150px;
         background: rgba(255, 255, 255, 0.8);
-        border: 1px solid #ccc;
-        box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
+        /* border: 1px solid #ccc; */
+        /* box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2); */
 
         display: flex;
         align-items: center;
@@ -84,6 +87,77 @@
       <div class="side right">4</div>
       <div class="side top">5</div>
       <div class="side bottom">6</div>
+    </div>
+
+    <div class="box"></div>
+
+    <div class="box">
+      <div class="side front">
+        <svg
+          class="pattern-figure"
+          preserveAspectRatio="none"
+          viewBox="0 0 106 106"
+          style="--color: var(--red)"
+        >
+          <use href="./images/shuffle-dice-cult.svg#frame"></use>
+          <use href="./images/shuffle-dice-cult.svg#one"></use>
+        </svg>
+      </div>
+      <div class="side back">
+        <svg
+          class="pattern-figure"
+          preserveAspectRatio="none"
+          viewBox="0 0 106 106"
+          style="--color: var(--green)"
+        >
+          <use href="./images/shuffle-dice-cult.svg#frame"></use>
+          <use href="./images/shuffle-dice-cult.svg#two"></use>
+        </svg>
+      </div>
+      <div class="side left">
+        <svg
+          class="pattern-figure"
+          preserveAspectRatio="none"
+          viewBox="0 0 106 106"
+          style="--color: var(--blue)"
+        >
+          <use href="./images/shuffle-dice-cult.svg#frame"></use>
+          <use href="./images/shuffle-dice-cult.svg#three"></use>
+        </svg>
+      </div>
+      <div class="side right">
+        <svg
+          class="pattern-figure"
+          preserveAspectRatio="none"
+          viewBox="0 0 106 106"
+          style="--color: var(--yellow)"
+        >
+          <use href="./images/shuffle-dice-cult.svg#frame"></use>
+          <use href="./images/shuffle-dice-cult.svg#four"></use>
+        </svg>
+      </div>
+      <div class="side top">
+        <svg
+          class="pattern-figure"
+          preserveAspectRatio="none"
+          viewBox="0 0 106 106"
+          style="--color: var(--black)"
+        >
+          <use href="./images/shuffle-dice-cult.svg#frame"></use>
+          <use href="./images/shuffle-dice-cult.svg#five"></use>
+        </svg>
+      </div>
+      <div class="side bottom">
+        <svg
+          class="pattern-figure"
+          preserveAspectRatio="none"
+          viewBox="0 0 106 106"
+          style="--color: var(--gray)"
+        >
+          <use href="./images/shuffle-dice-cult.svg#frame"></use>
+          <use href="./images/shuffle-dice-cult.svg#six"></use>
+        </svg>
+      </div>
     </div>
   </body>
 </html>
