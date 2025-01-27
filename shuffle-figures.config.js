@@ -331,35 +331,35 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotColorSisiAnisi: {
-    patternsInCol: 3,
-    patternsInRow: 2,
-    viewBox: defaultViewBox,
-    maxAnswerCount: 8,
-    questionMarkFigure: "circle",
+  // rotColorSisiAnisi: {
+  //   patternsInCol: 3,
+  //   patternsInRow: 2,
+  //   viewBox: defaultViewBox,
+  //   maxAnswerCount: 8,
+  //   questionMarkFigure: "circle",
 
-    figureLink: "./images/arrow-icons.svg",
+  //   figureLink: "./images/arrow-icons.svg",
 
-    figureParts: [
-      {
-        figures: [shuffleTypes.single({ items: ["circle"] })],
-        color: shuffleTypes.rowProgression({ items: ["#f3d3bd", "#6c4f36"] }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["arrow-nipple"] })],
-        color: shuffleTypes.rowProgression({
-          rowShift: 2,
-          items: ["#c28875", "#544039"],
-        }),
-        rotation: shuffleTypes.unique123({
-          items: [135, 180, 180 + 45],
-        }),
-      },
-    ],
+  //   figureParts: [
+  //     {
+  //       figures: [shuffleTypes.single({ items: ["circle"] })],
+  //       color: shuffleTypes.rowProgression({ items: ["#f3d3bd", "#6c4f36"] }),
+  //     },
+  //     {
+  //       figures: [shuffleTypes.single({ items: ["arrow-nipple"] })],
+  //       color: shuffleTypes.rowProgression({
+  //         rowShift: 2,
+  //         items: ["#c28875", "#544039"],
+  //       }),
+  //       rotation: shuffleTypes.unique123({
+  //         items: [135, 180, 180 + 45],
+  //       }),
+  //     },
+  //   ],
 
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
+  //   generator: generateShuffleFigurePatternsQuestion,
+  //   renderer: renderFigurePatternsQuestion,
+  // },
 
   rotColorTriangles: {
     patternsInCol: 3,
