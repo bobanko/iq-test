@@ -2,6 +2,7 @@ import { renderRotationalQuestion } from "./rotational.renderer.js";
 import { generateRotationalQuestion } from "./rotational.generator.js";
 
 import { colors } from "./common.config.js";
+import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 
 const svgFigs = {
   quarter: "./images/clock-quarter.svg#quarter",
@@ -31,7 +32,7 @@ export const svgFrames = {
 
 export const rotationalConfigs = {
   //  custom letters
-  letters45: {
+  letters45_newRender: {
     // todo(vmyshko): put colors to use, shared between figs? how?
 
     // todo(vmyshko):
@@ -42,6 +43,9 @@ export const rotationalConfigs = {
     // OR put static figs separately?
     // fig order applies as z-index (naturally)
     // mirroring should be avail. same as degs for each fig.
+
+    // questionMarkFigure: "circle",
+    figureLink: "./images/letters-ptu.svg",
 
     figs: [
       {
@@ -60,8 +64,42 @@ export const rotationalConfigs = {
 
     generator: generateRotationalQuestion,
     renderer: renderRotationalQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
+  letters45_oldRender: {
+    // todo(vmyshko): put colors to use, shared between figs? how?
+
+    // todo(vmyshko):
+    // each fig has colors arr, as svgs
+    // ? arr should be shared between figs, if you want unique figs took once?
+    // same for colors
+    // fig can be fixed/static, no rule for it, for static bgs, but startDeg still applies
+    // OR put static figs separately?
+    // fig order applies as z-index (naturally)
+    // mirroring should be avail. same as degs for each fig.
+
+    figureLink: "./images/letters-ptu.svg",
+
+    figs: [
+      {
+        pickFrom: [svgFigs.letterP, svgFigs.letterU, svgFigs.letterT],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+        colorsFrom: [colors.black, colors.red, colors.green],
+      },
+    ],
+
+    shiftColorsBetweenRows: false,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+    // renderer: renderFigurePatternsQuestion,
+  },
   //  1 quarter (/arrow/circle/custom) 90deg
   oneQuarter90: {
     figs: [
@@ -402,7 +440,7 @@ export const rotationalConfigs = {
   },
 
   // todo(vmyshko): added for anisya
-  sisiCircle: {
+  sisiAnisiCircle: {
     figs: [
       {
         pickFrom: [svgFigs.circle],

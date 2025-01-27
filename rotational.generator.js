@@ -122,6 +122,26 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
     } //col
   } //row
 
+  const patterns = mtxDegs
+    .map((row) => row.flat())
+    .flat()
+    .map((deg) => ({
+      degs: [deg],
+      figureParts: [
+        {
+          color: "var(--blue)",
+          figures: ["letter-t"],
+          rotation: deg,
+          strokeWidth: 0,
+        },
+      ],
+    }));
+
+  //last block
+  const [correctAnswer] = patterns.splice(-1, 1, null);
+  correctAnswer.isCorrect = true;
+  correctAnswer.id = getUid();
+
   const correctDegs = mtxDegs[patternsInCol - 1][patternsInRow - 1];
 
   // delete correct from patterns
@@ -134,12 +154,6 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
   const usedDegsSet = new Set([correctDegs.toString()]);
 
   const answers = [];
-
-  const correctAnswer = {
-    id: getUid(),
-    degs: correctDegs,
-    isCorrect: true,
-  };
 
   answers.push(correctAnswer);
 
@@ -183,6 +197,15 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
           id: getUid(),
           degs: currentDegs,
           isCorrect: false,
+
+          figureParts: [
+            {
+              color: "var(--red)",
+              figures: ["letter-t"],
+              rotation: currentDegs[0],
+              strokeWidth: 0,
+            },
+          ],
         });
 
         break;
@@ -206,11 +229,9 @@ export function generateRotationalQuestion({ config, seed, questionIndex }) {
     patternsInRow,
     patternsInCol,
 
-    config,
-    mtxDegs,
+    mtxDegs, //old
     // todo(vmyshko): refac to
-    //patterns
+    patterns,
     answers,
-    correctAnswer,
   };
 }
