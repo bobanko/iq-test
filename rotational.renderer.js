@@ -76,6 +76,9 @@ function createCustomQuestionMark({ config }) {
   return $patternQuestionMark;
 }
 
+/**
+ * @deprecated use shuffle-figures, but it not finished 😢
+ */
 export function renderRotationalQuestion({
   config,
   questionData,

@@ -62,6 +62,9 @@ function createFigurePattern({ figureConfig, config }) {
   return $svgPatternContainer;
 }
 
+/**
+ * @deprecated use renderFigurePatternsQuestion instead
+ */
 export function renderFiguresQuestion({ config, questionData, questionIndex }) {
   const { patterns, answers } = questionData;
 
