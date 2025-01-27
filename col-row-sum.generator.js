@@ -90,7 +90,7 @@ function generateNumberMatrix({ random, config }) {
   ];
 }
 
-function* formulaRowColSumGenerator({ random, config }) {
+function* colRowSumGenerator({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
   const { figures, figureTypesCountToUse, colRowSum } = config;
 
@@ -169,7 +169,7 @@ export function generatePatternsQuestion_colRowSum({
   const random = new SeededRandom(seed + questionIndex);
 
   const patterns = [
-    ...formulaRowColSumGenerator({
+    ...colRowSumGenerator({
       random,
       config,
     }),
