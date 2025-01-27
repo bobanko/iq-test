@@ -303,8 +303,11 @@ function checkAnswers() {
   };
 
   questions.forEach(({ questionIndex, questionData }) => {
+    const selectedAnswerId = quizAnswers[questionIndex];
+
     const isCorrect =
-      questionData.correctAnswer.id === quizAnswers[questionIndex];
+      questionData.answers.find((answer) => answer.id === selectedAnswerId)
+        ?.isCorrect || false;
 
     const isAnswered = quizAnswers[questionIndex] !== undefined;
 

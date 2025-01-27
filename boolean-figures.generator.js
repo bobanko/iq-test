@@ -175,7 +175,5 @@ export function generateBooleanFiguresQuestion({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

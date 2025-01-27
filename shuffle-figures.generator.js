@@ -369,7 +369,5 @@ export function generateShuffleFiguresQuestion({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

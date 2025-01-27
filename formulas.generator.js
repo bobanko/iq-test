@@ -336,7 +336,5 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

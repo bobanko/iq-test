@@ -214,7 +214,5 @@ export function generatePatternsQuestion_colRowSum({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

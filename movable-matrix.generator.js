@@ -182,7 +182,5 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

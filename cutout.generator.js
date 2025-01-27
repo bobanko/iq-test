@@ -66,11 +66,8 @@ export function generateCutoutQuestion({ config, seed, questionIndex }) {
   return {
     seed,
     patternsInRow,
-
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

@@ -418,7 +418,5 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

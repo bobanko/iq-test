@@ -141,7 +141,5 @@ export function generateResizableQuestion({ config, seed, questionIndex }) {
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

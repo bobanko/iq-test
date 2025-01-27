@@ -94,7 +94,6 @@ export function renderRotationalQuestion({
     //
     mtxDegs,
     answers,
-    correctAnswer,
     seed,
   } = questionData;
 

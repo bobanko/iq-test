@@ -176,8 +176,6 @@ export function generateCropFigurePatternsQuestion({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }
 
@@ -369,8 +367,6 @@ export function generateCropFigurePatternsQuestionAlt({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }
 
@@ -537,7 +533,5 @@ export function generateCropFigurePatternsQuestionXorCustom({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }

@@ -399,7 +399,5 @@ export function generateNumberProgressionQuestion({
     //
     patterns,
     answers,
-    correctAnswer,
-    //
   };
 }
