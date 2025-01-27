@@ -202,7 +202,6 @@ export function generatePatternsQuestion_colRowSum({
             `${figures.toString()};${color};${rotation};${strokeWidth}`
         )
         .toString();
-      console.log(figureParts, hash);
 
       return hash;
     },

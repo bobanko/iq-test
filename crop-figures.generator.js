@@ -525,7 +525,6 @@ export function generateCropFigurePatternsQuestionXorCustom({
             `${figures.toString()};${color};${rotation};${strokeWidth}`
         )
         .toString();
-      console.log(figureParts, hash);
 
       return hash;
     },
