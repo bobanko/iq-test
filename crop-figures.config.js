@@ -1,11 +1,11 @@
 import { colors, defaultColors } from "./common.config.js";
 import {
   generateCropFigurePatternsQuestion,
-  generateCropFigurePatternsQuestion_colRowSum,
   generateCropFigurePatternsQuestionAlt,
   generateCropFigurePatternsQuestionXorCustom,
 } from "./crop-figures.generator.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
+import { generatePatternsQuestion_colRowSum } from "./formula-col-row-sum.generator.js";
 
 const defaultViewBox = "0 0 100 100";
 
@@ -30,7 +30,7 @@ export const cropFiguresConfigs = {
     colRowSum: 4, // possible 3*9=27 positions
     // shufflePositions: false,
 
-    generator: generateCropFigurePatternsQuestion_colRowSum,
+    generator: generatePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,
   },
 
@@ -50,7 +50,7 @@ export const cropFiguresConfigs = {
     colRowSum: 4, // possible 3*9=27 positions
     // shufflePositions: false,
 
-    generator: generateCropFigurePatternsQuestion_colRowSum,
+    generator: generatePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,
   },
 
@@ -68,7 +68,7 @@ export const cropFiguresConfigs = {
     figureTypesCountToUse: 1,
     colRowSum: 9, // possible 3*9=27 positions
 
-    generator: generateCropFigurePatternsQuestion_colRowSum,
+    generator: generatePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,
   },
 
