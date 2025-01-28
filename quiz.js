@@ -433,6 +433,7 @@ function bindingsOnKeypress({ key }) {
   const keyBindingsMap = new Map([
     ["ArrowRight", () => $btnNextQuestion.click()],
     ["ArrowLeft", () => $btnPrevQuestion.click()],
+    ["g", () => $btnGenerate.click()],
   ]);
 
   keyBindingsMap.get(key)?.();
