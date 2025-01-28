@@ -11,6 +11,12 @@ function safeAddCoords({ point1, point2, mtxSize }) {
   };
 }
 
+export const movableMatrixRuleSets = {
+  orthogonal: 0,
+  diagonal: 1,
+  mixed: 2,
+};
+
 /**
  *
  * @param {object} params
