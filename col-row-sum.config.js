@@ -3,7 +3,7 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 import { generatePatternsQuestion_colRowSum } from "./col-row-sum.generator.js";
 
 export const colRowSumFiguresConfigs = {
-  colRowSumFiguresMany: {
+  iq35_colRowSumFiguresMany: {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
@@ -18,6 +18,7 @@ export const colRowSumFiguresConfigs = {
     colRowSum: 4, // possible 3*9=27 positions
     // shufflePositions: false,
 
+    // todo(vmyshko): do not show unused figs in answers
     generator: generatePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,
   },
