@@ -4,7 +4,7 @@ import { generatePatternsQuestion_rowSub } from "./row-sub-figs.generator.js";
 
 export const rowSubFiguresConfigs = {
   //✅36
-  rowSubFigsMany: {
+  iq36_rowSubFigsMany: {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
@@ -23,6 +23,7 @@ export const rowSubFiguresConfigs = {
     figureTypesCountToUse: 2,
     // shufflePositions: false,
 
+    // todo(vmyshko): restrict empty patterns
     generator: generatePatternsQuestion_rowSub,
     renderer: renderFigurePatternsQuestion,
   },

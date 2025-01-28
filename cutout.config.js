@@ -70,7 +70,8 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
-  cutout_raysBox: {
+  iq25_cutout_raysBox: {
+    // todo(vmyshko): maybe colors can be random?
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-rays-box.svg",
     figures: ["pattern"],
@@ -136,13 +137,15 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
-  cutout_linesOrig: {
+  iq24_cutout_linesOrig: {
+    // todo(vmyshko): maybe scale up whole img to make it more readable on small screens
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-lines-orig.svg",
     figures: ["pattern"],
 
     cutoutSize: 93,
     cutoutPoints: [
+      // todo(vmyshko): read cutout points from svg?
       [118.5, 86.5],
       [41.5, 109.5],
       [90.5, 91.5],

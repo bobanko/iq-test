@@ -141,10 +141,6 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  // todo(vmyshko): rotate both figs in one direction, same deg
-  //  2 quarters 90deg same deg
-  // twoQuarters90sameDir: null,
-
   //  2 quarters 45deg (semi-overlap/full overlap)
   twoQuarters45: {
     figs: [
@@ -167,6 +163,33 @@ export const rotationalConfigs = {
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
 
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+
+  //  2 quarters 90deg same deg
+  iq11_twoQuarters90sameDir: {
+    figs: [
+      {
+        pickFrom: [svgFigs.quarter],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: false, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.quarter],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ],
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: true, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    // todo(vmyshko): rotate both figs in one direction, same deg
     generator: generateRotationalQuestion,
     renderer: renderRotationalQuestion,
   },
@@ -273,7 +296,7 @@ export const rotationalConfigs = {
   },
 
   // clock 2
-  clock4590: {
+  iq34_clock4590: {
     figs: [
       {
         pickFrom: [svgFigs.arrow],
@@ -382,10 +405,11 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  pentagon: {
+  iq40_pentagon: {
+    // todo(vmyshko): add row angle increase progression
     figs: [
       {
-        pickFrom: [svgFigs.circle, svgFigs.arrow],
+        pickFrom: [svgFigs.circle],
         startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 360 / 5, // min rotation step by rules
         skipZero: true, // no zero rotation by rules

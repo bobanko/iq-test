@@ -34,7 +34,8 @@ const _booleanFiguresConfigs = {
     maxAnswerCount: 8,
   },
 
-  dot4xor: {
+  iq32_dot4xor: {
+    // todo(vmyshko): orig is not xor, its v seq AND. so impl diff gen types
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/dot-4.svg",
@@ -134,7 +135,8 @@ const _booleanFiguresConfigs = {
     color: "black",
     maxAnswerCount: 8,
   },
-  flake_xor8: {
+  iq33_flake_xor8: {
+    // todo(vmyshko): allow v sequence
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/16-lines.svg",

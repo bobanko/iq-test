@@ -8,7 +8,7 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 
 export const cropFiguresConfigs = {
   // todo(vmyshko): probably it does not fully match config for crops (no cropFigs), so extract
-  xorQuarters: {
+  iq12_xorQuarters: {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
@@ -30,7 +30,9 @@ export const cropFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  cropFigures1: {
+  iq22_cropFigures1: {
+    // todo(vmyshko): maybe make bg difficulty? simple-> halves ->quarters -- per row
+    // todo(vmyshko): answers should have only existing colors/figs
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
@@ -58,7 +60,8 @@ export const cropFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  cropFigures2: {
+  iq21_cropFigures2: {
+    // todo(vmyshko): maybe simplify bg for 1st row?
     patternsInCol: 2,
     patternsInRow: 3,
     viewBox: defaultViewBox,

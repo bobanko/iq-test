@@ -14,23 +14,26 @@ const _numberProgressionConfigs = {
     colRowSum: 8,
   },
   //  desc here
-  numToAbc: {
+  iq15_numToAbc: {
     progressionType: progressionTypes.numToAbc,
     patternsInCol: 5, // todo(vmyshko): rename to row count or smth
     maxAnswerCount: 6,
   },
-  addToAbc: {
+  iq16_addToAbc: {
+    // todo(vmyshko): sort by asc
     progressionType: progressionTypes.addToAbc,
     patternsInCol: 3, // limits by maxAnswerCount as well
     maxAnswerCount: 6,
   },
-  addProgression: {
+  iq17_addProgression: {
+    // todo(vmyshko): seems orig 135 is not possible
     progressionType: progressionTypes.addProgression,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 20,
   },
-  subProgression: {
+  iq18_subProgression: {
+    // todo(vmyshko): impossible orig 741
     progressionType: progressionTypes.subProgression,
     patternsInCol: 3,
     maxAnswerCount: 6,

@@ -24,7 +24,7 @@ const _formulasConfigs = {
     renderer: renderFormulasEmojiQuestion,
   },
   //same but different renderer
-  spanishFormula: {
+  iq26_spanishFormula: {
     formulaType: "formulaTypes.random",
     patternsInCol: 3,
     // maxAnswerCount: 8,
