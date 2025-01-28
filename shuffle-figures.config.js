@@ -2,7 +2,12 @@ import {
   generateShuffleFiguresQuestion,
   shuffleTypes,
 } from "./shuffle-figures.generator.js";
-import { colors, defaultViewBox, rgbColors } from "./common.config.js";
+import {
+  colors,
+  defaultColors,
+  defaultViewBox,
+  rgbColors,
+} from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns.generator.js";
 
@@ -129,7 +134,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  color3Frames: {
+  iq38_color3Frames: {
+    // todo(vmyshko): probably broken logic, recheck
     patternsInCol: 3,
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
@@ -202,7 +208,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  color3FramesBg: {
+  iq37_color3FramesBg: {
+    // todo(vmyshko): probably broken logic, unsolvable
     patternsInCol: 3,
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
@@ -275,24 +282,31 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotColorQuarters: {
-    patternsInCol: 3,
+  iq13_rotColorQuarters: {
+    // todo(vmyshko): total refac figparts and shuffles
+    patternsInCol: 2,
     viewBox: defaultViewBox,
-    maxAnswerCount: 8,
+    maxAnswerCount: 6,
     questionMarkFigure: "circle",
 
     figureLink: "./images/shuffle-quarters.svg",
 
     figureParts: [
       {
-        figures: [shuffleTypes.single({ items: ["quarter-1"] })],
+        figures: [
+          shuffleTypes.single({ items: ["quarter-1"] }),
+          shuffleTypes.single({ items: ["quarter-3"] }),
+        ],
         color: shuffleTypes.shiftedBy({
           rowShift: 2,
           items: quarterColors,
         }),
       },
       {
-        figures: [shuffleTypes.single({ items: ["quarter-2"] })],
+        figures: [
+          shuffleTypes.single({ items: ["quarter-2"] }),
+          shuffleTypes.single({ items: ["quarter-4"] }),
+        ],
         // rotation: shuffleTypes.single({ items: [180] }),
         color: shuffleTypes.shiftedBy({
           rowShift: 2,
@@ -300,22 +314,8 @@ export const shuffleFiguresConfigs = {
           items: quarterColors,
         }),
       },
-      {
-        figures: [shuffleTypes.single({ items: ["quarter-3"] })],
-        color: shuffleTypes.shiftedBy({
-          rowShift: 2,
-          items: quarterColors,
-        }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["quarter-4"] })],
-        color: shuffleTypes.shiftedBy({
-          rowShift: 2,
-          colShift: 1,
-          items: quarterColors,
-        }),
-      },
 
+      //statics
       {
         figures: [shuffleTypes.single({ items: ["line-h"] })],
       },
@@ -361,7 +361,9 @@ export const shuffleFiguresConfigs = {
   //   renderer: renderFigurePatternsQuestion,
   // },
 
-  rotColorTriangles: {
+  id30_rotColorTriangles: {
+    // todo(vmyshko): randomize colors
+    // todo(vmyshko): randomize base rotation
     patternsInCol: 3,
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
@@ -394,12 +396,14 @@ export const shuffleFiguresConfigs = {
   },
 
   // exact match with base test
-  figDice: {
+  iq29_figDice: {
+    // todo(vmyshko): randomize colors per fig
+    // todo(vmyshko): try maybe shift start fig?
     patternsInCol: 3,
     patternsInRow: 3,
 
     viewBox: "0 0 106 106",
-    maxAnswerCount: 8,
+    maxAnswerCount: 6,
 
     figureLink: "./images/shuffle-dice-cult.svg",
 
@@ -449,8 +453,33 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotIcons: {
+  iq19_rotIcons: {
+    // todo(vmyshko): gen answers with question colors only
     patternsInCol: 2, // hard to solve
+    viewBox: defaultViewBox,
+    scale: 0.7,
+
+    maxAnswerCount: 6,
+
+    figureLink: "./images/shuffle-icons.svg",
+
+    figureParts: [
+      {
+        figures: [
+          shuffleTypes.unique123({ items: ["battery", "drop", "signal"] }),
+        ],
+        color: shuffleTypes.single({ items: [...rgbColors] }),
+        // todo(vmyshko): or ignore for defaults
+        rotation: shuffleTypes.rowProgression({ items: [0, 180] }),
+        // todo(vmyshko): impl or not?
+        // scale: shuffleTypes.single({ items: [0.7] }),
+      },
+    ],
+
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+  rotIcons: {
     patternsInCol: 3,
     viewBox: defaultViewBox,
     scale: 0.7,
@@ -476,7 +505,7 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  colRotHalves: {
+  iq20_colRotHalves: {
     patternsInCol: 3,
     patternsInCol: 2,
     viewBox: "0 0 104 104",
@@ -490,6 +519,7 @@ export const shuffleFiguresConfigs = {
       {
         figures: [shuffleTypes.unique123({ items: ["shuffle-halves"] })],
         color: shuffleTypes.unique123({ items: [...rgbColors] }),
+        // color: shuffleTypes.unique123({ items: [...defaultColors] }),
         rotation: shuffleTypes.unique123({ items: [0, 180] }),
       },
     ],
@@ -498,7 +528,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  cardSuits: {
+  iq39_cardSuits: {
+    // todo(vmyshko): recheck logic, seems unsolvable, diff with orig
     patternsInCol: 3,
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
@@ -527,7 +558,10 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  figRotLetters: {
+  iq27_figRotLetters: {
+    // todo(vmyshko): its broken, should be:
+    // each fig rotates 90deg cw
+    // figs shuffled in cols
     patternsInCol: 3,
     viewBox: defaultViewBox,
     maxAnswerCount: 8,
@@ -550,6 +584,39 @@ export const shuffleFiguresConfigs = {
       },
     ],
 
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  iq14_fig2_RectTriangleCircle: {
+    patternsInCol: 3,
+    viewBox: "0 0 106 106",
+    scale: 0.8,
+    maxAnswerCount: 8,
+
+    figureLink: "./images/inner-rect-triangle-circle.svg",
+
+    patternsInCol: 2,
+
+    // todo(vmyshko): only presented colors for answers
+    // todo(vmyshko): more chaotic shuffle, as in orig
+    // todo(vmyshko): restyle svgs
+    figureParts: [
+      {
+        figures: [
+          shuffleTypes.unique123({ items: ["circle", "rect", "triangle"] }),
+
+          shuffleTypes.unique123({
+            items: ["inner-circle", "inner-rect", "inner-triangle"],
+          }),
+        ],
+
+        color: shuffleTypes.single({ items: [...rgbColors] }),
+        rotation: shuffleTypes.single({ items: [0] }),
+      },
+    ],
+
+    //rotations? groups?
     generator: generateShuffleFigurePatternsQuestion,
     renderer: renderFigurePatternsQuestion,
   },
