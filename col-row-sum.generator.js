@@ -71,8 +71,7 @@ function generateNumberMatrix({ random, config }) {
 
   // center cell
   const cell_11 = random.fromRange(
-    // todo(vmyshko): min range is unknown for now, i set safe min for now (less combinations)
-    Math.min(cell_02, cell_20),
+    Math.max(colRowSum - cell_00 - cell_01 - cell_10 + 1, 1),
     colRowSum - Math.max(cell_01, cell_10) - 1
   );
 
