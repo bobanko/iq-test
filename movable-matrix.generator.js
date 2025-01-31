@@ -12,9 +12,11 @@ function safeAddCoords({ point1, point2, mtxSize }) {
 }
 
 export const movableMatrixRuleSets = {
-  orthogonal: 0,
-  diagonal: 1,
-  mixed: 2,
+  vertical: 0,
+  horizontal: 1,
+  orthogonal: 2,
+  diagonal: 3,
+  mixed: 4,
 };
 
 /**
@@ -44,12 +46,17 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   const backwardShift = mtxSize - 1;
 
-  const orthogonalRules = [
-    { row: 0, col: 1 }, // right
-    { row: 1, col: 0 }, // down
+  const verticalRules = [
     { row: backwardShift, col: 0 }, // up
     { row: 0, col: backwardShift }, // left
   ];
+
+  const horizontalRules = [
+    { row: 0, col: 1 }, // right
+    { row: 1, col: 0 }, // down
+  ];
+
+  const orthogonalRules = [...horizontalRules, ...verticalRules];
 
   const diagonalRules = [
     //diagonals
@@ -61,12 +68,24 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     // todo(vmyshko): add rotation rules? knight-horse rule?
   ];
 
-  const ruleSets = [
-    [...random.shuffle([...orthogonalRules])],
-    [...random.shuffle([...diagonalRules])],
-    [...random.shuffle([...orthogonalRules, ...diagonalRules])], //both
+  const ruleSets = {
+    [movableMatrixRuleSets.vertical]: [...random.shuffle([...verticalRules])],
+
+    [movableMatrixRuleSets.horizontal]: [
+      ...random.shuffle([...horizontalRules]),
+    ],
+
+    [movableMatrixRuleSets.orthogonal]: [
+      ...random.shuffle([...orthogonalRules]),
+    ],
+
+    [movableMatrixRuleSets.diagonal]: [...random.shuffle([...diagonalRules])],
+
+    [movableMatrixRuleSets.mixed]: [
+      ...random.shuffle([...orthogonalRules, ...diagonalRules]),
+    ], //both
     //new to come
-  ];
+  };
 
   const rules = ruleSets[ruleSet];
 
