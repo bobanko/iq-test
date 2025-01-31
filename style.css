@@ -3,6 +3,7 @@
 @import url(./helpers.css);
 @import url(./palette.css);
 @import url(./patterns.css);
+@import url(./animations.css);
 
 :root {
   --row-height: 75px;

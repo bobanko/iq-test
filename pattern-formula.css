@@ -11,7 +11,6 @@
 }
 
 .debug .pattern-formula-variable,
-.pattern-formula-variable:hover,
 .pattern-formula-variable.white,
 .pattern-formula-variable.yellow {
   color: black;
@@ -74,4 +73,14 @@
   border-radius: 10px;
   padding-bottom: 0;
   border-style: dashed;
+}
+
+.pattern-formula-variable > span,
+.pattern-formula-const > span,
+.pattern-formula-variable-emoji > span {
+  animation: fadeIn 200ms ease-in forwards, slideUp 200ms ease-in forwards;
+}
+
+.pattern-formula-operator > span {
+  animation: fadeIn 200ms ease-in forwards, rotateUp 200ms ease-in forwards;
 }

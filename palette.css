@@ -57,14 +57,5 @@
 /* todo: use for cases when something went wrong */
 .undefined {
   --color: magenta;
-  animation: blinking 500ms ease-in-out infinite alternate;
-}
-/* todo: move to anims css? */
-@keyframes blinking {
-  from {
-    opacity: 0;
-  }
-  to {
-    opacity: 1;
-  }
+  animation: fadeIn 500ms ease-in-out infinite alternate;
 }

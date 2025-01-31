@@ -1,5 +1,9 @@
 import { createQuestionMark } from "./common.renderer.js";
 
+export function applyValue($elem, value) {
+  $elem.innerHTML = `<span>${value}</span>`;
+}
+
 function createValuePattern({ pattern, config }) {
   const { value } = pattern;
   const { color = "black" } = config;
@@ -7,7 +11,8 @@ function createValuePattern({ pattern, config }) {
   const $patternContainer =
     $tmplPatternValue.content.firstElementChild.cloneNode(true);
 
-  $patternContainer.textContent = value;
+  applyValue($patternContainer, value);
+
   $patternContainer.style.setProperty("--color", color);
 
   return $patternContainer;

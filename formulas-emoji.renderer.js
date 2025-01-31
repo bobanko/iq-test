@@ -1,5 +1,6 @@
 import { createQuestionMark } from "./common.renderer.js";
 import { SeededRandom } from "./random.helpers.js";
+import { applyValue } from "./value.renderer.js";
 
 function createFormulaPattern({
   value = "",
@@ -48,11 +49,12 @@ function createFormulaPattern({
   const emojiSet = random.sample(emojiSets);
 
   if (!isOperator) {
-    $patternContainer.textContent = isVar
-      ? emojiSet["xyz".indexOf(label)]
-      : value;
+    applyValue(
+      $patternContainer,
+      isVar ? emojiSet["xyz".indexOf(label)] : value
+    );
   } else {
-    $patternContainer.textContent = value;
+    applyValue($patternContainer, value);
   }
 
   if (!isOperator) {

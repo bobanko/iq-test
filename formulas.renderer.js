@@ -1,4 +1,5 @@
 import { createQuestionMark } from "./common.renderer.js";
+import { applyValue } from "./value.renderer.js";
 
 function createFormulaPattern({
   value = "",
@@ -24,7 +25,7 @@ function createFormulaPattern({
     isOperator ? classes.operator : isVar ? classes.var : classes.const
   );
 
-  $patternContainer.textContent = value;
+  applyValue($patternContainer, value);
 
   if (!isOperator) {
     $patternContainer.classList.add(color);
