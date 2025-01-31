@@ -69,29 +69,6 @@ const _booleanFiguresConfigs = {
     color: "var(--blue)",
     maxAnswerCount: 8,
   },
-
-  arc12xor: {
-    figureGenRule: figureGenRules.random,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/arc-12.svg",
-    figureCount: 12,
-    viewBox: alternateViewBox,
-    strokeWidth: 4,
-    color: "var(--green)",
-    maxAnswerCount: 8,
-  },
-
-  arc4xor: {
-    figureGenRule: figureGenRules.random,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/arc-4.svg",
-    figureCount: 4,
-    viewBox: alternateViewBox,
-    strokeWidth: 4,
-    color: "black",
-    maxAnswerCount: 8,
-  },
-
   pentagon10xor: {
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,

@@ -149,14 +149,6 @@ randomize circle appearance somehow?
 add colors [3]
 allow multicolor? to increase complexity
 
-## arc12xor
-
-remove as shitty one OR add symmetry?
-
-## arc4xor
-
-increase readability somehow?
-
 ## flake_xor4cut8
 
 make pipe skin?
