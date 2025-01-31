@@ -48,12 +48,12 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
   const verticalRules = [
     { row: backwardShift, col: 0 }, // up
-    { row: 0, col: backwardShift }, // left
+    { row: 1, col: 0 }, // down
   ];
 
   const horizontalRules = [
+    { row: 0, col: backwardShift }, // left
     { row: 0, col: 1 }, // right
-    { row: 1, col: 0 }, // down
   ];
 
   const orthogonalRules = [...horizontalRules, ...verticalRules];
