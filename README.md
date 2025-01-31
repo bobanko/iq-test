@@ -28,3 +28,18 @@ https://iqcenter.net/
 
 some more tests to discover:
 https://www.123test.com/classical-intelligence-test/?d=1
+
+## international-iq-test.com/ test results
+
+lowest-iq result 69 (0/40)  
+https://international-iq-test.com/ru/679adbc7-b05c-4e3b-9b59-4a3795ca4579
+
+highest-iq result 142 (40/40)  
+https://international-iq-test.com/ru/6799440c-69d0-4140-8507-49aa95ca4579
+
+## testometrika
+
+https://testometrika.com/intellectual/test-raven-iq/
+
+low IQ - 58. (01/48)  
+hi IQ - 141. (47/48)
