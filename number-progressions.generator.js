@@ -370,6 +370,7 @@ export function generateNumberProgressionQuestion({
   //last block
   const [correctAnswer] = patterns.splice(-1, 1, null);
   correctAnswer.isCorrect = true;
+  correctAnswer.id = getUid();
 
   // *******
   // ANSWERS
