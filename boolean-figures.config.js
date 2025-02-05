@@ -9,7 +9,104 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 const alternateViewBox = "2 2 100 100";
 
 export const booleanFiguresConfigs = {
+  // difficulty - 4
+  iq32_dot4xor: {
+    disabled: true,
+    // todo(vmyshko): orig is not xor, its v seq AND. so impl diff gen types
+    figureGenRule: figureGenRules.random,
+    patternsInCol: 3,
+    figureLink: "./images/boolean-figures/dot-4.svg",
+    figureCount: 4,
+    staticFigures: ["circle"],
+    viewBox: scaleViewBox("4 4 100 100", 0.7),
+    strokeWidth: (5 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8, //16
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  triangles4xor: {
+    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
+    patternsInCol: 3,
+    figureLink: "./images/boolean-figures/triangles-8.svg",
+    figureCount: 8,
+    viewBox: defaultViewBox,
+    strokeWidth: 1,
+    color: "var(--blue)",
+    maxAnswerCount: 8, //16
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  flake4xor: {
+    disabled: true, // dupes konforki
+    figureGenRule: figureGenRules.random,
+    patternsInCol: 3,
+    // maxAnswerCount: 20,
+    figureLink: "./images/boolean-figures/16-lines.svg",
+    figureCount: 4,
+    // viewBox: scaleViewBox(basicViewBox, 0.7),
+    viewBox: alternateViewBox,
+    strokeWidth: 5,
+    color: "deeppink",
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  // difficulty - 6
+
+  circle6xor: {
+    figureGenRule: figureGenRules.random,
+    patternsInCol: 3,
+    figureLink: "./images/boolean-figures/circle-6.svg",
+    figureCount: 6,
+    staticFigures: ["circle"],
+    viewBox: scaleViewBox(alternateViewBox, 0.7),
+    strokeWidth: (5 / 0.7).toFixed(2),
+    color: "var(--red)",
+    maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  hexsym6xor: {
+    figureGenRule: figureGenRules.symmetric,
+    patternsInCol: 3,
+    figureLink: "./images/boolean-figures/hex-12.svg",
+    figureCount: 12,
+    viewBox: scaleViewBox(alternateViewBox, 0.7),
+    strokeWidth: (3 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  ortosym6xor: {
+    disabled: true, // same as hex, but hex is beautiful
+    figureGenRule: figureGenRules.symmetric,
+    patternsInCol: 3,
+    figureLink: "./images/boolean-figures/12-lines-orto.svg",
+    figureCount: 12,
+    viewBox: scaleViewBox(alternateViewBox, 0.7),
+    strokeWidth: (3 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  // difficulty - 8
+
   crossDots8xor: {
+    disabled: true, // same as dice but uglier
     // todo(vmyshko): impl mul-dots xor-lines [new feature]
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -40,106 +137,8 @@ export const booleanFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  iq32_dot4xor: {
-    // todo(vmyshko): orig is not xor, its v seq AND. so impl diff gen types
-    figureGenRule: figureGenRules.random,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/dot-4.svg",
-    figureCount: 4,
-    staticFigures: ["circle"],
-    viewBox: scaleViewBox("4 4 100 100", 0.7),
-    strokeWidth: (5 / 0.7).toFixed(2),
-    color: "black",
-    maxAnswerCount: 8, //16
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  circle6xor: {
-    figureGenRule: figureGenRules.random,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/circle-6.svg",
-    figureCount: 6,
-    staticFigures: ["circle"],
-    viewBox: scaleViewBox(alternateViewBox, 0.7),
-    strokeWidth: (5 / 0.7).toFixed(2),
-    color: "var(--red)",
-    maxAnswerCount: 8,
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  triangles8xorAns16: {
-    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/triangles-8.svg",
-    figureCount: 8,
-    viewBox: defaultViewBox,
-    strokeWidth: 1,
-    color: "var(--blue)",
-    maxAnswerCount: 8, //16
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-  pentagon10xor: {
-    figureGenRule: figureGenRules.random,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/pentagon-10.svg",
-    figureCount: 10,
-    viewBox: scaleViewBox(alternateViewBox, 0.7),
-    strokeWidth: (3 / 0.7).toFixed(2),
-    color: "black",
-    maxAnswerCount: 8,
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  hex12xor: {
-    figureGenRule: figureGenRules.symmetric,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/hex-12.svg",
-    figureCount: 12,
-    viewBox: scaleViewBox(alternateViewBox, 0.7),
-    strokeWidth: (3 / 0.7).toFixed(2),
-    color: "black",
-    maxAnswerCount: 8,
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  xor12orto: {
-    figureGenRule: figureGenRules.symmetric,
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/12-lines-orto.svg",
-    figureCount: 12,
-    viewBox: scaleViewBox(alternateViewBox, 0.7),
-    strokeWidth: (3 / 0.7).toFixed(2),
-    color: "black",
-    maxAnswerCount: 8,
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  xor16symmetric: {
-    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): use enums for other configs as well
-    patternsInCol: 3,
-    figureLink: "./images/boolean-figures/16-lines.svg",
-    figureCount: 16,
-    viewBox: scaleViewBox(alternateViewBox, 0.7),
-    strokeWidth: (3 / 0.7).toFixed(2),
-    color: "black",
-    maxAnswerCount: 8,
-
-    generator: generateBooleanFiguresQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-  iq33_flake_xor8: {
+  flake8xor_iq33: {
+    disabled: true, // easier than linessym visually
     // todo(vmyshko): allow v sequence
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -152,16 +151,34 @@ export const booleanFiguresConfigs = {
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
   },
-  flake_xor4cut8: {
+
+  linessym8xor: {
+    disabled: true,
+    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): use enums for other configs as well
+    patternsInCol: 3,
+    figureLink: "./images/boolean-figures/16-lines.svg",
+    figureCount: 16,
+    viewBox: scaleViewBox(alternateViewBox, 0.7),
+    strokeWidth: (3 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  // difficulty - 10
+
+  pentagon10xor: {
+    disabled: true, // because dro4
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
-    // maxAnswerCount: 20,
-    figureLink: "./images/boolean-figures/16-lines.svg",
-    figureCount: 4,
-    // viewBox: scaleViewBox(basicViewBox, 0.7),
-    viewBox: alternateViewBox,
-    strokeWidth: 5,
-    color: "deeppink",
+    figureLink: "./images/boolean-figures/pentagon-10.svg",
+    figureCount: 10,
+    viewBox: scaleViewBox(alternateViewBox, 0.7),
+    strokeWidth: (3 / 0.7).toFixed(2),
+    color: "black",
+    maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
