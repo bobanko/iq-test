@@ -239,7 +239,10 @@ function generateXorRowPatterns({ basicPoints, mtxSize, random, pointColors }) {
   const allCells = getPossibleMatrixCells(mtxSize);
 
   const middlePattern = {
-    points: random.popRangeFrom(allCells, random.fromRange(1, allCells.length)),
+    points: random.popRangeFrom(
+      allCells,
+      random.fromRange(1, allCells.length - 1)
+    ),
     id: getUid(),
   };
 
