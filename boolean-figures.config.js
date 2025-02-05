@@ -4,11 +4,11 @@ import {
 } from "./boolean-figures.generator.js";
 import { defaultViewBox } from "./common.config.js";
 import { scaleViewBox } from "./common.js";
-import { renderFiguresQuestion } from "./figures.renderer.js";
+import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 
 const alternateViewBox = "2 2 100 100";
 
-const _booleanFiguresConfigs = {
+export const booleanFiguresConfigs = {
   crossDots8xor: {
     // todo(vmyshko): impl mul-dots xor-lines [new feature]
     figureGenRule: figureGenRules.random,
@@ -20,6 +20,9 @@ const _booleanFiguresConfigs = {
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   dice8xor: {
@@ -32,6 +35,9 @@ const _booleanFiguresConfigs = {
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   iq32_dot4xor: {
@@ -44,7 +50,10 @@ const _booleanFiguresConfigs = {
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    maxAnswerCount: 8, //16
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   circle6xor: {
@@ -57,9 +66,12 @@ const _booleanFiguresConfigs = {
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "var(--red)",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
-  triangles8xor: {
+  triangles8xorAns16: {
     figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/triangles-8.svg",
@@ -67,7 +79,10 @@ const _booleanFiguresConfigs = {
     viewBox: defaultViewBox,
     strokeWidth: 1,
     color: "var(--blue)",
-    maxAnswerCount: 8,
+    maxAnswerCount: 8, //16
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
   pentagon10xor: {
     figureGenRule: figureGenRules.random,
@@ -78,6 +93,9 @@ const _booleanFiguresConfigs = {
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   hex12xor: {
@@ -89,6 +107,9 @@ const _booleanFiguresConfigs = {
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   xor12orto: {
@@ -100,6 +121,9 @@ const _booleanFiguresConfigs = {
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   xor16symmetric: {
@@ -111,6 +135,9 @@ const _booleanFiguresConfigs = {
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
     maxAnswerCount: 8,
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
   iq33_flake_xor8: {
     // todo(vmyshko): allow v sequence
@@ -121,6 +148,9 @@ const _booleanFiguresConfigs = {
     viewBox: alternateViewBox,
     strokeWidth: 3,
     color: "crimson",
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
   flake_xor4cut8: {
     figureGenRule: figureGenRules.random,
@@ -132,17 +162,8 @@ const _booleanFiguresConfigs = {
     viewBox: alternateViewBox,
     strokeWidth: 5,
     color: "deeppink",
+
+    generator: generateBooleanFiguresQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 };
-
-// todo(vmyshko): get rid of this patcher, keep everything in config obj instead
-export const booleanFiguresConfigs = Object.fromEntries(
-  Object.entries(_booleanFiguresConfigs).map((entry) => {
-    const [_key, value] = entry;
-
-    value.generator = generateBooleanFiguresQuestion;
-    value.renderer = renderFiguresQuestion;
-
-    return entry;
-  })
-);

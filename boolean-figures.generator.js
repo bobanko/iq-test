@@ -99,7 +99,18 @@ function generateXorRowPatterns({ basicFigures, figureCount, random, config }) {
     id: getUid(),
   };
 
-  return [firstPattern, middlePattern, lastPattern];
+  return [firstPattern, middlePattern, lastPattern].map(mapToFigureParts);
+}
+
+function mapToFigureParts(oldPattern) {
+  return {
+    ...oldPattern,
+    figureParts: [
+      {
+        figures: oldPattern.figures.sort((a, b) => a - b),
+      },
+    ],
+  };
 }
 
 function getFreeFiguresIndexes(figureCount) {
@@ -159,13 +170,20 @@ export function generateBooleanFiguresQuestion({
   const answers = generateUniqueValues({
     existingValues: [correctAnswer],
     maxValuesCount: maxAnswerCount - 1,
-    generateFn: () => {
-      return {
+    generateFn: () =>
+      mapToFigureParts({
         figures: figureGenerators[config.figureGenRule]({ random, config }),
         id: getUid(),
-      };
-    },
-    getValueHashFn: ({ figures }) => figures.toSorted().toString(),
+      }),
+
+    getValueHashFn: ({ figureParts = [] }) =>
+      figureParts
+        .map(
+          // todo(vmyshko): why defaults are not set yet? re-check!
+          ({ figures, rotation = 0, color = "", strokeWidth = 0 }) =>
+            `${figures.toString()};${color};${rotation};${strokeWidth}`
+        )
+        .toString(),
   });
 
   //
