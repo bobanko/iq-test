@@ -11,7 +11,7 @@ const alternateViewBox = "2 2 100 100";
 export const booleanFiguresConfigs = {
   // difficulty - 4
   iq32_dot4xor: {
-    disabled: true,
+    skip: true,
     // todo(vmyshko): orig is not xor, its v seq AND. so impl diff gen types
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -42,7 +42,7 @@ export const booleanFiguresConfigs = {
   },
 
   flake4xor: {
-    disabled: true, // dupes konforki
+    skip: true, // dupes konforki
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     // maxAnswerCount: 20,
@@ -89,7 +89,7 @@ export const booleanFiguresConfigs = {
   },
 
   ortosym6xor: {
-    disabled: true, // same as hex, but hex is beautiful
+    skip: true, // same as hex, but hex is beautiful
     figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/12-lines-orto.svg",
@@ -106,7 +106,7 @@ export const booleanFiguresConfigs = {
   // difficulty - 8
 
   crossDots8xor: {
-    disabled: true, // same as dice but uglier
+    skip: true, // same as dice but uglier
     // todo(vmyshko): impl mul-dots xor-lines [new feature]
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -138,7 +138,7 @@ export const booleanFiguresConfigs = {
   },
 
   flake8xor_iq33: {
-    disabled: true, // easier than linessym visually
+    skip: true, // easier than linessym visually
     // todo(vmyshko): allow v sequence
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -153,7 +153,7 @@ export const booleanFiguresConfigs = {
   },
 
   linessym8xor: {
-    disabled: true,
+    skip: true,
     figureGenRule: figureGenRules.symmetric, // todo(vmyshko): use enums for other configs as well
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/16-lines.svg",
@@ -170,7 +170,7 @@ export const booleanFiguresConfigs = {
   // difficulty - 10
 
   pentagon10xor: {
-    disabled: true, // because dro4
+    skip: true, // because dro4
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/pentagon-10.svg",

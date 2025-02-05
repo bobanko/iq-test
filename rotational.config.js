@@ -33,6 +33,7 @@ export const svgFrames = {
 export const rotationalConfigs = {
   //  custom letters
   letters45_newRender: {
+    skip: true,
     // todo(vmyshko): put colors to use, shared between figs? how?
 
     // todo(vmyshko):
@@ -63,11 +64,11 @@ export const rotationalConfigs = {
     answerCount: 6, // how many answers to generate per question
 
     generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
   letters45_oldRender: {
+    skip: true,
     // todo(vmyshko): put colors to use, shared between figs? how?
 
     // todo(vmyshko):
@@ -101,7 +102,31 @@ export const rotationalConfigs = {
     // renderer: renderFigurePatternsQuestion,
   },
   //  1 quarter (/arrow/circle/custom) 90deg
+  oneQuarter90newRenderer: {
+    skip: true,
+    figureLink: "./images/clock-quarter.svg",
+
+    figs: [
+      {
+        pickFrom: [svgFigs.quarter],
+        colorsFrom: [colors.black, colors.red, colors.green],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ],
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 4, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
   oneQuarter90: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -115,6 +140,120 @@ export const rotationalConfigs = {
     onlyUniqueFigs: true, // [2 and more]
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 4, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+
+  hexCircle_iq40like: {
+    figs: [
+      {
+        pickFrom: [svgFigs.circle],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 360 / 6, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      //static
+      // {
+      //   pickFrom: [svgHrefs.frameHexagon],
+      //   startDeg: 30, // initial rotation, before rules: 0, -45
+      //   stepDeg: 0, // min rotation step by rules
+      //   skipZero: false, // no zero rotation by rules
+      // },
+    ],
+
+    svgFrame: svgFrames.hexagon,
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+
+  // clock 2
+  clock4590_iq34: {
+    skip: true,
+    figs: [
+      {
+        pickFrom: [svgFigs.arrow],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.circle, svgFigs.square],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ],
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+  // true clock 45/45
+  twoArrowClock_id34like: {
+    figs: [
+      {
+        pickFrom: [svgFigs.arrowAlt],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.arrow],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ],
+
+    shiftColorsBetweenRows: false,
+    onlyUniqueFigs: false, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+
+  // clock 3
+  // todo(vmyshko): redraw square/circle + and/or add arrows as alt
+  clock459090: {
+    skip: true,
+    figs: [
+      {
+        pickFrom: [svgFigs.arrow],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 45, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.circle],
+        startDeg: 0, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.square],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ],
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
 
     generator: generateRotationalQuestion,
     renderer: renderRotationalQuestion,
@@ -141,8 +280,34 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
+  quarterFig90: {
+    figs: [
+      {
+        pickFrom: [svgFigs.square, svgFigs.circle],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+      {
+        pickFrom: [svgFigs.quarter],
+        startDeg: 45, // initial rotation, before rules: 0, -45
+        stepDeg: 90, // min rotation step by rules
+        skipZero: true, // no zero rotation by rules
+      },
+    ],
+
+    shiftColorsBetweenRows: true,
+    onlyUniqueFigs: true, // [2 and more]
+    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
+    answerCount: 6, // how many answers to generate per question
+
+    generator: generateRotationalQuestion,
+    renderer: renderRotationalQuestion,
+  },
+
   //  2 quarters 45deg (semi-overlap/full overlap)
   twoQuarters45: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -168,13 +333,13 @@ export const rotationalConfigs = {
   },
 
   //  2 quarters 90deg same deg
-  iq11_twoQuarters90sameDir: {
+  twoQuarters90sameDir_iq11like: {
     figs: [
       {
         pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
+        startDeg: 0, // initial rotation, before rules: 0, -45
         stepDeg: 90, // min rotation step by rules
-        skipZero: false, // no zero rotation by rules
+        skipZero: true, // no zero rotation by rules
       },
       {
         pickFrom: [svgFigs.quarter],
@@ -223,6 +388,7 @@ export const rotationalConfigs = {
 
   //  3 quarters 90deg diff deg
   threeQuarters: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -295,118 +461,10 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  // clock 2
-  iq34_clock4590: {
-    figs: [
-      {
-        pickFrom: [svgFigs.arrow],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      {
-        pickFrom: [svgFigs.circle, svgFigs.square],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-    ],
-
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: true, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
-  },
-  // true clock 45/45
-  twoArrowClock: {
-    figs: [
-      {
-        pickFrom: [svgFigs.arrowAlt],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      {
-        pickFrom: [svgFigs.arrow],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-    ],
-
-    shiftColorsBetweenRows: false,
-    onlyUniqueFigs: false, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
-  },
-
-  // clock 3
-  // todo(vmyshko): redraw square/circle + and/or add arrows as alt
-  clock459090: {
+  pentagon_iq40: {
     skip: true,
-    figs: [
-      {
-        pickFrom: [svgFigs.arrow],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      {
-        pickFrom: [svgFigs.circle],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      {
-        pickFrom: [svgFigs.square],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-    ],
-
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: true, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
-  },
-
-  quarterFig90: {
-    figs: [
-      {
-        pickFrom: [svgFigs.square, svgFigs.circle],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      {
-        pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-    ],
-
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: true, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
-  },
-
-  iq40_pentagon: {
-    // todo(vmyshko): add row angle increase progression
+    // todo(vmyshko): add row progression angle multiplier *1,2,3
+    // todo(vmyshko): add more figs to increase possible answers from 5
     figs: [
       {
         pickFrom: [svgFigs.circle],
@@ -435,35 +493,7 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  hexagonCircle: {
-    figs: [
-      {
-        pickFrom: [svgFigs.circle],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 360 / 6, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      //static
-      // {
-      //   pickFrom: [svgHrefs.frameHexagon],
-      //   startDeg: 30, // initial rotation, before rules: 0, -45
-      //   stepDeg: 0, // min rotation step by rules
-      //   skipZero: false, // no zero rotation by rules
-      // },
-    ],
-
-    svgFrame: svgFrames.hexagon,
-
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: false, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
-  },
-
-  hexagonSector1: {
+  hexSector1: {
     skip: true,
     figs: [
       {
@@ -492,7 +522,8 @@ export const rotationalConfigs = {
     generator: generateRotationalQuestion,
     renderer: renderRotationalQuestion,
   },
-  hexagonSector2: {
+  hexSector2: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.hexSector60],
@@ -526,7 +557,7 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  hexagonSector3: {
+  hexSector3: {
     skip: true,
     figs: [
       {
@@ -568,6 +599,7 @@ export const rotationalConfigs = {
   },
 
   triadSector: {
+    skip: true,
     figs: [
       {
         pickFrom: [svgFigs.hexSector120],

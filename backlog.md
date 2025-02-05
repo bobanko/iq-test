@@ -171,15 +171,15 @@ fix sector borders, make it thick
 
 redesign figures [4]
 
-## pentagon & hexagonCircle
+## pentagon & hexCircle
 
 redesign figures [4] dots are too close to borders
 
-## hexagonCircle
+## hexCircle
 
 try to make razvertka riddle based on hex graphics
 
-## hexagonSector2
+## hexSector2
 
 do not allow overlap? [5]
 
