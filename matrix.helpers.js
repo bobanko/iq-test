@@ -1,9 +1,11 @@
 export class Point {
-  constructor({ row, col, color = null }) {
+  constructor({ row, col, color = null, ...rest }) {
     this.row = row;
     this.col = col;
 
     this.color = color;
+
+    Object.assign(this, rest);
   }
 
   toString(skipColor = false) {

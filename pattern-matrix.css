@@ -18,6 +18,17 @@
 
 .matrix-cell {
   background: var(--color, transparent);
+  font-size: 0;
+}
+
+.debug .matrix-cell {
+  /* text support */
+  font-size: 20px;
+  font-size: calc(var(--pattern-size) / var(--size) / 3 * 2);
+  line-height: 0px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 /* mixed colors */

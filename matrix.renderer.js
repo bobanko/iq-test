@@ -19,13 +19,22 @@ function createPaintedMatrix({ points = [], mtxSize }) {
       $patternMatrix.appendChild($matrixCell);
     });
 
+  // todo(vmyshko): check for same colors in one cell
+
+  //inset 0px 0px 0px 3px gold,
+  // inset 0px 0px 0px 5px black,
+  //  inset 0px 0px 0px 9px #00bc62,
+  // inset 0px 0px 0px 11px black
   for (let point of points) {
     const flatIndex = getPointFlatIndex({ point, mtxSize });
 
-    $patternMatrix.children[flatIndex].style.setProperty(
-      "--color",
-      point.color
-    );
+    const $cell = $patternMatrix.children[flatIndex];
+
+    $cell.style.setProperty("--color", point.color);
+
+    if (point.icon) {
+      $cell.textContent = point.icon;
+    }
   }
 
   return $patternMatrix;
