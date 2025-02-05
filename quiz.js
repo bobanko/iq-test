@@ -6,6 +6,7 @@ import { Timer } from "./timer.js";
 
 // globals
 const patternsInRowDefault = 3;
+const patternsInColDefault = 3;
 const timer = new Timer();
 
 const clockEmojis = [
@@ -244,15 +245,20 @@ function generateQuiz({ seed }) {
         );
 
         {
-          const { patternsInRow = patternsInRowDefault } = questionData;
+          const {
+            patternsInRow = patternsInRowDefault,
+            patternsInCol = patternsInColDefault,
+          } = questionData;
           // todo(vmyshko): extract this to common, cause other question-types should reset this
           // 100 + 10 + 100 + 10 + 100 + 10
+
+          const rowColMaxPatterns = Math.max(patternsInRow, patternsInCol);
           const targetWidthPx = 340; //px - total width that we want to get
           const maxPatternSizePx = 320;
           const outerBorderPx = 10 * 2; //px
-          const gapsPx = 10 * (patternsInRow - 1);
+          const gapsPx = 10 * (rowColMaxPatterns - 1);
           const patternSizePx =
-            (targetWidthPx - outerBorderPx - gapsPx) / patternsInRow;
+            (targetWidthPx - outerBorderPx - gapsPx) / rowColMaxPatterns;
 
           $patternArea.style.setProperty(
             "--pattern-size",
