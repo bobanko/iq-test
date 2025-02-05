@@ -24,6 +24,7 @@ export const colRowSumFiguresConfigs = {
   },
 
   colRowSumFigures: {
+    skip: true,
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
