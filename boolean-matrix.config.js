@@ -5,7 +5,7 @@ import {
 } from "./boolean-matrix.generator.js";
 
 export const booleanMatrixConfigs = {
-  iq7_vseq_colorDiff: {
+  mtxbool_vseq_colorDiff_iq7: {
     ruleSet: ruleSets.colorDiffRowPatterns,
     patternsInCol: 3,
     mtxSize: 3,
@@ -15,26 +15,27 @@ export const booleanMatrixConfigs = {
     renderer: renderMatrixQuestion,
   },
 
-  iq8_sub: {
-    ruleSet: ruleSets.subRowPatterns,
-    patternsInCol: 3,
-    mtxSize: 3,
+  // todo(vmyshko): both origs excluded as too easy
+  // d1_mtxbool_sub_iq8: {
+  //   ruleSet: ruleSets.subRowPatterns,
+  //   patternsInCol: 3,
+  //   mtxSize: 3,
 
-    generator: generateBooleanMatrixQuestion,
-    renderer: renderMatrixQuestion,
-  },
+  //   generator: generateBooleanMatrixQuestion,
+  //   renderer: renderMatrixQuestion,
+  // },
 
-  iq9_add: {
-    ruleSet: ruleSets.addRowPatterns,
-    patternsInCol: 3,
-    mtxSize: 3,
-    // maxAnswerCount: 20,
+  // d1_mtxbool_add_iq9: {
+  //   ruleSet: ruleSets.addRowPatterns,
+  //   patternsInCol: 3,
+  //   mtxSize: 3,
+  //   // maxAnswerCount: 20,
 
-    generator: generateBooleanMatrixQuestion,
-    renderer: renderMatrixQuestion,
-  },
+  //   generator: generateBooleanMatrixQuestion,
+  //   renderer: renderMatrixQuestion,
+  // },
 
-  iq10_addSubColor: {
+  mtxbool_addSubColor_iq10: {
     ruleSet: ruleSets.addAndSubRowPatterns,
     patternsInCol: 3,
     mtxSize: 3,
@@ -42,7 +43,7 @@ export const booleanMatrixConfigs = {
     generator: generateBooleanMatrixQuestion,
     renderer: renderMatrixQuestion,
   },
-  xor: {
+  mtxbool_xor: {
     ruleSet: ruleSets.xorRowPatterns,
     patternsInCol: 3,
     mtxSize: 3,
@@ -50,7 +51,7 @@ export const booleanMatrixConfigs = {
     generator: generateBooleanMatrixQuestion,
     renderer: renderMatrixQuestion,
   },
-  sumAll3: {
+  mtxbool_sumAll3: {
     ruleSet: ruleSets.sumAll3RowPatterns,
     patternsInCol: 3,
     mtxSize: 3,
