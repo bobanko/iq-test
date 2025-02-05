@@ -100,16 +100,16 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
   $questionButton.addEventListener("click", async () => {
     questionButtonClick($questionButton);
 
-    console.log("start");
-    $patternArea.style.opacity = 0;
-    $answerList.style.opacity = 0;
-    // await wait(10);
+    // console.log("start");
+    // $patternArea.style.opacity = 0;
+    // $answerList.style.opacity = 0;
+    // await wait(100);
     callbackFn($questionButton);
-    // await wait(10);
-    $patternArea.style.opacity = 1;
-    $answerList.style.opacity = 1;
+    // await wait(100);
+    // $patternArea.style.opacity = 1;
+    // $answerList.style.opacity = 1;
 
-    console.log("end");
+    // console.log("end");
   });
 }
 
