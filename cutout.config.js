@@ -12,6 +12,63 @@ export const cutoutConfigs = {
   // todo(vmyshko): impl color change
   // todo(vmyshko): impl answer rotation
   // todo(vmyshko): impl altering patterns(figures
+
+  cutout_ravenA8: {
+    skip: true,
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-raven-a8.svg",
+    figures: ["pattern"],
+
+    cutoutSize: 80,
+    cutoutPoints: [
+      [202, 202],
+      [202, 122],
+      [202, 42],
+      [122, 202],
+      [122, 122],
+      [122, 42],
+      [42, 202],
+      [42, 122],
+      [42, 42],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 6,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+
+  cutout_go: {
+    // todo(vmyshko): something is off, investigate
+    viewBox: "4 4 320 320",
+    figureLink: "./images/cutout-go.svg",
+    figures: ["pattern"],
+
+    cutoutSize: 76,
+    cutoutPoints: [
+      [179, 179],
+      [179, 126],
+      [179, 73],
+
+      [126, 179],
+      // [126, 126], center
+      [126, 73],
+
+      [73, 179],
+      [73, 126],
+      [73, 73],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
+
   cutout_spikes: {
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-spikes.svg",
@@ -71,6 +128,7 @@ export const cutoutConfigs = {
   },
 
   iq25_cutout_raysBox: {
+    // skip: true,
     // todo(vmyshko): maybe colors can be random?
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-rays-box.svg",
@@ -87,41 +145,16 @@ export const cutoutConfigs = {
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
   },
-  cutout_go: {
-    // todo(vmyshko): something is off, investigate
-    viewBox: "4 4 320 320",
-    figureLink: "./images/cutout-go.svg",
-    figures: ["pattern"],
 
-    cutoutSize: 76,
-    cutoutPoints: [
-      [179, 179],
-      [179, 126],
-      [179, 73],
-
-      [126, 179],
-      // [126, 126], center
-      [126, 73],
-
-      [73, 179],
-      [73, 126],
-      [73, 73],
-    ],
-
-    patternsInCol: 1,
-    patternsInRow: 1,
-    maxAnswerCount: 8,
-
-    generator: generateCutoutQuestion,
-    renderer: renderCutoutQuestion,
-  },
   cutout_4figs: {
+    skip: true,
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-4figs.svg",
     figures: ["pattern"],
 
     cutoutSize: 80,
     cutoutPoints: [
+      // todo(vmyshko): add one more answer!
       [145, 120],
       [225, 120],
       [121, 120],
@@ -139,6 +172,7 @@ export const cutoutConfigs = {
 
   iq24_cutout_linesOrig: {
     // todo(vmyshko): maybe scale up whole img to make it more readable on small screens
+    skip: true,
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-lines-orig.svg",
     figures: ["pattern"],
@@ -163,6 +197,7 @@ export const cutoutConfigs = {
   },
 
   cutout_linesMod: {
+    skip: true,
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-lines-mod.svg",
     figures: ["pattern"],
@@ -185,33 +220,8 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
-  cutout_ravenA8: {
-    viewBox: defaultCutoutViewBox,
-    figureLink: "./images/cutout-raven-a8.svg",
-    figures: ["pattern"],
-
-    cutoutSize: 80,
-    cutoutPoints: [
-      [202, 202],
-      [202, 122],
-      [202, 42],
-      [122, 202],
-      [122, 122],
-      [122, 42],
-      [42, 202],
-      [42, 122],
-      [42, 42],
-    ],
-
-    patternsInCol: 1,
-    patternsInRow: 1,
-    maxAnswerCount: 6,
-
-    generator: generateCutoutQuestion,
-    renderer: renderCutoutQuestion,
-  },
-
   cutout_star: {
+    skip: true,
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-star.svg",
     figures: ["pattern"],
