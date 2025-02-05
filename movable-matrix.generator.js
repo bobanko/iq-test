@@ -1,22 +1,50 @@
 import { getUid } from "./common.js";
 import { SeededRandom } from "./helpers.js";
-import { defaultColors } from "./common.config.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { getPossibleMatrixCells, Point } from "./matrix.helpers.js";
 
-function safeAddCoords({ point1, point2, mtxSize }) {
-  return {
-    row: (point1.row + point2.row) % mtxSize, // only positive rules!
-    col: (point1.col + point2.col) % mtxSize, // todo(vmyshko): refac to allow neg rules?
-  };
+function applyRuleToPoint({ basePoint, rulePoint, steps = 1, mtxSize }) {
+  return new Point({
+    row: (basePoint.row + rulePoint.row * steps) % mtxSize, // only positive rules!
+    col: (basePoint.col + rulePoint.col * steps) % mtxSize, // todo(vmyshko): refac to allow neg rules?
+  });
 }
 
-export const movableMatrixRuleSets = {
-  vertical: 0,
-  horizontal: 1,
-  orthogonal: 2,
-  diagonal: 3,
-  mixed: 4,
+/**
+ * checks wether two points will intersect on grid somewhere
+ * @param {*} param0
+ * @returns false if no conflicts found, otherwise - true
+ */
+function checkConflictingPoints({ point1, rule1, point2, rule2, mtxSize }) {
+  for (let currentStep = 0; currentStep < mtxSize; currentStep++) {
+    // apply rules to points
+    const stepPoint1 = new Point({
+      col: (point1.col + rule1.col * currentStep) % mtxSize,
+      row: (point1.row + rule1.row * currentStep) % mtxSize,
+    });
+
+    const stepPoint2 = new Point({
+      col: (point2.col + rule2.col * currentStep) % mtxSize,
+      row: (point2.row + rule2.row * currentStep) % mtxSize,
+    });
+
+    if (stepPoint1.toString(true) === stepPoint2.toString(true)) {
+      // intersects!!1
+      return true;
+    }
+  }
+}
+
+// todo(vmyshko): make consistent naming: rules vs rulesets
+// where one is abstract naming, and other is rule sets with rulePoints in it
+export const cellMoveRules = {
+  vertical: 0, // left-right
+  horizontal: 1, // top-bottom
+  orthogonal: 2, // all above
+  diagonal: 3, // 4 diag directions
+  mixed: 4, // all above
+  static: 5, // no shift
+  random: 6, // todo(vmyshko): unsure about this rule
 };
 
 /**
@@ -38,123 +66,164 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     patternsInCol = 3, // can be reduced by gen-non-unique reason
     maxAnswerCount = 6, //over 8 will not fit
     mtxSize = 3, // single pattern matrix size [2..5]
-    ruleSet = 0,
-    colorCount = 1,
+
+    interPatternRules = [],
+    interRowRules = [],
   } = config;
 
   const random = new SeededRandom(seed + questionIndex);
 
+  const hasInterRowRules = interRowRules.length > 0;
+
+  // todo(vmyshko): due to backwardShift all rulesets are inside fn, dependant on mtxSize
+  // todo(vmyshko): make it just -1 instead, and support neg rule appliance, then extract
+
   const backwardShift = mtxSize - 1;
 
-  const verticalRules = [
-    { row: backwardShift, col: 0 }, // up
-    { row: 1, col: 0 }, // down
+  const verticalRuleSet = [
+    { row: backwardShift, col: 0, icon: "⬆️" }, // up
+    { row: 1, col: 0, icon: "⬇️" }, // down
   ];
 
-  const horizontalRules = [
-    { row: 0, col: backwardShift }, // left
-    { row: 0, col: 1 }, // right
+  const horizontalRuleSet = [
+    { row: 0, col: backwardShift, icon: "⬅️" }, // left
+    { row: 0, col: 1, icon: "➡️" }, // right
   ];
 
-  const orthogonalRules = [...horizontalRules, ...verticalRules];
+  const orthogonalRuleSet = [...horizontalRuleSet, ...verticalRuleSet];
 
-  const diagonalRules = [
+  const diagonalRuleSet = [
     //diagonals
-    { row: 1, col: 1 },
-    { row: 1, col: backwardShift },
-    { row: backwardShift, col: 1 },
-    { row: backwardShift, col: backwardShift },
+    { row: 1, col: 1, icon: "↘️" },
+    { row: 1, col: backwardShift, icon: "↙️" },
+    { row: backwardShift, col: 1, icon: "↗️" },
+    { row: backwardShift, col: backwardShift, icon: "↖️" },
 
     // todo(vmyshko): add rotation rules? knight-horse rule?
   ];
 
+  const staticRuleSet = [{ row: 0, col: 0, icon: "⏹️" }];
+
   const ruleSets = {
-    [movableMatrixRuleSets.vertical]: [...random.shuffle([...verticalRules])],
+    [cellMoveRules.static]: staticRuleSet,
+    [cellMoveRules.vertical]: verticalRuleSet,
 
-    [movableMatrixRuleSets.horizontal]: [
-      ...random.shuffle([...horizontalRules]),
+    [cellMoveRules.horizontal]: horizontalRuleSet,
+
+    [cellMoveRules.orthogonal]: orthogonalRuleSet,
+    [cellMoveRules.diagonal]: diagonalRuleSet,
+
+    [cellMoveRules.mixed]: [...orthogonalRuleSet, ...diagonalRuleSet], //both
+    //new to come?
+
+    [cellMoveRules.random]: [
+      {
+        row: random.fromRange(1, mtxSize - 1),
+        col: random.fromRange(1, mtxSize - 1),
+        icon: "🎲",
+      },
     ],
-
-    [movableMatrixRuleSets.orthogonal]: [
-      ...random.shuffle([...orthogonalRules]),
-    ],
-
-    [movableMatrixRuleSets.diagonal]: [...random.shuffle([...diagonalRules])],
-
-    [movableMatrixRuleSets.mixed]: [
-      ...random.shuffle([...orthogonalRules, ...diagonalRules]),
-    ], //both
-    //new to come
   };
 
-  const rules = ruleSets[ruleSet];
+  const interRowRulesList = interRowRules.map((ruleSetId) =>
+    random.sample(ruleSets[ruleSetId])
+  );
 
-  const patterns = []; // matixes
+  const freeColorsList = random.shuffle(config.colors);
+  const freeRulesList = interPatternRules.map((ruleSetId) =>
+    random.sample(ruleSets[ruleSetId])
+  );
 
-  // ---
+  // get basic question cells with (no conflicting) rules
+  function getQuestionCells() {
+    const freePointsPool = random.shuffle(getPossibleMatrixCells(mtxSize));
 
-  function generateBasicPoints() {
-    const basicPoints = [];
-    const freeCellsForPoints = getPossibleMatrixCells(mtxSize);
+    return config.cells.reduce((questionCellsAcc, cell, index) => {
+      const possiblePointIndex = freePointsPool.findIndex(
+        (potentialPoint) =>
+          !questionCellsAcc.some((accCell) =>
+            checkConflictingPoints({
+              point1: accCell.basePoint,
+              rule1: accCell.rulePoint,
 
-    // todo(vmyshko): rewrite to func approach? or not?
-    for (let pointIndex = 0; pointIndex < colorCount; pointIndex++) {
-      //new point for each row
-      const randomPoint = random.popFrom(freeCellsForPoints);
+              point2: potentialPoint,
+              rule2: freeRulesList[cell.ruleIndex],
 
-      const currentPoint = new Point({ ...randomPoint });
+              mtxSize,
+            })
+          )
+      );
 
-      basicPoints.push(currentPoint);
-    } // ptColor
+      if (possiblePointIndex < 0) {
+        console.log(
+          "❌ no possible points found for rule:",
+          freeRulesList[cell.ruleIndex]
+        );
+        return questionCellsAcc;
+      }
 
-    return basicPoints;
+      const [freePoint] = freePointsPool.splice(possiblePointIndex, 1);
+
+      const resultCell = {
+        ...cell,
+        rulePoint: freeRulesList[cell.ruleIndex],
+        basePoint: freePoint,
+        color: freeColorsList[cell.colorIndex],
+        // todo(vmyshko): somehow randomize rows/cols but only one of them
+      };
+
+      return [...questionCellsAcc, resultCell];
+    }, []);
   }
 
-  const basicPointsPerRow = generateUniqueValues({
-    existingValues: [],
-    maxValuesCount: patternsInCol,
-    generateFn: generateBasicPoints,
-    getValueHashFn: (points) => points.toString(),
-  });
+  const patterns = [];
+  const questionCells = [];
+  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
+    // todo(vmyshko): reset/randomize next row cells
+    if (rowIndex === 0 || !hasInterRowRules) {
+      questionCells.splice(0, questionCells.length, ...getQuestionCells());
+    }
 
-  // ---
-
-  const pointColors = random.shuffle(defaultColors);
-
-  // pick rules
-
-  for (let currentRowBasicPoints of basicPointsPerRow) {
-    // todo(vmyshko): rotate colors here if needed -- should be configurable
-    pointColors.push(pointColors.shift());
-    // rules.push(rules.shift());
-
-    // applying rules for full row
-    for (let patternCol = 0; patternCol < patternsInRow; patternCol++) {
+    for (let colIndex = 0; colIndex < patternsInRow; colIndex++) {
+      // do per pattern
       const currentPattern = {
-        // apply rules
-        points: currentRowBasicPoints.map((point, pointIndex) => {
-          // todo(vmyshko): should be random but unique for all points and same for point between rows
-          const currentRule = rules.at(pointIndex);
-
-          const movedPoint = safeAddCoords({
-            point1: point,
-            point2: {
-              row: currentRule.row * patternCol,
-              col: currentRule.col * patternCol,
-            },
-            mtxSize,
-          });
-
-          const resultPoint = new Point({
-            ...movedPoint,
-            color: pointColors.at(pointIndex),
-          });
-
-          return resultPoint;
-        }),
-
-        id: getUid(),
+        points: [],
       };
+
+      for (let [index, cell] of questionCells.entries()) {
+        const currentRulePoint = cell.rulePoint;
+        const currentBasePoint = cell.basePoint;
+        const currentColor = cell.color;
+
+        // todo(vmyshko): allow randomize between rows? but how?
+        const currentInterRowRule = hasInterRowRules
+          ? interRowRulesList[cell.ruleIndex]
+          : {
+              row: 0,
+              col: 0,
+            };
+
+        // console.log(vRulesList[cell.ruleIndex].icon);
+        // here both col/row rule muls by COL-index to keep H-pattern change,
+        // ... to do V-pattern -- mul by rowIndex instead.
+        currentPattern.points.push(
+          new Point({
+            col:
+              (currentBasePoint.col +
+                currentRulePoint.col * colIndex +
+                currentInterRowRule.col * rowIndex) %
+              mtxSize,
+            row:
+              (currentBasePoint.row +
+                currentRulePoint.row * colIndex +
+                currentInterRowRule.row * rowIndex) %
+              mtxSize,
+            color: currentColor,
+
+            icon: currentRulePoint.icon,
+          })
+        );
+      }
 
       patterns.push(currentPattern);
     } // col
@@ -163,6 +232,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   //last block
   const [correctAnswer] = patterns.splice(-1, 1, null);
   correctAnswer.isCorrect = true;
+  correctAnswer.id = getUid();
 
   // *******
   // ANSWERS
@@ -173,9 +243,8 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
 
     // todo(vmyshko): if cell overlap is allowed for question patterns,
     // ... it should also be allowed for answers
-    // const possibleCells = getPossibleMatrixCells(mtxSize); // keep no-cell-overlap
-    for (let ptColor of pointColors.slice(0, correctAnswer.points.length)) {
-      const possibleCells = getPossibleMatrixCells(mtxSize); // allow cell overlap
+    const possibleCells = getPossibleMatrixCells(mtxSize);
+    for (let { color: ptColor } of correctAnswer.points) {
       const randomFreeCell = random.popFrom(possibleCells);
 
       const randomPoint = new Point({ ...randomFreeCell, color: ptColor });
