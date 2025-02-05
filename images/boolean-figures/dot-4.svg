@@ -1,9 +1,9 @@
 <svg width="108" height="108" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="dot-4">
-<path id="1" d="M54 54L104 54" stroke="var(--color)" stroke-linecap="round"/>
-<path id="0" d="M54 4V54" stroke="var(--color)" stroke-linecap="round"/>
-<path id="2" d="M54 54L54 104" stroke="var(--color)" stroke-linecap="round"/>
-<path id="3" d="M4 54H54" stroke="var(--color)" stroke-linecap="round"/>
-<circle id="circle" cx="54" cy="54" r="1" stroke="var(--color)" stroke-width="var(--stroke-width,40)"/>
+<path id="1" d="M54 54L104 54" stroke="black" stroke-linecap="round" stroke-width="7"/>
+<path id="0" d="M54 4V54" stroke="black" stroke-linecap="round" stroke-width="7"/>
+<path id="2" d="M54 54L54 104" stroke="black" stroke-linecap="round" stroke-width="7"/>
+<path id="3" d="M4 54H54" stroke="black" stroke-linecap="round" stroke-width="7"/>
+<circle id="circle" cx="54" cy="54" r="1" stroke="black" fill="black" stroke-width="40"/>
 </g>
 </svg>

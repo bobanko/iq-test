@@ -1,16 +1,17 @@
 <svg width="108" height="108" viewBox="0 0 108 108" fill="none" xmlns="http://www.w3.org/2000/svg">
+<style>*{ stroke-width: 7px;}</style>
 <g id="cross-dots-8">
-<circle id="dot" cx="53.5" cy="53.5" r="5" stroke="black" stroke-width="5"/>
+<circle id="dot" cx="54" cy="54" r="8" fill="black" />
 <circle id="circle" fill="none" cx="54" cy="54" r="50" stroke="black" stroke-width="5"/>
 
-<circle id="0" cx="54" cy="27" r="5" stroke="black" stroke-width="10"/>
-<circle id="1" cx="81" cy="54" r="5" stroke="black" stroke-width="10"/>
-<circle id="2" cx="54" cy="81" r="5" stroke="black" stroke-width="10"/>
-<circle id="3" cx="28" cy="54" r="5" stroke="black" stroke-width="10"/>
+<circle id="0" cx="54" cy="27" r="10" fill="black"/>
+<circle id="1" cx="81" cy="54" r="10" fill="black"/>
+<circle id="2" cx="54" cy="81" r="10" fill="black"/>
+<circle id="3" cx="28" cy="54" r="10" fill="black"/>
 
-<line id="4" x1="53.6794" y1="53.6464" x2="106.712" y2="0.613439" stroke="black"/>
-<line id="5" x1="106.713" y1="107.387" x2="53.6796" y2="54.3537" stroke="black"/>
-<line id="6" x1="0.646447" y1="106.68" x2="53.6795" y2="53.6466" stroke="black"/>
-<line id="7" x1="53.6794" y1="54.354" x2="0.646398" y2="1.32103" stroke="black"/>
+<line id="4" x1="53.6794" y1="53.6464" x2="106.712" y2="0.613439" stroke="black" />
+<line id="5" x1="106.713" y1="107.387" x2="53.6796" y2="54.3537" stroke="black" />
+<line id="6" x1="0.646447" y1="106.68" x2="53.6795" y2="53.6466" stroke="black" />
+<line id="7" x1="53.6794" y1="54.354" x2="0.646398" y2="1.32103" stroke="black" />
 </g>
 </svg>
