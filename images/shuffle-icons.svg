@@ -1,11 +1,10 @@
 <svg width="100" height="100" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
     <g id="shuffle-icons">
         <path id="frame" d="M99.5 0.5V99.5H0.5V0.5H99.5Z" stroke="#EB00FF" stroke-linecap="round" stroke-linejoin="round"></path>
+        <!-- svg style block doesn't work on mobile (iphone) -->
         <style>
-*{
-    --darkenColor: hsl(from var(--color) h s calc(l - 5));
-}
-</style>
+        *{--darkenColor: hsl(from var(--color) h s calc(l - 5));}
+        </style>
         <g id="battery" fill="var(--color)" stroke="var(--darkenColor)">
             <path d="M81.7333 50V60.5H95V50V39.5H81.7333V50Z" fill-opacity="0.75"></path>
             <path fill-rule="evenodd" clip-rule="evenodd" d="M24.1833 95H5V50V5H24.1833H43.3667V95H24.1833Z" fill-opacity="0.75"></path>

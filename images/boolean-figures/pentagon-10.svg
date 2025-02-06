@@ -1,4 +1,5 @@
 <svg width="104" height="104" viewBox="0 0 104 104" fill="none" xmlns="http://www.w3.org/2000/svg">
+<!-- svg style block doesn't work on mobile (iphone) -->
 <style>*{ stroke-width: 5px;}</style>
 <g id="pentagon-10">
 <path id="0" d="M52 4L52 58" stroke="var(--color)" stroke-linecap="round"/>
