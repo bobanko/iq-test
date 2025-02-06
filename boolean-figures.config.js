@@ -33,7 +33,6 @@ export const booleanFiguresConfigs = {
     figureLink: "./images/boolean-figures/triangles-8.svg",
     figureCount: 8,
     viewBox: defaultViewBox,
-    strokeWidth: 1,
     color: "var(--blue)",
     maxAnswerCount: 8, //16
 
