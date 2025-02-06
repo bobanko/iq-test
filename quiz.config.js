@@ -10,24 +10,30 @@ import { cutoutConfigs } from "./cutout.config.js";
 import { cropFiguresConfigs } from "./crop-figures.config.js";
 import { colRowSumFiguresConfigs } from "./col-row-sum.config.js";
 import { rowSubFiguresConfigs } from "./row-sub-figs.config.js";
+import { rotationalMatrixConfigs } from "./rotational-matrix.config.js";
 
 // todo(vmyshko): config every question here? or in each type? shuffle here? no.
-export const quizQuestionConfigs = Object.fromEntries([
-  // todo(vmyshko): refac, move to local config? or keep here?
+export const quizQuestionConfigs = Object.fromEntries(
+  [
+    // todo(vmyshko): we need logic to randomly choose diff renderers/configs for similar questions (boolFigs has samples)
 
-  ...Object.entries(rowSubFiguresConfigs),
-
-  ...Object.entries(colRowSumFiguresConfigs),
-  ...Object.entries(cropFiguresConfigs),
-  ...Object.entries(cutoutConfigs),
-
-  ...Object.entries(shuffleFiguresConfigs),
-  ...Object.entries(resizableConfigs),
-
-  ...Object.entries(formulasConfigs),
-  ...Object.entries(numberProgressionConfigs),
-  ...Object.entries(booleanFiguresConfigs),
-  ...Object.entries(booleanMatrixConfigs),
-  ...Object.entries(rotationalConfigs),
-  ...Object.entries(movableMatrixConfigs),
-]);
+    // by 4 questions each below:
+    ...Object.entries(movableMatrixConfigs),
+    ...Object.entries(booleanMatrixConfigs),
+    ...Object.entries(booleanFiguresConfigs),
+    ...Object.entries(rotationalConfigs),
+    ...Object.entries(numberProgressionConfigs),
+    ...Object.entries(cutoutConfigs),
+    //
+    // // by 1 question
+    ...Object.entries(colRowSumFiguresConfigs), //1
+    ...Object.entries(rowSubFiguresConfigs), //1
+    ...Object.entries(resizableConfigs), //1
+    ...Object.entries(formulasConfigs), //1
+    // by 2 questions
+    ...Object.entries(cropFiguresConfigs), //2
+    //
+    ...Object.entries(rotationalMatrixConfigs), //2
+    // ...Object.entries(shuffleFiguresConfigs),
+  ].filter(([, cfg]) => !cfg.skip)
+);
