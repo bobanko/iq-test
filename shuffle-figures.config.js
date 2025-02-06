@@ -101,6 +101,7 @@ export const shuffleFiguresConfigs = {
   // star from tg
   // todo(vmyshko): this one seems broken, rotation logic is not clear and random
   rotStarTg: {
+    skip: true,
     patternsInCol: 3,
     patternsInCol: 3,
     viewBox: defaultViewBox,
@@ -128,6 +129,64 @@ export const shuffleFiguresConfigs = {
           items: [0, 360 / 5, (360 / 5) * 2, (360 / 5) * 3, (360 / 5) * 4],
         }),
       },
+    ],
+
+    generator: generateShuffleFigurePatternsQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  // exact match with base test
+  iq29_figDice: {
+    // todo(vmyshko): randomize colors per fig
+    // todo(vmyshko): try maybe shift start fig?
+    patternsInCol: 3,
+    patternsInRow: 3,
+
+    viewBox: "0 0 106 106",
+    maxAnswerCount: 6,
+
+    figureLink: "./images/shuffle-dice-cult.svg",
+
+    // -----
+    // todo(vmyshko):
+    // figure-renderer should get (per pattern):
+    // multiple parts: {
+    //  figures = [],
+    //  color: figureColor,
+    //  rotation = 0,
+    // }
+
+    // figure-pattern, has:
+    // ..multiple figure-parts:
+    //    figure-part (svg), has:
+    //       figures: [1..n],(use-s)
+    //       color: '',
+    //       rotation: 0,
+
+    figureParts: [
+      {
+        // todo(vmyshko): probably it would be better not to call any fns in config
+        // ...then will be possible to get raw data in generator if needed (for answer generation)
+        //generators?
+        figures: [
+          shuffleTypes.single({ items: ["frame"] }),
+          shuffleTypes.shiftedBy({
+            rowShift: 2,
+            items: ["one", "two", "three", "four", "five", "six"],
+          }),
+        ],
+        color: shuffleTypes.shiftedBy({
+          items: [colors.yellow, colors.red, colors.blue],
+          rowShift: 2,
+        }),
+        // todo(vmyshko): or ignore for defaults
+        rotation: shuffleTypes.single({ items: [0] }),
+      },
+      // {
+      //   figures: [],
+      //   color: "",
+      //   rotation: "",
+      // },
     ],
 
     generator: generateShuffleFigurePatternsQuestion,
@@ -209,6 +268,7 @@ export const shuffleFiguresConfigs = {
   },
 
   iq37_color3FramesBg: {
+    skip: true,
     // todo(vmyshko): probably broken logic, unsolvable
     patternsInCol: 3,
     viewBox: defaultViewBox,
@@ -283,6 +343,7 @@ export const shuffleFiguresConfigs = {
   },
 
   iq13_rotColorQuarters: {
+    skip: true,
     // todo(vmyshko): total refac figparts and shuffles
     patternsInCol: 2,
     viewBox: defaultViewBox,
@@ -332,6 +393,7 @@ export const shuffleFiguresConfigs = {
   },
 
   rotColorSisiAnisi: {
+    skip: true,
     patternsInCol: 3,
     patternsInRow: 2,
     viewBox: defaultViewBox,
@@ -395,64 +457,6 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  // exact match with base test
-  iq29_figDice: {
-    // todo(vmyshko): randomize colors per fig
-    // todo(vmyshko): try maybe shift start fig?
-    patternsInCol: 3,
-    patternsInRow: 3,
-
-    viewBox: "0 0 106 106",
-    maxAnswerCount: 6,
-
-    figureLink: "./images/shuffle-dice-cult.svg",
-
-    // -----
-    // todo(vmyshko):
-    // figure-renderer should get (per pattern):
-    // multiple parts: {
-    //  figures = [],
-    //  color: figureColor,
-    //  rotation = 0,
-    // }
-
-    // figure-pattern, has:
-    // ..multiple figure-parts:
-    //    figure-part (svg), has:
-    //       figures: [1..n],(use-s)
-    //       color: '',
-    //       rotation: 0,
-
-    figureParts: [
-      {
-        // todo(vmyshko): probably it would be better not to call any fns in config
-        // ...then will be possible to get raw data in generator if needed (for answer generation)
-        //generators?
-        figures: [
-          shuffleTypes.single({ items: ["frame"] }),
-          shuffleTypes.shiftedBy({
-            rowShift: 2,
-            items: ["one", "two", "three", "four", "five", "six"],
-          }),
-        ],
-        color: shuffleTypes.shiftedBy({
-          items: [colors.yellow, colors.red, colors.blue],
-          rowShift: 2,
-        }),
-        // todo(vmyshko): or ignore for defaults
-        rotation: shuffleTypes.single({ items: [0] }),
-      },
-      // {
-      //   figures: [],
-      //   color: "",
-      //   rotation: "",
-      // },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
   iq19_rotIcons: {
     // todo(vmyshko): gen answers with question colors only
     patternsInCol: 2, // hard to solve
@@ -480,6 +484,7 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
   rotIcons: {
+    skip: true,
     patternsInCol: 3,
     viewBox: defaultViewBox,
     scale: 0.7,
@@ -506,6 +511,7 @@ export const shuffleFiguresConfigs = {
   },
 
   iq20_colRotHalves: {
+    skip: true,
     patternsInCol: 3,
     patternsInCol: 2,
     viewBox: "0 0 104 104",
@@ -589,6 +595,7 @@ export const shuffleFiguresConfigs = {
   },
 
   iq14_fig2_RectTriangleCircle: {
+    skip: true,
     patternsInCol: 3,
     viewBox: "0 0 106 106",
     scale: 0.8,
@@ -621,7 +628,7 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  fig2_RectTriangleCircle: {
+  fig2_RectTriangleCircle_iq14like: {
     patternsInCol: 3,
     viewBox: "0 0 106 106",
     scale: 0.8,
@@ -651,7 +658,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  fig1_RectTriangleCircle: {
+  fig1_RectTriangleCircle_iq14like: {
+    skip: true,
     patternsInCol: 3,
     viewBox: "0 0 106 106",
     scale: 0.8,
