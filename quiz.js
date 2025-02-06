@@ -252,7 +252,9 @@ function generateQuiz({ seed }) {
           // todo(vmyshko): extract this to common, cause other question-types should reset this
           // 100 + 10 + 100 + 10 + 100 + 10
 
-          const rowColMaxPatterns = Math.max(patternsInRow, patternsInCol);
+          const rowColMaxPatterns = patternsInRow;
+          // todo(vmyshko): fix and re-check for cutouts and in-row-2/in-col-3 configs
+          // Math.max(patternsInRow, patternsInCol);
           const targetWidthPx = 340; //px - total width that we want to get
           const maxPatternSizePx = 320;
           const outerBorderPx = 10 * 2; //px
@@ -433,7 +435,7 @@ $debugCheckbox.addEventListener("change", (event) => {
   document.body.classList.toggle("debug", $debugCheckbox.checked);
 });
 
-$debugCheckbox.click();
+// $debugCheckbox.click();
 
 function bindingsOnKeypress({ key }) {
   const keyBindingsMap = new Map([
