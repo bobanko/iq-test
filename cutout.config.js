@@ -105,6 +105,13 @@ export const cutoutConfigs = {
       //"questions"
     ],
     // variants: figsFn("lines-", 6),
+    styles: {
+      // "--stroke": "#FF5455",
+      // "--fill": "#2A468E",
+
+      "--primary-color": "var(--stroke, #FF5455)",
+      "--secondary-color": "var(--fill, #2A468E)",
+    },
 
     cutoutSize: 78,
     cutoutPoints: [

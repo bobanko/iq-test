@@ -19,12 +19,17 @@ function createCutoutMask({ x, y, size, width = size, height = size }) {
 }
 
 function createPatternBase({ figureConfig, config }) {
-  const { figureLink, figures = [] } = config;
+  const { figureLink, figures = [], styles = {} } = config;
   const { variant = null } = figureConfig;
 
   // svg as container
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true);
+
+  // apply styles
+  Object.entries(styles).forEach(([key, value]) => {
+    $svgPatternContainer.style.setProperty(key, value);
+  });
 
   // add pattern figs
   for (let figure of figures) {
