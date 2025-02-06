@@ -16,24 +16,26 @@ export const booleanMatrixConfigs = {
   },
 
   // todo(vmyshko): both origs excluded as too easy
-  // d1_mtxbool_sub_iq8: {
-  //   ruleSet: ruleSets.subRowPatterns,
-  //   patternsInCol: 3,
-  //   mtxSize: 3,
+  d1_mtxbool_sub_iq8: {
+    skip: true,
+    ruleSet: ruleSets.subRowPatterns,
+    patternsInCol: 3,
+    mtxSize: 3,
 
-  //   generator: generateBooleanMatrixQuestion,
-  //   renderer: renderMatrixQuestion,
-  // },
+    generator: generateBooleanMatrixQuestion,
+    renderer: renderMatrixQuestion,
+  },
 
-  // d1_mtxbool_add_iq9: {
-  //   ruleSet: ruleSets.addRowPatterns,
-  //   patternsInCol: 3,
-  //   mtxSize: 3,
-  //   // maxAnswerCount: 20,
+  d1_mtxbool_add_iq9: {
+    skip: true,
+    ruleSet: ruleSets.addRowPatterns,
+    patternsInCol: 3,
+    mtxSize: 3,
+    // maxAnswerCount: 20,
 
-  //   generator: generateBooleanMatrixQuestion,
-  //   renderer: renderMatrixQuestion,
-  // },
+    generator: generateBooleanMatrixQuestion,
+    renderer: renderMatrixQuestion,
+  },
 
   mtxbool_addSubColor_iq10: {
     ruleSet: ruleSets.addAndSubRowPatterns,
