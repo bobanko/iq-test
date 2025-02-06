@@ -5,7 +5,7 @@ const alternateViewBox = "2 2 100 100";
 
 const upscaleFactor = 1.9;
 export const resizableConfigs = {
-  iq23_default_resize: {
+  default_resize_iq23: {
     // todo(vmyshko): extract colors to config
     patternsInCol: 3,
     figureLink: "./images/pattern-resizable.svg",
@@ -27,7 +27,7 @@ export const resizableConfigs = {
     scale: 0.9 / 2,
     strokeWidth: 5,
 
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateResizableQuestion,
     renderer: renderFigurePatternsQuestion,

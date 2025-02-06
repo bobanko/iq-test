@@ -7,9 +7,9 @@ export const colRowSumFiguresConfigs = {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
-    noRotationAnimation: true,
+    // noRotationAnimation: true,
 
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     figureLink: "./images/card-suits.svg",
 
@@ -28,9 +28,9 @@ export const colRowSumFiguresConfigs = {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
-    noRotationAnimation: true,
+    // noRotationAnimation: true,
 
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     figureLink: "./images/card-suits.svg",
 

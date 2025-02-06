@@ -8,9 +8,7 @@ export const rowSubFiguresConfigs = {
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,
-    noRotationAnimation: true,
-
-    maxAnswerCount: 8,
+    // noRotationAnimation: true,
 
     figureLink: "./images/spark-icons.svg",
 
@@ -22,6 +20,7 @@ export const rowSubFiguresConfigs = {
     ],
     figureTypesCountToUse: 2,
     // shufflePositions: false,
+    // maxAnswerCount: 8,
 
     // todo(vmyshko): restrict empty patterns
     generator: generatePatternsQuestion_rowSub,

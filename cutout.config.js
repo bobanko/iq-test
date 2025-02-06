@@ -34,7 +34,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 6,
+    // maxAnswerCount: 6,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
@@ -91,7 +91,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
@@ -120,7 +120,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
@@ -139,7 +139,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
@@ -189,7 +189,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 6,
+    // maxAnswerCount: 6,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
@@ -213,7 +213,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 6,
+    // maxAnswerCount: 6,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,
@@ -248,7 +248,7 @@ export const cutoutConfigs = {
 
     patternsInCol: 1,
     patternsInRow: 1,
-    maxAnswerCount: 6,
+    // maxAnswerCount: 6,
 
     generator: generateCutoutQuestion,
     renderer: renderCutoutQuestion,

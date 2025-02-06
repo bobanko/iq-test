@@ -68,7 +68,7 @@ export const cropFiguresConfigs = {
     viewBox: defaultViewBox,
     noRotationAnimation: true,
 
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     figureLink: "./images/xor-halves.svg",
 
