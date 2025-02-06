@@ -21,7 +21,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8, //16
+    // maxAnswerCount: 8, //16
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -34,7 +34,7 @@ export const booleanFiguresConfigs = {
     figureCount: 8,
     viewBox: defaultViewBox,
     color: "var(--blue)",
-    maxAnswerCount: 8, //16
+    // maxAnswerCount: 8, //16
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -67,7 +67,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "var(--red)",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -81,7 +81,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -96,7 +96,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -115,7 +115,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -130,7 +130,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -160,7 +160,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -177,7 +177,7 @@ export const booleanFiguresConfigs = {
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
     renderer: renderFigurePatternsQuestion,
