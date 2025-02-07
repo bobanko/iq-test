@@ -1,15 +1,7 @@
-import {
-  generateShuffleFiguresQuestion,
-  shuffleTypes,
-} from "./shuffle-figures.generator.js";
-import {
-  colors,
-  defaultColors,
-  defaultViewBox,
-  rgbColors,
-} from "./common.config.js";
+import { shuffleTypes } from "./shuffle-figures.generator.js";
+import { colors, defaultViewBox, rgbColors } from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
-import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns.generator.js";
+import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns-old.generator.js";
 
 // todo(vmyshko): currently, shift is used for most multi-color
 // it (or any other similar) should provide randomness,
@@ -28,6 +20,7 @@ import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns
 // generate props for blocks
 // put blocks into blocks
 // rotate block parts
+// shuffle all rows/cols patterns with rule
 
 // it can be sepatated by:
 // figure -- just <use> with link
@@ -548,9 +541,9 @@ export const shuffleFiguresConfigs = {
           // todo(vmyshko): make possible random between sets
           // todo(vmyshko):  diamonds are bad for rotation
           shuffleTypes.unique123({
-            items: ["heart-1", "heart-2", "heart-3"],
-            items: ["spade-1", "spade-2", "spade-3"],
-            items: ["club-1", "club-2", "club-3"],
+            // items: ["heart-1", "heart-2", "heart-3"],
+            // items: ["spade-1", "spade-2", "spade-3"],
+            // items: ["club-1", "club-2", "club-3"],
             items: ["club-1", "mix-2", "mix-3"],
           }),
         ],
