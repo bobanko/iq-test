@@ -1,0 +1,26 @@
+[hotkey] {
+  position: relative;
+}
+
+[hotkey]:after {
+  text-align: center;
+  --size: 12px;
+  content: attr(hotkey);
+  position: absolute;
+  width: var(--size);
+  height: var(--size);
+  bottom: 0;
+  bottom: 50%;
+  right: 0;
+  /* left: 0; */
+  border: 2px solid black;
+  border-radius: 3px;
+  background: white;
+  padding: 2px;
+  line-height: var(--size);
+  text-transform: uppercase;
+  transform: translate(-50%, 50%);
+  transform: translate(50%, 50%);
+  outline: 1px solid white;
+  font-size: var(--size);
+}
