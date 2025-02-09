@@ -1,3 +1,24 @@
+body text.debug-info {
+  visibility: hidden;
+}
+
+body.debug text.debug-info {
+  visibility: visible;
+  dominant-baseline: text-before-edge;
+  text-anchor: start;
+  /* transform: translate(0%, 0%); */
+
+  font-family: monospace;
+  font-size: 50%;
+
+  fill: greenyellow;
+  stroke: black;
+
+  stroke-width: 6px;
+  paint-order: stroke;
+  stroke-linejoin: round;
+}
+
 .pattern-figure {
   width: var(--pattern-size);
   height: var(--pattern-size);

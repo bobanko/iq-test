@@ -54,6 +54,8 @@ function createFigurePattern({ figureConfig, config }) {
   const {
     viewBox = defaultViewBox,
     color = "black",
+    styles = {},
+    strokeWidth,
     figureLink,
     staticFigures = [],
     questionMarkFigure = null,
@@ -61,13 +63,17 @@ function createFigurePattern({ figureConfig, config }) {
     scale: configScale = 1,
   } = config;
 
-  const { figureParts, scaleX = 1, scaleY = 1 } = figureConfig;
+  const { figureParts, scaleX = 1, scaleY = 1, debugInfo = "∅" } = figureConfig;
 
   // svg as container
   const $svgPatternContainer =
     $tmplPatternFigure.content.firstElementChild.cloneNode(true);
 
   $svgPatternContainer.setAttribute("viewBox", viewBox);
+  // apply styles
+  Object.entries(styles).forEach(([key, value]) => {
+    $svgPatternContainer.style.setProperty(key, value);
+  });
 
   for (let figurePart of figureParts) {
     const $svgPart = $svgPatternContainer;
@@ -86,7 +92,7 @@ function createFigurePattern({ figureConfig, config }) {
       scaleX,
       scaleY,
       color: figureColor,
-      strokeWidth,
+      strokeWidth: figureStrokeWidth,
       stroke,
       transformX,
       transformY,
@@ -99,7 +105,11 @@ function createFigurePattern({ figureConfig, config }) {
       const $use = $tmplSvgUse.content.querySelector("use").cloneNode(true);
 
       $use.style.setProperty("--color", figureColor ?? color);
-      if (strokeWidth) $use.style.setProperty("--stroke-width", strokeWidth);
+      if (figureStrokeWidth)
+        $use.style.setProperty(
+          "--stroke-width",
+          figureStrokeWidth ?? strokeWidth
+        );
       if (stroke) $use.style.setProperty("--stroke", stroke);
 
       (async () => {
@@ -148,6 +158,14 @@ function createFigurePattern({ figureConfig, config }) {
 
     // $svgPatternContainer.appendChild($svgPart);
   }
+
+  const $debugText = document.createElementNS(
+    "http://www.w3.org/2000/svg",
+    "text"
+  );
+  $debugText.classList.add("debug-info");
+  $debugText.textContent = debugInfo;
+  $svgPatternContainer.appendChild($debugText);
 
   return $svgPatternContainer;
 }
