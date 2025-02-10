@@ -260,17 +260,27 @@ export function shuffleFiguresGeneratorGeneric({ random, config }) {
     byteCount: preGenConfig.length,
   });
 
+  const byteMappings = preGenConfig.map((byteCfg) => {
+    const map = Array(byteCfg.count)
+      .fill(0)
+      .map((_, index) => index);
+
+    return byteCfg.shuffle ? random.shuffle(map) : map;
+  });
+
   // apply rules
   applyToMtx({
     mtx,
     callback: ({ rowIndex, colIndex, mtx }) => {
       preGenConfig.forEach((byteConfig, index) => {
-        const { count, shifts } = byteConfig;
+        const { count, shifts, shuffle = false } = byteConfig;
 
         const [rowShift, colShift, extraShift = 0] = shifts;
-
+        // todo(vmyshko): mapping too complex, simplify
         mtx[rowIndex][colIndex][index] =
-          (rowIndex * rowShift + colIndex * colShift + extraShift) % count;
+          byteMappings[index][
+            (rowIndex * rowShift + colIndex * colShift + extraShift) % count
+          ];
       });
     },
   });
@@ -284,6 +294,8 @@ export function shuffleFiguresGeneratorGeneric({ random, config }) {
   if (shuffleRows) {
     return mtx.map((row) => random.shuffle(row)).flat();
   }
+
+  // todo(vmyshko): somehow shuffle only selected bytetypes but keep order
 
   return mtx.flat();
 }

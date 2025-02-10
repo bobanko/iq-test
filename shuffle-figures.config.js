@@ -96,14 +96,14 @@ const frameColors = [colors.blue, colors.red, colors.white];
 
 export const shuffleFiguresConfigs = {
   // exact match with base test
-  iq29_figDice: {
+  figDice_iq29_done: {
     // todo(vmyshko): randomize colors per fig
     // todo(vmyshko): try maybe shift start fig?
 
     // gen config
     patternsInCol: 3,
     patternsInRow: 3,
-    maxAnswerCount: 10,
+    // maxAnswerCount: 10,
 
     // const [rowShift, colShift] = [0, 0]; // all same
     // const [rowShift, colShift] = [1, 0]; // row changes
@@ -124,6 +124,7 @@ export const shuffleFiguresConfigs = {
         //colors
         count: 3,
         shifts: [2, 1], // orig dice
+        shuffle: true,
       },
     ],
 
@@ -204,7 +205,7 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  iq27_figRotLetters: {
+  iq27_figRotLetters_done: {
     // each fig rotates 90deg cw H
     // figs shuffled in cols
     patternsInCol: 3,
@@ -215,6 +216,7 @@ export const shuffleFiguresConfigs = {
         // figs
         count: 3,
         shifts: [2, 1],
+        shuffle: true,
       },
       {
         //rots
@@ -240,7 +242,7 @@ export const shuffleFiguresConfigs = {
       figureParts: [
         {
           figures: [{ byteIndex: 0, from: "figs" }],
-          color: { static: colors.red },
+          color: { static: colors.blue },
           // color: { byteIndex: 0, from: "cols" },
           rotation: { byteIndex: 1, from: "rots" },
         },
@@ -381,12 +383,14 @@ export const shuffleFiguresConfigs = {
         //rots
         count: 3,
         shifts: [1, 1],
+        shuffle: true,
       },
       {
         //cols - one for two, like theme
         count: 2,
         // todo(vmyshko): allow random
         shifts: [1, 0],
+        shuffle: true,
       },
     ],
 
@@ -419,7 +423,7 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  fig2_RectTriangleCircle_iq14like: {
+  fig2_RectTriangleCircle_iq14like_done: {
     patternsInCol: 3,
     patternsInCol: 2,
     maxAnswerCount: 8,
@@ -435,24 +439,34 @@ export const shuffleFiguresConfigs = {
         //figs-2
         count: 3,
         shifts: [1, 2, 1],
+        shuffle: true,
       },
+      // {
+      //   //colors
+      //   count: 3,
+      //   shifts: [0, 0],
+      //   shuffle: true,
+      // },
     ],
 
     preRenderConfig: {
       sets: {
         figs1: ["circle", "rect", "triangle"],
         figs2: ["inner-circle", "inner-rect", "inner-triangle"],
+        cols: [colors.red, colors.green, colors.blue],
       },
 
       // shift or randomize?
       figureParts: [
         {
           figures: [{ byteIndex: 0, from: "figs1" }],
-          color: { static: colors.red },
+          // color: { byteIndex: 2, from: "cols" },
+          color: { static: colors.blue },
         },
         {
           figures: [{ byteIndex: 1, from: "figs2" }],
-          color: { static: colors.red },
+          // color: { byteIndex: 2, from: "cols" },
+          color: { static: colors.blue },
         },
       ],
     },
@@ -475,13 +489,14 @@ export const shuffleFiguresConfigs = {
       {
         //color-theme
         count: 3,
-        shifts: [1, 1],
-        // shuffle: true,
+        shifts: [1, 2],
+        shuffle: true,
       },
       {
         //frame
         count: 2,
         shifts: [1, 1],
+        shuffle: true,
       },
     ],
 
@@ -528,7 +543,7 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotColorQuarters_iq13: {
+  rotColorQuarters_iq13_done: {
     // skip: true,
 
     patternsInCol: 2,
@@ -539,7 +554,7 @@ export const shuffleFiguresConfigs = {
         //color-theme
         count: 3,
         shifts: [1, 1],
-        // shuffle: true,
+        shuffle: true,
       },
       {
         //rot
