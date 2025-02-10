@@ -289,6 +289,9 @@ header {
   position: relative;
   font-size: calc(var(--pattern-size) * 2 / 3);
   text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+
+  animation: fadeIn 200ms ease-in forwards, rotateUp 200ms ease-in forwards,
+    slideUp 200ms ease-in forwards;
 }
 
 /* for svg content */
