@@ -21,18 +21,12 @@
 </g>
 <path id="circle" d="M50 1C77.0619 1 99 22.9381 99 50C99 77.0619 77.0619 99 50 99C22.9381 99 1 77.0619 1 50C1 22.9381 22.9381 1 50 1Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <g id="arrow-nipple">
-<g id="outer">
-<g filter="url(#filter0_i_171_5808)">
-<rect x="30" y="5" width="40" height="40" rx="20" fill="#FF5455"/>
-</g>
-<rect x="30.5" y="5.5" width="39" height="39" rx="19.5" stroke="black" stroke-opacity="0.35"/>
-</g>
-<g id="inner">
-<g filter="url(#filter1_i_171_5808)">
-<rect x="40.6667" y="9" width="20" height="20" rx="10" fill="#FF5455"/>
-</g>
-<rect x="41.1667" y="9.5" width="19" height="19" rx="9.5" stroke="black" stroke-opacity="0.35"/>
-</g>
+    <g id="outer">
+        <rect x="30.5" y="5.5" width="39" height="39" rx="19.5" stroke="black" stroke-opacity="0.35"/>
+    </g>
+    <g id="inner">
+        <rect x="41.1667" y="9.5" width="19" height="19" rx="9.5" stroke="black" stroke-opacity="0.35"/>
+    </g>
 </g>
 </g>
 </g>
