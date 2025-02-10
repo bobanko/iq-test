@@ -6,12 +6,21 @@ import { SeededRandom } from "./random.helpers.js";
 // it's made for testing conception of multiple figure-parts
 // it needed to be unified with old version
 
+const defaultPatternCount = { patternsInCol: 3, patternsInRow: 3 };
 // todo(vmyshko): refac to reuse same code? only yield differs (mostly)
 export const shuffleTypes = {
+  /**
+   * single for all cols/rows but basically random
+   * @param {*} param0
+   * @returns same item for all rows/cols but basically random
+   */
   // single for all cols/rows but basically random
   single: ({ items }) =>
     function* ({ random, config }) {
-      const { patternsInCol = 3, patternsInRow = 3 } = config;
+      const { patternsInCol = 3, patternsInRow = 3 } = {
+        ...defaultPatternCount,
+        ...config,
+      };
 
       const shuffledItems = random.shuffle(items);
 
@@ -246,6 +255,9 @@ function generateAnswer({ random, config, correctAnswer }) {
   };
 }
 
+/**
+ * @deprecated new one is in the shuffle-figures.gen
+ */
 export function generateShuffleFigurePatternsQuestion({
   config,
   seed,

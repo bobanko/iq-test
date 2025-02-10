@@ -1,7 +1,10 @@
-import { shuffleTypes } from "./shuffle-figures.generator.js";
 import { colors, defaultViewBox, rgbColors } from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
-import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns-old.generator.js";
+import { generateShuffleFigurePatternsQuestion } from "./shuffle-figure-patterns.generator.js";
+import {
+  generateSequenceQuestion,
+  shuffleTypes,
+} from "./shuffle-figures.generator.js";
 
 // todo(vmyshko): currently, shift is used for most multi-color
 // it (or any other similar) should provide randomness,
@@ -90,7 +93,396 @@ block:
 // ]
 const quarterColors = [colors.yellow, colors.blue, colors.red, colors.dark];
 const frameColors = [colors.blue, colors.red, colors.white];
+
 export const shuffleFiguresConfigs = {
+  // exact match with base test
+  iq29_figDice: {
+    // todo(vmyshko): randomize colors per fig
+    // todo(vmyshko): try maybe shift start fig?
+
+    // gen config
+    patternsInCol: 3,
+    patternsInRow: 3,
+    maxAnswerCount: 10,
+
+    // const [rowShift, colShift] = [0, 0]; // all same
+    // const [rowShift, colShift] = [1, 0]; // row changes
+    // const [rowShift, colShift] = [0, 1]; // col changes
+    // const [rowShift, colShift] = [1, 1]; // 123 but each row shifts 1 left // secondary mtx diag same
+    // const [rowShift, colShift] = [2, 1]; // (orig for dice) 123 but each row shifts 2 left (or 1 right) // main mtx diag same
+    // const [rowShift, colShift] = [1, 2]; //same as [2,1] but Vertical
+    // todo(vmyshko): how to combine both secondary and primary diags? [2,1] & [1,2]
+
+    preGenConfig: [
+      // todo(vmyshko): add named bytes?
+      {
+        // figs
+        count: 6,
+        shifts: [2, 1], // orig dice
+      },
+      {
+        //colors
+        count: 3,
+        shifts: [2, 1], // orig dice
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        figs: ["one", "two", "three", "four", "five", "six"],
+        colors: [colors.yellow, colors.red, colors.blue],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ static: "frame" }, { byteIndex: 0, from: "figs" }],
+          color: { byteIndex: 1, from: "colors" },
+        },
+      ],
+    },
+
+    // render config
+    figureLink: "./images/shuffle-dice-cult.svg",
+    viewBox: "0 0 106 106",
+
+    //----
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  cardSuits_iq39_done: {
+    // todo(vmyshko): recheck logic, seems unsolvable, diff with orig
+    patternsInCol: 3,
+    maxAnswerCount: 8,
+    // noRotationAnimation: true,
+
+    // todo(vmyshko): move to pregenconf?
+    fullShuffle: true,
+
+    preGenConfig: [
+      // todo(vmyshko): add named bytes?
+      {
+        // figs
+        count: 3,
+        shifts: [2, 1],
+      },
+      {
+        //rots
+        count: 3,
+        shifts: [0, 1],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        // todo(vmyshko):  diamonds are bad for rotation
+        //alts
+        // todo(vmyshko): make possible random between those
+        // items: ["heart-1", "heart-2", "heart-3"],
+        // items: ["spade-1", "spade-2", "spade-3"],
+        // items: ["club-1", "club-2", "club-3"],
+        figs: ["club-1", "mix-2", "mix-3"],
+        rots: [0, 90, 180],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ byteIndex: 0, from: "figs" }],
+          // color: { static: colors.black },
+          rotation: { byteIndex: 1, from: "rots" },
+        },
+      ],
+    },
+
+    figureLink: "./images/card-suits.svg",
+    viewBox: defaultViewBox,
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  iq27_figRotLetters: {
+    // each fig rotates 90deg cw H
+    // figs shuffled in cols
+    patternsInCol: 3,
+    maxAnswerCount: 8,
+
+    preGenConfig: [
+      {
+        // figs
+        count: 3,
+        shifts: [2, 1],
+      },
+      {
+        //rots
+        count: 3,
+        shifts: [0, 1],
+      },
+      // {
+      //   //cols
+      //   count: 3,
+      //   // todo(vmyshko): allow random
+      //   shifts: [0, 1],
+      // },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        figs: ["letter-p", "letter-t", "letter-u"],
+        rots: [0, 90, 180],
+        cols: [...rgbColors],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ byteIndex: 0, from: "figs" }],
+          color: { static: colors.red },
+          // color: { byteIndex: 0, from: "cols" },
+          rotation: { byteIndex: 1, from: "rots" },
+        },
+      ],
+    },
+
+    figureLink: "./images/letters-ptu.svg",
+    viewBox: defaultViewBox,
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  rotIcons_iq19_done: {
+    // todo(vmyshko): gen answers with question colors only
+    patternsInCol: 2, // hard to solve
+    maxAnswerCount: 6,
+
+    preGenConfig: [
+      {
+        // figs
+        count: 3,
+        shifts: [2, 1],
+      },
+      {
+        //rots
+        count: 2,
+        shifts: [1, 0],
+      },
+      // {
+      //   //cols
+      //   count: 3,
+      //   // todo(vmyshko): allow random
+      //   shifts: [0, 1],
+      // },
+    ],
+
+    shuffleRows: true,
+    preRenderConfig: {
+      sets: {
+        figs: ["battery", "drop", "signal"],
+        cols: [...rgbColors],
+        rots: [0, 180],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ byteIndex: 0, from: "figs" }],
+          rotation: { byteIndex: 1, from: "rots" },
+          // color: { byteIndex: 1, from: "cols" },
+          color: { static: colors.blue },
+        },
+      ],
+    },
+
+    figureLink: "./images/mobile-icons.svg",
+    viewBox: defaultViewBox,
+    scale: 0.7,
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  rotColorTriangles_id30_done: {
+    // todo(vmyshko): randomize colors
+    // todo(vmyshko): randomize base rotation
+
+    patternsInCol: 3,
+    patternsInRow: 3,
+    maxAnswerCount: 18,
+
+    preGenConfig: [
+      {
+        //cols1
+        count: 3,
+        // todo(vmyshko): allow random
+        shifts: [0, 1],
+      },
+      // {
+      //   //cols2
+      //   count: 3,
+      //   // todo(vmyshko): allow random
+      //   shifts: [0, 1, 1],
+      // },
+      {
+        //rots
+        count: 2,
+        shifts: [1, 0],
+      },
+    ],
+
+    shuffleRows: true,
+
+    // todo(vmyshko): add in-row shuffle
+
+    preRenderConfig: {
+      sets: {
+        cols: [colors.yellow, colors.blue, colors.red],
+        rots: [0, 180],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ static: "triangle-bottom" }],
+          color: { byteIndex: 0, from: "cols" },
+          rotation: { byteIndex: 1, from: "rots" },
+        },
+        {
+          figures: [{ static: "triangle-top" }],
+          color: { byteIndex: 0, from: "cols", shift: 1 },
+          rotation: { byteIndex: 1, from: "rots" },
+        },
+        {
+          figures: [{ static: "diagonal" }],
+          rotation: { byteIndex: 1, from: "rots" },
+        },
+      ],
+    },
+
+    figureLink: "./images/shuffle-2-triangles.svg",
+    viewBox: defaultViewBox,
+    noRotationAnimation: true,
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  rotColorSisiAnisi: {
+    skip: true,
+    patternsInCol: 3,
+    patternsInRow: 2,
+    maxAnswerCount: 8,
+
+    preGenConfig: [
+      {
+        //rots
+        count: 3,
+        shifts: [1, 1],
+      },
+      {
+        //cols - one for two, like theme
+        count: 2,
+        // todo(vmyshko): allow random
+        shifts: [1, 0],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        rots: [135, 180, 180 + 45],
+        cols1: ["#c28875", "#544039"],
+        cols2: ["#f3d3bd", "#6c4f36"],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ static: "circle" }],
+          color: { byteIndex: 1, from: "cols2" },
+        },
+        {
+          figures: [{ static: "arrow-nipple" }],
+          color: { byteIndex: 1, from: "cols1" },
+          rotation: { byteIndex: 0, from: "rots" },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrow-icons.svg",
+    viewBox: defaultViewBox,
+    questionMarkFigure: "circle",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  fig2_RectTriangleCircle_iq14like: {
+    patternsInCol: 3,
+    patternsInCol: 2,
+    maxAnswerCount: 8,
+
+    preGenConfig: [
+      {
+        //figs-1
+        count: 3,
+        shifts: [1, 1],
+        shuffle: true,
+      },
+      {
+        //figs-2
+        count: 3,
+        shifts: [1, 2, 1],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        figs1: ["circle", "rect", "triangle"],
+        figs2: ["inner-circle", "inner-rect", "inner-triangle"],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ byteIndex: 0, from: "figs1" }],
+          color: { static: colors.red },
+        },
+        {
+          figures: [{ byteIndex: 1, from: "figs2" }],
+          color: { static: colors.red },
+        },
+      ],
+    },
+
+    figureParts: [
+      {
+        figures: [
+          shuffleTypes.unique123({ items: ["circle", "rect", "triangle"] }),
+
+          shuffleTypes.unique123({
+            items: ["inner-circle", "inner-rect", "inner-triangle"],
+          }),
+        ],
+
+        color: shuffleTypes.unique123({ items: [...rgbColors] }),
+        rotation: shuffleTypes.single({ items: [0] }),
+      },
+    ],
+
+    figureLink: "./images/inner-rect-triangle-circle.svg",
+    viewBox: "0 0 106 106",
+    scale: 0.8,
+
+    //rotations? groups?
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+};
+
+var kek = {
   // star from tg
   // todo(vmyshko): this one seems broken, rotation logic is not clear and random
   rotStarTg: {
@@ -122,64 +514,6 @@ export const shuffleFiguresConfigs = {
           items: [0, 360 / 5, (360 / 5) * 2, (360 / 5) * 3, (360 / 5) * 4],
         }),
       },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  // exact match with base test
-  iq29_figDice: {
-    // todo(vmyshko): randomize colors per fig
-    // todo(vmyshko): try maybe shift start fig?
-    patternsInCol: 3,
-    patternsInRow: 3,
-
-    viewBox: "0 0 106 106",
-    maxAnswerCount: 6,
-
-    figureLink: "./images/shuffle-dice-cult.svg",
-
-    // -----
-    // todo(vmyshko):
-    // figure-renderer should get (per pattern):
-    // multiple parts: {
-    //  figures = [],
-    //  color: figureColor,
-    //  rotation = 0,
-    // }
-
-    // figure-pattern, has:
-    // ..multiple figure-parts:
-    //    figure-part (svg), has:
-    //       figures: [1..n],(use-s)
-    //       color: '',
-    //       rotation: 0,
-
-    figureParts: [
-      {
-        // todo(vmyshko): probably it would be better not to call any fns in config
-        // ...then will be possible to get raw data in generator if needed (for answer generation)
-        //generators?
-        figures: [
-          shuffleTypes.single({ items: ["frame"] }),
-          shuffleTypes.shiftedBy({
-            rowShift: 2,
-            items: ["one", "two", "three", "four", "five", "six"],
-          }),
-        ],
-        color: shuffleTypes.shiftedBy({
-          items: [colors.yellow, colors.red, colors.blue],
-          rowShift: 2,
-        }),
-        // todo(vmyshko): or ignore for defaults
-        rotation: shuffleTypes.single({ items: [0] }),
-      },
-      // {
-      //   figures: [],
-      //   color: "",
-      //   rotation: "",
-      // },
     ],
 
     generator: generateShuffleFigurePatternsQuestion,
@@ -385,37 +719,6 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotColorSisiAnisi: {
-    skip: true,
-    patternsInCol: 3,
-    patternsInRow: 2,
-    viewBox: defaultViewBox,
-    maxAnswerCount: 8,
-    questionMarkFigure: "circle",
-
-    figureLink: "./images/arrow-icons.svg",
-
-    figureParts: [
-      {
-        figures: [shuffleTypes.single({ items: ["circle"] })],
-        color: shuffleTypes.rowProgression({ items: ["#f3d3bd", "#6c4f36"] }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["arrow-nipple"] })],
-        color: shuffleTypes.rowProgression({
-          rowShift: 2,
-          items: ["#c28875", "#544039"],
-        }),
-        rotation: shuffleTypes.unique123({
-          items: [135, 180, 180 + 45],
-        }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
   id30_rotColorTriangles: {
     // todo(vmyshko): randomize colors
     // todo(vmyshko): randomize base rotation
@@ -450,59 +753,6 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  iq19_rotIcons: {
-    // todo(vmyshko): gen answers with question colors only
-    patternsInCol: 2, // hard to solve
-    viewBox: defaultViewBox,
-    scale: 0.7,
-
-    maxAnswerCount: 6,
-
-    figureLink: "./images/shuffle-icons.svg",
-
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.unique123({ items: ["battery", "drop", "signal"] }),
-        ],
-        color: shuffleTypes.single({ items: [...rgbColors] }),
-        // todo(vmyshko): or ignore for defaults
-        rotation: shuffleTypes.rowProgression({ items: [0, 180] }),
-        // todo(vmyshko): impl or not?
-        // scale: shuffleTypes.single({ items: [0.7] }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-  rotIcons: {
-    skip: true,
-    patternsInCol: 3,
-    viewBox: defaultViewBox,
-    scale: 0.7,
-
-    maxAnswerCount: 8,
-
-    figureLink: "./images/shuffle-icons.svg",
-
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.unique123({ items: ["battery", "drop", "signal"] }),
-        ],
-        color: shuffleTypes.unique123({ items: [...rgbColors] }),
-        // todo(vmyshko): or ignore for defaults
-        rotation: shuffleTypes.unique123({ items: [0, 90, 180] }),
-        // todo(vmyshko): impl or not?
-        // scale: shuffleTypes.single({ items: [0.7] }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
   iq20_colRotHalves: {
     skip: true,
     patternsInCol: 3,
@@ -520,66 +770,6 @@ export const shuffleFiguresConfigs = {
         color: shuffleTypes.unique123({ items: [...rgbColors] }),
         // color: shuffleTypes.unique123({ items: [...defaultColors] }),
         rotation: shuffleTypes.unique123({ items: [0, 180] }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  iq39_cardSuits: {
-    // todo(vmyshko): recheck logic, seems unsolvable, diff with orig
-    patternsInCol: 3,
-    viewBox: defaultViewBox,
-    maxAnswerCount: 8,
-
-    figureLink: "./images/card-suits.svg",
-
-    figureParts: [
-      {
-        figures: [
-          // todo(vmyshko): make possible random between sets
-          // todo(vmyshko):  diamonds are bad for rotation
-          shuffleTypes.unique123({
-            // items: ["heart-1", "heart-2", "heart-3"],
-            // items: ["spade-1", "spade-2", "spade-3"],
-            // items: ["club-1", "club-2", "club-3"],
-            items: ["club-1", "mix-2", "mix-3"],
-          }),
-        ],
-
-        color: shuffleTypes.single({ items: ["black"] }),
-        rotation: shuffleTypes.unique123({ items: [0, 90, 180] }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  iq27_figRotLetters: {
-    // todo(vmyshko): its broken, should be:
-    // each fig rotates 90deg cw
-    // figs shuffled in cols
-    patternsInCol: 3,
-    viewBox: defaultViewBox,
-    maxAnswerCount: 8,
-
-    figureLink: "./images/letters-ptu.svg",
-
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.unique123({
-            items: ["letter-p", "letter-t", "letter-u"],
-          }),
-        ],
-
-        // todo(vmyshko):  impl ability to gen 1-color-for-all (incl answers?)
-        color: shuffleTypes.single({
-          items: [colors.black],
-        }),
-        rotation: shuffleTypes.unique123({ items: [0, 90, 180] }),
       },
     ],
 
@@ -612,36 +802,6 @@ export const shuffleFiguresConfigs = {
         ],
 
         color: shuffleTypes.single({ items: [...rgbColors] }),
-        rotation: shuffleTypes.single({ items: [0] }),
-      },
-    ],
-
-    //rotations? groups?
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  fig2_RectTriangleCircle_iq14like: {
-    patternsInCol: 3,
-    viewBox: "0 0 106 106",
-    scale: 0.8,
-    maxAnswerCount: 8,
-
-    figureLink: "./images/inner-rect-triangle-circle.svg",
-
-    // patternsInCol: 2,
-
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.unique123({ items: ["circle", "rect", "triangle"] }),
-
-          shuffleTypes.unique123({
-            items: ["inner-circle", "inner-rect", "inner-triangle"],
-          }),
-        ],
-
-        color: shuffleTypes.unique123({ items: [...rgbColors] }),
         rotation: shuffleTypes.single({ items: [0] }),
       },
     ],

@@ -34,6 +34,6 @@ export const quizQuestionConfigs = Object.fromEntries(
     ...Object.entries(cropFiguresConfigs), //2
     //
     ...Object.entries(rotationalMatrixConfigs), //2
-    // ...Object.entries(shuffleFiguresConfigs),
+    ...Object.entries(shuffleFiguresConfigs), // should be 8
   ].filter(([, cfg]) => !cfg.skip)
 );
