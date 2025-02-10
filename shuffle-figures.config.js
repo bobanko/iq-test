@@ -457,26 +457,130 @@ export const shuffleFiguresConfigs = {
       ],
     },
 
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.unique123({ items: ["circle", "rect", "triangle"] }),
-
-          shuffleTypes.unique123({
-            items: ["inner-circle", "inner-rect", "inner-triangle"],
-          }),
-        ],
-
-        color: shuffleTypes.unique123({ items: [...rgbColors] }),
-        rotation: shuffleTypes.single({ items: [0] }),
-      },
-    ],
-
     figureLink: "./images/inner-rect-triangle-circle.svg",
     viewBox: "0 0 106 106",
     scale: 0.8,
 
     //rotations? groups?
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  iq38_color3Frames: {
+    // todo(vmyshko): randomize columns (not impl yet)
+    patternsInCol: 3,
+    maxAnswerCount: 8,
+
+    preGenConfig: [
+      {
+        //color-theme
+        count: 3,
+        shifts: [1, 1],
+        // shuffle: true,
+      },
+      {
+        //frame
+        count: 2,
+        shifts: [1, 1],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        col: [colors.red, colors.blue, colors.white],
+        frame: [1, 5],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ static: "fill-outer" }],
+          color: { byteIndex: 0, from: "col" },
+        },
+        {
+          figures: [{ static: "fill-middle" }],
+          color: { byteIndex: 0, from: "col", shift: 1 },
+        },
+        {
+          figures: [{ static: "fill-inner" }],
+          color: { byteIndex: 0, from: "col", shift: 2 },
+        },
+        {
+          figures: [{ static: "frame-outer" }],
+          strokeWidth: { byteIndex: 1, from: "frame" },
+        },
+        {
+          figures: [{ static: "frame-middle" }],
+          strokeWidth: { byteIndex: 1, from: "frame", shift: 1 },
+        },
+        {
+          figures: [{ static: "frame-inner" }],
+          strokeWidth: { static: 1 },
+        },
+      ],
+    },
+
+    figureLink: "./images/shuffle-frames.svg",
+    viewBox: defaultViewBox,
+    questionMarkFigure: "frame-outer",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  rotColorQuarters_iq13: {
+    // skip: true,
+
+    patternsInCol: 2,
+    maxAnswerCount: 6,
+
+    preGenConfig: [
+      {
+        //color-theme
+        count: 3,
+        shifts: [1, 1],
+        // shuffle: true,
+      },
+      {
+        //rot
+        count: 2,
+        shifts: [1, 0],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        col: [colors.yellow, colors.blue, colors.red, colors.black],
+        rot: [0, 90],
+      },
+
+      // shift or randomize?
+      figureParts: [
+        {
+          figures: [{ static: "quarter-1" }, { static: "quarter-3" }],
+          color: { byteIndex: 0, from: "col" },
+          rotation: { byteIndex: 1, from: "rot" },
+        },
+        {
+          figures: [{ static: "quarter-2" }, { static: "quarter-4" }],
+          color: { byteIndex: 0, from: "col", shift: 1 },
+          rotation: { byteIndex: 1, from: "rot" },
+        },
+        {
+          figures: [
+            { static: "line-h" },
+            { static: "line-v" },
+            { static: "circle" },
+          ],
+          rotation: { byteIndex: 1, from: "rot" },
+        },
+      ],
+    },
+
+    figureLink: "./images/shuffle-quarters.svg",
+    viewBox: defaultViewBox,
+    questionMarkFigure: "circle",
+
     generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
@@ -513,80 +617,6 @@ var kek = {
         rotation: shuffleTypes.unique123({
           items: [0, 360 / 5, (360 / 5) * 2, (360 / 5) * 3, (360 / 5) * 4],
         }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  iq38_color3Frames: {
-    // todo(vmyshko): probably broken logic, recheck
-    patternsInCol: 3,
-    viewBox: defaultViewBox,
-    maxAnswerCount: 8,
-
-    questionMarkFigure: "frame-outer",
-
-    figureLink: "./images/shuffle-frames.svg",
-
-    figureParts: [
-      {
-        figures: [shuffleTypes.single({ items: ["fill-outer"] })],
-        color: shuffleTypes.randomInCol({
-          rowShift: 1,
-          colShift: 3,
-          items: frameColors,
-          // shuffle: true,
-        }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["fill-middle"] })],
-        color: shuffleTypes.randomInCol({
-          rowShift: 2,
-          colShift: 3,
-          items: frameColors,
-          // shuffle: true,
-        }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["fill-inner"] })],
-        color: shuffleTypes.randomInCol({
-          rowShift: 3,
-          colShift: 3,
-          items: frameColors,
-          // shuffle: true,
-        }),
-      },
-
-      {
-        figures: [shuffleTypes.single({ items: ["frame-outer"] })],
-        strokeWidth: shuffleTypes.shiftedBy({
-          rowShift: 1,
-          colShift: 0,
-          items: [1, 5],
-          shuffle: true,
-        }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["frame-middle"] })],
-        strokeWidth: shuffleTypes.shiftedBy({
-          rowShift: 1,
-          colShift: 1,
-          items: [1, 5],
-          shuffle: true,
-        }),
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["frame-inner"] })],
-        // todo(vmyshko): no inner frame in origin
-
-        strokeWidth: shuffleTypes.single({ items: [1] }),
-        // strokeWidth: shuffleTypes.shiftedBy({
-        //   rowShift: 1,
-        //   colShift: 0,
-        //   items: [1, 5],
-        // }),
       },
     ],
 
@@ -662,56 +692,6 @@ var kek = {
         //   colShift: 0,
         //   items: [1, 5],
         // }),
-      },
-    ],
-
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  iq13_rotColorQuarters: {
-    skip: true,
-    // todo(vmyshko): total refac figparts and shuffles
-    patternsInCol: 2,
-    viewBox: defaultViewBox,
-    maxAnswerCount: 6,
-    questionMarkFigure: "circle",
-
-    figureLink: "./images/shuffle-quarters.svg",
-
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.single({ items: ["quarter-1"] }),
-          shuffleTypes.single({ items: ["quarter-3"] }),
-        ],
-        color: shuffleTypes.shiftedBy({
-          rowShift: 2,
-          items: quarterColors,
-        }),
-      },
-      {
-        figures: [
-          shuffleTypes.single({ items: ["quarter-2"] }),
-          shuffleTypes.single({ items: ["quarter-4"] }),
-        ],
-        // rotation: shuffleTypes.single({ items: [180] }),
-        color: shuffleTypes.shiftedBy({
-          rowShift: 2,
-          colShift: 1,
-          items: quarterColors,
-        }),
-      },
-
-      //statics
-      {
-        figures: [shuffleTypes.single({ items: ["line-h"] })],
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["line-v"] })],
-      },
-      {
-        figures: [shuffleTypes.single({ items: ["circle"] })],
       },
     ],
 

@@ -312,14 +312,23 @@ export function preRenderPatternGeneric({ bytes, preRenderConfig }) {
   const { figureParts, sets } = preRenderConfig;
 
   const resultFigParts = figureParts.map((figurePartConfig) => {
-    const { figures, color, rotation } = figurePartConfig;
+    const { figures, ...rest } = figurePartConfig;
+    // todo(vmyshko): simplify?
+    const remap = Object.fromEntries([
+      ...Object.entries(rest).map(([propName, value]) => {
+        return [propName, processVar({ variable: value, sets, bytes })];
+      }),
+    ]);
 
     return {
       figures: figures.map((figCfg) =>
         processVar({ variable: figCfg, sets, bytes: bytes })
       ),
-      color: processVar({ variable: color, sets, bytes: bytes }),
-      rotation: processVar({ variable: rotation, sets, bytes: bytes }) ?? 0,
+
+      ...remap,
+
+      // color: processVar({ variable: color, sets, bytes: bytes }),
+      // rotation: processVar({ variable: rotation, sets, bytes: bytes }) ?? 0,
     };
   });
 

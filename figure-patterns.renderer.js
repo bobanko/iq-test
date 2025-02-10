@@ -53,7 +53,8 @@ function createQuestionMark({ config }) {
 function createFigurePattern({ figureConfig, config }) {
   const {
     viewBox = defaultViewBox,
-    color = "black",
+    //!
+    color = "transparent",
     styles = {},
     strokeWidth,
     figureLink,
@@ -85,6 +86,7 @@ function createFigurePattern({ figureConfig, config }) {
 
     $svgPart.setAttribute("viewBox", viewBox);
 
+    // todo(vmyshko): make generic? or exclude props if null
     const {
       figures = [],
       rotation = 0,
