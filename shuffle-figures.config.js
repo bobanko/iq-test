@@ -118,6 +118,7 @@ export const shuffleFiguresConfigs = {
       {
         // figs
         count: 6,
+        // todo(vmyshko): randomize shifts [2,1] and [1,2]
         shifts: [2, 1], // orig dice
       },
       {
@@ -156,7 +157,7 @@ export const shuffleFiguresConfigs = {
   cardSuits_iq39_done: {
     // todo(vmyshko): recheck logic, seems unsolvable, diff with orig
     patternsInCol: 3,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
     // noRotationAnimation: true,
 
     // todo(vmyshko): move to pregenconf?
@@ -209,12 +210,13 @@ export const shuffleFiguresConfigs = {
     // each fig rotates 90deg cw H
     // figs shuffled in cols
     patternsInCol: 3,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     preGenConfig: [
       {
         // figs
         count: 3,
+        // todo(vmyshko): add random [1,2]
         shifts: [2, 1],
         shuffle: true,
       },
@@ -259,7 +261,6 @@ export const shuffleFiguresConfigs = {
   rotIcons_iq19_done: {
     // todo(vmyshko): gen answers with question colors only
     patternsInCol: 2, // hard to solve
-    maxAnswerCount: 6,
 
     preGenConfig: [
       {
@@ -313,7 +314,7 @@ export const shuffleFiguresConfigs = {
 
     patternsInCol: 3,
     patternsInRow: 3,
-    maxAnswerCount: 18,
+    // maxAnswerCount: 18,
 
     preGenConfig: [
       {
@@ -376,7 +377,7 @@ export const shuffleFiguresConfigs = {
     skip: true,
     patternsInCol: 3,
     patternsInRow: 2,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     preGenConfig: [
       {
@@ -426,7 +427,7 @@ export const shuffleFiguresConfigs = {
   fig2_RectTriangleCircle_iq14like_done: {
     patternsInCol: 3,
     patternsInCol: 2,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     preGenConfig: [
       {
@@ -483,13 +484,13 @@ export const shuffleFiguresConfigs = {
   iq38_color3Frames: {
     // todo(vmyshko): randomize columns (not impl yet)
     patternsInCol: 3,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     preGenConfig: [
       {
         //color-theme
         count: 3,
-        shifts: [1, 2],
+        shifts: [1, 1],
         shuffle: true,
       },
       {
@@ -595,6 +596,48 @@ export const shuffleFiguresConfigs = {
     figureLink: "./images/shuffle-quarters.svg",
     viewBox: defaultViewBox,
     questionMarkFigure: "circle",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  fig1_RectTriangleCircle_iq14like: {
+    skip: true,
+    patternsInCol: 3,
+    maxAnswerCount: 8,
+
+    //new
+    preGenConfig: [
+      {
+        //figs
+        count: 3,
+        shifts: [1, 1],
+      },
+      {
+        //colors
+        count: 3,
+        shifts: [1, 0],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        fig: ["circle", "rect", "triangle"],
+        col: [colors.red, colors.green, colors.blue],
+      },
+
+      figureParts: [
+        {
+          figures: [{ byteIndex: 0, from: "fig" }],
+          color: { byteIndex: 1, from: "col" },
+        },
+      ],
+    },
+
+    //---
+    figureLink: "./images/inner-rect-triangle-circle.svg",
+    viewBox: "0 0 106 106",
+    scale: 0.8,
 
     generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -777,7 +820,7 @@ var kek = {
     patternsInCol: 3,
     viewBox: "0 0 106 106",
     scale: 0.8,
-    maxAnswerCount: 8,
+    // maxAnswerCount: 8,
 
     figureLink: "./images/inner-rect-triangle-circle.svg",
 
@@ -802,29 +845,6 @@ var kek = {
     ],
 
     //rotations? groups?
-    generator: generateShuffleFigurePatternsQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
-  fig1_RectTriangleCircle_iq14like: {
-    skip: true,
-    patternsInCol: 3,
-    viewBox: "0 0 106 106",
-    scale: 0.8,
-    maxAnswerCount: 8,
-
-    figureLink: "./images/inner-rect-triangle-circle.svg",
-
-    figureParts: [
-      {
-        figures: [
-          shuffleTypes.unique123({ items: ["circle", "rect", "triangle"] }),
-        ],
-
-        // color: shuffleTypes.single({ items: [colors.blue] }),
-        color: shuffleTypes.rowProgression({ items: [...rgbColors] }),
-      },
-    ],
     generator: generateShuffleFigurePatternsQuestion,
     renderer: renderFigurePatternsQuestion,
   },
