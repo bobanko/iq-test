@@ -1,9 +1,6 @@
 <svg width="106" height="106" viewBox="0 0 106 106" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="shuffle-dice-cult">
 
-
-
-
 <g id="one" style="--color-lines: hsla(from var(--color) h calc(s - 20) calc(l - 10) /0.4)">
 <circle id="6" cx="53" cy="53" r="10" fill="hsla(from var(--color) 0 0 0 /.9)" stroke="hsla(from var(--color) h s calc(l - 10) /0.7)" stroke-width="2"/>
 <path id="line" d="M30 85L90 41" fill="none" stroke="var(--color-lines)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
