@@ -81,13 +81,13 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
   const backwardShift = mtxSize - 1;
 
   const verticalRuleSet = [
-    { row: backwardShift, col: 0, icon: "⬆️" }, // up
-    { row: 1, col: 0, icon: "⬇️" }, // down
+    { row: backwardShift, col: 0, icon: "↑" }, // up
+    { row: 1, col: 0, icon: "↓" }, // down
   ];
 
   const horizontalRuleSet = [
-    { row: 0, col: backwardShift, icon: "⬅️" }, // left
-    { row: 0, col: 1, icon: "➡️" }, // right
+    { row: 0, col: backwardShift, icon: "←" }, // left
+    { row: 0, col: 1, icon: "→" }, // right
   ];
 
   const orthogonalRuleSet = [...horizontalRuleSet, ...verticalRuleSet];
