@@ -10,7 +10,7 @@
 <path id="line-h" fill="none" d="M1 50H99" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 <path id="line-v" fill="none" d="M50 99V1" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 
-<path id="circle" fill="none" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  d="M50 1C77.0619 1 99 22.9381 99 50C99 77.0619 77.0619 99 50 99C22.9381 99 1 77.0619 1 50C1 22.9381 22.9381 1 50 1Z" />
+<path id="circle" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"  d="M50 1C77.0619 1 99 22.9381 99 50C99 77.0619 77.0619 99 50 99C22.9381 99 1 77.0619 1 50C1 22.9381 22.9381 1 50 1Z" />
 
 </g>
 </svg>

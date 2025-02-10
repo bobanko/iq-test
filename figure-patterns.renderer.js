@@ -38,7 +38,7 @@ function createQuestionMark({ config }) {
     id: questionMarkFigure,
   });
 
-  $use.style.setProperty("--color", colors.dimgray);
+  $use.style.setProperty("--fill", colors.dimgray);
   $use.style.setProperty("--stroke-width", 3);
 
   const $svgPart = $svgPatternContainer;
