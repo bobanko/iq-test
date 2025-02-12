@@ -98,6 +98,7 @@ function createFigurePattern({ figureConfig, config }) {
       stroke,
       transformX,
       transformY,
+      ...rest
     } = figurePart;
 
     // todo(vmyshko): impl separate coloring for each part?
@@ -129,6 +130,10 @@ function createFigurePattern({ figureConfig, config }) {
         // todo(vmyshko): do not set default values, skip setters
 
         $use.style.setProperty("--rotate", `${rotation}deg`);
+
+        Object.entries(rest).map(([propName, value]) => {
+          $use.style.setProperty(propName, value);
+        });
 
         // calc transform origin based on viewBox
         const [x1, y1, x2, y2] = viewBox.split(" ");
