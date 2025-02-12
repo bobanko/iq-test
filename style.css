@@ -299,9 +299,10 @@ header {
   border: none;
   background: none;
   stroke: black;
-  stroke-dasharray: 6 3;
-  stroke-dashoffset: 6;
-  stroke-width: 3px;
+  /* stroke-dasharray: 6 3; */
+  stroke-dasharray: 7 7;
+  /* stroke-dashoffset: 6; */
+  /* stroke-width: 3px; */
 }
 
 /* // */
