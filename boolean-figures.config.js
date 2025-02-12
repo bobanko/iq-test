@@ -2,7 +2,7 @@ import {
   generateBooleanFiguresQuestion,
   figureGenRules,
 } from "./boolean-figures.generator.js";
-import { defaultViewBox } from "./common.config.js";
+import { colors, defaultViewBox } from "./common.config.js";
 import { scaleViewBox } from "./common.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 
@@ -20,7 +20,7 @@ export const booleanFiguresConfigs = {
     staticFigures: ["circle"],
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
-    color: "black",
+    color: colors.black,
     // maxAnswerCount: 8, //16
 
     generator: generateBooleanFiguresQuestion,
@@ -33,7 +33,7 @@ export const booleanFiguresConfigs = {
     figureLink: "./images/boolean-figures/triangles-8.svg",
     figureCount: 8,
     viewBox: defaultViewBox,
-    color: "var(--blue)",
+    color: colors.blue,
     // maxAnswerCount: 8, //16
 
     generator: generateBooleanFiguresQuestion,
@@ -66,7 +66,7 @@ export const booleanFiguresConfigs = {
     staticFigures: ["circle"],
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
-    color: "var(--red)",
+    color: colors.red,
     // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
