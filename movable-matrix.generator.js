@@ -4,6 +4,7 @@ import { generateUniqueValues } from "./generate-unique-values.js";
 import { getPossibleMatrixCells, Point } from "./matrix.helpers.js";
 
 function applyRuleToPoint({ basePoint, rulePoint, steps = 1, mtxSize }) {
+  // todo(vmyshko): to make neg, just add max (mtxSize) to new index (row/col)
   return new Point({
     row: (basePoint.row + rulePoint.row * steps) % mtxSize, // only positive rules!
     col: (basePoint.col + rulePoint.col * steps) % mtxSize, // todo(vmyshko): refac to allow neg rules?
