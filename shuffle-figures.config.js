@@ -91,8 +91,6 @@ block:
 
 // diagonal [fixed]
 // ]
-const quarterColors = [colors.yellow, colors.blue, colors.red, colors.dark];
-const frameColors = [colors.blue, colors.red, colors.white];
 
 export const shuffleFiguresConfigs = {
   // exact match with base test
@@ -416,7 +414,7 @@ export const shuffleFiguresConfigs = {
       ],
     },
 
-    figureLink: "./images/arrow-icons.svg",
+    figureLink: "./images/arrows.svg",
     viewBox: defaultViewBox,
     questionMarkFigure: "circle",
 
@@ -566,7 +564,7 @@ export const shuffleFiguresConfigs = {
 
     preRenderConfig: {
       sets: {
-        col: [colors.yellow, colors.blue, colors.red, colors.black],
+        col: [colors.yellow, colors.blue, colors.red, colors.dark],
         rot: [0, 90],
       },
 
