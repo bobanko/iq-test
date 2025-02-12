@@ -1,8 +1,9 @@
 import { renderRotationalQuestion } from "./rotational.renderer.js";
 import { generateRotationalQuestion } from "./rotational.generator.js";
 
-import { colors } from "./common.config.js";
+import { colorMixins, colors, defaultViewBox } from "./common.config.js";
 import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
+import { generateSequenceQuestion } from "./shuffle-figures.generator.js";
 
 const svgFigs = {
   quarter: "./images/clock-quarter.svg#quarter",
@@ -31,54 +32,8 @@ export const svgFrames = {
 };
 
 export const rotationalConfigs = {
-  //  custom letters
-  letters45_newRender: {
-    skip: true,
-    // todo(vmyshko): put colors to use, shared between figs? how?
-
-    // todo(vmyshko):
-    // each fig has colors arr, as svgs
-    // ? arr should be shared between figs, if you want unique figs took once?
-    // same for colors
-    // fig can be fixed/static, no rule for it, for static bgs, but startDeg still applies
-    // OR put static figs separately?
-    // fig order applies as z-index (naturally)
-    // mirroring should be avail. same as degs for each fig.
-
-    // questionMarkFigure: "circle",
-    figureLink: "./images/letters-ptu.svg",
-
-    figs: [
-      {
-        pickFrom: [svgFigs.letterP, svgFigs.letterU, svgFigs.letterT],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-        colorsFrom: [colors.black, colors.red, colors.green],
-      },
-    ],
-
-    shiftColorsBetweenRows: false,
-    onlyUniqueFigs: true, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    generator: generateRotationalQuestion,
-    renderer: renderFigurePatternsQuestion,
-  },
-
   letters45_oldRender: {
     skip: true,
-    // todo(vmyshko): put colors to use, shared between figs? how?
-
-    // todo(vmyshko):
-    // each fig has colors arr, as svgs
-    // ? arr should be shared between figs, if you want unique figs took once?
-    // same for colors
-    // fig can be fixed/static, no rule for it, for static bgs, but startDeg still applies
-    // OR put static figs separately?
-    // fig order applies as z-index (naturally)
-    // mirroring should be avail. same as degs for each fig.
 
     figureLink: "./images/letters-ptu.svg",
 
@@ -145,32 +100,55 @@ export const rotationalConfigs = {
     renderer: renderRotationalQuestion,
   },
 
-  hexCircle_iq40like: {
-    figs: [
+  hexCircle_iq40like_shuffleBased: {
+    // skip: true,
+    //new
+    preGenConfig: [
       {
-        pickFrom: [svgFigs.circle],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 360 / 6, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
+        //degs
+        count: 5,
+        shifts: [1, 2],
+        // shuffle: true,
       },
-      //static
-      // {
-      //   pickFrom: [svgHrefs.frameHexagon],
-      //   startDeg: 30, // initial rotation, before rules: 0, -45
-      //   stepDeg: 0, // min rotation step by rules
-      //   skipZero: false, // no zero rotation by rules
-      // },
+      {
+        //degs
+        count: 5,
+        shifts: [1, 1],
+        // shuffle: true,
+      },
     ],
 
-    svgFrame: svgFrames.hexagon,
+    preRenderConfig: {
+      sets: {
+        // rot: Array(6)
+        rot: Array(5)
+          .fill(null)
+          // .map((_, i) => (360 / 6) * i),
+          .map((_, i) => (360 / 5) * i),
+      },
 
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: false, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
+      figureParts: [
+        {
+          figures: [{ static: "pentagon" }],
+          color: { static: colors.white },
+        },
 
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
+        {
+          figures: [{ static: "arrow-circle" }],
+          rotation: { byteIndex: 0, from: "rot" },
+          color: { static: colors.red },
+          stroke: { static: colorMixins.darken },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrows.svg",
+    viewBox: defaultViewBox,
+    // questionMarkFigure: "hexagon",
+    questionMarkFigure: "pentagon",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   // clock 2
@@ -201,28 +179,59 @@ export const rotationalConfigs = {
   },
   // true clock 45/45
   twoArrowClock_id34like: {
-    figs: [
+    preGenConfig: [
       {
-        pickFrom: [svgFigs.arrowAlt],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 45, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
+        //degs
+        count: 360 / 45,
+        shifts: [3, 1],
+        // shuffle: true,
       },
       {
-        pickFrom: [svgFigs.arrow],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
+        //degs
+        count: 360 / 90,
+        shifts: [3, 1],
+        // shuffle: true,
       },
     ],
 
-    shiftColorsBetweenRows: false,
-    onlyUniqueFigs: false, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
+    preRenderConfig: {
+      sets: {
+        rot1: Array(360 / 45)
+          .fill(null)
+          .map((_, i) => 45 * i),
+        rot2: Array(360 / 90)
+          .fill(null)
+          .map((_, i) => 90 * i),
+      },
 
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
+      figureParts: [
+        {
+          figures: [{ static: "circle" }],
+          color: { static: colors.white },
+        },
+
+        {
+          figures: [{ static: "arrow-hour" }],
+          rotation: { byteIndex: 0, from: "rot1" },
+          color: { static: colors.red },
+          stroke: { static: colorMixins.darken },
+        },
+        {
+          figures: [{ static: "arrow-minute" }],
+          rotation: { byteIndex: 1, from: "rot2" },
+          color: { static: colors.green },
+          stroke: { static: colorMixins.darken },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrows.svg",
+    viewBox: defaultViewBox,
+    // questionMarkFigure: "hexagon",
+    questionMarkFigure: "circle",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   // clock 3
@@ -301,8 +310,58 @@ export const rotationalConfigs = {
     noOverlap: false, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
 
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
+    preGenConfig: [
+      {
+        //degs
+        count: 360 / 45,
+        shifts: [3, 1],
+      },
+      {
+        //degs
+        count: 360 / 90,
+        shifts: [1, 3, 1],
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        rot1: Array(360 / 90)
+          .fill(null)
+          .map((_, i) => 90 * i + 45),
+        rot2: Array(360 / 90)
+          .fill(null)
+          .map((_, i) => 90 * i + 45),
+      },
+
+      figureParts: [
+        {
+          figures: [{ static: "circle" }],
+          color: { static: colors.white },
+        },
+
+        {
+          figures: [{ static: "quarter" }],
+          rotation: { byteIndex: 0, from: "rot1" },
+          color: { static: colors.blue },
+          stroke: { static: colorMixins.darken },
+          "mix-blend-mode": { static: "multiply" },
+        },
+        {
+          figures: [{ static: "arrow-circle" }],
+          rotation: { byteIndex: 1, from: "rot2" },
+          color: { static: colors.yellow },
+          stroke: { static: colorMixins.darken },
+          "mix-blend-mode": { static: "multiply" },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrows.svg",
+    viewBox: defaultViewBox,
+    questionMarkFigure: "circle",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   //  2 quarters 45deg (semi-overlap/full overlap)
@@ -334,34 +393,63 @@ export const rotationalConfigs = {
 
   //  2 quarters 90deg same deg
   twoQuarters90sameDir_iq11like: {
-    figs: [
+    preGenConfig: [
       {
-        pickFrom: [svgFigs.quarter],
-        startDeg: 0, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
+        //degs
+        count: 360 / 45,
+        shifts: [3, 1],
       },
       {
-        pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
+        //degs
+        count: 360 / 90,
+        shifts: [1, 3, 1],
       },
     ],
 
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: false, // [2 and more]
-    noOverlap: true, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
+    preRenderConfig: {
+      sets: {
+        rot1: Array(360 / 90)
+          .fill(null)
+          .map((_, i) => 90 * i),
+        rot2: Array(360 / 90)
+          .fill(null)
+          .map((_, i) => 90 * i + 45),
+      },
 
-    // todo(vmyshko): rotate both figs in one direction, same deg
-    generator: generateRotationalQuestion,
-    renderer: renderRotationalQuestion,
+      figureParts: [
+        {
+          figures: [{ static: "hexagon" }],
+          color: { static: colors.white },
+        },
+
+        {
+          figures: [{ static: "quarter" }],
+          rotation: { byteIndex: 0, from: "rot1" },
+          color: { static: colors.red },
+          stroke: { static: colorMixins.darken },
+          "mix-blend-mode": { static: "multiply" },
+        },
+        {
+          figures: [{ static: "quarter" }],
+          rotation: { byteIndex: 1, from: "rot2" },
+          color: { static: colors.green },
+          stroke: { static: colorMixins.darken },
+          "mix-blend-mode": { static: "multiply" },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrows.svg",
+    viewBox: defaultViewBox,
+    questionMarkFigure: "circle",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
   },
 
   //  2 quarters 90deg diff deg (no overlap)
   twoQuarters90: {
-    skip: true,
+    // skip: true,
     figs: [
       {
         pickFrom: [svgFigs.quarter],
@@ -381,6 +469,8 @@ export const rotationalConfigs = {
     onlyUniqueFigs: false, // [2 and more]
     noOverlap: true, // [2 and more] figs can overlap each other - have same deg
     answerCount: 6, // how many answers to generate per question
+
+    svgFrame: svgFrames.pentagon,
 
     generator: generateRotationalQuestion,
     renderer: renderRotationalQuestion,
