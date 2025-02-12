@@ -9,6 +9,12 @@ export const colors = {
   gray: "var(--gray)",
   dimgray: "var(--dimgray)",
   dark: "var(--dark)",
+  //mixins
+};
+
+export const colorMixins = {
+  contrast: "hsl(from var(--color) h s calc(l - 15))",
+  darken: "hsl(from var(--color) h s calc(l * 0.5))",
 };
 
 export const rgbColors = [colors.red, colors.green, colors.blue];
