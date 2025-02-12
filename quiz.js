@@ -69,12 +69,17 @@ function updateProgressQuiz({ answered, total = questions.length }) {
   $quizProgressAnswered.textContent = `${answered}/${total}`;
 }
 
-$btnPrevQuestion.addEventListener("click", () => {
-  $questionList.children[_currentQuestion].previousElementSibling?.click();
-});
-$btnNextQuestion.addEventListener("click", () => {
-  $questionList.children[_currentQuestion].nextElementSibling?.click();
-});
+// todo(vmyshko): rename
+function navigateQuestions(shift = 1) {
+  const nextQuestion =
+    (questions.length + _currentQuestion + shift) % questions.length;
+
+  $questionList.children[nextQuestion].click();
+}
+
+$btnPrevQuestion.addEventListener("click", () => navigateQuestions(-1));
+$btnNextQuestion.addEventListener("click", () => navigateQuestions(1));
+
 // question buttons
 
 function questionButtonClick($currentButton) {
@@ -435,14 +440,21 @@ $debugCheckbox.addEventListener("change", (event) => {
   document.body.classList.toggle("debug", $debugCheckbox.checked);
 });
 
-// $debugCheckbox.click();
+$debugCheckbox.click();
 
 function bindingsOnKeypress({ code }) {
+  const questionsInRow = 9; // depends on layout
   const keyBindingsMap = new Map([
-    ["ArrowRight", () => $btnNextQuestion.click()],
-    ["ArrowLeft", () => $btnPrevQuestion.click()],
+    ["ArrowRight", () => navigateQuestions(1)],
+    ["ArrowLeft", () => navigateQuestions(-1)],
+    // for quick navigation
+    ["ArrowDown", () => navigateQuestions(questionsInRow)],
+    ["ArrowUp", () => navigateQuestions(-questionsInRow)],
+
     ["KeyG", () => $btnGenerate.click()],
   ]);
+
+  // console.log(code);
 
   keyBindingsMap.get(code)?.();
 }
