@@ -35,5 +35,9 @@ export const quizQuestionConfigs = Object.fromEntries(
     //
     ...Object.entries(rotationalMatrixConfigs), //2
     ...Object.entries(shuffleFiguresConfigs), // should be 8
-  ].filter(([, cfg]) => !cfg.skip)
+  ]
+    .filter(([, cfg]) => !cfg.skip)
+    .sort(([, q1], [, q2]) => {
+      return (q1.order || Infinity) - (q2.order || Infinity);
+    }) //asc
 );
