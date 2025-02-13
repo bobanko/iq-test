@@ -113,6 +113,12 @@ export const rotationalConfigs = {
         shifts: [1, 2],
         // shuffle: true,
       },
+      {
+        //cols
+        count: 2,
+        shifts: [0, 0],
+        shuffle: true,
+      },
     ],
 
     preRenderConfig: {
@@ -120,11 +126,57 @@ export const rotationalConfigs = {
         rot: Array(5)
           .fill(null)
           .map((_, i) => (360 / 5) * i),
+        col: [colors.red, colors.green],
       },
 
       figureParts: [
         {
           figures: [{ static: "pentagon" }],
+          color: { static: colors.white },
+        },
+
+        {
+          figures: [{ static: "arrow-circle" }],
+          rotation: { byteIndex: 0, from: "rot" },
+          color: { byteIndex: 1, from: "col" },
+          stroke: { static: colorMixins.darken },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrows.svg",
+    viewBox: defaultViewBox,
+    // questionMarkFigure: "hexagon",
+    questionMarkFigure: "pentagon",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  iq40alt_hexCircle_like_hexagon_shuffleBased: {
+    // todo(vmyshko): this is replacement for pentagon orig, due to lack of answers (5)
+    order: 40,
+    // skip: true,
+    //new
+    preGenConfig: [
+      {
+        //degs
+        count: 6,
+        shifts: [1, 2],
+        // shuffle: true,
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        rot: Array(6)
+          .fill(null)
+          .map((_, i) => (360 / 6) * i),
+      },
+
+      figureParts: [
+        {
+          figures: [{ static: "hexagon" }],
           color: { static: colors.white },
         },
 
@@ -139,8 +191,7 @@ export const rotationalConfigs = {
 
     figureLink: "./images/arrows.svg",
     viewBox: defaultViewBox,
-    // questionMarkFigure: "hexagon",
-    questionMarkFigure: "pentagon",
+    questionMarkFigure: "hexagon",
 
     generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
@@ -432,6 +483,66 @@ export const rotationalConfigs = {
           figures: [{ static: "quarter" }],
           rotation: { byteIndex: 1, from: "rot2" },
           color: { static: colors.green },
+          stroke: { static: colorMixins.darken },
+          "mix-blend-mode": { static: "multiply" },
+        },
+      ],
+    },
+
+    figureLink: "./images/arrows.svg",
+    viewBox: defaultViewBox,
+    questionMarkFigure: "circle",
+
+    generator: generateSequenceQuestion,
+    renderer: renderFigurePatternsQuestion,
+  },
+
+  iq11_twoQuarters90sameDeg_iq11: {
+    order: 11,
+
+    patternsInCol: 2,
+    // maxAnswerCount: 10,
+
+    preGenConfig: [
+      {
+        //degs
+        count: 360 / 90, //4
+        shifts: [3, 1],
+        // shuffle: true,
+        // todo(vmyshko): besides shuffle it should be random start shift
+      },
+      {
+        //colors
+        count: 2,
+        shifts: [0, 0],
+        shuffle: true,
+      },
+    ],
+
+    preRenderConfig: {
+      sets: {
+        rot1: Array(360 / 90)
+          .fill(null)
+          .map((_, i) => 90 * i),
+        cols: [colors.red, colors.green],
+      },
+
+      figureParts: [
+        {
+          figures: [{ static: "circle" }],
+          color: { static: colors.white },
+        },
+        {
+          figures: [{ static: "quarter" }],
+          rotation: { byteIndex: 0, from: "rot1" },
+          color: { byteIndex: 1, from: "cols" },
+          stroke: { static: colorMixins.darken },
+          "mix-blend-mode": { static: "multiply" },
+        },
+        {
+          figures: [{ static: "quarter" }],
+          rotation: { byteIndex: 0, from: "rot1", shift: -1 },
+          color: { byteIndex: 1, from: "cols", shift: 1 },
           stroke: { static: colorMixins.darken },
           "mix-blend-mode": { static: "multiply" },
         },
