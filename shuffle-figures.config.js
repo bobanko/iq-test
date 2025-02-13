@@ -94,7 +94,8 @@ block:
 
 export const shuffleFiguresConfigs = {
   // exact match with base test
-  figDice_iq29_done: {
+  iq29_figDice: {
+    order: 29,
     // todo(vmyshko): randomize colors per fig
     // todo(vmyshko): try maybe shift start fig?
 
@@ -152,7 +153,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  cardSuits_iq39_done: {
+  iq39_cardSuits: {
+    order: 39,
     // todo(vmyshko): recheck logic, seems unsolvable, diff with orig
     patternsInCol: 3,
     // maxAnswerCount: 8,
@@ -204,7 +206,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  iq27_figRotLetters_done: {
+  iq27_figRotLetters: {
+    order: 27,
     // each fig rotates 90deg cw H
     // figs shuffled in cols
     patternsInCol: 3,
@@ -256,7 +259,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotIcons_iq19_done: {
+  iq19_rotIcons: {
+    order: 19,
     // todo(vmyshko): gen answers with question colors only
     patternsInCol: 2, // hard to solve
 
@@ -306,7 +310,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotColorTriangles_id30_done: {
+  iq30_rotColorTriangles: {
+    order: 30,
     // todo(vmyshko): randomize colors
     // todo(vmyshko): randomize base rotation
 
@@ -422,7 +427,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  fig2_RectTriangleCircle_iq14like_done: {
+  iq14alt_fig2_RectTriangleCircle: {
+    order: 14,
     patternsInCol: 3,
     patternsInCol: 2,
     // maxAnswerCount: 8,
@@ -480,6 +486,7 @@ export const shuffleFiguresConfigs = {
   },
 
   iq38_color3Frames: {
+    order: 38,
     // todo(vmyshko): randomize columns (not impl yet)
     patternsInCol: 3,
     // maxAnswerCount: 8,
@@ -542,7 +549,8 @@ export const shuffleFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  rotColorQuarters_iq13_done: {
+  iq13_rotColorQuarters: {
+    order: 13,
     // skip: true,
 
     patternsInCol: 2,
@@ -814,6 +822,7 @@ var kek = {
   },
 
   iq14_fig2_RectTriangleCircle: {
+    order: 14,
     skip: true,
     patternsInCol: 3,
     viewBox: "0 0 106 106",

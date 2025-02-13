@@ -12,7 +12,8 @@ export const movableMatrixConfigs = {
 
   // 2 3 1 5 order
 
-  d1_mtxmov_1gby1cells_iq2: {
+  iq02_d1_mtxmov_1gby1cells: {
+    order: 2,
     // one cell moves v or h
     colors: defaultColors,
 
@@ -37,7 +38,8 @@ export const movableMatrixConfigs = {
     renderer: renderMatrixQuestion,
   },
 
-  d2_mtxmov_2gby1cells_iq3: {
+  iq03_d2_mtxmov_2gby1cells: {
+    order: 3,
     colors: defaultColors,
 
     interPatternRules: [
@@ -68,7 +70,8 @@ export const movableMatrixConfigs = {
     renderer: renderMatrixQuestion,
   },
 
-  d3_mtxmov_1gby3cells_iq1: {
+  iq1_d3_mtxmov_1gby3cells: {
+    order: 1,
     // two cells bidirectional but both H
     colors: defaultColors,
 
@@ -106,7 +109,8 @@ export const movableMatrixConfigs = {
     renderer: renderMatrixQuestion,
   },
 
-  q4_mtxmove_2gby2cells_noiq5: {
+  iq5_q4_mtxmove_2gby2cells: {
+    order: 5,
     colors: defaultColors,
 
     // two groups by two cells each, move ortho

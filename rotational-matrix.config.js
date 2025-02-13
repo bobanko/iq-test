@@ -3,7 +3,8 @@ import { renderMatrixQuestion } from "./matrix.renderer.js";
 import { generateRotationalMatrixQuestion } from "./rotational-matrix.generator.js";
 
 export const rotationalMatrixConfigs = {
-  mtxbool_rotate_iq6: {
+  iq06_mtxbool_rotate: {
+    order: 6,
     // one color group
     colors: defaultColors,
     cellGroups: [{ min: 2, max: 4 }],
@@ -16,7 +17,8 @@ export const rotationalMatrixConfigs = {
     generator: generateRotationalMatrixQuestion,
     renderer: renderMatrixQuestion,
   },
-  mtxbool_rotate_iq4: {
+  iq4_mtxbool_rotate: {
+    order: 4,
     // two by two
     colors: defaultColors,
     cellGroups: [

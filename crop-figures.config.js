@@ -32,6 +32,7 @@ export const cropFiguresConfigs = {
   },
 
   iq21_cropFigures2: {
+    order: 21,
     // todo(vmyshko): maybe simplify bg for 1st row?
     patternsInCol: 2,
     patternsInRow: 3,
@@ -61,6 +62,7 @@ export const cropFiguresConfigs = {
   },
 
   iq22_cropFigures1: {
+    order: 22,
     // todo(vmyshko): maybe make bg difficulty? simple-> halves ->quarters -- per row
     // todo(vmyshko): answers should have only existing colors/figs
     patternsInCol: 3,

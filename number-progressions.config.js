@@ -5,7 +5,8 @@ import {
 import { renderValuesQuestion } from "./value.renderer.js";
 
 export const numberProgressionConfigs = {
-  equalSumPerRowCol: {
+  iq18alt_equalSumPerRowCol: {
+    order: 18,
     // skip: true,
     progressionType: progressionTypes.equalSumPerRowCol,
     patternsInRow: 3,
@@ -28,6 +29,7 @@ export const numberProgressionConfigs = {
     renderer: renderValuesQuestion,
   },
   iq16_addToAbc: {
+    order: 16,
     // todo(vmyshko): sort by asc
     progressionType: progressionTypes.addToAbc,
     patternsInCol: 3, // limits by maxAnswerCount as well
@@ -58,7 +60,8 @@ export const numberProgressionConfigs = {
     generator: generateNumberProgressionQuestion,
     renderer: renderValuesQuestion,
   },
-  subIncrementAll: {
+  iq15alt_subIncrementAll: {
+    order: 15,
     // skip: true,
     progressionType: progressionTypes.subIncrementAll,
     patternsInRow: 3,
@@ -107,7 +110,8 @@ export const numberProgressionConfigs = {
     renderer: renderValuesQuestion,
   },
 
-  subThenAdd: {
+  iq17alt_subThenAdd: {
+    order: 17,
     // skip: true,
     progressionType: progressionTypes.subThenAdd,
     patternsInRow: 3,

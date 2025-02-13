@@ -12,6 +12,7 @@ export const booleanFiguresConfigs = {
   // difficulty - 4
   iq32_dot4xor: {
     skip: true,
+    order: 32,
     // todo(vmyshko): orig is not xor, its v seq AND. so impl diff gen types
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -27,7 +28,8 @@ export const booleanFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  triangles4xor: {
+  iq12alt_triangles4xor: {
+    order: 12,
     figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/triangles-8.svg",
@@ -58,7 +60,8 @@ export const booleanFiguresConfigs = {
 
   // difficulty - 6
 
-  circle6xor: {
+  iq31alt_circle6xor: {
+    order: 31,
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/circle-6.svg",
@@ -73,7 +76,8 @@ export const booleanFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  hexsym6xor: {
+  iq32alt_hexsym6xor: {
+    order: 32,
     figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/hex-12.svg",
@@ -121,7 +125,8 @@ export const booleanFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
-  dice8xor: {
+  iq33alt_dice8xor: {
+    order: 33,
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/dice-8.svg",

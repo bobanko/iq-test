@@ -4,6 +4,7 @@ import { generatePatternsQuestion_colRowSum } from "./col-row-sum.generator.js";
 
 export const colRowSumFiguresConfigs = {
   iq35_colRowSumFiguresMany: {
+    order: 35,
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,

@@ -5,7 +5,8 @@ const alternateViewBox = "2 2 100 100";
 
 const upscaleFactor = 1.9;
 export const resizableConfigs = {
-  default_resize_iq23: {
+  iq23_default_resize: {
+    order: 23,
     // todo(vmyshko): extract colors to config
     patternsInCol: 3,
     figureLink: "./images/pattern-resizable.svg",

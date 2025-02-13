@@ -16,7 +16,8 @@ export const formulasConfigs = {
   //   renderer: renderFormulasQuestion,
   // },
 
-  spanishEmojiFormula_iq26like: {
+  iq26alt_spanishEmojiFormula: {
+    order: 26,
     formulaType: "formulaTypes.random",
     patternsInCol: 3,
     // maxAnswerCount: 8,
@@ -26,8 +27,9 @@ export const formulasConfigs = {
     generator: generateFormulasQuestion,
   },
   //same but different renderer
-  spanishFormula_iq26like: {
+  iq26alt_spanishFormula: {
     skip: true,
+    order: 26,
     formulaType: "formulaTypes.random",
     patternsInCol: 3,
     // maxAnswerCount: 8,

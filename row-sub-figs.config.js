@@ -3,8 +3,8 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 import { generatePatternsQuestion_rowSub } from "./row-sub-figs.generator.js";
 
 export const rowSubFiguresConfigs = {
-  //✅36
   iq36_rowSubFigsMany: {
+    order: 36,
     patternsInCol: 3,
     patternsInRow: 3,
     viewBox: defaultViewBox,

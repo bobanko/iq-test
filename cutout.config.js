@@ -41,7 +41,8 @@ export const cutoutConfigs = {
   },
 
   cutout_go: {
-    // todo(vmyshko): something is off, investigate
+    order: 20,
+    // todo(vmyshko): something is off (on iphone?), investigate
     viewBox: "4 4 320 320",
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-go.svg",
@@ -68,7 +69,8 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
-  cutout_spikes: {
+  iq37alt_cutout_spikes: {
+    order: 37,
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-spikes.svg",
     figures: [
@@ -97,7 +99,8 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
-  cutout_circlesStroked: {
+  iq24alt_cutout_circlesStroked: {
+    order: 24,
     viewBox: defaultCutoutViewBox,
     figureLink: "./images/cutout-circles-stroke.svg",
     figures: [
@@ -134,6 +137,7 @@ export const cutoutConfigs = {
   },
 
   iq25_cutout_raysBox: {
+    order: 25,
     // skip: true,
     // todo(vmyshko): maybe colors can be random?
     viewBox: defaultCutoutViewBox,
