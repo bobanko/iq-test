@@ -1,4 +1,4 @@
-import { getLetter, wait } from "./helpers.js";
+import { getLetter, getSafeIndex, wait } from "./helpers.js";
 import { quizQuestionConfigs } from "./quiz.config.js";
 import { SeededRandom } from "./random.helpers.js";
 
@@ -71,8 +71,10 @@ function updateProgressQuiz({ answered, total = questions.length }) {
 
 // todo(vmyshko): rename
 function navigateQuestions(shift = 1) {
-  const nextQuestion =
-    (questions.length + _currentQuestion + shift) % questions.length;
+  const nextQuestion = getSafeIndex({
+    length: questions.length,
+    index: _currentQuestion + shift,
+  });
 
   $questionList.children[nextQuestion].click();
 }

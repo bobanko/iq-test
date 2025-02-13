@@ -22,3 +22,18 @@ export function getLetter(index) {
 export function wait(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
+
+/**
+ * if index goes out of range, it starts from beginning, and vise-versa
+ * @param {Object} parameters
+ * @param parameters.length total safe range length (from 0 to length)
+ * @param parameters.index if index goes out
+ * @returns safe index in range from 0 to length-1
+ *
+ * to check validity!
+ * @example getSafeIndex({length: 5, index: 6}) => 1
+ * @example getSafeIndex({length: 5, index: -2}) => 3
+ */
+export function getSafeIndex({ length, index }) {
+  return (length + index) % length;
+}

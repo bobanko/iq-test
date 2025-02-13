@@ -2,6 +2,7 @@ import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
 import { colors } from "./common.config.js";
+import { getSafeIndex } from "./helpers.js";
 
 const defaultPatternCount = { patternsInCol: 3, patternsInRow: 3 };
 // todo(vmyshko): refac to reuse same code? only yield differs (mostly)
@@ -312,8 +313,10 @@ function processVar({ variable, sets, bytes }) {
     return variable.static;
   } else if (variable.hasOwnProperty("byteIndex")) {
     return sets[variable.from][
-      (bytes[variable.byteIndex] + (variable.shift ?? 0)) %
-        sets[variable.from].length
+      getSafeIndex({
+        index: bytes[variable.byteIndex] + (variable.shift ?? 0),
+        length: sets[variable.from].length,
+      })
     ];
   }
 }
