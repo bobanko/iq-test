@@ -55,7 +55,7 @@ function makeFigureParts({ figures, random, config }) {
 // minus 1 to keep at least 1 for 3rd column
 // Math.min(figsAvailable.length - 1, maxFigsPerCell);
 
-function generateNumberMatrix({ random, config }) {
+function generateColRowSumMatrix({ random, config }) {
   const { colRowSum } = config;
 
   // first row
@@ -89,7 +89,13 @@ function generateNumberMatrix({ random, config }) {
   ];
 }
 
-function* colRowSumGenerator({ random, config }) {
+export function bytesToFigNames({ patternBytes, figNamesToUse }) {
+  return patternBytes
+    .map((byte, byteIndex) => Array(byte).fill(figNamesToUse[byteIndex]))
+    .flat();
+}
+
+export function* patternsGenerator({ random, config, mtxGenFn }) {
   const { figures, figureTypesCountToUse } = config;
 
   const figNamesToUse = random.popRangeFrom(
@@ -102,7 +108,7 @@ function* colRowSumGenerator({ random, config }) {
   const patternsFiguresMatrixes = Array.from(
     { length: figureTypesCountToUse },
     (_, index) => {
-      const mtxNumbers = generateNumberMatrix({ random, config }).flat();
+      const mtxNumbers = mtxGenFn({ random, config }).flat();
       return mtxNumbers;
     }
   );
@@ -113,21 +119,10 @@ function* colRowSumGenerator({ random, config }) {
     }, []);
   });
 
-  function bytesToFigs(patternBytes) {
-    //but more
-    return patternBytes
-      .map((byte, byteIndex) =>
-        Array.from({ length: byte }, (_, index) => {
-          return figNamesToUse[byteIndex];
-        })
-      )
-      .flat();
-  }
-
   for (let patternBytes of patternsFigBytes) {
     // one pattern
 
-    const cellFigs = bytesToFigs(patternBytes);
+    const cellFigs = bytesToFigNames({ patternBytes, figNamesToUse });
     yield {
       debugInfo: patternBytes,
       figureParts: makeFigureParts({ figures: cellFigs, random, config }),
@@ -142,24 +137,30 @@ function generateAnswer_colRowSum({ random, config }) {
 
   // todo(vmyshko): get rid of this copy-pasta
 
-  const figsToUse = random.popRangeFrom([...figures], figureTypesCountToUse);
+  const figNamesToUse = random.popRangeFrom(
+    [...figures],
+    figureTypesCountToUse
+  );
 
-  const randomAnswerFigs = figsToUse
-    .map((fig) => {
-      const figCount = random.fromRange(
-        // todo(vmyshko): fit answers to be  similar to correct
-        Math.max(1, colRowSum - maxFigsPerCell * 2),
-        Math.min(colRowSum / 3, maxFigsPerCell)
-      );
+  const patternBytes = Array.from({ length: figureTypesCountToUse }, (_, i) => {
+    const figCount = random.fromRange(
+      // todo(vmyshko): fit answers to be  similar to correct
+      Math.max(1, colRowSum - maxFigsPerCell * 2),
+      Math.min(colRowSum / 3, maxFigsPerCell)
+    );
 
-      return Array(figCount).fill(fig);
-    })
-    .flat()
-    .sort();
+    return figCount;
+  });
+
+  const randomAnswerFigs = bytesToFigNames({
+    patternBytes,
+    figNamesToUse,
+  });
 
   return {
     isCorrect: false,
     id: getUid(),
+    debugInfo: patternBytes,
     figureParts: makeFigureParts({ figures: randomAnswerFigs, random, config }),
   };
 }
@@ -179,9 +180,10 @@ export function generatePatternsQuestion_colRowSum({
   const random = new SeededRandom(seed + questionIndex);
 
   const patterns = [
-    ...colRowSumGenerator({
+    ...patternsGenerator({
       random,
       config,
+      mtxGenFn: generateColRowSumMatrix,
     }),
   ];
 

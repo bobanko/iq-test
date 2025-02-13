@@ -1,3 +1,4 @@
+import { bytesToFigNames, patternsGenerator } from "./col-row-sum.generator.js";
 import { getUid } from "./common.js";
 import { generateUniqueValues } from "./generate-unique-values.js";
 import { SeededRandom } from "./random.helpers.js";
@@ -43,7 +44,7 @@ function makeFigureParts({ figures, random, config }) {
   }));
 }
 
-function generateNumberMatrix({ random, config }) {
+function generateRowSubMatrix({ random, config }) {
   const { figureTypesCountToUse, patternsInCol = 3 } = config;
 
   const maxFigsPerType = Math.floor(maxFigsPerCell / figureTypesCountToUse);
@@ -52,7 +53,7 @@ function generateNumberMatrix({ random, config }) {
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     const cell_00 = random.fromRange(1, maxFigsPerType);
-    const cell_01 = random.fromRange(0, cell_00);
+    const cell_01 = random.fromRange(0, cell_00); // todo(vmyshko): can be 0 but not for all! how to impl?
     const cell_02 = cell_00 - cell_01;
 
     mtxResult.push([cell_00, cell_01, cell_02]);
@@ -61,64 +62,33 @@ function generateNumberMatrix({ random, config }) {
   return mtxResult;
 }
 
-function* rowSubGenerator({ random, config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
-  const { figures, figureTypesCountToUse, colRowSum } = config;
-
-  const figNamesToUse = random.popRangeFrom(
-    [...figures],
-    figureTypesCountToUse
-  );
-
-  const figGroupsCells = figNamesToUse.map((figName) => {
-    const mtxNumbers = generateNumberMatrix({ random, config });
-
-    const figCells = mtxNumbers
-      .map((row) => row.map((cellNumber) => Array(cellNumber).fill(figName)))
-      .flat();
-
-    return figCells;
-  });
-
-  const result = Array.from({ length: 9 }, (_, i) =>
-    figGroupsCells
-      .map((arr) => arr[i] || null)
-      .flat()
-      .sort()
-  );
-
-  for (let cellFigs of result) {
-    yield {
-      figureParts: makeFigureParts({ figures: cellFigs, random, config }),
-    };
-  }
-}
-
-function generateAnswer_rowSub({ random, config, correctAnswer }) {
-  const { figureParts, colorGroups, rotationGroups } = config;
-
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
-
+function generateAnswer_rowSub({ random, config }) {
   const { figures, figureTypesCountToUse } = config;
 
   const maxFigsPerType = Math.floor(maxFigsPerCell / figureTypesCountToUse);
 
   // todo(vmyshko): get rid of this copy-pasta
 
-  const figsToUse = random.popRangeFrom([...figures], figureTypesCountToUse);
+  const figNamesToUse = random.popRangeFrom(
+    [...figures],
+    figureTypesCountToUse
+  );
 
-  const randomAnswerFigs = figsToUse
-    .map((fig) => {
-      const figCount = random.fromRange(1, maxFigsPerType);
+  const patternBytes = Array.from({ length: figureTypesCountToUse }, (_, i) => {
+    const figCount = random.fromRange(1, maxFigsPerType);
 
-      return Array(figCount).fill(fig);
-    })
-    .flat()
-    .sort();
+    return figCount;
+  });
+
+  const randomAnswerFigs = bytesToFigNames({
+    patternBytes,
+    figNamesToUse,
+  });
 
   return {
     isCorrect: false,
     id: getUid(),
+    debugInfo: patternBytes,
     figureParts: makeFigureParts({ figures: randomAnswerFigs, random, config }),
   };
 }
@@ -138,9 +108,10 @@ export function generatePatternsQuestion_rowSub({
   const random = new SeededRandom(seed + questionIndex);
 
   const patterns = [
-    ...rowSubGenerator({
+    ...patternsGenerator({
       random,
       config,
+      mtxGenFn: generateRowSubMatrix,
     }),
   ];
 
