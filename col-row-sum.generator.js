@@ -90,42 +90,53 @@ function generateNumberMatrix({ random, config }) {
 }
 
 function* colRowSumGenerator({ random, config }) {
-  const { patternsInCol = 3, patternsInRow = 3 } = config;
-  const { figures, figureTypesCountToUse, colRowSum } = config;
+  const { figures, figureTypesCountToUse } = config;
 
   const figNamesToUse = random.popRangeFrom(
     [...figures],
     figureTypesCountToUse
   );
 
-  const figGroupsCells = figNamesToUse.map((figName) => {
-    const mtxNumbers = generateNumberMatrix({ random, config });
+  // todo(vmyshko): refac/simplify
 
-    const figCells = mtxNumbers
-      .map((row) => row.map((cellNumber) => Array(cellNumber).fill(figName)))
-      .flat();
-
-    return figCells;
-  });
-
-  const result = Array.from({ length: 9 }, (_, i) =>
-    figGroupsCells
-      .map((arr) => arr[i] || null)
-      .flat()
-      .sort()
+  const patternsFiguresMatrixes = Array.from(
+    { length: figureTypesCountToUse },
+    (_, index) => {
+      const mtxNumbers = generateNumberMatrix({ random, config }).flat();
+      return mtxNumbers;
+    }
   );
 
-  for (let cellFigs of result) {
+  const patternsFigBytes = patternsFiguresMatrixes.at(0).map((_, index) => {
+    return patternsFiguresMatrixes.reduce((acc, mtx) => {
+      return [...acc, mtx[index]];
+    }, []);
+  });
+
+  function bytesToFigs(patternBytes) {
+    //but more
+    return patternBytes
+      .map((byte, byteIndex) =>
+        Array.from({ length: byte }, (_, index) => {
+          return figNamesToUse[byteIndex];
+        })
+      )
+      .flat();
+  }
+
+  for (let patternBytes of patternsFigBytes) {
+    // one pattern
+
+    const cellFigs = bytesToFigs(patternBytes);
     yield {
+      debugInfo: patternBytes,
       figureParts: makeFigureParts({ figures: cellFigs, random, config }),
     };
   }
 }
 
-function generateAnswer_colRowSum({ random, config, correctAnswer }) {
-  const { figureParts, colorGroups, rotationGroups } = config;
-
-  const { patternsInCol = 3, patternsInRow = 3, colRowSum } = config;
+function generateAnswer_colRowSum({ random, config }) {
+  const { colRowSum } = config;
 
   const { figures, figureTypesCountToUse } = config;
 
