@@ -8,18 +8,17 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 
 export const cropFiguresConfigs = {
   // todo(vmyshko): probably it does not fully match config for crops (no cropFigs), so extract
+
+  // todo(vmyshko): similar is on boolean figures, decide which to keep
   iq12_xorQuarters: {
     skip: true,
     patternsInCol: 3,
     patternsInRow: 3,
-    viewBox: defaultViewBox,
     noRotationAnimation: true,
 
     maxAnswerCount: 8,
 
     figureLink: "./images/shuffle-quarters.svg",
-
-    questionMarkFigure: "circle",
 
     figures: ["quarter-1", "quarter-2", "quarter-3", "quarter-4"],
     figureColors: [...defaultColors],
@@ -28,7 +27,10 @@ export const cropFiguresConfigs = {
     staticFigures: ["line-h", "line-v"],
 
     generator: generateCropFigurePatternsQuestionXorCustom,
+
     renderer: renderFigurePatternsQuestion,
+    questionMarkFigure: "circle",
+    viewBox: defaultViewBox,
   },
 
   iq21_cropFigures2: {

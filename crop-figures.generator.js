@@ -482,7 +482,6 @@ export function generateCropFigurePatternsQuestionXorCustom({
   const {
     patternsInRow = 3,
     maxAnswerCount = 6, //over 8 will not fit
-    figureCount, // single pattern figure count [2..n]
   } = config;
 
   const random = new SeededRandom(seed + questionIndex);

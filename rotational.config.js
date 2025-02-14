@@ -58,6 +58,7 @@ export const rotationalConfigs = {
   },
   //  1 quarter (/arrow/circle/custom) 90deg
   oneQuarter90newRenderer: {
+    // todo(vmyshko): broken!!!
     skip: true,
     figureLink: "./images/clock-quarter.svg",
 
@@ -101,7 +102,7 @@ export const rotationalConfigs = {
   },
 
   iq40_hexCircle_like_pentagon_shuffleBased: {
-    // todo(vmyshko): not enough wrong answers - only 5 avail.
+    // todo(vmyshko): not enough wrong answers - only 5 avail. UPD: colors added
     // skip: true,
     order: 40,
     // skip: true,
@@ -155,6 +156,7 @@ export const rotationalConfigs = {
 
   iq40alt_hexCircle_like_hexagon_shuffleBased: {
     // todo(vmyshko): this is replacement for pentagon orig, due to lack of answers (5)
+    skip: true,
     order: 40,
     // skip: true,
     //new
