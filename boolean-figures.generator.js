@@ -33,7 +33,7 @@ export function xorFigures(figures1, figures2) {
 }
 
 function generateSymmetricFigures({ random, config }) {
-  const { figureCount } = config;
+  const { figureCount, figures } = config;
   const basicFigures = [];
 
   const freeFigures = getFreeFiguresIndexes(figureCount / 2);
@@ -48,15 +48,15 @@ function generateSymmetricFigures({ random, config }) {
     //new point for each row
     const randomFigure = random.popFrom(figuresLeft);
 
-    basicFigures.push(randomFigure);
-    basicFigures.push(randomFigure + 1);
+    basicFigures.push(figures ? figures[randomFigure] : randomFigure);
+    basicFigures.push(figures ? figures[randomFigure + 1] : randomFigure + 1);
   } // ptColor
 
   return basicFigures;
 }
 
 function generateRandomFigures({ random, config }) {
-  const { figureCount } = config;
+  const { figureCount, figures } = config;
   const basicFigures = [];
 
   const freeFigures = getFreeFiguresIndexes(figureCount);
@@ -72,13 +72,13 @@ function generateRandomFigures({ random, config }) {
     //new point for each row
     const randomFigure = random.popFrom(figuresLeft);
 
-    basicFigures.push(randomFigure);
+    basicFigures.push(figures ? figures[randomFigure] : randomFigure);
   } // ptColor
 
   return basicFigures;
 }
 
-function generateXorRowPatterns({ basicFigures, figureCount, random, config }) {
+function generateXorRowPatterns({ basicFigures, random, config }) {
   // [9]  rnd | all@part | first XOR mid
   // first col
   const firstPattern = {
@@ -129,7 +129,6 @@ export function generateBooleanFiguresQuestion({
   const {
     patternsInCol = 3, // can be reduced by gen-non-unique reason
     maxAnswerCount = 6, //over 8 will not fit
-    figureCount, // single pattern figure count [2..n]
   } = config;
 
   const random = new SeededRandom(seed + questionIndex);
@@ -152,7 +151,6 @@ export function generateBooleanFiguresQuestion({
       basicFigures: figures,
       random,
       config,
-      figureCount,
     });
 
     patterns.push(...rowPatterns);

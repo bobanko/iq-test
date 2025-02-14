@@ -28,6 +28,28 @@ export const booleanFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
+  iq12_like_quarters4xor: {
+    // todo(vmyshko): similar in crop-figures, decide which to keep #2
+    order: 12,
+    figureGenRule: figureGenRules.random, // todo(vmyshko): group in sub-arrays instead?
+    patternsInCol: 3,
+    figureLink: "./images/shuffle-quarters.svg",
+    figureCount: 4,
+    // maxAnswerCount: 8, //16
+    color: colors.blue,
+
+    staticFigures: ["line-h", "line-v", "circle"],
+
+    // todo(vmyshko): new field introduced to boolean figs to replace figureCount
+    figures: ["quarter-1", "quarter-2", "quarter-3", "quarter-4"],
+
+    generator: generateBooleanFiguresQuestion,
+
+    renderer: renderFigurePatternsQuestion,
+    questionMarkFigure: "circle",
+    viewBox: defaultViewBox,
+  },
+
   iq12alt_triangles4xor: {
     order: 12,
     figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
