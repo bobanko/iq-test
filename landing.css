@@ -1,6 +1,7 @@
 @import url(./reset.css);
 @import url(./fonts.css);
 @import url(./helpers.css);
+@import url(./animations.css);
 
 @import url(./palette.css);
 
@@ -156,7 +157,7 @@ section {
   margin: 30px;
   margin-bottom: 0;
   width: 360px;
-  height: 360px;
+  height: 460px;
   /* overflow: hidden; */
 
   box-sizing: border-box;
@@ -214,6 +215,9 @@ section {
 /* STATS */
 
 .stats-total {
+  padding: 20px;
+  border-radius: 30px;
+
   .stat-block {
     display: flex;
     flex-direction: column;
@@ -262,4 +266,16 @@ hr {
   border-width: 1px;
   box-sizing: border-box;
   align-self: stretch;
+}
+
+.app-preview {
+  img {
+    /* visibility: hidden; */
+    display: none;
+  }
+
+  img.active {
+    display: block;
+    animation: fadeIn 300ms ease-in;
+  }
 }
