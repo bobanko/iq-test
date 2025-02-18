@@ -1,0 +1,265 @@
+@import url(./reset.css);
+@import url(./fonts.css);
+@import url(./helpers.css);
+
+@import url(./palette.css);
+
+:root {
+  --accent-color: var(--green);
+  --inactive-color: var(--dark);
+  --splash-bg: #ffebd6;
+}
+
+html {
+  display: flex;
+
+  align-items: center;
+  justify-content: space-around;
+}
+
+body {
+  flex: 1;
+  max-width: 1200px;
+  box-sizing: border-box;
+}
+
+@media screen {
+  body {
+    padding: 0 40px;
+  }
+}
+
+button {
+  cursor: pointer;
+
+  align-items: center;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+  box-sizing: border-box;
+  font-weight: 600;
+  border-radius: 3px;
+  border-radius: 5px;
+  user-select: none;
+
+  color: black;
+  text-decoration: none;
+
+  text-transform: capitalize;
+
+  transition: background-color 100ms ease-in-out;
+
+  --color: var(--accent-color);
+
+  &.btn-primary {
+    color: white;
+    background-color: var(--color);
+
+    &:hover {
+      background-color: hsla(from var(--color) h s l / 0.8);
+    }
+
+    &:active {
+      background-color: hsla(
+        from var(--color) h calc(s + 10) calc(l - 10) / 0.4
+      );
+    }
+  }
+
+  &.btn-secondary {
+    border-color: var(--color);
+
+    &:hover {
+      background-color: hsla(from var(--color) h s l / 0.2);
+    }
+
+    &:active {
+      background-color: hsla(
+        from var(--color) h calc(s + 10) calc(l - 10) / 0.4
+      );
+    }
+  }
+}
+
+a.button-link {
+  display: inline-block;
+  text-decoration: none;
+}
+
+header {
+  /* // */
+  background-color: none;
+}
+
+h2 {
+  text-transform: capitalize;
+}
+
+nav.header-menu {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  a {
+    display: flex;
+    padding: 10px;
+    text-transform: capitalize;
+
+    padding: 10px;
+    text-decoration: none;
+
+    color: var(--inactive-color);
+
+    &.selected {
+      border-bottom: 3px solid var(--accent-color);
+      color: var(--accent-color);
+    }
+  }
+}
+
+section {
+  background-color: var(--splash-bg);
+  box-sizing: border-box;
+
+  margin: 30px 0;
+}
+
+.button-language {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  cursor: pointer;
+
+  font-weight: bold;
+
+  .flag-icon {
+    font-size: 30px;
+  }
+
+  .language-name {
+    text-transform: uppercase;
+  }
+}
+
+.section-splash {
+  overflow: hidden;
+  border-radius: 30px;
+
+  height: 500px;
+
+  /* todo: can change hue, keep opacity */
+  background-color: #e9911e30;
+}
+
+.app-preview {
+  position: relative;
+  /* to cover shadow */
+  margin: 30px;
+  margin-bottom: 0;
+  width: 360px;
+  height: 360px;
+  /* overflow: hidden; */
+
+  box-sizing: border-box;
+  border: 12px solid black;
+  border-radius: 60px;
+  box-shadow: 
+  /* chehol */ 0px 0px 0px 4px #019ce1,
+    /* shadow */ 5px 0px 20px 4px #000000a3;
+
+  /* to move screenshot */
+  padding-top: 45px;
+  background-color: #c0c0c0;
+  background-color: dimgray;
+
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+
+  &::after {
+    /* dynamic island */
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: 22px;
+    transform: translate(-50%, -50%);
+
+    width: 100px;
+    height: 28px;
+    border-radius: 15px;
+
+    background-color: black;
+  }
+
+  &:before {
+    /* power button */
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(18px, 205px);
+
+    width: 2px;
+    height: 90px;
+    background-color: black;
+  }
+
+  img {
+    object-position: top;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}
+
+/* STATS */
+
+.stats-total {
+  .stat-block {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .stat-value {
+      font-size: 40px;
+      font-weight: bold;
+    }
+
+    .flag-icon {
+      font-size: 30px;
+    }
+  }
+}
+
+/* FOOTER */
+
+.footer-menu {
+  list-style: none;
+
+  padding: 0;
+  margin: 0;
+
+  a {
+    display: flex;
+    padding: 10px;
+    text-transform: capitalize;
+
+    padding: 10px;
+    text-decoration: none;
+
+    color: var(--inactive-color);
+
+    &.selected {
+      border-bottom: 3px solid var(--accent-color);
+      color: var(--accent-color);
+    }
+  }
+}
+
+hr {
+  padding: 0;
+  margin: 0;
+  /* width: 100%; */
+  border-width: 1px;
+  box-sizing: border-box;
+  align-self: stretch;
+}

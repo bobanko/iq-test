@@ -5,21 +5,163 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>IQ test</title>
     <link rel="icon" href="./iq.svg" type="image/svg+xml" />
-    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./landing.css" />
+
+    <script src="./landing.js" type="module" async></script>
   </head>
-  <body class="inter-regular" style="min-width: 300px; min-height: 400px">
-    <header class="flex-col">
-      <h1 class="px-10">IQ Test</h1>
+  <body class="inter-regular w-100p">
+    <header
+      id="index"
+      class="flex-row align-center py-10"
+      style="justify-content: space-between"
+    >
+      <div class="flex-row align-center">
+        <span style="font-size: 40px">🧠</span>
+        <div class="flex-col px-10">
+          <span style="font-weight: bold">IQ Test</span>
+          <span style="font-size: 10px">created by experts</span>
+        </div>
+      </div>
+
+      <nav
+        id="$navMenu"
+        class="header-menu flex flex-row align-center"
+        style="align-self: flex-end"
+      >
+        <a href="#index">home</a>
+        <a href="#about">about</a>
+        <!-- <a href="#pricing">pricing</a> -->
+        <a href="#faq">FAQs</a>
+        <a href="#contact">contact us</a>
+
+        <a href="./quiz.html" class="button-link">
+          <button class="p-10 btn-primary">start test</button>
+        </a>
+
+        <button class="p-10 btn-secondary">sign in</button>
+
+        <div class="button-language">
+          <span class="flag-icon p-5">🇺🇸</span>
+          <span class="language-name">en</span>
+        </div>
+      </nav>
     </header>
 
-    <section class="p-10">
-      <h2>select test:</h2>
+    <!-- SPLASH -->
 
-      <ul>
-        <li>
-          <a href="./quiz.html">start quiz!</a>
-        </li>
-      </ul>
+    <section class="section-splash flex-row">
+      <div class="flex-col w-100p" style="padding: 50px; padding-right: 0">
+        <h1 style="font-size: 56px; margin: 0">
+          You're definitely smarter than you think.
+
+          <span style="color: var(--accent-color)"> Prove it!</span>
+        </h1>
+        <h3>...or die trying</h3>
+
+        <div>
+          <a href="./quiz.html" class="button-link">
+            <button
+              class="btn-primary"
+              style="font-size: 30px; padding: 10px 20px"
+            >
+              <!-- start quiz! -->
+              test yourself!
+            </button>
+          </a>
+        </div>
+      </div>
+
+      <div
+        class="flex-col w-100p align-center"
+        style="overflow: hidden; align-self: flex-end"
+      >
+        <div class="app-preview">
+          <img src="./images/app-preview.png" alt="app-preview" srcset="" />
+        </div>
+      </div>
     </section>
+
+    <!-- stats -->
+
+    <div class="stats-total flex-row" style="justify-content: space-around">
+      <div class="stat-block">
+        <span class="stat-value">1k+</span>
+        tests taken today
+      </div>
+      <div class="stat-block">
+        <span class="stat-value">1k+</span>
+        <div class="flex-row align-center">
+          <span>tests taken in UA</span>
+          <span class="flag-icon">🇺🇦</span>
+        </div>
+      </div>
+      <div class="stat-block">
+        <span class="stat-value">2m+</span>
+        total tests taken
+      </div>
+      <div class="stat-block">
+        <span class="stat-value">100</span>
+        average iq
+      </div>
+      <div class="stat-block">
+        <span class="stat-value">>9000</span>
+        max iq
+      </div>
+    </div>
+
+    <!-- next section -->
+
+    <section id="pricing" class="p-10">
+      <h2>pricing</h2>
+    </section>
+
+    <section id="about" class="p-10">
+      <h2>About</h2>
+    </section>
+
+    <section id="faq" class="p-10">
+      <h2>FAQs</h2>
+    </section>
+
+    <section id="contact" class="p-10">
+      <h2>contact us</h2>
+    </section>
+
+    <!-- FOOTER -->
+
+    <footer class="flex-col">
+      <hr />
+      <div class="flex-row" style="justify-content: space-between">
+        <div class="flex-row align-center" href="#index">
+          <span style="font-size: 40px">🧠</span>
+          <div class="flex-col px-10">
+            <span style="font-weight: bold">IQ Test</span>
+            <span style="font-size: 10px">created by experts</span>
+          </div>
+        </div>
+
+        <nav
+          class="footer-menu flex flex-row align-center"
+          style="align-self: flex-end"
+        >
+          <a href="#index">home</a>
+          <a href="#about">about</a>
+          <!-- <a href="#pricing">pricing</a> -->
+          <a href="#faq">FAQs</a>
+          <a href="#contact">contact us</a>
+
+          <div class="button-language">
+            <span class="flag-icon p-5">🇺🇸</span>
+            <span class="language-name">en</span>
+          </div>
+        </nav>
+      </div>
+
+      <hr />
+
+      <div class="flex-col align-center">
+        <p>© 2025 iq-test.kek. All rights reserved.</p>
+      </div>
+    </footer>
   </body>
 </html>
