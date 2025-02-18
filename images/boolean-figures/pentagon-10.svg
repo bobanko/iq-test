@@ -12,5 +12,7 @@
 <path id="5" d="M52 4L102 41" stroke="var(--color)" stroke-linecap="round"/>
 <path id="1" d="M52 58L102 41" stroke="var(--color)" stroke-linecap="round"/>
 <path id="2" d="M52 58L82.3922 100" stroke="var(--color)" stroke-linecap="round"/>
+
+<path id="pentagon" d="M3.67559 34.8927L49.9991 1.24137L96.3244 34.8928L78.6301 89.3502L21.3699 89.3505L3.67559 34.8927Z" stroke="black" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
 </g>
 </svg>
