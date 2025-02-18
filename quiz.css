@@ -6,6 +6,8 @@
 @import url(./patterns.css);
 @import url(./animations.css);
 
+@import url(./button.css);
+
 :root {
   --row-height: 75px;
 
@@ -14,14 +16,6 @@
 
 ::selection {
   background-color: var(--yellow);
-}
-
-@font-face {
-  /* used to display emoji on windows */
-  font-family: "Segoe UI Emoji";
-  src: local("Segoe UI Emoji");
-
-  size-adjust: 80%;
 }
 
 html {
@@ -40,27 +34,6 @@ body {
   box-sizing: border-box;
 }
 
-button {
-  cursor: pointer;
-}
-
-button {
-  font-size: 20px;
-  background-color: var(--gray);
-  align-items: center;
-  border: 2px solid rgba(0, 0, 0, 0.3);
-  box-sizing: border-box;
-  font-weight: 600;
-  border-radius: 3px;
-  user-select: none;
-
-  transition: background-color 100ms ease-in-out;
-}
-
-button:active {
-  background-color: rgba(0, 0, 0, 0.2);
-}
-
 .tabular-nums {
   font-variant-numeric: tabular-nums;
 }
@@ -74,44 +47,6 @@ button:active {
   inherits: false;
   initial-value: transparent;
 } */
-
-/* tailwind-like */
-
-.p-10 {
-  padding: 10px;
-}
-
-.px-10 {
-  padding-left: 10px;
-  padding-right: 10px;
-}
-
-.py-10 {
-  padding-top: 10px;
-  padding-bottom: 10px;
-}
-
-.m-10 {
-  margin: 10px;
-}
-
-.mx-10 {
-  margin-left: 10px;
-  margin-right: 10px;
-}
-
-.my-10 {
-  margin-top: 10px;
-  margin-bottom: 10px;
-}
-
-.w-100p {
-  width: 100%;
-}
-
-.small {
-  font-size: small;
-}
 
 /* progress */
 progress {
