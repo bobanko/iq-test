@@ -8,8 +8,9 @@ export class Timer {
     return this._isRunning;
   }
 
-  constructor() {
+  constructor({ intervalMs } = { intervalMs: 100 }) {
     //
+    this._intervalMs = intervalMs;
   }
 
   handlers = [];
