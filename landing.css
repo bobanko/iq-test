@@ -7,8 +7,24 @@
 
 :root {
   --accent-color: var(--green);
+  --accent-color: #019ce1;
+  --accent-color: #2196f3;
+
   --inactive-color: var(--dark);
-  --splash-bg: #ffebd6;
+  --section-bg: #ffebd6;
+
+  --main-color: var(--accent-color);
+  /* --main-color: #e9911e; */
+
+  /* splash */
+
+  /* #019ce1 - chehol */
+
+  --splash-bg-color: hsla(from var(--main-color) h s l / 0.3);
+
+  --splash-mob-frame-color: #019ce1;
+  --splash-mob-frame-color: var(--main-color);
+  --splash-mob-frame-color: hsl(from var(--main-color) calc(h + 150) s l);
 }
 
 html {
@@ -118,7 +134,7 @@ nav.header-menu {
 }
 
 section {
-  background-color: var(--splash-bg);
+  background-color: var(--section-bg);
   box-sizing: border-box;
 
   margin: 30px 0;
@@ -148,7 +164,7 @@ section {
   height: 500px;
 
   /* todo: can change hue, keep opacity */
-  background-color: #e9911e30;
+  background-color: var(--splash-bg-color);
 }
 
 .app-preview {
@@ -164,7 +180,7 @@ section {
   border: 12px solid black;
   border-radius: 60px;
   box-shadow: 
-  /* chehol */ 0px 0px 0px 4px #019ce1,
+  /* chehol */ 0px 0px 0px 4px var(--splash-mob-frame-color),
     /* shadow */ 5px 0px 20px 4px #000000a3;
 
   /* to move screenshot */
@@ -176,9 +192,8 @@ section {
   border-bottom-right-radius: 0;
   border-bottom: none;
 
-  &::after {
+  .dynamic-island {
     /* dynamic island */
-    content: "";
     position: absolute;
     left: 50%;
     top: 22px;
@@ -191,17 +206,72 @@ section {
     background-color: black;
   }
 
-  &:before {
-    /* power button */
-    content: "";
+  .phone-clock {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    color: white;
+
+    font-size: 15px;
+
+    width: 120px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-icons {
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(18px, 205px);
+
+    height: 45px;
+    width: 120px;
+
+    > svg {
+      width: 70px;
+    }
+    /* color: white; */
+
+    --color: greenyellow;
+
+    /* transform: translate(-28px, 14px); */
+
+    /* background: grey; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-button {
+    /* power button */
+    position: absolute;
+    top: 0;
 
     width: 2px;
-    height: 90px;
     background-color: black;
+
+    &.power-button {
+      right: 0;
+      height: 90px;
+      transform: translate(18px, 220px);
+    }
+
+    &.volume-up {
+      height: 55px;
+      left: 0;
+      transform: translate(-18px, 195px);
+    }
+
+    &.volume-down {
+      height: 55px;
+      left: 0;
+      transform: translate(-18px, 270px);
+    }
   }
 
   img {

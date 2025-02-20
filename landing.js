@@ -49,6 +49,9 @@ function initSlider() {
 
     slides.forEach(($imgSlide) => $imgSlide.classList.remove("active"));
     slides[currentSlideIndex].classList.add("active");
+
+    const date = new Date();
+    $phoneClock.textContent = `${date.getHours()}:${date.getMinutes()}`;
   });
 
   timer.start();
