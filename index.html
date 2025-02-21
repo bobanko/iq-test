@@ -10,6 +10,19 @@
     <script src="./landing.js" type="module" async></script>
   </head>
   <body class="inter-regular w-100p">
+    <!-- templates -->
+    <template id="$tmplResultItem">
+      <div class="result-item flex-row">
+        <div class="item-value">123</div>
+        <div class="item-country">ua</div>
+        <div class="item-text-block flex-col">
+          <div class="item-name">vasya</div>
+          <div class="item-date">today</div>
+        </div>
+      </div>
+    </template>
+    <!-- end templates -->
+
     <header
       id="index"
       class="flex-row align-center py-10"
@@ -19,7 +32,9 @@
         <span style="font-size: 40px">🧠</span>
         <div class="flex-col px-10">
           <span style="font-weight: bold">IQ Test</span>
-          <span style="font-size: 10px">created by experts</span>
+          <span style="font-size: 10px" data-translation="logo-slogan"
+            >created by experts</span
+          >
         </div>
       </div>
 
@@ -49,7 +64,7 @@
 
     <!-- SPLASH -->
 
-    <section class="section-splash flex-row">
+    <section class="section-splash flex-row section-radius">
       <div class="flex-col w-100p" style="padding: 50px; padding-right: 0">
         <h1 style="font-size: 56px; margin: 0">
           You're definitely smarter than you think.
@@ -98,7 +113,10 @@
 
     <!-- stats total -->
 
-    <section class="stats-total flex-row" style="justify-content: space-around">
+    <section
+      class="stats-total flex-row section-radius"
+      style="justify-content: space-around"
+    >
       <div class="stat-block">
         <span class="stat-value">1k+</span>
         tests taken today
@@ -106,7 +124,9 @@
       <div class="stat-block">
         <span class="stat-value">1k+</span>
         <div class="flex-row align-center">
-          <span>tests taken in $country$</span>
+          tests taken in&nbsp;<span data-id="current_country"
+            >$your_country$</span
+          >
         </div>
       </div>
       <div class="stat-block">
@@ -125,13 +145,42 @@
 
     <!-- stats total -->
 
-    <div class="stats-list"></div>
+    <div class="stats-list section-radius">
+      <h1 class="m-0 flex-row justify-center">IQ statistics</h1>
+      <hr class="my-20" />
+
+      <div class="flex-row" style="justify-content: space-around">
+        <div class="flex-col">
+          <h3>recent results</h3>
+          <div class="result-list" id="$results_recent">
+            <!-- result items here -->
+          </div>
+        </div>
+
+        <div class="flex-col">
+          <h3>in <span data-id="current_country">$your_country$</span></h3>
+          <div class="result-list" id="$results_currentCountry">
+            <!-- result items here -->
+          </div>
+        </div>
+
+        <div class="flex-col">
+          <h3>by country</h3>
+          <div class="result-list" id="$results_perCountry">
+            <!-- result items here -->
+          </div>
+        </div>
+      </div>
+
+      <!-- <hr class="my-20" />
+      <a href="#">view detailed statistics</a> -->
+    </div>
 
     <!-- next section -->
 
-    <section id="pricing" class="p-10">
+    <!-- <section id="pricing" class="p-10">
       <h2>pricing</h2>
-    </section>
+    </section> -->
 
     <section id="about" class="p-10">
       <h2>About</h2>
@@ -154,7 +203,9 @@
           <span style="font-size: 40px">🧠</span>
           <div class="flex-col px-10">
             <span style="font-weight: bold">IQ Test</span>
-            <span style="font-size: 10px">created by experts</span>
+            <span style="font-size: 10px" data-translation="logo-slogan"
+              >created by experts</span
+            >
           </div>
         </div>
 

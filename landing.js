@@ -1,6 +1,10 @@
 import { getHash, setHash } from "./hash-param.js";
-import { getSafeIndex } from "./helpers.js";
+import { getSafeIndex, SeededRandom } from "./helpers.js";
 import { Timer } from "./timer.js";
+
+import { loadStats } from "./stats-results.js";
+import { countries } from "./countries.mapping.js";
+import { applyTranslations } from "./translation.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -24,7 +28,7 @@ window.addEventListener("hashchange", onHashChanged);
 window.addEventListener("load", onHashChanged);
 
 function initSlider() {
-  const slides = Array.from({ length: 10 }, (_, index) => {
+  const slides = Array.from({ length: 9 }, (_, index) => {
     const $imgSlide = document.createElement("img");
 
     const imgName = index.toString().padStart(2, 0);
@@ -58,3 +62,69 @@ function initSlider() {
 }
 
 initSlider();
+
+const mockNames = [
+  "Belyash",
+  "Mukola",
+  "yana",
+  "Margosha30",
+  "Володимир",
+  "Світлана",
+  "helenhlu",
+  "kek",
+  "kirayoha",
+];
+
+const random = new SeededRandom(Date.now());
+
+const countryCodes = Object.keys(countries);
+
+const getRandomDate = () => new Date(174e10 + random.fromRange(0, 9e9));
+
+const data_results_recent = Array.from({ length: 10 }, (_) => {
+  const randomCountryCode = random.sample(countryCodes);
+
+  return {
+    name: random.sample(mockNames),
+    countryCode: randomCountryCode,
+    value: random.fromRange(60, 140),
+    date: getRandomDate(),
+  };
+});
+
+const currentCountryCode = random.sample(countryCodes);
+
+document.querySelectorAll("[data-id=current_country]").forEach(($elem) => {
+  $elem.textContent = countries[currentCountryCode];
+});
+
+const data_results_current = Array.from({ length: 10 }, (_) => {
+  return {
+    name: random.sample(mockNames),
+    countryCode: currentCountryCode,
+    value: random.fromRange(60, 140),
+    date: getRandomDate(),
+  };
+});
+
+const data_results_perCountry = Array.from({ length: 10 }, (_) => {
+  const randomCountryCode = random.sample(countryCodes);
+
+  return {
+    name: countries[randomCountryCode],
+    countryCode: randomCountryCode,
+    value: random.fromRange(60, 140),
+    // no date
+  };
+});
+
+// -----
+
+loadStats({
+  $container: $results_recent,
+  data: data_results_recent,
+});
+loadStats({ $container: $results_currentCountry, data: data_results_current });
+loadStats({ $container: $results_perCountry, data: data_results_perCountry });
+
+window.addEventListener("load", applyTranslations);
