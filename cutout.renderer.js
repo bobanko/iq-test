@@ -78,6 +78,7 @@ function createQuestionPattern({ figureConfig, config }) {
 
   // todo(vmyshko): fix this shit, wrap properly
   const $div = document.createElement("div");
+  $div.classList.add("flex");
   $div.appendChild($questionPattern);
   $div.appendChild($questionMark);
   return $div;

@@ -98,7 +98,9 @@
 .pattern-area {
   --size: 3;
   display: grid;
-  grid-template-columns: repeat(var(--size), 0fr);
+  grid-template-columns: repeat(var(--size), 1fr);
+  grid-template-rows: repeat(var(--size), 0fr);
+  align-content: center;
 
   --pattern-size: 100px;
 }

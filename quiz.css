@@ -8,6 +8,8 @@
 
 @import url(./button.css);
 
+@import url(./question-list.css);
+
 :root {
   --row-height: 75px;
 
@@ -81,16 +83,17 @@ header {
 .pattern-area {
   position: relative;
   display: grid;
-  grid-template-columns: repeat(var(--size), 0fr);
+  box-sizing: border-box;
+  grid-template-columns: repeat(var(--size), 1fr);
 
   --pattern-size: 100px;
-
-  /* width: 375px; */
 
   font-size: 50px;
   text-align: center;
 
   gap: 10px;
+
+  max-width: 340px;
 }
 
 .pattern-area,
@@ -105,14 +108,6 @@ header {
   justify-content: space-evenly;
 }
 
-.question-list {
-  display: grid;
-  grid-template-columns: repeat(6, 0fr);
-
-  gap: 10px;
-}
-
-/* @media (orientation: landscape) { */
 /* landscape-like */
 .patterns-answers-container {
   flex-direction: row;
@@ -120,12 +115,9 @@ header {
 
 .answer-list {
   grid-template-columns: repeat(2, 1fr);
-}
 
-.question-list {
-  grid-template-columns: repeat(9, 1fr);
+  box-sizing: border-box;
 }
-/* } */
 
 @media (orientation: portrait) and (width < 600px) {
   .patterns-answers-container {
@@ -134,10 +126,6 @@ header {
 
   .answer-list {
     grid-template-columns: repeat(3, 1fr);
-  }
-
-  .question-list {
-    grid-template-columns: repeat(6, 1fr);
   }
 }
 
@@ -208,6 +196,8 @@ header {
 .pattern-question-mark {
   position: relative;
   display: flex;
+  box-sizing: border-box;
+
   align-items: center;
   justify-content: center;
   border: 3px solid black;

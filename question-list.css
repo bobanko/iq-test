@@ -1,0 +1,72 @@
+/* questions section */
+
+:root {
+  --question-button-size: 50px;
+  --question-list-gap: 10px;
+}
+
+.question-button {
+  font-size: 20px;
+  background-color: var(--gray);
+  width: var(--question-button-size);
+  height: var(--question-button-size);
+  align-items: center;
+  justify-self: anchor-center;
+  display: flex;
+  justify-content: center;
+  border: 2px solid rgba(0, 0, 0, 0.3);
+
+  box-sizing: border-box;
+  font-weight: 600;
+  border-radius: 3px;
+
+  transition: all 300ms ease-in-out;
+}
+
+/* todo: draft -- style may change */
+.question-button:not(.answered) {
+  background-color: transparent;
+  border-style: dashed;
+}
+
+.question-button.correct {
+  background-color: var(--green);
+}
+
+.question-button.wrong {
+  background-color: var(--red);
+}
+
+.question-button.selected {
+  /* background-color: var(--yellow); */
+  box-shadow: 0 0 0px 3px var(--yellow);
+  border-color: black;
+}
+
+.question-list {
+  display: grid;
+  width: 100%;
+  box-sizing: border-box;
+
+  grid-template-columns: repeat(
+    auto-fill,
+    minmax(var(--question-button-size), 1fr)
+  );
+
+  gap: var(--question-list-gap);
+}
+
+.question-list {
+  /* grid-template-columns: repeat(9, 1fr); */
+}
+
+@media (orientation: portrait) and (width < 600px) {
+  .question-list {
+    box-sizing: border-box;
+    width: 100%;
+
+    /* grid-template-columns: repeat(6, 1fr); */
+
+    /* grid-template-columns: repeat(auto-fill, minmax(50px, 1fr)); */
+  }
+}
