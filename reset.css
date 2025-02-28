@@ -24,3 +24,7 @@ button {
 button {
   all: unset;
 }
+
+textarea {
+  resize: vertical;
+}

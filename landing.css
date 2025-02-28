@@ -308,6 +308,65 @@ section {
   }
 }
 
+.contact-form {
+  box-shadow: 0px 0px 10px 0px #000000a3;
+
+  --pw: 15px;
+  --red: #f44336;
+  --white: #f2f2f2;
+  --blue: #2196f3;
+
+  background: linear-gradient(white, white),
+    repeating-linear-gradient(
+      -45deg,
+      var(--red) 0px,
+      var(--red) calc(var(--pw) * 1),
+      var(--white) calc(var(--pw) * 1),
+      var(--white) calc(var(--pw) * 2),
+      var(--blue) calc(var(--pw) * 2),
+      var(--blue) calc(var(--pw) * 3),
+      var(--white) calc(var(--pw) * 3),
+      var(--white) calc(var(--pw) * 4)
+    );
+
+  background-origin: padding-box, border-box;
+  background-repeat: no-repeat; /* this is important */
+  border: 5px solid transparent;
+  border-radius: 5px;
+
+  fieldset {
+    margin: 0;
+    border: none;
+    /* border: 2px solid; */
+    /* background-color: var(--bg-secondary); */
+    /* background-color: white; */
+    /* border-color: var(--bg-secondary); */
+    /* border-radius: 30px; */
+    padding: 20px 30px;
+  }
+
+  input[type="text"],
+  input[type="email"],
+  input[type="password"],
+  textarea {
+    border: 2px solid;
+    border-color: var(--splash-bg-color);
+    border-radius: 5px;
+
+    &:focus {
+      border-color: var(--main-color);
+    }
+
+    &::placeholder {
+      /* color: var(--splash-bg-color); */
+    }
+  }
+
+  textarea {
+    min-height: 16px;
+  }
+}
+
 .stats-section {
   padding: 20px;
 

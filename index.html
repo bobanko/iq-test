@@ -262,6 +262,59 @@
 
     <section id="contact" class="p-10 radius-30 p-20">
       <h2>contact us</h2>
+
+      <div class="flex-col">
+        <form
+          class="contact-form"
+          action="mailto:example@email.com"
+          method="post"
+          enctype="text/plain"
+          style="max-width: 400px"
+        >
+          <fieldset class="flex-col">
+            <label for="name" class="py-10">Name:</label>
+            <input
+              class="p-10"
+              type="text"
+              id="name"
+              name="name"
+              required
+              placeholder="enter your name"
+            />
+
+            <label for="email" class="py-10">Email:</label>
+            <input
+              class="p-10"
+              type="email"
+              id="email"
+              name="email"
+              required
+              placeholder="enter your email address"
+            />
+
+            <label for="subject" class="py-10">Subject:</label>
+            <input
+              class="p-10"
+              type="text"
+              id="subject"
+              name="subject"
+              placeholder="email subject"
+            />
+
+            <label for="message" class="py-10">Message:</label>
+            <textarea
+              class="p-10"
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="your message"
+            ></textarea>
+
+            <button class="btn-primary p-10 my-10" type="submit">Send</button>
+          </fieldset>
+        </form>
+      </div>
     </section>
 
     <!-- FOOTER -->
