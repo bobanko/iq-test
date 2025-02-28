@@ -9,12 +9,14 @@ function createResultItem({ countryCode, name, value, date }) {
 
   const $itemName = $resultItem.querySelector(".item-name");
   $itemName.textContent = name;
+  $itemName.title = name;
 
   const $itemValue = $resultItem.querySelector(".item-value");
   $itemValue.textContent = value;
 
   const $itemDate = $resultItem.querySelector(".item-date");
   $itemDate.textContent = date?.toLocaleString(countryCode);
+  $itemDate.title = date?.toLocaleString(countryCode);
 
   return $resultItem;
 }

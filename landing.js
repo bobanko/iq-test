@@ -96,6 +96,7 @@ const currentCountryCode = random.sample(countryCodes);
 
 document.querySelectorAll("[data-id=current_country]").forEach(($elem) => {
   $elem.textContent = countries[currentCountryCode];
+  $elem.title = countries[currentCountryCode];
 });
 
 const data_results_current = Array.from({ length: 10 }, (_) => {

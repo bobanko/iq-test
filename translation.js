@@ -15,8 +15,10 @@ export function applyTranslations() {
   elements.forEach(($elem) => {
     const transKey = $elem.dataset.translation;
 
-    if (translations[langKey]?.[transKey]?.length > 0) {
-      $elem.textContent = translations[langKey]?.[transKey];
+    const transString = translations[langKey]?.[transKey];
+    if (transString?.length > 0) {
+      $elem.textContent = transString;
+      $elem.title = transString;
     }
   });
 }
