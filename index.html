@@ -64,7 +64,7 @@
 
     <!-- SPLASH -->
 
-    <section class="section-splash flex-row section-radius">
+    <section class="section-splash flex-row radius-30">
       <div class="flex-col w-100p" style="padding: 50px; padding-right: 0">
         <h1 style="font-size: 56px; margin: 0">
           You're definitely smarter than you think.
@@ -114,7 +114,7 @@
     <!-- stats total -->
 
     <section
-      class="stats-total flex-row section-radius"
+      class="stats-total flex-row radius-30 bg-secondary"
       style="justify-content: space-around"
     >
       <div class="stat-block">
@@ -124,7 +124,11 @@
       <div class="stat-block">
         <span class="stat-value">1k+</span>
         <div class="flex-row align-center">
-          tests taken in&nbsp;<span data-id="current_country"
+          tests taken in&nbsp;
+          <span
+            class="text-ellipsis"
+            data-id="current_country"
+            style="max-width: 100px"
             >$your_country$</span
           >
         </div>
@@ -145,11 +149,11 @@
 
     <!-- stats total -->
 
-    <div class="stats-list section-radius">
+    <section class="stats-section radius-30">
       <h1 class="m-0 flex-row justify-center">IQ statistics</h1>
       <hr class="my-20" />
 
-      <div class="flex-row" style="justify-content: space-around">
+      <div class="stats-columns flex-row" style="justify-content: space-around">
         <div class="flex-col">
           <h3>recent results</h3>
           <div class="result-list" id="$results_recent">
@@ -174,7 +178,7 @@
 
       <!-- <hr class="my-20" />
       <a href="#">view detailed statistics</a> -->
-    </div>
+    </section>
 
     <!-- next section -->
 
@@ -187,10 +191,76 @@
     </section>
 
     <section id="faq" class="p-10">
-      <h2>FAQs</h2>
+      <h2 class="p-20 bg-secondary radius-30">
+        Top 10 Frequently Asked Questions About IQ Tests
+      </h2>
+
+      <dl class="faq-list">
+        <dt>What is an IQ test?</dt>
+        <dd>
+          It is a test that evaluates a person’s intelligence level by measuring
+          their ability to think logically, analyze, and solve problems.
+        </dd>
+
+        <dt>Can you increase your IQ?</dt>
+        <dd>
+          Yes, regular training in memory, logic, and critical thinking can
+          improve cognitive abilities, but the IQ score itself changes only
+          slightly.
+        </dd>
+
+        <dt>What types of questions appear in IQ tests?</dt>
+        <dd>
+          Typically, they include logic puzzles, arithmetic problems, spatial
+          reasoning tasks, analogies, and numerical or verbal sequences.
+        </dd>
+
+        <dt>How do you interpret an IQ test result?</dt>
+        <dd>
+          The average IQ is 100. A score between 85 and 115 is considered
+          normal, above 130 is high, and below 70 may indicate cognitive
+          difficulties.
+        </dd>
+
+        <dt>Are all IQ tests the same?</dt>
+        <dd>
+          No, different tests use different evaluation methods, but most follow
+          similar principles.
+        </dd>
+
+        <dt>Can you "train" for an IQ test?</dt>
+        <dd>
+          Yes, familiarizing yourself with typical question types can improve
+          your score, but it may not reflect your actual intelligence level.
+        </dd>
+
+        <dt>Does IQ determine success in life?</dt>
+        <dd>
+          Not entirely. A high IQ helps with learning and analysis, but success
+          also depends on emotional intelligence, motivation, and social skills.
+        </dd>
+
+        <dt>Are there different IQ tests for children and adults?</dt>
+        <dd>
+          Yes, IQ tests for children are adapted to their developmental stage
+          and cognitive abilities.
+        </dd>
+
+        <dt>Do stress and fatigue affect IQ test results?</dt>
+        <dd>
+          Yes, fatigue, stress, and a bad mood can reduce concentration and
+          impact your score.
+        </dd>
+
+        <dt>What IQ is considered genius-level?</dt>
+        <dd>
+          An IQ above 140 is typically classified as genius or exceptional
+          intellectual ability.
+        </dd>
+      </dl>
     </section>
 
-    <section id="contact" class="p-10">
+    <section id="contact" class="p-10 radius-30 p-20">
       <h2>contact us</h2>
     </section>
 

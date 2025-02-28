@@ -46,6 +46,14 @@ svg[aria-hidden="true"] {
   padding: 10px;
 }
 
+.p-20 {
+  padding: 20px;
+}
+
+.p-30 {
+  padding: 30px;
+}
+
 .px-10 {
   padding-left: 10px;
   padding-right: 10px;
@@ -89,4 +97,10 @@ svg[aria-hidden="true"] {
 
 .small {
   font-size: small;
+}
+
+.text-ellipsis {
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }

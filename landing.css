@@ -11,7 +11,7 @@
   --accent-color: #2196f3;
 
   --inactive-color: var(--dark);
-  --section-bg: #ffebd6;
+  --bg-secondary: #ffebd6;
 
   --main-color: var(--accent-color);
   /* --main-color: #e9911e; */
@@ -134,10 +134,13 @@ nav.header-menu {
 }
 
 section {
-  background-color: var(--section-bg);
   box-sizing: border-box;
 
   margin: 30px 0;
+}
+
+.bg-secondary {
+  background-color: var(--bg-secondary);
 }
 
 .button-language {
@@ -157,7 +160,7 @@ section {
   }
 }
 
-.section-radius {
+.radius-30 {
   border-radius: 30px;
 }
 
@@ -305,7 +308,7 @@ section {
   }
 }
 
-.stats-list {
+.stats-section {
   padding: 20px;
 
   border: 2px solid;
@@ -314,6 +317,10 @@ section {
   h3 {
     text-transform: capitalize;
     margin-left: 80px;
+  }
+
+  .stats-columns {
+    overflow-x: scroll;
   }
 }
 
@@ -392,6 +399,24 @@ hr {
   border-color: var(--splash-bg-color);
 }
 
+dl.faq-list {
+  dt {
+    /* question */
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+
+    font-weight: bold;
+    font-size: 18px;
+  }
+
+  dd {
+    /* answer */
+    margin: 0;
+    font-size: 16px;
+    padding-bottom: 1rem;
+  }
+}
+
 .app-preview {
   img {
     /* visibility: hidden; */
@@ -401,5 +426,14 @@ hr {
   img.active {
     display: block;
     animation: fadeIn 300ms ease-in;
+  }
+}
+
+@media (orientation: portrait) and (width < 600px) {
+  body {
+    padding: 10px;
+  }
+  nav.header-menu {
+    display: none;
   }
 }
