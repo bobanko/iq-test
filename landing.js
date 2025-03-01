@@ -5,6 +5,7 @@ import { Timer } from "./timer.js";
 import { loadStats } from "./stats-results.js";
 import { countries, emojiFlags } from "./countries.mapping.js";
 import { applyTranslations, translationLangKeys } from "./translation.js";
+import { appConfig } from "./app.config.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -142,13 +143,10 @@ loadStats({
 // location
 
 function getUserIpInfo() {
-  // todo(vmyshko): move to app.config
-  const ipregistryKey = "--api-key-here--";
-
   // todo(vmyshko): cache ip in localstorage for user
-  return fetch(`https://api.ipregistry.co/?key=${ipregistryKey}`).then(
-    (response) => response.json()
-  );
+  return fetch(
+    `https://api.ipregistry.co/?key=${appConfig.ipRegistryKey}`
+  ).then((response) => response.json());
 }
 
 // page init
