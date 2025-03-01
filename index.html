@@ -35,7 +35,7 @@
       class="flex-row align-center py-10"
       style="justify-content: space-between"
     >
-      <div class="flex-row align-center">
+      <div class="flex-row align-center py-10">
         <img src="./images/brain-ios.png" width="40px" />
         <div class="flex-col px-10">
           <span
@@ -52,7 +52,7 @@
       <div class="flex-row">
         <nav
           id="$navMenu"
-          class="header-menu flex flex-row align-center desktop-only"
+          class="menu flex flex-row align-center desktop-only"
           style="align-self: flex-end"
         >
           <!-- <a href="#index">home</a> -->
@@ -92,9 +92,22 @@
 
         <div id="$mobileMenuOverlay" class="mobile-menu-overlay" hidden></div>
 
-        <nav id="$navLangSelector" class="nav-lang-selector flex-col" hidden>
-          <!-- lang buttons go here -->
-        </nav>
+        <div id="$popupMenu" class="popup-menu flex-col" hidden>
+          <!-- mobile nav menu -->
+          <nav id="$mobileNavPopupMenuList" class="mobile-only menu">
+            <a href="#index" data-translation="footer-nav-home">home</a>
+            <a href="#stats" data-translation="header-nav-stats">Statistics</a>
+            <a href="#faq" data-translation="footer-nav-faqs">FAQs</a>
+            <a href="#contact" data-translation="header-nav-contact"
+              >contact us</a
+            >
+          </nav>
+          <hr class="mobile-only" />
+
+          <nav id="$navLangItemList" class="nav-lang-item-list flex-col">
+            <!-- lang buttons go here -->
+          </nav>
+        </div>
 
         <button id="$btnBurgerMenu" class="button-with-icon mobile-only">
           <span class="button-text px-10" data-translation="header-mobile-menu"
@@ -448,10 +461,7 @@
           </div>
         </div>
 
-        <nav
-          class="footer-menu flex flex-row align-center"
-          style="align-self: flex-end"
-        >
+        <nav class="menu flex flex-row align-center">
           <a href="#index" data-translation="footer-nav-home">home</a>
           <a href="#stats" data-translation="header-nav-stats">Statistics</a>
 

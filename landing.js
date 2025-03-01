@@ -180,7 +180,7 @@ function toggleLangMenu(open = $btnLangClose.hidden) {
   $btnBurgerMenu.hidden = open;
 
   $btnLangClose.hidden = !open;
-  $navLangSelector.hidden = !open;
+  $popupMenu.hidden = !open;
   $mobileMenuOverlay.hidden = !open;
 }
 
@@ -189,6 +189,8 @@ $btnBurgerMenu.addEventListener("click", () => toggleLangMenu(true));
 
 $btnLangClose.addEventListener("click", () => toggleLangMenu(false));
 $mobileMenuOverlay.addEventListener("click", () => toggleLangMenu(false));
+
+$mobileNavPopupMenuList.addEventListener("click", () => toggleLangMenu(false));
 
 function createBtnLang({ countryCode }) {
   const $resultItem = $tmplBtnLang.content.firstElementChild.cloneNode(true);
@@ -218,7 +220,7 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
 
 window.addEventListener("load", () =>
   loadLanguages({
-    $container: $navLangSelector,
+    $container: $navLangItemList,
     data: langsCountryCodes,
     callbackFn: ({ countryCode }) => {
       switchLang(countryCode);
