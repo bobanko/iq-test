@@ -193,10 +193,10 @@ $mobileMenuOverlay.addEventListener("click", () => toggleLangMenu(false));
 function createBtnLang({ countryCode }) {
   const $resultItem = $tmplBtnLang.content.firstElementChild.cloneNode(true);
 
-  const $itemCountry = $resultItem.querySelector(".flag-icon");
+  const $itemCountry = $resultItem.querySelector(".icon-emoji");
   $itemCountry.textContent = emojiFlags[countryCode];
 
-  const $itemName = $resultItem.querySelector(".language-name");
+  const $itemName = $resultItem.querySelector(".button-text");
   $itemName.textContent = countryCode;
 
   return $resultItem;

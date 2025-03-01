@@ -23,9 +23,9 @@
     </template>
 
     <template id="$tmplBtnLang">
-      <button class="button-language px-10">
-        <span class="flag-icon">🇺🇦</span>
-        <span class="language-name">ua</span>
+      <button class="button-with-icon">
+        <span class="icon-emoji">🇺🇦</span>
+        <span class="button-text px-10">ua</span>
       </button>
     </template>
     <!-- end templates -->
@@ -58,8 +58,8 @@
           <!-- <a href="#index">home</a> -->
           <!-- <a href="#about">about</a> -->
           <!-- <a href="#pricing">pricing</a> -->
-          <a href="#faq" data-translation="header-nav-faqs">FAQs</a>
-          <a href="#contact" data-translation="header-nav-contact"
+          <a class="p-5" href="#faq" data-translation="header-nav-faqs">FAQs</a>
+          <a class="p-5" href="#contact" data-translation="header-nav-contact"
             >contact us</a
           >
 
@@ -79,11 +79,11 @@
             sign in
           </button>
 
-          <button id="$btnLangMenu" class="button-language px-10">
-            <span id="$langFlag" class="flag-icon">🇺🇸</span>
+          <button id="$btnLangMenu" class="button-with-icon">
+            <span id="$langFlag" class="icon-emoji">🇺🇸</span>
             <span
               id="$langCountryCode"
-              class="language-name"
+              class="button-text"
               data-translation="header-lang-en"
               >en</span
             >
@@ -96,11 +96,11 @@
           <!-- lang buttons go here -->
         </nav>
 
-        <button id="$btnBurgerMenu" class="button-language px-10 mobile-only">
-          <span class="flag-icon">🍔</span>
-          <span class="language-name" data-translation="header-mobile-menu"
+        <button id="$btnBurgerMenu" class="button-with-icon mobile-only">
+          <span class="button-text px-10" data-translation="header-mobile-menu"
             >menu</span
           >
+          <span class="icon-emoji">🍔</span>
         </button>
 
         <button
@@ -118,7 +118,7 @@
 
     <section class="section-splash flex-row radius-30">
       <div class="splash-text-block flex-col w-100p">
-        <h1>
+        <h1 class="my-10">
           <span data-translation="splash-slogan-1">
             You're definitely smarter than you think.
           </span>
@@ -130,13 +130,6 @@
             Prove it!</span
           >
         </h1>
-        <h3
-          class="my-20"
-          style="font-size: smaller"
-          data-translation="splash-subheading"
-        >
-          ...or die trying
-        </h3>
 
         <div class="mobile-center">
           <a href="./quiz.html" class="button-link">
@@ -178,11 +171,12 @@
     <!-- stats total -->
 
     <section
+      id="stats"
       class="stats-total flex-row radius-30 bg-secondary"
       style="justify-content: space-around"
     >
       <div class="stat-block">
-        <span class="stat-value" data-translation="stats-today-value">1k+</span>
+        <span class="stat-value">1k+</span>
         <span data-translation="stats-today-label">tests taken today</span>
       </div>
       <!-- <div class="stat-block">
@@ -198,17 +192,15 @@
         </div>
       </div> -->
       <div class="stat-block">
-        <span class="stat-value" data-translation="stats-total-value">2m+</span>
+        <span class="stat-value">2m+</span>
         <span data-translation="stats-total-label">total tests taken</span>
       </div>
       <div class="stat-block">
-        <span class="stat-value" data-translation="stats-average-value"
-          >100</span
-        >
+        <span class="stat-value">100</span>
         <span data-translation="stats-average-label">average iq</span>
       </div>
       <div class="stat-block">
-        <span class="stat-value" data-translation="stats-max-value">140</span>
+        <span class="stat-value">140</span>
         <span data-translation="stats-max-label">max iq</span>
       </div>
     </section>
@@ -443,7 +435,7 @@
 
     <footer class="flex-col">
       <hr />
-      <div class="flex-row" style="justify-content: space-between">
+      <div class="flex-row p-10" style="justify-content: space-between">
         <div class="flex-row align-center" href="#index">
           <img src="./images/brain-ios.png" width="40px" />
           <div class="flex-col px-10">
@@ -461,19 +453,11 @@
           style="align-self: flex-end"
         >
           <a href="#index" data-translation="footer-nav-home">home</a>
+          <a href="#stats" data-translation="header-nav-stats">Statistics</a>
+
           <!-- <a href="#about">about</a> -->
           <!-- <a href="#pricing">pricing</a> -->
           <a href="#faq" data-translation="footer-nav-faqs">FAQs</a>
-          <a href="#contact" data-translation="footer-nav-contact"
-            >contact us</a
-          >
-
-          <div class="button-language">
-            <span class="flag-icon p-5">🇺🇸</span>
-            <span class="language-name" data-translation="footer-lang-en"
-              >en</span
-            >
-          </div>
         </nav>
       </div>
 

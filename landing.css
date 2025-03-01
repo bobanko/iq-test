@@ -157,20 +157,22 @@ section {
   background-color: var(--bg-secondary);
 }
 
-.button-language {
+.button-with-icon {
   display: flex;
   flex-direction: row;
   align-items: center;
   cursor: pointer;
 
   font-weight: bold;
+  text-transform: uppercase;
 
-  .flag-icon {
+  padding: 0 10px;
+
+  .icon-emoji {
     font-size: 30px;
   }
 
-  .language-name {
-    text-transform: uppercase;
+  .button-text {
   }
 }
 
@@ -204,7 +206,7 @@ section {
       font-weight: bold;
     }
 
-    .flag-icon {
+    .icon-emoji {
       font-size: 30px;
     }
   }
@@ -281,7 +283,7 @@ section {
   }
 
   .stats-columns {
-    overflow-x: scroll;
+    overflow-x: auto;
   }
 }
 
@@ -484,6 +486,10 @@ h1 {
 }
 
 @media (orientation: portrait) and (width < 600px) {
+  .nav-lang-selector {
+    border: none;
+  }
+
   body {
     padding: 10px;
   }
