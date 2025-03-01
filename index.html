@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IQ test</title>
+    <title data-translation="header-title">IQ Test</title>
     <link rel="icon" href="./iq.svg" type="image/svg+xml" />
     <link rel="stylesheet" href="./landing.css" />
 
@@ -38,9 +38,13 @@
       <div class="flex-row align-center">
         <img src="./images/brain-ios.png" width="40px" />
         <div class="flex-col px-10">
-          <span style="font-weight: bold; font-size: 28px">IQ Test</span>
+          <span
+            style="font-weight: bold; font-size: 28px"
+            data-translation="header-title"
+            >IQ Test</span
+          >
           <span style="font-size: 10px" data-translation="logo-slogan"
-            >created by experts</span
+            >challenge your brain</span
           >
         </div>
       </div>
@@ -54,18 +58,35 @@
           <!-- <a href="#index">home</a> -->
           <!-- <a href="#about">about</a> -->
           <!-- <a href="#pricing">pricing</a> -->
-          <a href="#faq">FAQs</a>
-          <a href="#contact">contact us</a>
+          <a href="#faq" data-translation="header-nav-faqs">FAQs</a>
+          <a href="#contact" data-translation="header-nav-contact"
+            >contact us</a
+          >
 
           <a href="./quiz.html" class="button-link">
-            <button class="p-10 btn-primary">start test</button>
+            <button
+              class="p-10 btn-primary"
+              data-translation="header-btn-start-test"
+            >
+              start test
+            </button>
           </a>
 
-          <button class="p-10 btn-secondary">sign in</button>
+          <button
+            class="p-10 btn-secondary"
+            data-translation="header-btn-sign-in"
+          >
+            sign in
+          </button>
 
           <button id="$btnLangMenu" class="button-language px-10">
             <span id="$langFlag" class="flag-icon">🇺🇸</span>
-            <span id="$langCountryCode" class="language-name">en</span>
+            <span
+              id="$langCountryCode"
+              class="language-name"
+              data-translation="header-lang-en"
+              >en</span
+            >
           </button>
         </nav>
 
@@ -77,7 +98,9 @@
 
         <button id="$btnBurgerMenu" class="button-language px-10 mobile-only">
           <span class="flag-icon">🍔</span>
-          <span class="language-name">menu</span>
+          <span class="language-name" data-translation="header-mobile-menu"
+            >menu</span
+          >
         </button>
 
         <button
@@ -107,12 +130,20 @@
             Prove it!</span
           >
         </h1>
-        <h3 class="my-20" style="font-size: smaller">...or die trying</h3>
+        <h3
+          class="my-20"
+          style="font-size: smaller"
+          data-translation="splash-subheading"
+        >
+          ...or die trying
+        </h3>
 
         <div class="mobile-center">
           <a href="./quiz.html" class="button-link">
-            <button class="btn-primary p-20 py-10">
-              <!-- start quiz! -->
+            <button
+              class="btn-primary p-20 py-10"
+              data-translation="splash-btn-test"
+            >
               test yourself!
             </button>
           </a>
@@ -151,13 +182,13 @@
       style="justify-content: space-around"
     >
       <div class="stat-block">
-        <span class="stat-value">1k+</span>
-        tests taken today
+        <span class="stat-value" data-translation="stats-today-value">1k+</span>
+        <span data-translation="stats-today-label">tests taken today</span>
       </div>
       <!-- <div class="stat-block">
         <span class="stat-value">1k+</span>
         <div class="flex-row align-center">
-          tests taken in&nbsp;
+          tests taken in 
           <span
             class="text-ellipsis"
             data-id="current_country"
@@ -167,42 +198,52 @@
         </div>
       </div> -->
       <div class="stat-block">
-        <span class="stat-value">2m+</span>
-        total tests taken
+        <span class="stat-value" data-translation="stats-total-value">2m+</span>
+        <span data-translation="stats-total-label">total tests taken</span>
       </div>
       <div class="stat-block">
-        <span class="stat-value">100</span>
-        average iq
+        <span class="stat-value" data-translation="stats-average-value"
+          >100</span
+        >
+        <span data-translation="stats-average-label">average iq</span>
       </div>
       <div class="stat-block">
-        <span class="stat-value">140</span>
-        max iq
+        <span class="stat-value" data-translation="stats-max-value">140</span>
+        <span data-translation="stats-max-label">max iq</span>
       </div>
     </section>
 
     <!-- stats total -->
 
     <section class="stats-section radius-30">
-      <h1 class="m-0 flex-row justify-center">IQ statistics</h1>
+      <h1
+        class="m-0 flex-row justify-center"
+        data-translation="stats-section-title"
+      >
+        IQ statistics
+      </h1>
       <hr class="my-20" />
 
       <div class="stats-columns flex-row" style="justify-content: space-around">
         <div class="flex-col">
-          <h3>recent results</h3>
+          <h3 data-translation="stats-recent-title">recent results</h3>
           <div class="result-list" id="$results_recent">
             <!-- result items here -->
           </div>
         </div>
 
         <div class="flex-col">
-          <h3>in <span data-id="current_country">$your_country$</span></h3>
+          <h3>
+            <span data-translation="stats-country-label">in </span
+            ><span data-id="current_country">$your_country$</span>
+          </h3>
           <div class="result-list" id="$results_currentCountry">
             <!-- result items here -->
           </div>
         </div>
 
         <div class="flex-col">
-          <h3>by country</h3>
+          <h3 data-translation="stats-by-country-title">by country</h3>
           <div class="result-list" id="$results_perCountry">
             <!-- result items here -->
           </div>
@@ -224,69 +265,83 @@
     </section> -->
 
     <section id="faq" class="p-10">
-      <h2 class="p-20 bg-secondary radius-30">
+      <h2 class="p-20 bg-secondary radius-30" data-translation="faq-title">
         Top 10 Frequently Asked Questions About IQ Tests
       </h2>
 
       <dl class="faq-list">
-        <dt>What is an IQ test?</dt>
-        <dd>
+        <dt data-translation="faq-question-1">What is an IQ test?</dt>
+        <dd data-translation="faq-answer-1">
           It is a test that evaluates a person’s intelligence level by measuring
           their ability to think logically, analyze, and solve problems.
         </dd>
 
-        <dt>Can you increase your IQ?</dt>
-        <dd>
+        <dt data-translation="faq-question-2">Can you increase your IQ?</dt>
+        <dd data-translation="faq-answer-2">
           Yes, regular training in memory, logic, and critical thinking can
           improve cognitive abilities, but the IQ score itself changes only
           slightly.
         </dd>
 
-        <dt>What types of questions appear in IQ tests?</dt>
-        <dd>
+        <dt data-translation="faq-question-3">
+          What types of questions appear in IQ tests?
+        </dt>
+        <dd data-translation="faq-answer-3">
           Typically, they include logic puzzles, arithmetic problems, spatial
           reasoning tasks, analogies, and numerical or verbal sequences.
         </dd>
 
-        <dt>How do you interpret an IQ test result?</dt>
-        <dd>
+        <dt data-translation="faq-question-4">
+          How do you interpret an IQ test result?
+        </dt>
+        <dd data-translation="faq-answer-4">
           The average IQ is 100. A score between 85 and 115 is considered
           normal, above 130 is high, and below 70 may indicate cognitive
           difficulties.
         </dd>
 
-        <dt>Are all IQ tests the same?</dt>
-        <dd>
+        <dt data-translation="faq-question-5">Are all IQ tests the same?</dt>
+        <dd data-translation="faq-answer-5">
           No, different tests use different evaluation methods, but most follow
           similar principles.
         </dd>
 
-        <dt>Can you "train" for an IQ test?</dt>
-        <dd>
+        <dt data-translation="faq-question-6">
+          Can you "train" for an IQ test?
+        </dt>
+        <dd data-translation="faq-answer-6">
           Yes, familiarizing yourself with typical question types can improve
           your score, but it may not reflect your actual intelligence level.
         </dd>
 
-        <dt>Does IQ determine success in life?</dt>
-        <dd>
+        <dt data-translation="faq-question-7">
+          Does IQ determine success in life?
+        </dt>
+        <dd data-translation="faq-answer-7">
           Not entirely. A high IQ helps with learning and analysis, but success
           also depends on emotional intelligence, motivation, and social skills.
         </dd>
 
-        <dt>Are there different IQ tests for children and adults?</dt>
-        <dd>
+        <dt data-translation="faq-question-8">
+          Are there different IQ tests for children and adults?
+        </dt>
+        <dd data-translation="faq-answer-8">
           Yes, IQ tests for children are adapted to their developmental stage
           and cognitive abilities.
         </dd>
 
-        <dt>Do stress and fatigue affect IQ test results?</dt>
-        <dd>
+        <dt data-translation="faq-question-9">
+          Do stress and fatigue affect IQ test results?
+        </dt>
+        <dd data-translation="faq-answer-9">
           Yes, fatigue, stress, and a bad mood can reduce concentration and
           impact your score.
         </dd>
 
-        <dt>What IQ is considered genius-level?</dt>
-        <dd>
+        <dt data-translation="faq-question-10">
+          What IQ is considered genius-level?
+        </dt>
+        <dd data-translation="faq-answer-10">
           An IQ above 140 is typically classified as genius or exceptional
           intellectual ability.
         </dd>
@@ -294,7 +349,7 @@
     </section>
 
     <section id="contact" class="p-10 radius-30 p-20">
-      <h2 class="mobile-center">contact us</h2>
+      <h2 class="mobile-center" data-translation="contact-title">contact us</h2>
 
       <div class="flex-col mobile-center">
         <form
@@ -305,7 +360,12 @@
           style="max-width: 400px"
         >
           <fieldset class="flex-col">
-            <label for="name" class="py-10">Name:</label>
+            <label
+              for="name"
+              class="py-10"
+              data-translation="contact-label-name"
+              >Name:</label
+            >
             <input
               class="p-10"
               type="text"
@@ -313,9 +373,16 @@
               name="name"
               required
               placeholder="enter your name"
+              data-translation="contact-placeholder-name"
+              data-translation-attr="placeholder"
             />
 
-            <label for="email" class="py-10">Email:</label>
+            <label
+              for="email"
+              class="py-10"
+              data-translation="contact-label-email"
+              >Email:</label
+            >
             <input
               class="p-10"
               type="email"
@@ -323,18 +390,32 @@
               name="email"
               required
               placeholder="enter your email address"
+              data-translation="contact-placeholder-email"
+              data-translation-attr="placeholder"
             />
 
-            <label for="subject" class="py-10">Subject:</label>
+            <label
+              for="subject"
+              class="py-10"
+              data-translation="contact-label-subject"
+              >Subject:</label
+            >
             <input
               class="p-10"
               type="text"
               id="subject"
               name="subject"
               placeholder="email subject"
+              data-translation="contact-placeholder-subject"
+              data-translation-attr="placeholder"
             />
 
-            <label for="message" class="py-10">Message:</label>
+            <label
+              for="message"
+              class="py-10"
+              data-translation="contact-label-message"
+              >Message:</label
+            >
             <textarea
               class="p-10"
               id="message"
@@ -342,9 +423,15 @@
               rows="4"
               required
               placeholder="your message"
+              data-translation="contact-placeholder-message"
+              data-translation-attr="placeholder"
             ></textarea>
 
-            <button class="btn-primary p-10 my-10 mobile-center" type="submit">
+            <button
+              class="btn-primary p-10 my-10 mobile-center"
+              type="submit"
+              data-translation="contact-btn-send"
+            >
               Send
             </button>
           </fieldset>
@@ -360,9 +447,11 @@
         <div class="flex-row align-center" href="#index">
           <img src="./images/brain-ios.png" width="40px" />
           <div class="flex-col px-10">
-            <span style="font-weight: bold">IQ Test</span>
-            <span style="font-size: 10px" data-translation="logo-slogan"
-              >created by experts</span
+            <span style="font-weight: bold" data-translation="footer-title"
+              >IQ Test</span
+            >
+            <span style="font-size: 10px" data-translation="footer-logo-slogan"
+              >challenge your brain</span
             >
           </div>
         </div>
@@ -371,15 +460,19 @@
           class="footer-menu flex flex-row align-center"
           style="align-self: flex-end"
         >
-          <a href="#index">home</a>
+          <a href="#index" data-translation="footer-nav-home">home</a>
           <!-- <a href="#about">about</a> -->
           <!-- <a href="#pricing">pricing</a> -->
-          <a href="#faq">FAQs</a>
-          <a href="#contact">contact us</a>
+          <a href="#faq" data-translation="footer-nav-faqs">FAQs</a>
+          <a href="#contact" data-translation="footer-nav-contact"
+            >contact us</a
+          >
 
           <div class="button-language">
             <span class="flag-icon p-5">🇺🇸</span>
-            <span class="language-name">en</span>
+            <span class="language-name" data-translation="footer-lang-en"
+              >en</span
+            >
           </div>
         </nav>
       </div>
@@ -387,7 +480,9 @@
       <hr />
 
       <div class="flex-col align-center">
-        <p>© 2025 iq-test.kek. All rights reserved.</p>
+        <p data-translation="footer-copyright">
+          © 2025 iq-test.kek. All rights reserved.
+        </p>
       </div>
     </footer>
   </body>
