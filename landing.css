@@ -4,8 +4,10 @@
 @import url(./animations.css);
 
 @import url(./palette.css);
+@import url(./app-preview.css);
 
 :root {
+  --max-width: 1200px;
   --accent-color: var(--green);
   --accent-color: #019ce1;
   --accent-color: #2196f3;
@@ -36,7 +38,7 @@ html {
 
 body {
   flex: 1;
-  max-width: 1200px;
+  max-width: var(--max-width);
   box-sizing: border-box;
 }
 
@@ -167,124 +169,10 @@ section {
 .section-splash {
   overflow: hidden;
 
-  height: 500px;
+  font-size: min(4vw, calc(var(--max-width) / 100 * 4));
 
   /* todo: can change hue, keep opacity */
   background-color: var(--splash-bg-color);
-}
-
-.app-preview {
-  position: relative;
-  /* to cover shadow */
-  margin: 30px;
-  margin-bottom: 0;
-  width: 360px;
-  height: 460px;
-  /* overflow: hidden; */
-
-  box-sizing: border-box;
-  border: 12px solid black;
-  border-radius: 60px;
-  box-shadow: 
-  /* chehol */ 0px 0px 0px 4px var(--splash-mob-frame-color),
-    /* shadow */ 5px 0px 20px 4px #000000a3;
-
-  /* to move screenshot */
-  padding-top: 45px;
-  background-color: #c0c0c0;
-  background-color: dimgray;
-
-  border-bottom-left-radius: 0;
-  border-bottom-right-radius: 0;
-  border-bottom: none;
-
-  .dynamic-island {
-    /* dynamic island */
-    position: absolute;
-    left: 50%;
-    top: 22px;
-    transform: translate(-50%, -50%);
-
-    width: 100px;
-    height: 28px;
-    border-radius: 15px;
-
-    background-color: black;
-  }
-
-  .phone-clock {
-    position: absolute;
-    top: 0;
-    left: 0;
-
-    color: white;
-
-    font-size: 15px;
-
-    width: 120px;
-    height: 45px;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .phone-icons {
-    position: absolute;
-    top: 0;
-    right: 0;
-
-    height: 45px;
-    width: 120px;
-
-    > svg {
-      width: 70px;
-    }
-
-    --color: white;
-
-    /* transform: translate(-28px, 14px); */
-
-    /* background: grey; */
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .phone-button {
-    /* power button */
-    position: absolute;
-    top: 0;
-
-    width: 2px;
-    background-color: black;
-
-    &.power-button {
-      right: 0;
-      height: 90px;
-      transform: translate(18px, 220px);
-    }
-
-    &.volume-up {
-      height: 55px;
-      left: 0;
-      transform: translate(-18px, 195px);
-    }
-
-    &.volume-down {
-      height: 55px;
-      left: 0;
-      transform: translate(-18px, 270px);
-    }
-  }
-
-  img {
-    object-position: top;
-    object-fit: cover;
-    height: 100%;
-    width: 100%;
-  }
 }
 
 /* STATS */
@@ -297,8 +185,10 @@ section {
     flex-direction: column;
     align-items: center;
 
+    font-size: min(3vw, calc(var(--max-width) / 100 * 3));
+
     .stat-value {
-      font-size: 40px;
+      font-size: min(4vw, calc(var(--max-width) / 100 * 4));
       font-weight: bold;
     }
 
@@ -488,11 +378,84 @@ dl.faq-list {
   }
 }
 
+h1 {
+  font-size: 56px;
+  font-size: min(4.5vw, calc(var(--max-width) / 100 * 4.5));
+  margin: 0;
+}
+
+/* landscape */
+
+.splash-text-block {
+  box-sizing: border-box;
+  padding: 50px;
+  padding-right: 0;
+}
+
+.app-preview {
+  transition: all 300ms ease;
+}
+
+@media (width < 1000px) {
+  .app-preview {
+    zoom: 0.8;
+  }
+}
+
+@media (width < 850px) {
+  .app-preview {
+    zoom: 0.7;
+  }
+}
+
+@media (width < 700px) {
+  .app-preview {
+    zoom: 0.6;
+  }
+}
+
+@media (width < 600px) {
+  .app-preview {
+    zoom: 1;
+  }
+}
+
+@media (width < 450px) {
+  .app-preview {
+    zoom: 0.8;
+  }
+}
+
+@media (width < 350px) {
+  .app-preview {
+    zoom: 0.7;
+  }
+}
+
 @media (orientation: portrait) and (width < 600px) {
   body {
     padding: 10px;
   }
+
   nav.header-menu {
     display: none;
+  }
+
+  h1 {
+    font-size: clamp(10px, 7vw, 40px);
+  }
+
+  .section-splash {
+    flex-direction: column;
+  }
+
+  .splash-text-block {
+    padding: 20px;
+  }
+
+  .mobile-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
   }
 }

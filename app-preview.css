@@ -1,0 +1,113 @@
+.app-preview {
+  position: relative;
+  /* to cover shadow */
+  margin: 30px;
+  margin-bottom: 0;
+  width: 360px;
+  height: 460px;
+  /* overflow: hidden; */
+
+  box-sizing: border-box;
+  border: 12px solid black;
+  border-radius: 60px;
+  box-shadow: 
+    /* chehol */ 0px 0px 0px 4px var(--splash-mob-frame-color),
+    /* shadow */ 5px 0px 20px 4px #000000a3;
+
+  /* to move screenshot */
+  padding-top: 45px;
+  background-color: #c0c0c0;
+  background-color: dimgray;
+
+  border-bottom-left-radius: 0;
+  border-bottom-right-radius: 0;
+  border-bottom: none;
+
+  .dynamic-island {
+    /* dynamic island */
+    position: absolute;
+    left: 50%;
+    top: 22px;
+    transform: translate(-50%, -50%);
+
+    width: 100px;
+    height: 28px;
+    border-radius: 15px;
+
+    background-color: black;
+  }
+
+  .phone-clock {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    color: white;
+
+    font-size: 15px;
+
+    width: 120px;
+    height: 45px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-icons {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    height: 45px;
+    width: 120px;
+
+    > svg {
+      width: 70px;
+    }
+
+    --color: white;
+
+    /* transform: translate(-28px, 14px); */
+
+    /* background: grey; */
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .phone-button {
+    /* power button */
+    position: absolute;
+    top: 0;
+
+    width: 2px;
+    background-color: black;
+
+    &.power-button {
+      right: 0;
+      height: 90px;
+      transform: translate(18px, 220px);
+    }
+
+    &.volume-up {
+      height: 55px;
+      left: 0;
+      transform: translate(-18px, 195px);
+    }
+
+    &.volume-down {
+      height: 55px;
+      left: 0;
+      transform: translate(-18px, 270px);
+    }
+  }
+
+  img {
+    object-position: top;
+    object-fit: cover;
+    height: 100%;
+    width: 100%;
+  }
+}

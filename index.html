@@ -29,9 +29,9 @@
       style="justify-content: space-between"
     >
       <div class="flex-row align-center">
-        <span style="font-size: 40px">🧠</span>
+        <img src="./images/brain-ios.png" width="40px" />
         <div class="flex-col px-10">
-          <span style="font-weight: bold">IQ Test</span>
+          <span style="font-weight: bold; font-size: 28px">IQ Test</span>
           <span style="font-size: 10px" data-translation="logo-slogan"
             >created by experts</span
           >
@@ -43,8 +43,8 @@
         class="header-menu flex flex-row align-center"
         style="align-self: flex-end"
       >
-        <a href="#index">home</a>
-        <a href="#about">about</a>
+        <!-- <a href="#index">home</a> -->
+        <!-- <a href="#about">about</a> -->
         <!-- <a href="#pricing">pricing</a> -->
         <a href="#faq">FAQs</a>
         <a href="#contact">contact us</a>
@@ -56,8 +56,8 @@
         <button class="p-10 btn-secondary">sign in</button>
 
         <div class="button-language">
-          <span class="flag-icon p-5">🇺🇸</span>
-          <span class="language-name">en</span>
+          <span id="$langFlag" class="flag-icon p-5">🇺🇸</span>
+          <span id="$langCountryCode" class="language-name">en</span>
         </div>
       </nav>
     </header>
@@ -65,20 +65,17 @@
     <!-- SPLASH -->
 
     <section class="section-splash flex-row radius-30">
-      <div class="flex-col w-100p" style="padding: 50px; padding-right: 0">
-        <h1 style="font-size: 56px; margin: 0">
+      <div class="splash-text-block flex-col w-100p">
+        <h1>
           You're definitely smarter than you think.
 
           <span style="color: var(--accent-color)"> Prove it!</span>
         </h1>
-        <h3>...or die trying</h3>
+        <h3 class="my-20" style="font-size: smaller">...or die trying</h3>
 
-        <div>
+        <div class="mobile-center">
           <a href="./quiz.html" class="button-link">
-            <button
-              class="btn-primary"
-              style="font-size: 30px; padding: 10px 20px"
-            >
+            <button class="btn-primary p-20 py-10">
               <!-- start quiz! -->
               test yourself!
             </button>
@@ -121,7 +118,7 @@
         <span class="stat-value">1k+</span>
         tests taken today
       </div>
-      <div class="stat-block">
+      <!-- <div class="stat-block">
         <span class="stat-value">1k+</span>
         <div class="flex-row align-center">
           tests taken in&nbsp;
@@ -132,7 +129,7 @@
             >$your_country$</span
           >
         </div>
-      </div>
+      </div> -->
       <div class="stat-block">
         <span class="stat-value">2m+</span>
         total tests taken
@@ -142,7 +139,7 @@
         average iq
       </div>
       <div class="stat-block">
-        <span class="stat-value">>9000</span>
+        <span class="stat-value">140</span>
         max iq
       </div>
     </section>
@@ -186,9 +183,9 @@
       <h2>pricing</h2>
     </section> -->
 
-    <section id="about" class="p-10">
+    <!-- <section id="about" class="p-10">
       <h2>About</h2>
-    </section>
+    </section> -->
 
     <section id="faq" class="p-10">
       <h2 class="p-20 bg-secondary radius-30">
@@ -261,9 +258,9 @@
     </section>
 
     <section id="contact" class="p-10 radius-30 p-20">
-      <h2>contact us</h2>
+      <h2 class="mobile-center">contact us</h2>
 
-      <div class="flex-col">
+      <div class="flex-col mobile-center">
         <form
           class="contact-form"
           action="mailto:example@email.com"
@@ -311,7 +308,9 @@
               placeholder="your message"
             ></textarea>
 
-            <button class="btn-primary p-10 my-10" type="submit">Send</button>
+            <button class="btn-primary p-10 my-10 mobile-center" type="submit">
+              Send
+            </button>
           </fieldset>
         </form>
       </div>
@@ -323,7 +322,7 @@
       <hr />
       <div class="flex-row" style="justify-content: space-between">
         <div class="flex-row align-center" href="#index">
-          <span style="font-size: 40px">🧠</span>
+          <img src="./images/brain-ios.png" width="40px" />
           <div class="flex-col px-10">
             <span style="font-weight: bold">IQ Test</span>
             <span style="font-size: 10px" data-translation="logo-slogan"
@@ -337,7 +336,7 @@
           style="align-self: flex-end"
         >
           <a href="#index">home</a>
-          <a href="#about">about</a>
+          <!-- <a href="#about">about</a> -->
           <!-- <a href="#pricing">pricing</a> -->
           <a href="#faq">FAQs</a>
           <a href="#contact">contact us</a>
