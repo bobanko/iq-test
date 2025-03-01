@@ -1,6 +1,12 @@
 import { countries, emojiFlags } from "./countries.mapping.js";
 
-function createResultItem({ countryCode, name, value, date }) {
+function createResultItem({
+  countryCode,
+  name,
+  value,
+  date,
+  locale = countryCode,
+}) {
   const $resultItem = $tmplResultItem.content.firstElementChild.cloneNode(true);
 
   const $itemCountry = $resultItem.querySelector(".item-country");
@@ -15,15 +21,15 @@ function createResultItem({ countryCode, name, value, date }) {
   $itemValue.textContent = value;
 
   const $itemDate = $resultItem.querySelector(".item-date");
-  $itemDate.textContent = date?.toLocaleString(countryCode);
-  $itemDate.title = date?.toLocaleString(countryCode);
+  $itemDate.textContent = date?.toLocaleString(locale);
+  $itemDate.title = date?.toLocaleString(locale);
 
   return $resultItem;
 }
 
-export function loadStats({ $container, data }) {
+export function loadStats({ $container, data, locale }) {
   data.forEach((itemData) => {
-    const $resultItem = createResultItem(itemData);
+    const $resultItem = createResultItem({ ...itemData, locale });
 
     $container.appendChild($resultItem);
   });

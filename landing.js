@@ -3,7 +3,7 @@ import { getSafeIndex, SeededRandom } from "./helpers.js";
 import { Timer } from "./timer.js";
 
 import { loadStats } from "./stats-results.js";
-import { countries } from "./countries.mapping.js";
+import { countries, emojiFlags } from "./countries.mapping.js";
 import { applyTranslations } from "./translation.js";
 
 // handle menu item highlights
@@ -121,11 +121,22 @@ const data_results_perCountry = Array.from({ length: 10 }, (_) => {
 
 // -----
 
+const { locale: defaultLocale } = Intl.DateTimeFormat().resolvedOptions();
+
 loadStats({
   $container: $results_recent,
   data: data_results_recent,
+  locale: defaultLocale,
 });
-loadStats({ $container: $results_currentCountry, data: data_results_current });
-loadStats({ $container: $results_perCountry, data: data_results_perCountry });
+loadStats({
+  $container: $results_currentCountry,
+  data: data_results_current,
+  locale: defaultLocale,
+});
+loadStats({
+  $container: $results_perCountry,
+  data: data_results_perCountry,
+  locale: defaultLocale,
+});
 
 window.addEventListener("load", applyTranslations);
