@@ -4,8 +4,12 @@ import { Timer } from "./timer.js";
 
 import { loadStats } from "./stats-results.js";
 import { countries, emojiFlags } from "./countries.mapping.js";
-import { applyTranslations, translationLangKeys } from "./translation.js";
+import {
+  applyTranslations,
+  translationLangKeys,
+} from "./translation.helper.js";
 import { appConfig } from "./app.config.js";
+import { getCached } from "./local-cache.helper.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -142,8 +146,7 @@ loadStats({
 
 // location
 
-function getUserIpInfo() {
-  // todo(vmyshko): cache ip in localstorage for user
+function fetchClientIpInfo() {
   return fetch(
     `https://api.ipregistry.co/?key=${appConfig.ipRegistryKey}`
   ).then((response) => response.json());
@@ -151,15 +154,16 @@ function getUserIpInfo() {
 
 // page init
 {
-  // const ipInfo = await getUserIpInfo();
-  // console.log(ipInfo);
-  // const countryCode = ipInfo.location.country.code;
+  const ipInfo = await getCached({
+    fn: fetchClientIpInfo,
+    cacheKey: "client-ip-info",
+  });
 
-  const countryCode = "UA";
+  console.log(ipInfo);
+  // const countryCode = "UA";
+  const countryCode = ipInfo.location.country.code;
 
   switchLang(countryCode);
-
-  window.addEventListener("load", () => applyTranslations(countryCode));
 }
 
 // lang menu
@@ -208,12 +212,14 @@ function loadLanguages({ $container, data, callbackFn }) {
   });
 }
 
-const _langs3 = translationLangKeys.map((key) => ({ countryCode: key }));
+const langsCountryCodes = translationLangKeys.map((key) => ({
+  countryCode: key,
+}));
 
 window.addEventListener("load", () =>
   loadLanguages({
     $container: $navLangSelector,
-    data: _langs3,
+    data: langsCountryCodes,
     callbackFn: ({ countryCode }) => {
       switchLang(countryCode);
       toggleLangMenu(false);
