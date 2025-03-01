@@ -1,8 +1,4 @@
 button {
-  cursor: pointer;
-}
-
-button {
   font-size: 20px;
   background-color: var(--gray);
   align-items: center;
@@ -13,8 +9,10 @@ button {
   user-select: none;
 
   transition: background-color 100ms ease-in-out;
-}
 
-button:active {
-  background-color: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+
+  &:active {
+    background-color: rgba(0, 0, 0, 0.2);
+  }
 }
