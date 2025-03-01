@@ -8,25 +8,23 @@
 
 :root {
   --max-width: 1200px;
-  --accent-color: var(--green);
-  --accent-color: #019ce1;
   --accent-color: #2196f3;
 
   --inactive-color: var(--dark);
   --bg-secondary: #ffebd6;
 
-  --main-color: var(--accent-color);
-  /* --main-color: #e9911e; */
+  --color-primary: var(--accent-color);
+  /* --color-primary: #e9911e; */
 
   /* splash */
 
   /* #019ce1 - chehol */
 
-  --splash-bg-color: hsla(from var(--main-color) h s l / 0.3);
+  --bg-primary: hsla(from var(--color-primary) h s l / 0.3);
 
   --splash-mob-frame-color: #019ce1;
-  --splash-mob-frame-color: var(--main-color);
-  --splash-mob-frame-color: hsl(from var(--main-color) calc(h + 150) s l);
+  --splash-mob-frame-color: var(--color-primary);
+  --splash-mob-frame-color: hsl(from var(--color-primary) calc(h + 150) s l);
 }
 
 html {
@@ -52,10 +50,9 @@ button {
   cursor: pointer;
 
   align-items: center;
-  border: 2px solid rgba(0, 0, 0, 0.3);
+  border: 2px solid transparent;
   box-sizing: border-box;
   font-weight: 600;
-  border-radius: 3px;
   border-radius: 5px;
   user-select: none;
 
@@ -71,6 +68,7 @@ button {
   &.btn-primary {
     color: white;
     background-color: var(--color);
+    border-color: rgba(0, 0, 0, 0.3);
 
     &:hover {
       background-color: hsla(from var(--color) h s l / 0.8);
@@ -84,6 +82,21 @@ button {
   }
 
   &.btn-secondary {
+    border-color: var(--color);
+
+    &:hover {
+      background-color: hsla(from var(--color) h s l / 0.2);
+    }
+
+    &:active {
+      background-color: hsla(
+        from var(--color) h calc(s + 10) calc(l - 10) / 0.4
+      );
+    }
+  }
+
+  &.btn-cancel {
+    --color: gray;
     border-color: var(--color);
 
     &:hover {
@@ -117,13 +130,12 @@ nav.header-menu {
 
   padding: 0;
   margin: 0;
+  gap: 10px;
 
   a {
     display: flex;
-    padding: 10px;
-    text-transform: capitalize;
 
-    padding: 10px;
+    text-transform: capitalize;
     text-decoration: none;
 
     color: var(--inactive-color);
@@ -172,7 +184,7 @@ section {
   font-size: min(4vw, calc(var(--max-width) / 100 * 4));
 
   /* todo: can change hue, keep opacity */
-  background-color: var(--splash-bg-color);
+  background-color: var(--bg-primary);
 }
 
 /* STATS */
@@ -240,15 +252,15 @@ section {
   input[type="password"],
   textarea {
     border: 2px solid;
-    border-color: var(--splash-bg-color);
+    border-color: var(--bg-primary);
     border-radius: 5px;
 
     &:focus {
-      border-color: var(--main-color);
+      border-color: var(--color-primary);
     }
 
     &::placeholder {
-      /* color: var(--splash-bg-color); */
+      /* color: var(--bg-primary); */
     }
   }
 
@@ -261,7 +273,7 @@ section {
   padding: 20px;
 
   border: 2px solid;
-  border-color: var(--splash-bg-color);
+  border-color: var(--bg-primary);
 
   h3 {
     text-transform: capitalize;
@@ -345,7 +357,7 @@ hr {
   border-style: dashed;
   box-sizing: border-box;
   align-self: stretch;
-  border-color: var(--splash-bg-color);
+  border-color: var(--bg-primary);
 }
 
 dl.faq-list {
@@ -396,6 +408,39 @@ h1 {
   transition: all 300ms ease;
 }
 
+.nav-lang-selector {
+  position: absolute;
+  top: 0;
+  right: 0;
+  z-index: 1;
+
+  background: white;
+  border: 2px solid var(--color-primary);
+  border-radius: 5px;
+  padding: 10px 0;
+  margin: 60px 40px;
+
+  > * {
+    border-radius: 0;
+
+    &:hover {
+      background-color: var(--bg-secondary);
+    }
+  }
+}
+
+.mobile-menu-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+
+  background-color: hsla(from var(--bg-secondary) h s l / 0.3);
+
+  z-index: 1;
+}
+
 @media (width < 1000px) {
   .app-preview {
     zoom: 0.8;
@@ -432,12 +477,18 @@ h1 {
   }
 }
 
+@media (width >= 600px) {
+  .mobile-only {
+    display: none;
+  }
+}
+
 @media (orientation: portrait) and (width < 600px) {
   body {
     padding: 10px;
   }
 
-  nav.header-menu {
+  .desktop-only {
     display: none;
   }
 
@@ -457,5 +508,12 @@ h1 {
     display: flex;
     justify-content: center;
     align-items: center;
+  }
+
+  .nav-lang-selector {
+    left: 0;
+    bottom: 0;
+
+    margin: 0px;
   }
 }

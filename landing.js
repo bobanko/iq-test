@@ -4,7 +4,7 @@ import { Timer } from "./timer.js";
 
 import { loadStats } from "./stats-results.js";
 import { countries, emojiFlags } from "./countries.mapping.js";
-import { applyTranslations } from "./translation.js";
+import { applyTranslations, translationLangKeys } from "./translation.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -139,19 +139,86 @@ loadStats({
   locale: defaultLocale,
 });
 
-window.addEventListener("load", applyTranslations);
-
 // location
 
-{
-  const ipInfo = await fetch("https://api.ipregistry.co/?key=tryout").then(
+function getUserIpInfo() {
+  // todo(vmyshko): move to app.config
+  const ipregistryKey = "--api-key-here--";
+
+  // todo(vmyshko): cache ip in localstorage for user
+  return fetch(`https://api.ipregistry.co/?key=${ipregistryKey}`).then(
     (response) => response.json()
   );
+}
 
-  console.log(ipInfo);
+// page init
+{
+  // const ipInfo = await getUserIpInfo();
+  // console.log(ipInfo);
+  // const countryCode = ipInfo.location.country.code;
 
-  const countryCode = ipInfo.location.country.code;
+  const countryCode = "UA";
 
+  switchLang(countryCode);
+
+  window.addEventListener("load", () => applyTranslations(countryCode));
+}
+
+// lang menu
+
+function switchLang(countryCode) {
   $langFlag.textContent = emojiFlags[countryCode];
   $langCountryCode.textContent = countryCode;
+
+  applyTranslations(countryCode);
 }
+
+function toggleLangMenu(open = $btnLangClose.hidden) {
+  $navMenu.hidden = open;
+  $btnBurgerMenu.hidden = open;
+
+  $btnLangClose.hidden = !open;
+  $navLangSelector.hidden = !open;
+  $mobileMenuOverlay.hidden = !open;
+}
+
+$btnLangMenu.addEventListener("click", () => toggleLangMenu(true));
+$btnBurgerMenu.addEventListener("click", () => toggleLangMenu(true));
+
+$btnLangClose.addEventListener("click", () => toggleLangMenu(false));
+$mobileMenuOverlay.addEventListener("click", () => toggleLangMenu(false));
+
+function createBtnLang({ countryCode }) {
+  const $resultItem = $tmplBtnLang.content.firstElementChild.cloneNode(true);
+
+  const $itemCountry = $resultItem.querySelector(".flag-icon");
+  $itemCountry.textContent = emojiFlags[countryCode];
+
+  const $itemName = $resultItem.querySelector(".language-name");
+  $itemName.textContent = countryCode;
+
+  return $resultItem;
+}
+
+function loadLanguages({ $container, data, callbackFn }) {
+  data.forEach((itemData) => {
+    const $resultItem = createBtnLang(itemData);
+
+    $resultItem.addEventListener("click", () => callbackFn(itemData));
+
+    $container.appendChild($resultItem);
+  });
+}
+
+const _langs3 = translationLangKeys.map((key) => ({ countryCode: key }));
+
+window.addEventListener("load", () =>
+  loadLanguages({
+    $container: $navLangSelector,
+    data: _langs3,
+    callbackFn: ({ countryCode }) => {
+      switchLang(countryCode);
+      toggleLangMenu(false);
+    },
+  })
+);

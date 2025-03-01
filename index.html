@@ -21,6 +21,13 @@
         </div>
       </div>
     </template>
+
+    <template id="$tmplBtnLang">
+      <button class="button-language px-10">
+        <span class="flag-icon">🇺🇦</span>
+        <span class="language-name">ua</span>
+      </button>
+    </template>
     <!-- end templates -->
 
     <header
@@ -38,28 +45,50 @@
         </div>
       </div>
 
-      <nav
-        id="$navMenu"
-        class="header-menu flex flex-row align-center"
-        style="align-self: flex-end"
-      >
-        <!-- <a href="#index">home</a> -->
-        <!-- <a href="#about">about</a> -->
-        <!-- <a href="#pricing">pricing</a> -->
-        <a href="#faq">FAQs</a>
-        <a href="#contact">contact us</a>
+      <div class="flex-row">
+        <nav
+          id="$navMenu"
+          class="header-menu flex flex-row align-center desktop-only"
+          style="align-self: flex-end"
+        >
+          <!-- <a href="#index">home</a> -->
+          <!-- <a href="#about">about</a> -->
+          <!-- <a href="#pricing">pricing</a> -->
+          <a href="#faq">FAQs</a>
+          <a href="#contact">contact us</a>
 
-        <a href="./quiz.html" class="button-link">
-          <button class="p-10 btn-primary">start test</button>
-        </a>
+          <a href="./quiz.html" class="button-link">
+            <button class="p-10 btn-primary">start test</button>
+          </a>
 
-        <button class="p-10 btn-secondary">sign in</button>
+          <button class="p-10 btn-secondary">sign in</button>
 
-        <div class="button-language">
-          <span id="$langFlag" class="flag-icon p-5">🇺🇸</span>
-          <span id="$langCountryCode" class="language-name">en</span>
-        </div>
-      </nav>
+          <button id="$btnLangMenu" class="button-language px-10">
+            <span id="$langFlag" class="flag-icon">🇺🇸</span>
+            <span id="$langCountryCode" class="language-name">en</span>
+          </button>
+        </nav>
+
+        <div id="$mobileMenuOverlay" class="mobile-menu-overlay" hidden></div>
+
+        <nav id="$navLangSelector" class="nav-lang-selector flex-col" hidden>
+          <!-- lang buttons go here -->
+        </nav>
+
+        <button id="$btnBurgerMenu" class="button-language px-10 mobile-only">
+          <span class="flag-icon">🍔</span>
+          <span class="language-name">menu</span>
+        </button>
+
+        <button
+          id="$btnLangClose"
+          class="btn-cancel p-10"
+          hidden
+          style="z-index: 1; background-color: white"
+        >
+          <span>✖️</span>
+        </button>
+      </div>
     </header>
 
     <!-- SPLASH -->
@@ -67,9 +96,16 @@
     <section class="section-splash flex-row radius-30">
       <div class="splash-text-block flex-col w-100p">
         <h1>
-          You're definitely smarter than you think.
+          <span data-translation="splash-slogan-1">
+            You're definitely smarter than you think.
+          </span>
 
-          <span style="color: var(--accent-color)"> Prove it!</span>
+          <span
+            style="color: var(--accent-color)"
+            data-translation="splash-slogan-2"
+          >
+            Prove it!</span
+          >
         </h1>
         <h3 class="my-20" style="font-size: smaller">...or die trying</h3>
 
