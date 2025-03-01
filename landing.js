@@ -140,3 +140,18 @@ loadStats({
 });
 
 window.addEventListener("load", applyTranslations);
+
+// location
+
+{
+  const ipInfo = await fetch("https://api.ipregistry.co/?key=tryout").then(
+    (response) => response.json()
+  );
+
+  console.log(ipInfo);
+
+  const countryCode = ipInfo.location.country.code;
+
+  $langFlag.textContent = emojiFlags[countryCode];
+  $langCountryCode.textContent = countryCode;
+}
