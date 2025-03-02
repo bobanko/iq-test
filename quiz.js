@@ -4,6 +4,10 @@ import { SeededRandom } from "./random.helpers.js";
 
 import { Timer } from "./timer.js";
 import { updateHashParameter, getHashParameter } from "./hash-param.js";
+import {
+  preloadImageByImg,
+  preloadImageByLink,
+} from "./preload-image.helper.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -138,19 +142,8 @@ function preloadSvgs() {
     }
   });
 
-  console.log(svgLinks);
-
-  function preloadImage(url) {
-    const img = new Image();
-    img.src = url;
-    // Optional: Handle load/error events
-    img.onload = () => console.log("Image loaded:", url);
-    img.onerror = () => console.error("Error loading:", url);
-  }
-
-  svgLinks.forEach((link) => preloadImage(link));
-
-  // <link rel="preload" as="image" href="image.jpg" fetchpriority="high"></link>;
+  svgLinks.forEach((link) => preloadImageByLink(link));
+  // svgLinks.forEach((link) => preloadImageByImg(link));
 }
 
 function windowOnLoad() {

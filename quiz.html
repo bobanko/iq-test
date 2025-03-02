@@ -11,6 +11,10 @@
   </head>
   <body class="inter-regular">
     <!-- templates -->
+    <template id="$tmplPreloadLink">
+      <link rel="preload" as="image" href="" fetchpriority="high" />
+    </template>
+
     <!-- todo(vmyshko): extract templates to corresponding question types somehow... -->
     <template id="$tmplSvgUse">
       <!-- seems only this way it works: svg+use+href -->
