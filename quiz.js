@@ -282,7 +282,7 @@ function generateQuiz({ seed }) {
           current: questionIndex,
         });
 
-        preventSvgCache(seed);
+        // preventSvgCache(seed);
       },
     });
   });
