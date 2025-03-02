@@ -1,5 +1,5 @@
 import { colors, defaultViewBox } from "./common.config.js";
-import { preventSvgCache, wait } from "./helpers.js";
+import { wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
@@ -195,11 +195,6 @@ export function renderFigurePatternsQuestion({ config, questionData }) {
       isCorrect,
     };
   });
-
-  //debug
-  setTimeout(() => {
-    preventSvgCache();
-  }, 0);
 
   return { questionPatterns, answerPatterns };
 }

@@ -1,5 +1,5 @@
 import { defaultColors, defaultViewBox } from "./common.config.js";
-import { SeededRandom, preventSvgCache, wait } from "./helpers.js";
+import { SeededRandom, wait } from "./helpers.js";
 import { svgFrames } from "./rotational.config.js";
 import { makeUnique } from "./rotational.generator.js";
 
@@ -178,11 +178,6 @@ export function renderRotationalQuestion({
 
     return { $pattern, id, isCorrect };
   });
-
-  //debug
-  setTimeout(() => {
-    preventSvgCache();
-  }, 0);
 
   return {
     questionPatterns,

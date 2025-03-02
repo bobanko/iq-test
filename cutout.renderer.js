@@ -1,6 +1,5 @@
 import { getUid } from "./common.js";
 import { createQuestionMark } from "./common.renderer.js";
-import { preventSvgCache, wait } from "./helpers.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
@@ -118,11 +117,6 @@ export function renderCutoutQuestion({ config, questionData, questionIndex }) {
       isCorrect,
     };
   });
-
-  //debug
-  setTimeout(() => {
-    preventSvgCache();
-  }, 0);
 
   return {
     questionPatterns,

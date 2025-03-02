@@ -1,10 +1,10 @@
 export { SeededRandom } from "./random.helpers.js";
 
-export function preventSvgCache() {
+export function preventSvgCache(cacheKey = Date.now()) {
   // todo(vmyshko): debug: prevent svg cache
-  [...document.querySelectorAll("use")].forEach((use) => {
-    const [url, hash] = use.href.baseVal.split("#");
-    use.href.baseVal = `${url}?${Date.now()}#${hash}`;
+  [...document.querySelectorAll("use")].forEach(($use) => {
+    const [url, hash] = $use.href.baseVal.split("#");
+    $use.href.baseVal = `${url}?${cacheKey}#${hash}`;
   });
 }
 

@@ -1,4 +1,4 @@
-import { getLetter, getSafeIndex, wait } from "./helpers.js";
+import { getLetter, getSafeIndex, preventSvgCache, wait } from "./helpers.js";
 import { quizQuestionConfigs } from "./quiz.config.js";
 import { SeededRandom } from "./random.helpers.js";
 
@@ -127,6 +127,32 @@ function generateButtonClick() {
   updateHashParameter("seed", seed);
 }
 
+function preloadSvgs() {
+  const questionConfigList = Object.values(quizQuestionConfigs);
+
+  const svgLinks = new Set();
+
+  questionConfigList.forEach((cfg) => {
+    if (cfg.figureLink) {
+      svgLinks.add(cfg.figureLink);
+    }
+  });
+
+  console.log(svgLinks);
+
+  function preloadImage(url) {
+    const img = new Image();
+    img.src = url;
+    // Optional: Handle load/error events
+    img.onload = () => console.log("Image loaded:", url);
+    img.onerror = () => console.error("Error loading:", url);
+  }
+
+  svgLinks.forEach((link) => preloadImage(link));
+
+  // <link rel="preload" as="image" href="image.jpg" fetchpriority="high"></link>;
+}
+
 function windowOnLoad() {
   const seed = +getHashParameter("seed");
 
@@ -135,6 +161,7 @@ function windowOnLoad() {
     return;
   }
 
+  preloadSvgs();
   generateQuiz({ seed });
 }
 
@@ -261,6 +288,8 @@ function generateQuiz({ seed }) {
         updateCurrentQuestionLabel({
           current: questionIndex,
         });
+
+        preventSvgCache(seed);
       },
     });
   });
