@@ -52,9 +52,6 @@ timer.onUpdate((diff) => {
     clockEmojis[Math.floor(diff / 1000) % clockEmojis.length];
 
   $timer.textContent = timeStr;
-
-  $progressTime.max = timeGivenMs / 1000;
-  $progressTime.value = Math.floor(diff / 1000);
 });
 
 // ***
@@ -282,7 +279,7 @@ function generateQuiz({ seed }) {
           current: questionIndex,
         });
 
-        // preventSvgCache(seed);
+        // preventSvgCache(performance.now());
       },
     });
   });
@@ -454,3 +451,7 @@ function bindingsOnKeypress({ code }) {
 }
 
 document.addEventListener("keydown", bindingsOnKeypress);
+
+$btnDebug.addEventListener("click", () => {
+  $debugControlPanel.hidden = !$debugControlPanel.hidden;
+});

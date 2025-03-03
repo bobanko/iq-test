@@ -106,25 +106,20 @@ header {
 .patterns-answers-container {
   display: flex;
   justify-content: space-evenly;
-}
 
-/* landscape-like */
-.patterns-answers-container {
+  /* landscape-like */
   flex-direction: row;
+
+  @media (orientation: portrait) and (width < 600px) {
+    flex-direction: column;
+  }
 }
 
 .answer-list {
   grid-template-columns: repeat(2, 1fr);
 
   box-sizing: border-box;
-}
-
-@media (orientation: portrait) and (width < 600px) {
-  .patterns-answers-container {
-    flex-direction: column;
-  }
-
-  .answer-list {
+  @media (orientation: portrait) and (width < 600px) {
     grid-template-columns: repeat(3, 1fr);
   }
 }
@@ -239,4 +234,11 @@ hr {
   border-width: 2px;
   box-sizing: border-box;
   align-self: stretch;
+}
+
+footer {
+  position: sticky;
+  bottom: 0;
+  background-color: var(--body-bg-color);
+  box-shadow: 0px 0px 5px 1px #0000003d;
 }

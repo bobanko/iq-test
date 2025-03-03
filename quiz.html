@@ -94,52 +94,6 @@
     <!-- templates end -->
 
     <header class="flex-col" style="z-index: 3">
-      <div class="flex-row align-center">
-        <a class="p-10 m-10" href="./index.html">Back</a>
-
-        <button
-          id="$btnGenerate"
-          type="button"
-          class="small p-10 m-10"
-          hotkey="g"
-        >
-          generate
-        </button>
-
-        <label class="flex-row align-center"
-          ><span>seed</span>
-          <input
-            type="text"
-            id="$seed"
-            readonly
-            class="m-10"
-            style="width: 100%; font-size: 10px"
-            value="123123"
-          />
-        </label>
-
-        <label>
-          <input type="checkbox" name="debug" id="$debugCheckbox" />
-          <span>show debug info</span>
-        </label>
-      </div>
-    </header>
-
-    <section id="$mainSection" class="flex-col align-center">
-      <progress
-        id="$progressQuiz"
-        class="w-100p"
-        max="100"
-        value="0"
-        style="
-          position: sticky;
-          top: 60px;
-          z-index: 2;
-          --progress-value-bg: var(--green);
-          box-shadow: 0px -2px 5px black;
-        "
-      ></progress>
-
       <div class="flex-col w-100p">
         <div class="flex-col w-100p py-10">
           <div
@@ -147,7 +101,6 @@
             style="justify-content: space-between; text-transform: capitalize"
           >
             <div class="px-10">
-              <!-- <span>⬆️</span> -->
               <span>answered:</span>
               <span id="$quizProgressAnswered" class="tabular-nums">99/99</span>
               <span id="$quizStats"></span>
@@ -158,29 +111,25 @@
               <span> time left:</span>
               <!-- <span>remaining time:</span> -->
               <span id="$timer" class="tabular-nums">99:99</span>
-              <!-- <span>⬇️</span> -->
             </div>
           </div>
         </div>
       </div>
 
       <progress
-        hidden
-        id="$progressTime"
+        id="$progressQuiz"
         class="w-100p"
         max="100"
         value="0"
         style="
-          position: sticky;
-          top: 65px;
-          z-index: 1;
-          --progress-value-bg: var(--red);
-          /* box-shadow: 0px -2px 5px black; */
+          --progress-value-bg: var(--green);
+          box-shadow: 0px 0px 5px #0000003b;
         "
       ></progress>
+    </header>
 
+    <section id="$mainSection" class="flex-col align-center">
       <hr />
-
       <div class="patterns-answers-container align-center w-100p">
         <div id="$patternArea" class="pattern-area p-10">
           <!-- patterns go here -->
@@ -194,27 +143,65 @@
 
       <hr />
 
-      <div class="question-navigation flex-row align-center p-10">
-        <button id="$btnPrevQuestion" class="p-10" hotkey="←">prev</button>
-        <div
-          id="$currentQuestionLabel"
-          class="px-10 tabular-nums"
-          style="font-size: x-large"
-        >
-          99/99
-        </div>
-        <button id="$btnNextQuestion" class="p-10" hotkey="→">next</button>
-      </div>
-      <hr />
-
       <div id="$questionList" class="question-list p-10">
         <!-- question links go here -->
       </div>
-
-      <hr />
-      <button id="$btnFinishQuiz" type="button" class="p-10 m-10">
-        finish test
-      </button>
     </section>
+
+    <footer class="flex-col">
+      <hr />
+      <div
+        class="flex-row align-center p-10"
+        style="gap: 10px; justify-content: space-between"
+      >
+        <button id="$btnDebug" type="button" class="p-10">🐞</button>
+
+        <div class="flex-row align-center">
+          <button id="$btnPrevQuestion" class="p-10" hotkey="←">prev</button>
+          <div
+            id="$currentQuestionLabel"
+            class="px-10 tabular-nums"
+            style="font-size: x-large"
+          >
+            99/99
+          </div>
+          <button id="$btnNextQuestion" class="p-10" hotkey="→">next</button>
+        </div>
+
+        <button id="$btnFinishQuiz" type="button" class="p-10">finish</button>
+      </div>
+
+      <!-- debug below -->
+      <div class="flex-col" id="$debugControlPanel" hidden>
+        <hr />
+        <label class="p-10">
+          <input type="checkbox" name="debug" id="$debugCheckbox" />
+          <span>show debug info</span>
+        </label>
+
+        <div class="flex-row align-center">
+          <button
+            id="$btnGenerate"
+            type="button"
+            class="small p-10 m-10"
+            hotkey="g"
+          >
+            generate
+          </button>
+
+          <label class="flex-row align-center"
+            ><span>seed</span>
+            <input
+              type="text"
+              id="$seed"
+              readonly
+              class="m-10"
+              style="width: 100%; font-size: 10px"
+              value="123123"
+            />
+          </label>
+        </div>
+      </div>
+    </footer>
   </body>
 </html>
