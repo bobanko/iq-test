@@ -1,3 +1,9 @@
+.app-preview-container {
+  overflow: hidden;
+  align-self: flex-end;
+  container-type: inline-size;
+}
+
 .app-preview {
   position: relative;
   /* to cover shadow */
@@ -105,9 +111,30 @@
   }
 
   img {
+    display: none;
+
+    &.active {
+      display: block;
+      animation: fadeIn 300ms ease-in;
+    }
+
     object-position: top;
     object-fit: cover;
     height: 100%;
     width: 100%;
   }
+
+  @container (width < 450px) {
+    zoom: 0.8;
+  }
+
+  @container (width < 350px) {
+    zoom: 0.7;
+  }
+
+  @container (width < 300px) {
+    zoom: 0.6;
+  }
+
+  transition: zoom 0.3s ease;
 }

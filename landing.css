@@ -46,6 +46,10 @@ body {
   }
 }
 
+label {
+  cursor: pointer;
+}
+
 button {
   cursor: pointer;
 
@@ -200,11 +204,23 @@ section {
     flex-direction: column;
     align-items: center;
 
-    font-size: min(2vw, calc(var(--max-width) / 100 * 2));
-
     .stat-value {
       font-size: min(4vw, calc(var(--max-width) / 100 * 4));
       font-weight: bold;
+    }
+
+    .stat-text {
+      font-size: min(2vw, calc(var(--max-width) / 100 * 2));
+    }
+
+    @media (orientation: portrait) and (width < 600px) {
+      .stat-value {
+        font-size: min(6vw, calc(var(--max-width) / 100 * 6));
+      }
+
+      .stat-text {
+        font-size: min(3vw, calc(var(--max-width) / 100 * 3));
+      }
     }
 
     .icon-emoji {
@@ -358,18 +374,6 @@ dl.faq-list {
   }
 }
 
-.app-preview {
-  img {
-    /* visibility: hidden; */
-    display: none;
-  }
-
-  img.active {
-    display: block;
-    animation: fadeIn 300ms ease-in;
-  }
-}
-
 h1 {
   font-size: 56px;
   font-size: min(4.5vw, calc(var(--max-width) / 100 * 4.5));
@@ -382,10 +386,6 @@ h1 {
   box-sizing: border-box;
   padding: 50px;
   padding-right: 0;
-}
-
-.app-preview {
-  transition: all 300ms ease;
 }
 
 .popup-menu {
@@ -419,44 +419,9 @@ h1 {
   right: 0;
 
   background-color: hsla(from var(--bg-secondary) h s l / 0.3);
+  backdrop-filter: blur(5px);
 
   z-index: 1;
-}
-
-@media (width < 1000px) {
-  .app-preview {
-    zoom: 0.8;
-  }
-}
-
-@media (width < 850px) {
-  .app-preview {
-    zoom: 0.7;
-  }
-}
-
-@media (width < 700px) {
-  .app-preview {
-    zoom: 0.6;
-  }
-}
-
-@media (width < 600px) {
-  .app-preview {
-    zoom: 1;
-  }
-}
-
-@media (width < 450px) {
-  .app-preview {
-    zoom: 0.8;
-  }
-}
-
-@media (width < 350px) {
-  .app-preview {
-    zoom: 0.7;
-  }
 }
 
 @media (width >= 600px) {
