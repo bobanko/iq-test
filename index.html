@@ -35,7 +35,7 @@
       class="flex-row align-center py-10"
       style="justify-content: space-between"
     >
-      <div class="flex-row align-center py-10">
+      <div class="flex-row align-center py-10 nowrap">
         <img src="./images/brain-ios.png" width="40px" />
         <div class="flex-col px-10">
           <span
@@ -130,7 +130,7 @@
     <!-- SPLASH -->
 
     <section class="section-splash flex-row radius-30">
-      <div class="splash-text-block flex-col w-100p">
+      <div class="splash-text-container flex-col w-100p">
         <h1 class="my-10">
           <span data-translation="splash-slogan-1">
             You're definitely smarter than you think.
@@ -156,10 +156,7 @@
         </div>
       </div>
 
-      <div
-        class="flex-col w-100p align-center"
-        style="overflow: hidden; align-self: flex-end"
-      >
+      <div class="app-preview-container flex-col w-100p align-center">
         <div class="app-preview">
           <div id="$phoneClock" class="phone-clock">18:21</div>
           <div class="phone-icons">
@@ -190,7 +187,9 @@
     >
       <div class="stat-block">
         <span class="stat-value">1k+</span>
-        <span data-translation="stats-today-label">tests taken today</span>
+        <span class="stat-text" data-translation="stats-today-label"
+          >tests taken today</span
+        >
       </div>
       <!-- <div class="stat-block">
         <span class="stat-value">1k+</span>
@@ -206,15 +205,19 @@
       </div> -->
       <div class="stat-block">
         <span class="stat-value">2m+</span>
-        <span data-translation="stats-total-label">total tests taken</span>
+        <span class="stat-text" data-translation="stats-total-label"
+          >total tests taken</span
+        >
       </div>
       <div class="stat-block">
         <span class="stat-value">100</span>
-        <span data-translation="stats-average-label">average iq</span>
+        <span class="stat-text" data-translation="stats-average-label"
+          >average iq</span
+        >
       </div>
       <div class="stat-block">
         <span class="stat-value">140</span>
-        <span data-translation="stats-max-label">max iq</span>
+        <span class="stat-text" data-translation="stats-max-label">max iq</span>
       </div>
     </section>
 
@@ -358,6 +361,7 @@
 
       <div class="flex-col mobile-center">
         <form
+          id="$formContact"
           class="contact-form"
           action="mailto:example@email.com"
           method="post"

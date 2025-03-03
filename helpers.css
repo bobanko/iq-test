@@ -20,6 +20,14 @@
   justify-content: center;
 }
 
+.container {
+  container-type: inline-size;
+}
+
+.nowrap {
+  white-space: nowrap;
+}
+
 [hidden] {
   display: none !important;
 }

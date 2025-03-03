@@ -38,10 +38,9 @@ body {
   flex: 1;
   max-width: var(--max-width);
   box-sizing: border-box;
-}
+  container: auto;
 
-@media screen {
-  body {
+  @media screen {
     padding: 0 40px;
   }
 }
@@ -188,8 +187,6 @@ section {
 .section-splash {
   overflow: hidden;
 
-  font-size: min(4vw, calc(var(--max-width) / 100 * 4));
-
   /* todo: can change hue, keep opacity */
   background-color: var(--bg-primary);
 }
@@ -198,6 +195,7 @@ section {
 
 .stats-total {
   padding: 20px;
+  container-type: inline-size;
 
   .stat-block {
     display: flex;
@@ -205,26 +203,12 @@ section {
     align-items: center;
 
     .stat-value {
-      font-size: min(4vw, calc(var(--max-width) / 100 * 4));
+      font-size: min(6cqw, 40px);
       font-weight: bold;
     }
 
     .stat-text {
-      font-size: min(2vw, calc(var(--max-width) / 100 * 2));
-    }
-
-    @media (orientation: portrait) and (width < 600px) {
-      .stat-value {
-        font-size: min(6vw, calc(var(--max-width) / 100 * 6));
-      }
-
-      .stat-text {
-        font-size: min(3vw, calc(var(--max-width) / 100 * 3));
-      }
-    }
-
-    .icon-emoji {
-      font-size: 30px;
+      font-size: min(3cqw, 20px);
     }
   }
 }
@@ -375,17 +359,30 @@ dl.faq-list {
 }
 
 h1 {
-  font-size: 56px;
-  font-size: min(4.5vw, calc(var(--max-width) / 100 * 4.5));
   margin: 0;
 }
 
 /* landscape */
 
-.splash-text-block {
+.splash-text-container {
+  container-type: inline-size;
   box-sizing: border-box;
-  padding: 50px;
-  padding-right: 0;
+
+  h1 {
+    font-size: 10cqw;
+  }
+
+  > * {
+    padding: 8cqw;
+  }
+
+  .mobile-center {
+    padding-top: 0;
+  }
+
+  .button-link {
+    font-size: 7cqw;
+  }
 }
 
 .popup-menu {
@@ -439,16 +436,8 @@ h1 {
     display: none;
   }
 
-  h1 {
-    font-size: clamp(10px, 7vw, 40px);
-  }
-
   .section-splash {
     flex-direction: column;
-  }
-
-  .splash-text-block {
-    padding: 20px;
   }
 
   .mobile-center {
