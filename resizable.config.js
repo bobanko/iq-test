@@ -26,7 +26,7 @@ export const resizableConfigs = {
 
     viewBox: alternateViewBox,
     scale: 0.9 / 2,
-    strokeWidth: 5,
+    strokeWidth: 3,
 
     // maxAnswerCount: 8,
 
