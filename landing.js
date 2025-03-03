@@ -17,8 +17,9 @@ function onHashChanged() {
   const pageHash = getHash();
 
   if (pageHash === "") {
-    const miHash = menuItems[0].getAttribute("href").substring(1);
-    setHash(miHash);
+    //select first?
+    // const miHash = menuItems[0].getAttribute("href").substring(1);
+    // setHash(miHash);
     return;
   }
 
@@ -163,7 +164,7 @@ function fetchClientIpInfo() {
   // const countryCode = "UA";
   const countryCode = ipInfo.location.country.code;
 
-  switchLang(countryCode);
+  // switchLang(countryCode);
 }
 
 // lang menu
@@ -218,7 +219,7 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
   countryCode: key,
 }));
 
-window.addEventListener("load", () =>
+window.addEventListener("load", () => {
   loadLanguages({
     $container: $navLangItemList,
     data: langsCountryCodes,
@@ -226,5 +227,18 @@ window.addEventListener("load", () =>
       switchLang(countryCode);
       toggleLangMenu(false);
     },
-  })
-);
+  });
+
+  $formContact.addEventListener("submit", (e) => {
+    e.preventDefault();
+
+    const formData = new FormData($formContact);
+
+    const email = formData.get("email");
+    const subject = formData.get("subject");
+    const name = formData.get("name");
+    const message = formData.get("message");
+
+    window.open(`mailto:${email}?subject=${subject}&body=${name}: ${message}`);
+  });
+});
