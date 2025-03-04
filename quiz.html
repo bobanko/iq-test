@@ -156,8 +156,13 @@
       >
         <button id="$btnDebug" type="button" class="p-10">🐞</button>
 
-        <div class="flex-row align-center">
-          <button id="$btnPrevQuestion" class="p-10" hotkey="←">prev</button>
+        <div class="navigation-controls flex-row align-center">
+          <div class="btn-container" style="justify-content: right">
+            <button id="$btnPrevQuestion" class="btn-nav p-10" hotkey="←">
+              <span class="btn-nav-icon">←</span>
+              <span class="btn-nav-text">prev</span>
+            </button>
+          </div>
           <div
             id="$currentQuestionLabel"
             class="px-10 tabular-nums"
@@ -165,7 +170,12 @@
           >
             99/99
           </div>
-          <button id="$btnNextQuestion" class="p-10" hotkey="→">next</button>
+          <div class="btn-container">
+            <button id="$btnNextQuestion" class="btn-nav p-10" hotkey="→">
+              <span class="btn-nav-text">next</span>
+              <span class="btn-nav-icon">→</span>
+            </button>
+          </div>
         </div>
 
         <button id="$btnFinishQuiz" type="button" class="p-10">finish</button>
