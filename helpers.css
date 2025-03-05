@@ -20,6 +20,10 @@
   justify-content: center;
 }
 
+.gap-10 {
+  gap: 10px;
+}
+
 .container {
   container-type: inline-size;
 }
@@ -111,4 +115,14 @@ svg[aria-hidden="true"] {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  backdrop-filter: blur(5px);
+  z-index: 1;
 }

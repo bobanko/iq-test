@@ -274,3 +274,15 @@ footer {
   background-color: var(--body-bg-color);
   box-shadow: 0px 0px 5px 1px #0000003d;
 }
+
+.modal-overlay {
+  background-color: color(srgb 1 0.921569 0.839216 / 0.3);
+}
+
+.popup-container {
+  background-color: var(--body-bg-color);
+
+  border: 3px solid var(--gray);
+  border-radius: 5px;
+  box-shadow: 0px 0px 5px 5px #00000040;
+}

@@ -93,7 +93,7 @@
 
     <!-- templates end -->
 
-    <header class="flex-col" style="z-index: 3">
+    <header class="flex-col" style="z-index: 1">
       <div class="flex-col w-100p">
         <div class="flex-col w-100p py-10">
           <div
@@ -151,8 +151,8 @@
     <footer class="flex-col">
       <hr />
       <div
-        class="flex-row align-center p-10"
-        style="gap: 10px; justify-content: space-between"
+        class="flex-row align-center p-10 gap-10"
+        style="justify-content: space-between"
       >
         <button id="$btnDebug" type="button" class="p-10">🐞</button>
 
@@ -213,5 +213,24 @@
         </div>
       </div>
     </footer>
+
+    <!-- modal -->
+
+    <div
+      id="$modalOverlay"
+      class="modal-overlay overlay flex-col align-center justify-center"
+      hidden
+    >
+      <div class="popup-container flex-col p-20 gap-10">
+        <div style="font-weight: bold">title</div>
+        <div class="">message</div>
+
+        <hr />
+        <div class="flex-row gap-10">
+          <button id="$btnFinishCancel" class="p-10">cancel</button>
+          <button id="$btnFinishConfirm" class="p-10">confirm</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

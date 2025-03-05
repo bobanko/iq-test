@@ -351,6 +351,8 @@ $seed.addEventListener("click", () => {
 
 $btnFinishQuiz.addEventListener("click", () => {
   checkAnswers();
+
+  $modalOverlay.hidden = false;
 });
 
 export function wrapAnswers({
@@ -433,6 +435,7 @@ $debugCheckbox.addEventListener("change", (event) => {
 
 $debugCheckbox.click();
 
+// hotkeys
 function bindingsOnKeypress({ code }) {
   const questionsInRow = 9; // depends on layout
   const keyBindingsMap = new Map([
@@ -443,6 +446,9 @@ function bindingsOnKeypress({ code }) {
     ["ArrowUp", () => navigateQuestions(-questionsInRow)],
 
     ["KeyG", () => $btnGenerate.click()],
+    ["Escape", () => $btnDebug.click()],
+    ["KeyD", () => $debugCheckbox.click()],
+    ["KeyF", () => $btnFinishQuiz.click()],
   ]);
 
   // console.log(code);
@@ -454,4 +460,11 @@ document.addEventListener("keydown", bindingsOnKeypress);
 
 $btnDebug.addEventListener("click", () => {
   $debugControlPanel.hidden = !$debugControlPanel.hidden;
+});
+
+$btnFinishConfirm.addEventListener("click", () => {
+  $modalOverlay.hidden = true;
+});
+$btnFinishCancel.addEventListener("click", () => {
+  $modalOverlay.hidden = true;
 });
