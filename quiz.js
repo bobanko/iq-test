@@ -330,11 +330,10 @@ function checkAnswers() {
     $questionList.children[questionIndex].classList.toggle("wrong", !isCorrect);
   }); //forEach
 
-  // todo(vmyshko): debug
-  $quizStats.textContent = `
-  🟢${stats.isCorrect} 
-  🔴${stats.isAnswered - stats.isCorrect} 
-  ⚪️${stats.total - stats.isAnswered}`;
+  $msgTestResults.innerHTML = `
+  🟢 correct answers: ${stats.isCorrect}  </br>
+  🔴 wrong answers: ${stats.isAnswered - stats.isCorrect}  </br>
+  ⚪️ total questions answered: ${stats.isAnswered} of ${stats.total}`;
 }
 
 // apply handlers

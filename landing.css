@@ -409,16 +409,7 @@ h1 {
 }
 
 .mobile-menu-overlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  bottom: 0;
-  right: 0;
-
   background-color: hsla(from var(--bg-secondary) h s l / 0.3);
-  backdrop-filter: blur(5px);
-
-  z-index: 1;
 }
 
 @media (width >= 600px) {
