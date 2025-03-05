@@ -12,25 +12,34 @@ const figureGenerators = {
   [figureGenRules.symmetric]: generateSymmetricFigures,
 };
 
-// A&!B
+// A&!B &~
 function subFigures(figures1, figures2) {
   // all from 1 but no from 2
   return figures1.filter((pt1) => !figures2.some((pt2) => pt2 === pt1));
 }
 
-// AND
+// AND &
 function mulFigures(figures1, figures2) {
   // only same from both
   return figures1.filter((pt1) => figures2.some((pt2) => pt2 === pt1));
 }
 
-// XOR
+// XOR ^
 export function xorFigures(figures1, figures2) {
   //only unique from both
   const mulResult = mulFigures(figures1, figures2);
 
   return subFigures([...figures1, ...figures2], mulResult);
 }
+
+// todo(vmyshko): all logical ops could be done with binaries
+// example
+// convert from binary and do bitwise ops:
+// parseInt('0111',2) &~ parseInt('1001',2) => 6
+// from dec to binary
+// (6).toString(2).padStart(4,'0')
+// '0110'
+// each binary digit can be mapped to corresponding figure
 
 function generateSymmetricFigures({ random, config }) {
   const { figureCount, figures } = config;
@@ -104,7 +113,6 @@ function generateXorRowPatterns({ basicFigures, random, config }) {
 
 function mapToFigureParts(oldPattern) {
   return {
-    ...oldPattern,
     figureParts: [
       {
         figures: oldPattern.figures.sort((a, b) => a - b),
