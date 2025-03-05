@@ -1,12 +1,12 @@
 <svg id="quarter" viewBox="0 0 80 80" fill="none" xmlns="http://www.w3.org/2000/svg">
 
 <g clip-path="url(#clip0_171_5837)">
-<rect  x="40" y="40" width="40" height="40" transform="rotate(180 40 40)" fill="var(--color)" stroke="black"/>
+<rect  x="40" y="40" width="40" height="40" transform="rotate(180 40 40)" fill="var(--color)" stroke="var(--stroke)" />
 </g>
 
 <defs>
 <clipPath id="clip0_171_5837">
-<rect width="80" height="80" rx="40" fill="white"/>
+<rect width="80" height="80" rx="40" fill="white" />
 </clipPath>
 </defs>
 </svg>
