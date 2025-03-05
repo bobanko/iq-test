@@ -11,8 +11,6 @@
 @import url(./question-list.css);
 
 :root {
-  --row-height: 75px;
-
   --body-bg-color: #c0c0c0;
 }
 
@@ -175,7 +173,7 @@ header {
   align-items: center;
   justify-content: center;
 
-  width: calc(var(--row-height) / 3);
+  width: 25px;
 
   text-align: center;
 
