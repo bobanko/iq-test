@@ -10,6 +10,7 @@ import {
 } from "./translation.helper.js";
 import { appConfig } from "./app.config.js";
 import { getCached } from "./local-cache.helper.js";
+import "./firebase.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");

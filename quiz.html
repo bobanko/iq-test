@@ -190,10 +190,17 @@
       <!-- debug below -->
       <div class="flex-col" id="$debugControlPanel" hidden>
         <hr />
-        <label class="p-10">
-          <input type="checkbox" name="debug" id="$debugCheckbox" />
-          <span>show debug info</span>
-        </label>
+        <div class="flex-row">
+          <label class="p-10">
+            <input type="checkbox" name="debug" id="$debugCheckbox" />
+            <span>show debug info</span>
+          </label>
+
+          <label class="p-10">
+            <input type="checkbox" name="debug" id="$disableSvgCacheCheckbox" />
+            <span>disable svg cache</span>
+          </label>
+        </div>
 
         <div class="flex-row align-center">
           <button

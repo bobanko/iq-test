@@ -9,6 +9,8 @@ import {
   preloadImageByLink,
 } from "./preload-image.helper.js";
 
+import "./firebase.js";
+
 // globals
 const patternsInRowDefault = 3;
 const patternsInColDefault = 3;
@@ -279,7 +281,9 @@ function generateQuiz({ seed }) {
           current: questionIndex,
         });
 
-        // preventSvgCache(performance.now());
+        if ($disableSvgCacheCheckbox.checked) {
+          preventSvgCache(performance.now());
+        }
       },
     });
   });
