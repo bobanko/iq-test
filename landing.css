@@ -368,16 +368,10 @@ h1 {
   container-type: inline-size;
   box-sizing: border-box;
 
-  h1 {
+  .splash-text-block {
     font-size: 10cqw;
-  }
-
-  > * {
-    padding: 8cqw;
-  }
-
-  .mobile-center {
-    padding-top: 0;
+    font-weight: bold;
+    padding: 4cqw 8cqw;
   }
 
   .button-link {

@@ -115,7 +115,7 @@
 
     &.active {
       display: block;
-      animation: fadeIn 300ms ease-in;
+      animation: fadeIn 500ms ease-in;
     }
 
     object-position: top;
