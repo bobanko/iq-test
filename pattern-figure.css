@@ -23,8 +23,6 @@ body.debug text.debug-info {
   width: var(--pattern-size);
   height: var(--pattern-size);
 
-  color: var(--color, black);
-
   background-color: white;
   stroke-width: 2px;
 
@@ -45,8 +43,8 @@ body.debug text.debug-info {
   /* --color is fallback, should be -fill */
 
   fill: var(--fill, var(--color, none));
-  stroke: var(--stroke);
-  stroke-width: var(--stroke-width);
+  stroke: var(--stroke, var(--color, none));
+  stroke-width: var(--stroke-width, 0);
   transform: rotate(var(--rotate, 0deg))
     scale3d(var(--scaleX, var(--scale, 1)), var(--scaleY, var(--scale, 1)), 1);
 
