@@ -1,7 +1,7 @@
 <svg width="320" height="320" viewBox="0 0 320 320" fill="none" xmlns="http://www.w3.org/2000/svg">
 <g id="cutout-raven-a8" clip-path="url(#clip0_834_2465)">
 <g id="pattern">
-<rect id="background" width="320" height="320" fill="#FFDF32"/>
+<rect id="background" width="320" height="320" fill="var(--yellow)"/>
 <line id="Line 29" y1="240" x2="320" y2="240" stroke="black" stroke-width="4"/>
 <line id="Line 28" y1="93" x2="320" y2="93" stroke="black" stroke-width="4"/>
 <line id="Line 24" y1="70" x2="320" y2="70" stroke="black" stroke-width="4"/>
