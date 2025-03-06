@@ -3,6 +3,8 @@ import { renderFigurePatternsQuestion } from "./figure-patterns.renderer.js";
 import { generatePatternsQuestion_rowSub } from "./row-sub-figs.generator.js";
 
 export const rowSubFiguresConfigs = {
+  // todo(vmyshko): fix empty col 2
+  // http://127.0.0.1:8080/quiz.html#seed=0.10673593757500122
   iq36_rowSubFigsMany: {
     order: 36,
     patternsInCol: 3,
