@@ -16,6 +16,25 @@ https://international-iq-test.com/ru/679adbc7-b05c-4e3b-9b59-4a3795ca4579
 highest-iq result 142 (40/40)  
 https://international-iq-test.com/ru/6799440c-69d0-4140-8507-49aa95ca4579
 
+#### correct answers
+
+'f,b,a,c,d,b,f,a,d,f,f,a,e,d,b,e,d,d,d,d,b,e,c,e,e,d,d,a,b,e,f,c,b,c,f,f,d,b,c,f'
+
+0/40 - iq 69
+3/40 - iq 69
+
+4/40 - iq 76
+5/40 - iq 76
+10/40 - iq 76
+
+15/40 - iq 89
+20/40 - iq 99
+25/40 - iq 105
+30/40 - iq 118
+35/40 - iq 125
+
+40/40 - iq 142
+
 ---
 
 stylish, good questions  
@@ -70,3 +89,7 @@ https://www.arealme.com/category/iq-tests/en
 good landing, paywall, ok questions
 
 https://officialiqtests.com/
+
+## new
+
+https://test.iq/
