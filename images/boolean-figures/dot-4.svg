@@ -4,6 +4,6 @@
 <path id="0" d="M54 4V54" stroke-linecap="round" stroke-width="7"/>
 <path id="2" d="M54 54L54 104" stroke-linecap="round" stroke-width="7"/>
 <path id="3" d="M4 54H54" stroke-linecap="round" stroke-width="7"/>
-<circle id="circle" cx="54" cy="54" r="1" stroke-width="40"/>
+<circle id="circle" cx="54" cy="54" r="1" stroke-width="40" stroke="black"/>
 </g>
 </svg>
