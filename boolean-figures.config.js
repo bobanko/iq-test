@@ -179,6 +179,9 @@ export const booleanFiguresConfigs = {
   },
 
   linessym8xor: {
+    // todo(vmyshko): fix empty row 2 col 3
+    // http://127.0.0.1:8080/quiz.html#seed=0.10673593757500122
+
     skip: true,
     figureGenRule: figureGenRules.symmetric, // todo(vmyshko): use enums for other configs as well
     patternsInCol: 3,
@@ -201,12 +204,15 @@ export const booleanFiguresConfigs = {
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/pentagon-10.svg",
     figureCount: 10,
-    viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (3 / 0.7).toFixed(2),
     color: "black",
     // maxAnswerCount: 8,
 
     generator: generateBooleanFiguresQuestion,
+
+    viewBox: scaleViewBox(alternateViewBox, 0.7),
+    // staticFigures: ["pentagon"],
+    // questionMarkFigure: "pentagon",
     renderer: renderFigurePatternsQuestion,
   },
 };
