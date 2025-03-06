@@ -26,7 +26,7 @@ import {
   linkWithPopup,
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
 
-import { firebaseConfig } from "./firebase.config.js";
+import { firebaseConfig } from "./configs/firebase.config.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

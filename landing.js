@@ -1,15 +1,15 @@
-import { getHash, setHash } from "./hash-param.js";
-import { getSafeIndex, SeededRandom } from "./helpers.js";
-import { Timer } from "./timer.js";
+import { getHash, setHash } from "./helpers/hash-param.js";
+import { getSafeIndex, SeededRandom } from "./helpers/helpers.js";
+import { Timer } from "./helpers/timer.js";
 
 import { loadStats } from "./stats-results.js";
 import { countries, emojiFlags } from "./countries.mapping.js";
 import {
   applyTranslations,
   translationLangKeys,
-} from "./translation.helper.js";
-import { appConfig } from "./app.config.js";
-import { getCached } from "./local-cache.helper.js";
+} from "./helpers/translation.helper.js";
+import { appConfig } from "./configs/app.config.js";
+import { getCached } from "./helpers/local-cache.helper.js";
 import "./firebase.js";
 import { getCurrentUser, signAnonUser, updateUserData } from "./firebase.js";
 

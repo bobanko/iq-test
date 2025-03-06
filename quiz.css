@@ -1,14 +1,14 @@
-@import url(./reset.css);
-@import url(./fonts.css);
-@import url(./helpers.css);
-/* @import url(./hotkeys.css); */
-@import url(./palette.css);
-@import url(./patterns.css);
-@import url(./animations.css);
+@import url(./styles/reset.css);
+@import url(./styles/fonts.css);
+@import url(./styles/helpers.css);
+/* @import url(./styles/hotkeys.css); */
+@import url(./styles/palette.css);
+@import url(./styles/patterns/patterns.css);
+@import url(./styles/animations.css);
 
-@import url(./button.css);
+@import url(./styles/button.css);
 
-@import url(./question-list.css);
+@import url(./styles/question-list.css);
 
 :root {
   --body-bg-color: #c0c0c0;

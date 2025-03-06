@@ -1,10 +1,10 @@
-@import url(./reset.css);
-@import url(./fonts.css);
-@import url(./helpers.css);
-@import url(./animations.css);
+@import url(./styles/reset.css);
+@import url(./styles/fonts.css);
+@import url(./styles/helpers.css);
+@import url(./styles/animations.css);
 
-@import url(./palette.css);
-@import url(./app-preview.css);
+@import url(./styles/palette.css);
+@import url(./styles/app-preview.css);
 
 :root {
   --max-width: 1200px;

@@ -1,13 +1,18 @@
-import { getLetter, getSafeIndex, preventSvgCache, wait } from "./helpers.js";
-import { quizQuestionConfigs } from "./quiz.config.js";
-import { SeededRandom } from "./random.helpers.js";
+import {
+  getLetter,
+  getSafeIndex,
+  preventSvgCache,
+  wait,
+} from "./helpers/helpers.js";
+import { quizQuestionConfigs } from "./configs/quiz/quiz.config.js";
+import { SeededRandom } from "./helpers/random.helpers.js";
 
-import { Timer } from "./timer.js";
-import { updateHashParameter, getHashParameter } from "./hash-param.js";
+import { Timer } from "./helpers/timer.js";
+import { updateHashParameter, getHashParameter } from "./helpers/hash-param.js";
 import {
   preloadImageByImg,
   preloadImageByLink,
-} from "./preload-image.helper.js";
+} from "./helpers/preload-image.helper.js";
 
 import "./firebase.js";
 import { signAnonUser } from "./firebase.js";
@@ -440,7 +445,7 @@ $debugCheckbox.click();
 
 // hotkeys
 function bindingsOnKeypress({ code }) {
-  const questionsInRow = 9; // depends on layout
+  const questionsInRow = 10; // depends on layout
   const keyBindingsMap = new Map([
     ["ArrowRight", () => navigateQuestions(1)],
     ["ArrowLeft", () => navigateQuestions(-1)],
