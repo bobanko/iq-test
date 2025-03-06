@@ -49,10 +49,12 @@ export function generateUniqueValues({
     generatedValues.length < maxValuesCount
   );
 
-  console.log(
-    `🎲 generated ${generatedValues.length} of ${maxValuesCount}, 
+  if (attemptsCount > 0) {
+    console.log(
+      `🎲 generated ${generatedValues.length} of ${maxValuesCount}, 
       by ${attemptsCount} of ${maxAttemptsCount} attempts`
-  );
+    );
+  }
 
   return [...existingValues, ...generatedValues];
 }
