@@ -1,41 +1,23 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+import { firebaseConfig } from "./firebase.config.js";
 import {
-  getFirestore,
-  query,
-  orderBy,
-  limit,
-  collection,
-  getDocs,
-  getDoc,
-  addDoc,
-  doc,
-  setDoc,
-  Timestamp,
-  serverTimestamp,
-} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
-import {
+  getAnalytics,
   getAuth,
+  getFirestore,
+  initializeApp,
   signInAnonymously,
   updateProfile,
-  signInWithPopup,
-  GoogleAuthProvider,
-  //   EmailAuthProvider,
-  linkWithCredential,
-  linkWithRedirect,
-  linkWithPopup,
-} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-auth.js";
-
-import { firebaseConfig } from "./configs/firebase.config.js";
+} from "./firebase.js";
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
 
 // Initialize Cloud Firestore and get a reference to the service
-const db = getFirestore(app);
+export const db = getFirestore(app);
 
 // functions
+
+// todo(vmyshko): extract api/endpoints
 
 export function getCurrentUser() {
   return getAuth().currentUser;

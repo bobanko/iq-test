@@ -10,8 +10,12 @@ import {
 } from "./helpers/translation.helper.js";
 import { appConfig } from "./configs/app.config.js";
 import { getCached } from "./helpers/local-cache.helper.js";
-import "./firebase.js";
-import { getCurrentUser, signAnonUser, updateUserData } from "./firebase.js";
+
+import {
+  getCurrentUser,
+  updateUserData,
+  signAnonUser,
+} from "./endpoints/firebase.init.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
