@@ -11,6 +11,7 @@ import {
 import { appConfig } from "./app.config.js";
 import { getCached } from "./local-cache.helper.js";
 import "./firebase.js";
+import { getCurrentUser, signAnonUser, updateUserData } from "./firebase.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -31,8 +32,11 @@ function onHashChanged() {
   });
 }
 
-window.addEventListener("hashchange", onHashChanged);
-window.addEventListener("load", onHashChanged);
+{
+  window.addEventListener("hashchange", onHashChanged);
+  // window.onload
+  onHashChanged();
+}
 
 function initSlider() {
   const slides = Array.from({ length: 9 }, (_, index) => {
@@ -220,7 +224,8 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
   countryCode: key,
 }));
 
-window.addEventListener("load", () => {
+{
+  // on page load
   loadLanguages({
     $container: $navLangItemList,
     data: langsCountryCodes,
@@ -229,17 +234,46 @@ window.addEventListener("load", () => {
       toggleLangMenu(false);
     },
   });
+}
 
-  $formContact.addEventListener("submit", (e) => {
+{
+  const $fieldset = $formContact.querySelector("fieldset");
+
+  await signAnonUser();
+
+  {
+    // fill form
+    $fieldset.disabled = true;
+
+    const user = await getCurrentUser();
+    const { displayName, email } = user;
+    const formData = { displayName, email };
+
+    for (let [key, value] of Object.entries(formData)) {
+      const input = $formContact.elements[key];
+
+      input.value = value;
+    }
+
+    $fieldset.disabled = false;
+  }
+
+  $formContact.addEventListener("submit", async (e) => {
     e.preventDefault();
+    $fieldset.disabled = true;
 
     const formData = new FormData($formContact);
 
     const email = formData.get("email");
+    const displayName = formData.get("displayName");
     const subject = formData.get("subject");
-    const name = formData.get("name");
     const message = formData.get("message");
 
-    window.open(`mailto:${email}?subject=${subject}&body=${name}: ${message}`);
+    const result = await updateUserData({ email, displayName });
+
+    console.log("result", result);
+
+    $fieldset.disabled = false;
+    // window.open(`mailto:${email}?subject=${subject}&body=${name}: ${message}`);
   });
-});
+}
