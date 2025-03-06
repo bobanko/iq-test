@@ -10,6 +10,7 @@ import {
 } from "./preload-image.helper.js";
 
 import "./firebase.js";
+import { signAnonUser } from "./firebase.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -345,7 +346,6 @@ function checkAnswers() {
 $btnGenerate.addEventListener("click", () => generateButtonClick());
 
 window.addEventListener("hashchange", onHashChanged);
-window.addEventListener("load", windowOnLoad);
 
 $seed.addEventListener("click", () => {
   $seed.select();
@@ -471,3 +471,8 @@ $btnFinishConfirm.addEventListener("click", () => {
 $btnFinishCancel.addEventListener("click", () => {
   $modalOverlay.hidden = true;
 });
+
+{
+  windowOnLoad();
+  await signAnonUser();
+}
