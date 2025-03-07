@@ -163,7 +163,7 @@ function onHashChanged() {
 
 const currentQuiz = {
   questions: [],
-  answers: [],
+  answers: new Map(),
   seed: null,
 };
 
@@ -178,9 +178,7 @@ function generateQuiz({ seed }) {
 
   currentQuiz.seed = seed;
 
-  // todo(vmyshko):  gen questions
-
-  currentQuiz.answers.splice(0); // clear answers
+  currentQuiz.answers.clear();
 
   $questionList.replaceChildren(); // delete all question buttons
 
@@ -210,11 +208,11 @@ function generateQuiz({ seed }) {
       return { questionData, configName, questionIndex };
     }
   );
-
   currentQuiz.questions.splice(0, currentQuiz.questions.length, ..._questions);
 
   console.timeEnd(generatingQuestionsTimeTestString);
 
+  // add question buttons
   currentQuiz.questions.forEach(
     ({ questionData, configName, questionIndex }) => {
       addQuestionButton({
@@ -297,11 +295,28 @@ function generateQuiz({ seed }) {
   timer.start();
 }
 
+function markAnsweredQuestions(quizResults) {
+  quizResults
+    .filter((answer) => answer.isAnswered)
+    .forEach((answerData) => {
+      const { isCorrect, questionIndex } = answerData;
+      $questionList.children[questionIndex].classList.toggle(
+        "correct",
+        isCorrect
+      );
+
+      $questionList.children[questionIndex].classList.toggle(
+        "wrong",
+        isCorrect === false
+      );
+    });
+}
+
 function getQuizResults() {
   // todo(vmyshko): swap loops
   return currentQuiz.questions.map(
     ({ questionIndex, configName, questionData }) => {
-      const selectedAnswerId = currentQuiz.answers[questionIndex] ?? null;
+      const selectedAnswerId = currentQuiz.answers.get(questionIndex) ?? null;
       const isAnswered = selectedAnswerId !== null;
 
       const correctAnswer = questionData.answers.find(
@@ -341,23 +356,6 @@ function getResultsStats(quizResults) {
   return stats;
 }
 
-function markAnsweredQuestions(quizResults) {
-  quizResults
-    .filter((answer) => answer.isAnswered)
-    .forEach((answerData) => {
-      const { isCorrect, questionIndex } = answerData;
-      $questionList.children[questionIndex].classList.toggle(
-        "correct",
-        isCorrect
-      );
-
-      $questionList.children[questionIndex].classList.toggle(
-        "wrong",
-        isCorrect === false
-      );
-    });
-}
-
 function checkAnswers() {
   const quizResults = getQuizResults();
 
@@ -378,7 +376,11 @@ function checkAnswers() {
 
       markAnsweredQuestions(quizResults);
 
-      saveQuizResults({ quizResults, stats: resultsStats });
+      saveQuizResults({
+        quizResults,
+        seed: currentQuiz.seed,
+        stats: resultsStats,
+      });
     },
     { once: true }
   );
@@ -401,7 +403,7 @@ $btnFinishQuiz.addEventListener("click", () => {
   $modalOverlay.hidden = false;
 });
 
-export function wrapAnswers({
+function wrapAnswers({
   seed,
   $answerList,
   $tmplAnswer,
@@ -424,7 +426,7 @@ export function wrapAnswers({
     $answerButton.addEventListener("click", async () => {
       toggleAnswerSelect({ $answer: $answerButton, $answerList });
 
-      currentQuiz.answers[questionIndex] = id;
+      currentQuiz.answers.set(questionIndex, id);
       $questionList.children[questionIndex]?.classList.add("answered");
 
       // todo(vmyshko): not the best solution, but quizAnswers collection is bad
@@ -450,9 +452,11 @@ export function wrapAnswers({
   });
 
   // select previously selected answer if possible
-  $answerList
-    .querySelector(`[data-id='${currentQuiz.answers[questionIndex]}']`)
-    ?.classList.add("selected");
+  if (currentQuiz.answers.has(questionIndex)) {
+    $answerList
+      .querySelector(`[data-id='${currentQuiz.answers.get(questionIndex)}']`)
+      ?.classList.add("selected");
+  }
 }
 
 function wrapAnswerPattern({ $tmplAnswer, $pattern, letter = "x" }) {
