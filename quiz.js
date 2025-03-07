@@ -14,8 +14,8 @@ import {
   preloadImageByLink,
 } from "./helpers/preload-image.helper.js";
 
-import "./firebase.js";
-import { signAnonUser } from "./firebase.js";
+import { signAnonUser } from "./endpoints/firebase.init.js";
+import { saveQuizResults } from "./endpoints/save-quiz-results.endpoint.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -39,7 +39,7 @@ const clockEmojis = [
 
 timer.onUpdate((diff) => {
   const oneMinMs = 60 * 1000;
-  const timeGivenMs = questions.length * oneMinMs;
+  const timeGivenMs = currentQuiz.questions.length * oneMinMs;
 
   if (timeGivenMs <= diff) {
     console.log("stopping timer", timer.getDiff());
@@ -64,15 +64,19 @@ timer.onUpdate((diff) => {
 
 // ***
 
-const quizAnswers = [];
-
 let _currentQuestion;
-function updateCurrentQuestionLabel({ current, total = questions.length }) {
+function updateCurrentQuestionLabel({
+  current,
+  total = currentQuiz.questions.length,
+}) {
   _currentQuestion = current;
   $currentQuestionLabel.textContent = `${current + 1}/${total}`;
 }
 
-function updateProgressQuiz({ answered, total = questions.length }) {
+function updateProgressQuiz({
+  answered,
+  total = currentQuiz.questions.length,
+}) {
   $progressQuiz.max = total;
   $progressQuiz.value = answered;
 
@@ -82,7 +86,7 @@ function updateProgressQuiz({ answered, total = questions.length }) {
 // todo(vmyshko): rename
 function navigateQuestions(shift = 1) {
   const nextQuestion = getSafeIndex({
-    length: questions.length,
+    length: currentQuiz.questions.length,
     index: _currentQuestion + shift,
   });
 
@@ -130,7 +134,7 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
   });
 }
 
-function generateButtonClick() {
+function generateSeed() {
   const seed = Math.random();
 
   updateHashParameter("seed", seed);
@@ -151,59 +155,43 @@ function preloadSvgs() {
   // svgLinks.forEach((link) => preloadImageByImg(link));
 }
 
-function windowOnLoad() {
-  const seed = +getHashParameter("seed");
-
-  if (!Number.isFinite(seed) || seed === 0) {
-    generateButtonClick();
-    return;
-  }
-
-  preloadSvgs();
-  generateQuiz({ seed });
-}
-
 function onHashChanged() {
   const seed = +getHashParameter("seed");
 
   generateQuiz({ seed });
 }
 
-const questions = [];
-function generateQuiz({ seed }) {
-  // todo(vmyshko): debug
-  $quizStats.textContent = "";
+const currentQuiz = {
+  questions: [],
+  answers: [],
+  seed: null,
+};
 
+function generateQuiz({ seed }) {
   const $prevQuestion = $questionList.querySelector(".selected");
 
   const questionIndexToSelect = $prevQuestion
     ? [...$questionList.children].indexOf($prevQuestion)
     : 0;
-  //---
-
-  // basic question list init
-  // todo(vmyshko): add ability to input custom seed/ via url?
-  console.log({ seed });
 
   $seed.value = seed;
 
+  currentQuiz.seed = seed;
+
   // todo(vmyshko):  gen questions
 
-  quizAnswers.splice(0); // clear answers
+  currentQuiz.answers.splice(0); // clear answers
 
   $questionList.replaceChildren(); // delete all question buttons
 
   const questionConfigEntries = Object.entries(quizQuestionConfigs);
 
-  const generatingQuestionsTimeTestString = `🍀🍀 generating ${questionConfigEntries.length} questions`;
+  const generatingQuestionsTimeTestString = `⏱️🍀 generating ${questionConfigEntries.length} questions`;
   console.time(generatingQuestionsTimeTestString);
 
   const _questions = questionConfigEntries.map(
     ([configName, config], questionIndex) => {
-      // console.clear();
-      console.log(`🍀 generation start: %c${configName}`, "color: gold");
-
-      // "%cI am red %cI am green", "color: red", "color: green")
+      console.group(`🍀 generation: %c${configName}`, "color: gold");
 
       const questionData = config.generator({
         config,
@@ -211,92 +199,95 @@ function generateQuiz({ seed }) {
         questionIndex,
       });
 
-      console.log(`🍀 generation end: %c${configName}`, "color: gold", {
+      console.log({
         seed,
         config,
         questionData,
       });
 
+      console.groupEnd();
+
       return { questionData, configName, questionIndex };
     }
   );
 
-  questions.splice(0, questions.length, ..._questions);
+  currentQuiz.questions.splice(0, currentQuiz.questions.length, ..._questions);
 
   console.timeEnd(generatingQuestionsTimeTestString);
 
-  questions.forEach(({ questionData, configName, questionIndex }) => {
-    addQuestionButton({
-      text: `${questionIndex + 1}`,
-      callbackFn: function _selectQuestion() {
-        const config = quizQuestionConfigs[configName];
+  currentQuiz.questions.forEach(
+    ({ questionData, configName, questionIndex }) => {
+      addQuestionButton({
+        text: `${questionIndex + 1}`,
+        callbackFn: function _selectQuestion() {
+          const config = quizQuestionConfigs[configName];
 
-        console.log("🔮", configName);
+          console.log("🔮", configName);
 
-        // todo(vmyshko): based on current/config
-        const { questionPatterns, answerPatterns } = config.renderer({
-          config,
-          questionData,
-          questionIndex,
-        });
+          // todo(vmyshko): based on current/config
+          const { questionPatterns, answerPatterns } = config.renderer({
+            config,
+            questionData,
+            questionIndex,
+          });
 
-        // todo(vmyshko): put replace with append for fast rendering
-        $patternArea.style.setProperty(
-          "--size",
-          questionData.patternsInRow ?? patternsInRowDefault
-        );
-
-        {
-          const {
-            patternsInRow = patternsInRowDefault,
-            patternsInCol = patternsInColDefault,
-          } = questionData;
-          // todo(vmyshko): extract this to common, cause other question-types should reset this
-          // 100 + 10 + 100 + 10 + 100 + 10
-
-          const rowColMaxPatterns = patternsInRow;
-          // todo(vmyshko): fix and re-check for cutouts and in-row-2/in-col-3 configs
-          // Math.max(patternsInRow, patternsInCol);
-          const targetWidthPx = 340; //px - total width that we want to get
-          const maxPatternSizePx = 320;
-          const outerBorderPx = 10 * 2; //px
-          const gapsPx = 10 * (rowColMaxPatterns - 1);
-          const patternSizePx =
-            (targetWidthPx - outerBorderPx - gapsPx) / rowColMaxPatterns;
-
+          // todo(vmyshko): put replace with append for fast rendering
           $patternArea.style.setProperty(
-            "--pattern-size",
-            `${Math.min(patternSizePx, maxPatternSizePx)}px`
+            "--size",
+            questionData.patternsInRow ?? patternsInRowDefault
           );
-        }
 
-        $patternArea.replaceChildren(...questionPatterns);
+          {
+            const {
+              patternsInRow = patternsInRowDefault,
+              patternsInCol = patternsInColDefault,
+            } = questionData;
+            // todo(vmyshko): extract this to common, cause other question-types should reset this
+            // 100 + 10 + 100 + 10 + 100 + 10
 
-        //--- end -----------
+            const rowColMaxPatterns = patternsInRow;
+            // todo(vmyshko): fix and re-check for cutouts and in-row-2/in-col-3 configs
+            // Math.max(patternsInRow, patternsInCol);
+            const targetWidthPx = 340; //px - total width that we want to get
+            const maxPatternSizePx = 320;
+            const outerBorderPx = 10 * 2; //px
+            const gapsPx = 10 * (rowColMaxPatterns - 1);
+            const patternSizePx =
+              (targetWidthPx - outerBorderPx - gapsPx) / rowColMaxPatterns;
 
-        wrapAnswers({
-          seed: seed + questionIndex,
-          $answerList,
-          $tmplAnswer,
-          answerPatterns,
-          questionIndex,
-          quizAnswers,
-        });
+            $patternArea.style.setProperty(
+              "--pattern-size",
+              `${Math.min(patternSizePx, maxPatternSizePx)}px`
+            );
+          }
 
-        updateCurrentQuestionLabel({
-          current: questionIndex,
-        });
+          $patternArea.replaceChildren(...questionPatterns);
 
-        if ($disableSvgCacheCheckbox.checked) {
-          preventSvgCache(performance.now());
-        }
-      },
-    });
-  });
+          //--- end -----------
+
+          wrapAnswers({
+            seed: seed + questionIndex,
+            $answerList,
+            $tmplAnswer,
+            answerPatterns,
+            questionIndex,
+          });
+
+          updateCurrentQuestionLabel({
+            current: questionIndex,
+          });
+
+          if ($disableSvgCacheCheckbox.checked) {
+            preventSvgCache(performance.now());
+          }
+        },
+      });
+    }
+  );
 
   updateProgressQuiz({
     answered: 0,
-    total: questions.length,
+    total: currentQuiz.questions.length,
   });
 
   // select question to start from
@@ -306,49 +297,96 @@ function generateQuiz({ seed }) {
   timer.start();
 }
 
-function checkAnswers() {
-  // todo(vmyshko): grab answers and check them!111
+function getQuizResults() {
+  // todo(vmyshko): swap loops
+  return currentQuiz.questions.map(
+    ({ questionIndex, configName, questionData }) => {
+      const selectedAnswerId = currentQuiz.answers[questionIndex] ?? null;
+      const isAnswered = selectedAnswerId !== null;
 
-  // todo(vmyshko): debug
+      const correctAnswer = questionData.answers.find(
+        (answer) => answer.isCorrect
+      );
+
+      const isCorrect = isAnswered
+        ? correctAnswer.id === selectedAnswerId
+        : null;
+      return {
+        // todo(vmyshko): add seed and type
+        configName,
+        questionIndex,
+        isAnswered,
+        selectedAnswerId,
+        correctAnswerId: correctAnswer.id,
+        isCorrect,
+      };
+    }
+  );
+}
+
+function getResultsStats(quizResults) {
   const stats = {
     isAnswered: 0,
     isCorrect: 0,
-    total: 0,
+    total: quizResults.length,
   };
 
-  questions.forEach(({ questionIndex, questionData }) => {
-    const selectedAnswerId = quizAnswers[questionIndex];
+  quizResults.forEach((answerData) => {
+    const { isAnswered, isCorrect } = answerData;
 
-    const isCorrect =
-      questionData.answers.find((answer) => answer.id === selectedAnswerId)
-        ?.isCorrect || false;
-
-    const isAnswered = quizAnswers[questionIndex] !== undefined;
-
-    // todo(vmyshko): debug
-    stats.total++;
     if (isAnswered) stats.isAnswered++;
     if (isCorrect) stats.isCorrect++;
+  });
 
-    if (!isAnswered) return;
+  return stats;
+}
 
-    $questionList.children[questionIndex].classList.toggle(
-      "correct",
-      isCorrect
-    );
+function markAnsweredQuestions(quizResults) {
+  quizResults
+    .filter((answer) => answer.isAnswered)
+    .forEach((answerData) => {
+      const { isCorrect, questionIndex } = answerData;
+      $questionList.children[questionIndex].classList.toggle(
+        "correct",
+        isCorrect
+      );
 
-    $questionList.children[questionIndex].classList.toggle("wrong", !isCorrect);
-  }); //forEach
+      $questionList.children[questionIndex].classList.toggle(
+        "wrong",
+        isCorrect === false
+      );
+    });
+}
+
+function checkAnswers() {
+  const quizResults = getQuizResults();
+
+  const resultsStats = getResultsStats(quizResults);
 
   $msgTestResults.innerHTML = `
-  🟢 correct answers: ${stats.isCorrect}  </br>
-  🔴 wrong answers: ${stats.isAnswered - stats.isCorrect}  </br>
-  ⚪️ total questions answered: ${stats.isAnswered} of ${stats.total}`;
+  🟢 correct answers: ${resultsStats.isCorrect}  </br>
+  🔴 wrong answers: ${resultsStats.isAnswered - resultsStats.isCorrect}  </br>
+  ⚪️ total questions answered: ${resultsStats.isAnswered} of ${
+    resultsStats.total
+  }`;
+  //
+
+  $btnFinishConfirm.addEventListener(
+    "click",
+    () => {
+      $modalOverlay.hidden = true;
+
+      markAnsweredQuestions(quizResults);
+
+      saveQuizResults({ quizResults, stats: resultsStats });
+    },
+    { once: true }
+  );
 }
 
 // apply handlers
 
-$btnGenerate.addEventListener("click", () => generateButtonClick());
+$btnGenerate.addEventListener("click", () => generateSeed());
 
 window.addEventListener("hashchange", onHashChanged);
 
@@ -368,7 +406,6 @@ export function wrapAnswers({
   $answerList,
   $tmplAnswer,
   answerPatterns,
-  quizAnswers,
   questionIndex,
 }) {
   const random = new SeededRandom(seed + questionIndex);
@@ -387,7 +424,7 @@ export function wrapAnswers({
     $answerButton.addEventListener("click", async () => {
       toggleAnswerSelect({ $answer: $answerButton, $answerList });
 
-      quizAnswers[questionIndex] = id;
+      currentQuiz.answers[questionIndex] = id;
       $questionList.children[questionIndex]?.classList.add("answered");
 
       // todo(vmyshko): not the best solution, but quizAnswers collection is bad
@@ -414,7 +451,7 @@ export function wrapAnswers({
 
   // select previously selected answer if possible
   $answerList
-    .querySelector(`[data-id='${quizAnswers[questionIndex]}']`)
+    .querySelector(`[data-id='${currentQuiz.answers[questionIndex]}']`)
     ?.classList.add("selected");
 }
 
@@ -470,14 +507,24 @@ $btnDebug.addEventListener("click", () => {
   $debugControlPanel.hidden = !$debugControlPanel.hidden;
 });
 
-$btnFinishConfirm.addEventListener("click", () => {
-  $modalOverlay.hidden = true;
-});
 $btnFinishCancel.addEventListener("click", () => {
   $modalOverlay.hidden = true;
 });
 
+function prepareQuiz() {
+  // on load
+  const seed = +getHashParameter("seed");
+
+  if (!Number.isFinite(seed) || seed === 0) {
+    generateSeed();
+    return;
+  }
+
+  generateQuiz({ seed });
+}
+
 {
-  windowOnLoad();
+  preloadSvgs();
+  prepareQuiz();
   await signAnonUser();
 }

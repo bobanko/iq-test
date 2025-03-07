@@ -1,10 +1,10 @@
 import { collection, doc, serverTimestamp, setDoc } from "./firebase.js";
 import { db, getCurrentUser } from "./firebase.init.js";
 
-export async function saveQuizResults({ quizData, stats }) {
+export async function saveQuizResults({ quizResults, quizData = {}, stats }) {
   // set
 
-  const { answers, seed } = quizData;
+  const { answers, seed = 123 } = quizData;
 
   const user = await getCurrentUser();
 
@@ -16,7 +16,8 @@ export async function saveQuizResults({ quizData, stats }) {
 
     seed,
     stats, //answered,correct,wrong iq etc...
-    answers,
+    // to keep it at the end in firebase doc
+    quizResults: quizResults,
   });
 
   console.log("quizResultRef written with ID: ", quizResultRef.id);
