@@ -29,6 +29,7 @@ export const booleanFiguresConfigs = {
   },
 
   iq12_like_quarters4xor: {
+    skip: true,
     // todo(vmyshko): similar in crop-figures, decide which to keep #2
     order: 12,
     figureGenRule: figureGenRules.random, // todo(vmyshko): group in sub-arrays instead?
