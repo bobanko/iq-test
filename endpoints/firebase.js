@@ -3,6 +3,7 @@ export { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase
 export {
   getFirestore,
   query,
+  where,
   orderBy,
   limit,
   collection,
@@ -13,12 +14,14 @@ export {
   setDoc,
   Timestamp,
   serverTimestamp,
+  getCountFromServer,
 } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-firestore.js";
 
 export {
   getAuth,
   signInAnonymously,
   updateProfile,
+  updateEmail,
   signInWithPopup,
   GoogleAuthProvider,
   //   EmailAuthProvider,

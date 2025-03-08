@@ -14,7 +14,7 @@ import {
   preloadImageByLink,
 } from "./helpers/preload-image.helper.js";
 
-import { signAnonUser } from "./endpoints/firebase.init.js";
+import { signAnonUser } from "./endpoints/auth.js";
 import { saveQuizResults } from "./endpoints/save-quiz-results.endpoint.js";
 
 // globals

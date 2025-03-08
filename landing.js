@@ -12,10 +12,12 @@ import { appConfig } from "./configs/app.config.js";
 import { getCached } from "./helpers/local-cache.helper.js";
 
 import {
-  getCurrentUser,
-  updateUserData,
-  signAnonUser,
-} from "./endpoints/firebase.init.js";
+  getResultsLast10,
+  getResultsLast24hCount,
+  getResultsTotalCount,
+} from "./endpoints/get-stats.js";
+import { getCurrentUser, signAnonUser } from "./endpoints/auth.js";
+import { getUserData, updateUserData } from "./endpoints/user-data.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -135,24 +137,54 @@ const data_results_perCountry = Array.from({ length: 10 }, (_) => {
 });
 
 // -----
+function calcStaticIqByStats(stats) {
+  const minIq = 60;
+  const maxIq = 140;
 
-const { locale: defaultLocale } = Intl.DateTimeFormat().resolvedOptions();
+  const { isAnswered, isCorrect, total } = stats;
 
-loadStats({
-  $container: $results_recent,
-  data: data_results_recent,
-  locale: defaultLocale,
-});
-loadStats({
-  $container: $results_currentCountry,
-  data: data_results_current,
-  locale: defaultLocale,
-});
-loadStats({
-  $container: $results_perCountry,
-  data: data_results_perCountry,
-  locale: defaultLocale,
-});
+  return minIq + (isCorrect / total) * (maxIq - minIq);
+}
+
+async function loadStatsFb() {
+  const { locale: defaultLocale } = Intl.DateTimeFormat().resolvedOptions();
+
+  //real stats
+
+  $statsTotal.textContent = await getResultsTotalCount();
+  $statsLast24h.textContent = await getResultsLast24hCount();
+
+  const last10results = await getResultsLast10();
+
+  console.log({ last10results });
+
+  const data_results_recent = last10results.map((data) => ({
+    name: data.user?.displayName ?? "not set",
+    countryCode: data.user?.countryCode ?? "__",
+    value: calcStaticIqByStats(data.stats),
+    date: data.datePassed.toDate(),
+  }));
+
+  loadStats({
+    $container: $results_recent,
+    data: data_results_recent,
+    locale: defaultLocale,
+  });
+
+  //stubs
+  loadStats({
+    $container: $results_currentCountry,
+    data: data_results_current,
+    locale: defaultLocale,
+  });
+  loadStats({
+    $container: $results_perCountry,
+    data: data_results_perCountry,
+    locale: defaultLocale,
+  });
+}
+
+loadStatsFb();
 
 // location
 
@@ -245,35 +277,56 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
 
   await signAnonUser();
 
-  {
-    // fill form
-    $fieldset.disabled = true;
+  // fill form
+  $fieldset.disabled = true;
 
-    const user = await getCurrentUser();
-    const { displayName, email } = user;
-    const formData = { displayName, email };
+  const user = await getCurrentUser();
 
-    for (let [key, value] of Object.entries(formData)) {
-      const input = $formContact.elements[key];
+  const userData = (await getUserData(user.uid)) ?? {};
+  const { displayName = "", email = "", subject = "", message = "" } = userData;
+  const formData = { displayName, email, subject, message };
 
-      input.value = value;
-    }
+  for (let [key, value] of Object.entries(formData)) {
+    const input = $formContact.elements[key];
 
-    $fieldset.disabled = false;
+    input.value = value ?? "";
   }
+
+  $fieldset.disabled = false;
 
   $formContact.addEventListener("submit", async (e) => {
     e.preventDefault();
-    $fieldset.disabled = true;
 
     const formData = new FormData($formContact);
+    //disabling fieldset disables formdata fields from reading
+    $fieldset.disabled = true;
 
     const email = formData.get("email");
     const displayName = formData.get("displayName");
     const subject = formData.get("subject");
     const message = formData.get("message");
 
-    const result = await updateUserData({ email, displayName });
+    const ipInfo = await getCached({
+      fn: fetchClientIpInfo,
+      cacheKey: "client-ip-info",
+    });
+
+    const userData = {
+      email,
+      displayName,
+      subject,
+      message,
+
+      countryCode: ipInfo.location.country.code,
+
+      ipInfo,
+    };
+
+    const user = await getCurrentUser();
+    const result = await updateUserData({
+      userId: user.uid,
+      userData,
+    });
 
     console.log("result", result);
 

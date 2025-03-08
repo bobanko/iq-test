@@ -1,5 +1,6 @@
 import { collection, doc, serverTimestamp, setDoc } from "./firebase.js";
-import { db, getCurrentUser } from "./firebase.init.js";
+import { db } from "./firebase.init.js";
+import { getCurrentUser } from "./auth.js";
 
 export async function saveQuizResults({ quizResults, seed, stats }) {
   // set
