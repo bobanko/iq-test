@@ -1,4 +1,5 @@
 export const countries = {
+  __: "",
   AF: "Afghanistan",
   AX: "Åland Islands",
   AL: "Albania",
@@ -247,6 +248,7 @@ export const countries = {
 };
 
 export const emojiFlags = {
+  __: "🏴‍☠️",
   AF: "🇦🇫",
   AX: "🇦🇽",
   AL: "🇦🇱",
