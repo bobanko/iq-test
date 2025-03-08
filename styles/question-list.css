@@ -37,11 +37,12 @@
   }
 
   &.selected {
-    /* background-color: var(--yellow); */
     box-shadow: 0 0 0px 3px var(--yellow);
     border-color: black;
   }
+}
 
+.debug .question-button {
   &:after {
     /* debug */
     content: attr(data-time);
@@ -49,7 +50,8 @@
     top: 0;
     right: 0;
     background: lime;
-    font-size: 10px;
+    font-size: 12px;
+    font-variant-numeric: tabular-nums;
   }
 }
 

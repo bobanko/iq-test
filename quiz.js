@@ -60,16 +60,32 @@ timer.onUpdate((diff) => {
     clockEmojis[Math.floor(diff / 1000) % clockEmojis.length];
 
   $timer.textContent = timeStr;
+
+  currentQuiz.questions[_currentQuestionIndex].timeSpent += 1;
+
+  // debug
+
+  if (document.debugMode) {
+    const questionButtons = [
+      ...$questionList.querySelectorAll(".question-button"),
+    ];
+
+    questionButtons[_currentQuestionIndex].dataset.time =
+      // todo(vmyshko): make it based on timer interval?
+      // todo(vmyshko): calc based on diff? complex
+      // todo(vmyshko): stop when all answered? is it cheat?
+      (currentQuiz.questions[_currentQuestionIndex].timeSpent / 10).toFixed(1);
+  }
 });
 
 // ***
 
-let _currentQuestion;
+let _currentQuestionIndex;
 function updateCurrentQuestionLabel({
   current,
   total = currentQuiz.questions.length,
 }) {
-  _currentQuestion = current;
+  _currentQuestionIndex = current;
   $currentQuestionLabel.textContent = `${current + 1}/${total}`;
 }
 
@@ -87,7 +103,7 @@ function updateProgressQuiz({
 function navigateQuestions(shift = 1) {
   const nextQuestion = getSafeIndex({
     length: currentQuiz.questions.length,
-    index: _currentQuestion + shift,
+    index: _currentQuestionIndex + shift,
   });
 
   $questionList.children[nextQuestion].click();
@@ -205,7 +221,7 @@ function generateQuiz({ seed }) {
 
       console.groupEnd();
 
-      return { questionData, configName, questionIndex };
+      return { questionData, configName, questionIndex, timeSpent: 0 };
     }
   );
   currentQuiz.questions.splice(0, currentQuiz.questions.length, ..._questions);
@@ -315,7 +331,7 @@ function markAnsweredQuestions(quizResults) {
 function getQuizResults() {
   // todo(vmyshko): swap loops
   return currentQuiz.questions.map(
-    ({ questionIndex, configName, questionData }) => {
+    ({ questionIndex, configName, questionData, timeSpent = null }) => {
       const selectedAnswerId = currentQuiz.answers.get(questionIndex) ?? null;
       const isAnswered = selectedAnswerId !== null;
 
@@ -327,13 +343,14 @@ function getQuizResults() {
         ? correctAnswer.id === selectedAnswerId
         : null;
       return {
-        // todo(vmyshko): add seed and type
+        // todo(vmyshko): add seed?
         configName,
         questionIndex,
         isAnswered,
         selectedAnswerId,
         correctAnswerId: correctAnswer.id,
         isCorrect,
+        timeSpent,
       };
     }
   );
@@ -479,7 +496,8 @@ function toggleAnswerSelect({ $answer, $answerList }) {
 }
 
 $debugCheckbox.addEventListener("change", (event) => {
-  document.body.classList.toggle("debug", $debugCheckbox.checked);
+  document.debugMode = $debugCheckbox.checked;
+  document.body.classList.toggle("debug", document.debugMode);
 });
 
 $debugCheckbox.click();
