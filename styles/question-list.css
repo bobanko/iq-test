@@ -28,15 +28,15 @@
     border-style: dashed;
   }
 
-  .correct {
+  &.correct {
     background-color: var(--green);
   }
 
-  .wrong {
+  &.wrong {
     background-color: var(--red);
   }
 
-  .selected {
+  &.selected {
     /* background-color: var(--yellow); */
     box-shadow: 0 0 0px 3px var(--yellow);
     border-color: black;
