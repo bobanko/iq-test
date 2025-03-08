@@ -248,7 +248,7 @@ export const countries = {
 };
 
 export const emojiFlags = {
-  __: "🏴‍☠️",
+  __: "🏳️",
   AF: "🇦🇫",
   AX: "🇦🇽",
   AL: "🇦🇱",

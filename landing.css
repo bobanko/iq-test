@@ -49,6 +49,13 @@ label {
   cursor: pointer;
 }
 
+.beta:after {
+  content: "βeta";
+  color: red;
+  font-size: 15px;
+  padding: 3px;
+}
+
 button {
   cursor: pointer;
 
@@ -320,6 +327,9 @@ section {
 }
 
 /* results */
+.is-loading {
+  animation: fadeIn 500ms infinite alternate;
+}
 
 .result-item {
   padding: 10px;
