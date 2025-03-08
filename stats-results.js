@@ -2,7 +2,7 @@ import { countries, emojiFlags } from "./countries.mapping.js";
 
 function createResultItem({
   countryCode,
-  name,
+  displayName,
   value,
   date,
   locale = countryCode,
@@ -14,8 +14,8 @@ function createResultItem({
   $itemCountry.title = countries[countryCode];
 
   const $itemName = $resultItem.querySelector(".item-name");
-  $itemName.textContent = name;
-  $itemName.title = name;
+  $itemName.textContent = displayName;
+  $itemName.title = displayName;
 
   const $itemValue = $resultItem.querySelector(".item-value");
   $itemValue.textContent = value;
@@ -27,7 +27,11 @@ function createResultItem({
   return $resultItem;
 }
 
-export function loadStats({ $container, data, locale }) {
+export function loadStats({ $container, data, locale, replace = true }) {
+  if (replace) {
+    $container.replaceChildren();
+  }
+
   data.forEach((itemData) => {
     const $resultItem = createResultItem({ ...itemData, locale });
 

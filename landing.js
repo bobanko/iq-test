@@ -118,7 +118,7 @@ document.querySelectorAll("[data-id=current_country]").forEach(($elem) => {
 
 const data_results_current = Array.from({ length: 10 }, (_) => {
   return {
-    name: random.sample(mockNames),
+    displayName: random.sample(mockNames),
     countryCode: currentCountryCode,
     value: random.fromRange(60, 140),
     date: getRandomDate(),
@@ -129,7 +129,7 @@ const data_results_perCountry = Array.from({ length: 10 }, (_) => {
   const randomCountryCode = random.sample(countryCodes);
 
   return {
-    name: countries[randomCountryCode],
+    displayName: countries[randomCountryCode],
     countryCode: randomCountryCode,
     value: random.fromRange(60, 140),
     // no date
@@ -151,24 +151,45 @@ async function loadStatsFb() {
 
   //real stats
 
-  $statsTotal.textContent = await getResultsTotalCount();
-  $statsLast24h.textContent = await getResultsLast24hCount();
+  getResultsTotalCount().then((data) => {
+    $statsTotal.textContent = data;
+  });
 
-  const last10results = await getResultsLast10();
+  getResultsLast24hCount().then((data) => {
+    $statsLast24h.textContent = data;
+  });
 
-  console.log({ last10results });
+  const data_results_recent_stub = Array(10).fill({
+    countryCode: "__",
+    displayName: "...",
+    value: "...",
+    date: new Date(),
+  });
 
-  const data_results_recent = last10results.map((data) => ({
-    name: data.user?.displayName ?? "not set",
-    countryCode: data.user?.countryCode ?? "__",
-    value: calcStaticIqByStats(data.stats),
-    date: data.datePassed.toDate(),
-  }));
-
+  $results_recent.classList.add("is-loading");
   loadStats({
     $container: $results_recent,
-    data: data_results_recent,
+    data: data_results_recent_stub,
     locale: defaultLocale,
+  });
+
+  getResultsLast10().then((data) => {
+    const last10results = data;
+    console.log({ last10results });
+
+    const data_results_recent = last10results.map((data) => ({
+      displayName: data.user?.displayName ?? "not set",
+      countryCode: data.user?.countryCode ?? "__",
+      value: calcStaticIqByStats(data.stats),
+      date: data.datePassed.toDate(),
+    }));
+
+    loadStats({
+      $container: $results_recent,
+      data: data_results_recent,
+      locale: defaultLocale,
+    });
+    $results_recent.classList.remove("is-loading");
   });
 
   //stubs
