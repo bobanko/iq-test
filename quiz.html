@@ -84,7 +84,7 @@
 
     <!-- common templates -->
     <template id="$tmplPatternQuestionMark">
-      <div class="pattern-question-mark"></div>
+      <div class="pattern-question-mark" symbol="?"></div>
     </template>
 
     <template id="$tmplAnswer">
@@ -104,7 +104,11 @@
         <div class="flex-col w-100p py-10">
           <div
             class="flex-row align-center"
-            style="justify-content: space-between; text-transform: capitalize"
+            style="
+              justify-content: space-between;
+              text-transform: capitalize;
+              line-height: 24px;
+            "
           >
             <div class="px-10">
               <span>answered:</span>
@@ -112,7 +116,9 @@
             </div>
 
             <div class="px-10 flex-row align-center" style="gap: 5px">
-              <span id="$timerIcon" style="font-size: x-large">⏱️</span>
+              <span id="$timerIcon" style="font-size: 24px; line-height: 24px"
+                >⏱️</span
+              >
               <span> time left:</span>
               <!-- <span>remaining time:</span> -->
               <span id="$timer" class="tabular-nums">99:99</span>
@@ -149,6 +155,15 @@
       </div>
 
       <hr />
+      <div id="$questionInfo" hidden class="flex-col p-10 w-100p">
+        <div class="p-10" style="font-weight: bold">test results</div>
+        <div class="p-10" id="$msgTestResults" class="">message</div>
+
+        <div class="p-10">some explanation</div>
+        <div class="p-10">time spent</div>
+        <div class="p-10">some global stats?</div>
+        <hr />
+      </div>
 
       <div id="$questionList" class="question-list p-10">
         <!-- question links go here -->
@@ -236,8 +251,8 @@
       hidden
     >
       <div class="popup-container flex-col p-20 gap-20">
-        <div style="font-weight: bold">test results</div>
-        <div id="$msgTestResults" class="">message</div>
+        <div style="font-weight: bold; font-size: 40px">finish test</div>
+        <div style="font-size: 20px">please confirm</div>
 
         <hr />
         <div class="flex-row gap-10">

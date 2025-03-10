@@ -37,6 +37,13 @@ const clockEmojis = [
   "🕚",
 ];
 
+function formatTimeSpan(timeMs) {
+  const totalSeconds = Math.floor(timeMs / 1000); // Convert ms to seconds
+  const minutes = Math.floor(totalSeconds / 60); // Get minutes
+  const seconds = totalSeconds % 60; // Get remaining seconds
+  return `${minutes}:${seconds.toString().padStart(2, "0")}`; // Format as "MM:SS"
+}
+
 timer.onUpdate((diff) => {
   const oneMinMs = 60 * 1000;
   const timeGivenMs = currentQuiz.questions.length * oneMinMs;
@@ -50,16 +57,10 @@ timer.onUpdate((diff) => {
     return;
   }
 
-  const timeStr = new Date(timeGivenMs - diff).toLocaleTimeString("en-US", {
-    minute: "numeric",
-    second: "numeric",
-    hour12: false,
-  });
-
   $timerIcon.textContent =
     clockEmojis[Math.floor(diff / 1000) % clockEmojis.length];
 
-  $timer.textContent = timeStr;
+  $timer.textContent = formatTimeSpan(timeGivenMs - diff);
 
   currentQuiz.questions[_currentQuestionIndex].timeSpent += 1;
 
@@ -183,8 +184,16 @@ const currentQuiz = {
   seed: null,
 };
 
+function toggleControls(isEnabled = true) {
+  $answerList.toggleAttribute("disabled", !isEnabled);
+  $btnFinishQuiz.disabled = !isEnabled;
+
+  $questionInfo.hidden = isEnabled;
+}
+
 function generateQuiz({ seed }) {
   const $prevQuestion = $questionList.querySelector(".selected");
+  toggleControls(true);
 
   const questionIndexToSelect = $prevQuestion
     ? [...$questionList.children].indexOf($prevQuestion)
@@ -361,46 +370,21 @@ function getResultsStats(quizResults) {
     isAnswered: 0,
     isCorrect: 0,
     total: quizResults.length,
+    timeSpent: 0,
   };
 
   quizResults.forEach((answerData) => {
-    const { isAnswered, isCorrect } = answerData;
+    const { isAnswered, isCorrect, timeSpent = 0 } = answerData;
 
     if (isAnswered) stats.isAnswered++;
     if (isCorrect) stats.isCorrect++;
+
+    stats.timeSpent += timeSpent;
   });
 
+  stats.timeSpent *= 100; //to ms
+
   return stats;
-}
-
-function checkAnswers() {
-  const quizResults = getQuizResults();
-
-  const resultsStats = getResultsStats(quizResults);
-
-  $msgTestResults.innerHTML = `
-  🟢 correct answers: ${resultsStats.isCorrect}  </br>
-  🔴 wrong answers: ${resultsStats.isAnswered - resultsStats.isCorrect}  </br>
-  ⚪️ total questions answered: ${resultsStats.isAnswered} of ${
-    resultsStats.total
-  }`;
-  //
-
-  $btnFinishConfirm.addEventListener(
-    "click",
-    () => {
-      $modalOverlay.hidden = true;
-
-      markAnsweredQuestions(quizResults);
-
-      saveQuizResults({
-        quizResults,
-        seed: currentQuiz.seed,
-        stats: resultsStats,
-      });
-    },
-    { once: true }
-  );
 }
 
 // apply handlers
@@ -415,9 +399,35 @@ $seed.addEventListener("click", () => {
 });
 
 $btnFinishQuiz.addEventListener("click", () => {
-  checkAnswers();
-
   $modalOverlay.hidden = false;
+});
+
+$btnFinishConfirm.addEventListener("click", () => {
+  $modalOverlay.hidden = true;
+  timer.stop();
+
+  toggleControls(false);
+
+  const quizResults = getQuizResults();
+
+  const resultsStats = getResultsStats(quizResults);
+
+  $msgTestResults.innerHTML = `
+  ⚪️ total questions answered: ${resultsStats.isAnswered} of ${
+    resultsStats.total
+  } </br>
+  🟢 correct answers: ${resultsStats.isCorrect}  </br>
+  🔴 wrong answers: ${resultsStats.isAnswered - resultsStats.isCorrect}  </br>
+  ⏱️ time spent: ${formatTimeSpan(resultsStats.timeSpent)}
+  `;
+
+  markAnsweredQuestions(quizResults);
+
+  // saveQuizResults({
+  //   quizResults,
+  //   seed: currentQuiz.seed,
+  //   stats: resultsStats,
+  // });
 });
 
 function wrapAnswers({

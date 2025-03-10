@@ -15,4 +15,14 @@ button {
   &:active {
     background-color: rgba(0, 0, 0, 0.2);
   }
+
+  &:disabled {
+    color: var(--dimgray);
+    border-style: dashed;
+  }
+}
+
+[disabled] button {
+  color: var(--dimgray);
+  border-style: dashed;
 }
