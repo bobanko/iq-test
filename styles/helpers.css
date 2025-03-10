@@ -20,6 +20,10 @@
   justify-content: center;
 }
 
+.justify-space-around {
+  justify-content: space-around;
+}
+
 .gap-10 {
   gap: 10px;
 }

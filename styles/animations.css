@@ -24,3 +24,27 @@
     transform: rotate(0deg);
   }
 }
+
+@property --shift {
+  syntax: "<length>"; /* <- defined as type number for the transition to work */
+  initial-value: 0;
+  inherits: false;
+}
+
+@keyframes shift60 {
+  0% {
+    --shift: 0px;
+  }
+
+  100% {
+    --shift: 60px;
+  }
+}
+
+.glowing {
+  animation: shift60 1500ms infinite ease-in-out alternate-reverse;
+
+  --shadow: calc(var(--shift) / 3);
+
+  box-shadow: 0 0 0px var(--shadow) gold;
+}
