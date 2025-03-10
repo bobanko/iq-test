@@ -133,7 +133,7 @@ header {
 }
 
 .answer-list {
-  --pattern-size: 94px;
+  --pattern-size: 90px;
 
   @media (orientation: portrait) and (width < 600px) {
     --pattern-size: 70px;
@@ -160,8 +160,10 @@ header {
   text-align: center;
 
   background-color: var(--color);
-  border: 3px solid var(--color);
-  border-radius: 2px;
+  border: 2px solid var(--color);
+
+  border-radius: 4px;
+  padding: 3px;
 
   transition: 200ms all;
 }
@@ -170,7 +172,7 @@ header {
   --color: var(--yellow);
   --answer-letter-color: black;
 
-  box-shadow: 0 0 0 2px black;
+  border-color: black;
 }
 
 .answer-letter {

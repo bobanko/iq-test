@@ -20,7 +20,7 @@
 /* ad-hoc */
 .answer-list {
   .pattern-formula-const {
-    --pattern-size: 94px;
+    --pattern-size: 90px;
 
     @media (orientation: portrait) and (width < 600px) {
       --pattern-size: 70px;
