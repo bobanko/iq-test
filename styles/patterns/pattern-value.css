@@ -1,8 +1,9 @@
 .pattern-value {
-  --bg-color: white;
+  --bg-color: var(--white);
 
   --shadow-color: rgba(0, 0, 0, 0.2);
   --shadow-color: #cbd7f2;
+  --shadow-color: hsl(from var(--bg-color) h calc(s - 15) calc(l - 15));
 
   display: flex;
   align-items: center;
