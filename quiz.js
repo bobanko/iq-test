@@ -463,15 +463,19 @@ function wrapAnswers({
         answered: answeredCount,
       });
 
-      const $nextQuestion = $questionList.children[questionIndex].nextSibling;
+      const $nextQuestion =
+        //first not-answered in question list
+        $questionList.querySelector(":not(.answered)");
 
       if ($nextQuestion) {
-        // todo(vmyshko): bug when user is on last question and no nav happens, answers become disabled
-        [...$answerList.children].forEach(($btn) => ($btn.disabled = true));
-
+        $answerList.toggleAttribute("disabled", true);
         await wait(500);
         // go to next question
-        $questionList.children[questionIndex].nextSibling?.click();
+        $nextQuestion.click();
+        $answerList.toggleAttribute("disabled", false);
+      } else {
+        // no quesitons left - finish
+        $btnFinishQuiz.click();
       }
     });
 
