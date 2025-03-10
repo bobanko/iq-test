@@ -1,7 +1,8 @@
 .pattern-matrix {
+  position: relative;
+  container-type: inline-size;
   /* prevent outside recoloring */
-
-  --color: white;
+  --color: var(--white);
   display: grid;
   grid-template-columns: repeat(var(--size), 1fr);
 
@@ -14,6 +15,25 @@
 
   width: var(--pattern-size);
   height: var(--pattern-size);
+}
+
+.debug .pattern-matrix {
+  &:after {
+    content: attr(debug-info);
+    top: 0;
+    left: 0;
+    font-size: 15cqw;
+    /* text-shadow: 0 0 3px #fc0000; */
+    position: absolute;
+    font-variant-numeric: tabular-nums;
+
+    color: var(--debug-color);
+    background: var(--debug-bg);
+
+    max-width: -webkit-fill-available;
+    word-wrap: break-word;
+    text-align: left;
+  }
 }
 
 .matrix-cell {

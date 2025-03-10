@@ -11,8 +11,8 @@ body.debug text.debug-info {
   font-family: monospace;
   font-size: 50%;
 
-  fill: greenyellow;
-  stroke: black;
+  fill: var(--debug-color);
+  stroke: var(--debug-bg);
 
   stroke-width: 6px;
   paint-order: stroke;
