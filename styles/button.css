@@ -1,6 +1,7 @@
 button {
+  --button-bg: var(--gray);
   font-size: 20px;
-  background-color: var(--gray);
+  background-color: var(--button-bg);
   align-items: center;
   border: 2px solid rgba(0, 0, 0, 0.3);
   box-sizing: border-box;
@@ -12,8 +13,17 @@ button {
 
   cursor: pointer;
 
+  &.primary {
+    --button-bg: #8bccff;
+  }
+
+  &.cancel {
+    --button-bg: #ffafaf;
+  }
+
   &:active {
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: hsl(from var(--button-bg) h s calc(l - 20));
+    /* background-color: rgba(0, 0, 0, 0.2); */
   }
 
   &:disabled {
