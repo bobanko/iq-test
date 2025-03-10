@@ -12,6 +12,9 @@
 
 :root {
   --body-bg-color: #c0c0c0;
+
+  --debug-color: black;
+  --debug-bg: greenyellow;
 }
 
 ::selection {
