@@ -23,8 +23,10 @@ export async function getResultsTotalCount() {
 }
 
 export async function getResultsLast24hCount() {
-  // last 24h
-  const tsOneDayAgo = Timestamp.fromDate(new Date(Date.now() - 10 * 60 * 1000)); // last 10m
+  const tsOneDayAgo = Timestamp.fromDate(
+    new Date(Date.now() - 24 * 60 * 60 * 1000)
+  ); // last 24h
+
   const testsLast24h = await getCountFromServer(
     query(quizResultsCol, where("datePassed", ">=", tsOneDayAgo))
   );
