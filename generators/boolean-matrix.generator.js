@@ -320,6 +320,8 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
 
   const basicCellCountRange = [2, Math.round(mtxSize ** 2 / 2)]; //potential config val
 
+  // todo(vmyshko): get rid of salting seeded random with question index!!!
+  // todo(vmyshko): how to keep/migrate old results?
   const random = new SeededRandom(seed + questionIndex);
 
   const patterns = [];
@@ -395,6 +397,10 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
 
     const availableColors = refPoints.map((pt) => pt.color);
     // todo(vmyshko): try to keep color proportions
+    // todo(vmyshko): this is adhoc fix for no-painted-cells case
+    if (availableColors.length === 0) {
+      availableColors.push(pointColors.at(0));
+    }
 
     points.forEach((pt) => {
       pt.color = random.sample(availableColors);
