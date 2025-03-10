@@ -2,8 +2,9 @@
 @import url(./styles/fonts.css);
 @import url(./styles/helpers.css);
 @import url(./styles/animations.css);
-
 @import url(./styles/palette.css);
+@import url(./styles/inputs.css);
+
 @import url(./styles/app-preview.css);
 
 :root {
@@ -14,17 +15,13 @@
   --bg-secondary: #ffebd6;
 
   --color-primary: var(--accent-color);
-  /* --color-primary: #e9911e; */
-
-  /* splash */
-
-  /* #019ce1 - chehol */
-
   --bg-primary: hsla(from var(--color-primary) h s l / 0.3);
 
   --splash-mob-frame-color: #019ce1;
   --splash-mob-frame-color: var(--color-primary);
   --splash-mob-frame-color: hsl(from var(--color-primary) calc(h + 150) s l);
+
+  --input-color: var(--accent-color);
 }
 
 html {
@@ -261,32 +258,6 @@ section {
     /* border-color: var(--bg-secondary); */
     /* border-radius: 30px; */
     padding: 20px 30px;
-  }
-
-  input[type="text"],
-  input[type="email"],
-  input[type="password"],
-  textarea {
-    border: 2px solid;
-    border-color: var(--bg-primary);
-    border-radius: 5px;
-
-    &:focus {
-      border-color: var(--color-primary);
-    }
-
-    &::placeholder {
-      /* color: var(--bg-primary); */
-    }
-
-    &:disabled {
-      background-color: #e3e3e3;
-      border-color: #b8b8b8;
-    }
-  }
-
-  textarea {
-    min-height: 16px;
   }
 }
 

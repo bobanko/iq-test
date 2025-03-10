@@ -1,0 +1,26 @@
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea {
+  outline: none;
+  --sat: 1;
+  border: 2px solid;
+  border-radius: 5px;
+
+  border-color: hsla(from var(--input-color) h s l / 0.3);
+
+  &:focus {
+    border-color: hsla(from var(--input-color) h s l / 1);
+  }
+
+  &:disabled {
+    --input-color: gray;
+    background-color: hsla(from var(--input-color) h s l / 0.1);
+    /* border-color: hsla(from var(--input-color) h 0 l / 0.3); */
+    /* background-color: hsla(from var(--input-color) h 0 calc(l * 2) / 1); */
+  }
+}
+
+textarea {
+  min-height: 16px;
+}
