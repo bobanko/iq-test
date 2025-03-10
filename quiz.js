@@ -173,7 +173,9 @@ function preloadSvgs() {
 }
 
 function onHashChanged() {
-  const seed = +getHashParameter("seed");
+  const seedRaw = getHashParameter("seed");
+
+  const seed = +seedRaw;
 
   generateQuiz({ seed });
 }
@@ -466,17 +468,17 @@ function wrapAnswers({
       const $nextQuestion =
         //first not-answered in question list
         $questionList.querySelector(":not(.answered)");
+      $answerList.toggleAttribute("disabled", true);
+      await wait(500);
 
       if ($nextQuestion) {
-        $answerList.toggleAttribute("disabled", true);
-        await wait(500);
         // go to next question
         $nextQuestion.click();
-        $answerList.toggleAttribute("disabled", false);
       } else {
         // no quesitons left - finish
         $btnFinishQuiz.click();
       }
+      $answerList.toggleAttribute("disabled", false);
     });
 
     $answerList.appendChild($answerButton);
