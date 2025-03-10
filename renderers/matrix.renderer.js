@@ -21,6 +21,8 @@ function createPaintedMatrix({ points = [], mtxSize }) {
 
   // todo(vmyshko): check for same colors in one cell
 
+  // todo(vmyshko): possible use boolean flag-like color
+  // as 0001 + 0010 => 0011 which means two mixed
   //inset 0px 0px 0px 3px gold,
   // inset 0px 0px 0px 5px black,
   //  inset 0px 0px 0px 9px #00bc62,
