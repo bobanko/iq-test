@@ -410,6 +410,7 @@ $btnFinishQuiz.addEventListener("click", () => {
 
 $btnFinishConfirm.addEventListener("click", () => {
   $modalOverlayFinishConfirm.hidden = true;
+  $modalOverlayPostQuiz.hidden = false;
   timer.stop();
 
   toggleControls(false);
@@ -733,7 +734,7 @@ $formPostQuiz.addEventListener("submit", async (e) => {
 
   $modalOverlayPostQuiz.hidden = true;
 
-  // todo(vmyshko): save quiz results here?
+  // todo(vmyshko): save quiz results
 });
 
 {
