@@ -104,6 +104,10 @@ The Hoeflin Power Test, 34 raw score*
 
 https://megasociety.org/#admission
 
+## how iq correlates with things
+
+https://ru.wikipedia.org/wiki/%D0%9A%D0%BE%D1%8D%D1%84%D1%84%D0%B8%D1%86%D0%B8%D0%B5%D0%BD%D1%82_%D0%B8%D0%BD%D1%82%D0%B5%D0%BB%D0%BB%D0%B5%D0%BA%D1%82%D0%B0#%D0%A2%D0%B5%D1%81%D1%82%D1%8B
+
 ## docs
 
 some test types and descriptions
