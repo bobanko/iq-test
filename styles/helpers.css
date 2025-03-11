@@ -32,6 +32,10 @@
   gap: 20px;
 }
 
+.border-box {
+  box-sizing: border-box;
+}
+
 .container {
   container-type: inline-size;
 }
@@ -100,6 +104,10 @@ svg[aria-hidden="true"] {
 .my-10 {
   margin-top: 10px;
   margin-bottom: 10px;
+}
+
+.m-20 {
+  margin: 20px;
 }
 
 .my-20 {

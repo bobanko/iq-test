@@ -1,16 +1,23 @@
 input[type="text"],
 input[type="email"],
 input[type="password"],
-textarea {
+input[type="number"],
+textarea,
+select {
   outline: none;
   --sat: 1;
   border: 2px solid;
   border-radius: 5px;
 
-  border-color: hsla(from var(--input-color) h s l / 0.3);
+  box-sizing: border-box;
+
+  padding: 10px;
+
+  border-color: var(--input-color);
 
   &:focus {
-    border-color: hsla(from var(--input-color) h s l / 1);
+    border-color: hsla(from var(--input-color) h s calc(l / 1.5) / 1);
+    outline: 2px solid white;
   }
 
   &:disabled {
@@ -23,4 +30,33 @@ textarea {
 
 textarea {
   min-height: 16px;
+}
+
+select {
+  appearance: none;
+
+  /* iphone shows blue somewhy, this is reset */
+  color: black;
+  box-sizing: border-box;
+  background-image: url(../images/keyboard_arrow_down.svg);
+  background-repeat: no-repeat;
+  background-position: right center;
+  padding-right: 20px;
+
+  width: 100%;
+  text-overflow: ellipsis;
+
+  option {
+    max-width: 100%;
+  }
+}
+
+input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  margin: 0;
+}
+
+label {
+  cursor: pointer;
 }
