@@ -14,8 +14,13 @@ import {
   preloadImageByLink,
 } from "./helpers/preload-image.helper.js";
 
-import { signAnonUser } from "./endpoints/auth.js";
+import { getCurrentUser, signAnonUser } from "./endpoints/auth.js";
 import { saveQuizResults } from "./endpoints/save-quiz-results.endpoint.js";
+import { countries, emojiFlags } from "./countries.mapping.js";
+import { getCached } from "./helpers/local-cache.helper.js";
+import { fetchClientIpInfo } from "./endpoints/ip-info.js";
+import { getUserData, updateUserData } from "./endpoints/user-data.js";
+import { calcStaticIqByStats } from "./calc-iq.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -189,7 +194,6 @@ const currentQuiz = {
 function toggleControls(isEnabled = true) {
   $answerList.toggleAttribute("disabled", !isEnabled);
   $btnFinishQuiz.disabled = !isEnabled;
-
   $questionInfo.hidden = isEnabled;
 }
 
@@ -401,11 +405,11 @@ $seed.addEventListener("click", () => {
 });
 
 $btnFinishQuiz.addEventListener("click", () => {
-  $modalOverlay.hidden = false;
+  $modalOverlayFinishConfirm.hidden = false;
 });
 
 $btnFinishConfirm.addEventListener("click", () => {
-  $modalOverlay.hidden = true;
+  $modalOverlayFinishConfirm.hidden = true;
   timer.stop();
 
   toggleControls(false);
@@ -414,22 +418,25 @@ $btnFinishConfirm.addEventListener("click", () => {
 
   const resultsStats = getResultsStats(quizResults);
 
+  const currentIq = calcStaticIqByStats(resultsStats);
+
   $msgTestResults.innerHTML = `
   ⚪️ total questions answered: ${resultsStats.isAnswered} of ${
     resultsStats.total
   } </br>
   🟢 correct answers: ${resultsStats.isCorrect}  </br>
   🔴 wrong answers: ${resultsStats.isAnswered - resultsStats.isCorrect}  </br>
-  ⏱️ time spent: ${formatTimeSpan(resultsStats.timeSpent)}
+  ⏱️ time spent: ${formatTimeSpan(resultsStats.timeSpent)} </br>
+  🧠 your static iq: ${currentIq}
   `;
 
   markAnsweredQuestions(quizResults);
 
-  // saveQuizResults({
-  //   quizResults,
-  //   seed: currentQuiz.seed,
-  //   stats: resultsStats,
-  // });
+  saveQuizResults({
+    quizResults,
+    seed: currentQuiz.seed,
+    stats: resultsStats,
+  });
 });
 
 function wrapAnswers({
@@ -519,7 +526,10 @@ $debugCheckbox.addEventListener("change", (event) => {
 $debugCheckbox.click();
 
 // hotkeys
-function bindingsOnKeypress({ code }) {
+function bindingsOnKeypress({ code, target }) {
+  const targetTagsToIgnore = ["INPUT", "SELECT"];
+  if (targetTagsToIgnore.includes(target.tagName)) return;
+
   const questionsInRow = 10; // depends on layout
   const keyBindingsMap = new Map([
     ["ArrowRight", () => navigateQuestions(1)],
@@ -534,8 +544,6 @@ function bindingsOnKeypress({ code }) {
     ["KeyF", () => $btnFinishQuiz.click()],
   ]);
 
-  // console.log(code);
-
   keyBindingsMap.get(code)?.();
 }
 
@@ -546,7 +554,7 @@ $btnDebug.addEventListener("click", () => {
 });
 
 $btnFinishCancel.addEventListener("click", () => {
-  $modalOverlay.hidden = true;
+  $modalOverlayFinishConfirm.hidden = true;
 });
 
 function prepareQuiz() {
@@ -561,8 +569,178 @@ function prepareQuiz() {
   generateQuiz({ seed });
 }
 
+function fillSelect({ $select, dataEntries }) {
+  for (let [key, text] of dataEntries) {
+    const $option = document.createElement("option");
+
+    $option.textContent = text;
+    $option.value = key;
+
+    $select.appendChild($option);
+  }
+}
+
+async function loadFormSelects() {
+  const countryEntries = Object.entries(countries).map(
+    ([countryCode, countryName]) => {
+      return [countryCode, `${emojiFlags[countryCode]} ${countryName}`];
+    }
+  );
+
+  fillSelect({ $select: $selectCountry, dataEntries: countryEntries });
+
+  // todo(vmyshko): translate? or put into data-translate?
+  const studies = {
+    highschool: "High School",
+    agriculture: "Agriculture",
+    architecture: "Architecture and urbanism",
+    art: "Art and design",
+    business: "Commercial and management",
+    education: "Education",
+    engineering: "Engineering and technology",
+    geography: "Geography and geology",
+    humanities: "Letters and culture",
+    languages: "Languages and philology",
+    law: "Law",
+    maths: "Math and Computer Science",
+    medical: "Medical sciences",
+    natural: "Natural Sciences",
+    social: "Social sciences",
+    com: "Communication and information",
+  };
+
+  fillSelect({ $select: $selectStudy, dataEntries: Object.entries(studies) });
+
+  const genders = {
+    male: "male",
+    female: "female",
+    other: "other",
+  };
+
+  fillSelect({ $select: $selectGender, dataEntries: Object.entries(genders) });
+
+  const diplomas = {
+    none: "No diploma",
+    bac1: "High school diploma",
+    bac2: "2 years studies degree",
+    bac3: "3 years studies degree",
+    bac4: "4 years studies degree",
+    bac5: "5 years studies degree",
+    bac6: "more than 5 years studies degree",
+
+    //
+  };
+  fillSelect({
+    $select: $selectDiploma,
+    dataEntries: Object.entries(diplomas),
+  });
+
+  const maxYearsOld = 120;
+  const currentYear = new Date().getFullYear();
+  const birthYearsEntries = Array.from({ length: maxYearsOld }, (_, index) => {
+    return currentYear - index;
+  }).map((year) => [year, year]);
+
+  fillSelect({
+    $select: $selectBirth,
+    dataEntries: birthYearsEntries,
+  });
+}
+
+async function prefillQuizForm() {
+  await signAnonUser();
+
+  const ipCountryCode =
+    // load user data from fb or ipinfo?
+    await getCached({
+      fn: fetchClientIpInfo,
+      cacheKey: "client-ip-info",
+    }).then((ipInfo) => {
+      return ipInfo.location.country.code ?? "__";
+    });
+
+  $fieldset.disabled = true;
+
+  const user = await getCurrentUser();
+
+  const userData = (await getUserData(user.uid)) ?? {};
+
+  const {
+    displayName = "",
+    email = "",
+    countryCode = ipCountryCode,
+    diploma,
+    gender,
+    study,
+    //
+    birth, //= 2025 - (50 - 14) / 2,
+    newsletter,
+  } = userData;
+  const formData = {
+    displayName,
+    email,
+    countryCode,
+    diploma,
+    gender,
+    study,
+    birth,
+    newsletter,
+  };
+
+  for (let [key, value] of Object.entries(formData)) {
+    const input = $formPostQuiz.elements[key];
+
+    if (input.type === "checkbox") {
+      input.checked = !!value;
+    } else {
+      input.value = value ?? "";
+    }
+  }
+
+  //loaded
+  $fieldset.disabled = false;
+}
+
+$formPostQuiz.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  const formData = new FormData($formPostQuiz);
+  //disabling fieldset disables formdata fields from reading
+  $fieldset.disabled = true;
+
+  const formEntries = [...formData.entries()];
+
+  const ipInfo = await getCached({
+    fn: fetchClientIpInfo,
+    cacheKey: "client-ip-info",
+  });
+
+  const userData = {
+    ...Object.fromEntries(formEntries),
+
+    ipInfo,
+  };
+
+  const user = await getCurrentUser();
+  const result = await updateUserData({
+    userId: user.uid,
+    userData,
+  });
+
+  console.log("result", result);
+
+  $fieldset.disabled = false;
+
+  $modalOverlayPostQuiz.hidden = true;
+
+  // todo(vmyshko): save quiz results here?
+});
+
 {
   preloadSvgs();
   prepareQuiz();
-  await signAnonUser();
+
+  loadFormSelects();
+
+  prefillQuizForm();
 }

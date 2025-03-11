@@ -18,6 +18,8 @@ import {
 } from "./endpoints/get-stats.js";
 import { getCurrentUser, signAnonUser } from "./endpoints/auth.js";
 import { getUserData, updateUserData } from "./endpoints/user-data.js";
+import { fetchClientIpInfo } from "./endpoints/ip-info.js";
+import { calcStaticIqByStats } from "./calc-iq.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
@@ -137,14 +139,6 @@ const data_results_perCountry = Array.from({ length: 10 }, (_) => {
 });
 
 // -----
-function calcStaticIqByStats(stats) {
-  const minIq = 60;
-  const maxIq = 140;
-
-  const { isAnswered, isCorrect, total } = stats;
-
-  return minIq + (isCorrect / total) * (maxIq - minIq);
-}
 
 async function loadStatsFb() {
   const { locale: defaultLocale } = Intl.DateTimeFormat().resolvedOptions();
@@ -206,14 +200,6 @@ async function loadStatsFb() {
 }
 
 loadStatsFb();
-
-// location
-
-function fetchClientIpInfo() {
-  return fetch(
-    `https://api.ipregistry.co/?key=${appConfig.ipRegistryKey}`
-  ).then((response) => response.json());
-}
 
 // page init
 {

@@ -294,3 +294,31 @@ footer {
   max-height: 100vh;
   overflow-x: auto;
 }
+
+.quiz-details-form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  column-gap: 10px;
+
+  /* fieldset reset */
+  border-width: 4px;
+  /* border: none;
+  padding: 0;
+  margin: 0; */
+
+  & > label > span {
+    text-transform: capitalize;
+    &:after {
+      content: ":";
+    }
+  }
+
+  input,
+  select {
+    /* max-width: 320px; */
+  }
+
+  @media (orientation: portrait) and (width < 600px) {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
