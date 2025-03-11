@@ -135,8 +135,6 @@ nav.menu {
   a {
     display: flex;
 
-    padding: 10px;
-
     text-transform: capitalize;
     text-decoration: none;
 

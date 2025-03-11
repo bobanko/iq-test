@@ -1,13 +1,12 @@
 @import url(./styles/reset.css);
 @import url(./styles/fonts.css);
 @import url(./styles/helpers.css);
+@import url(./styles/button.css);
+@import url(./styles/inputs.css);
 /* @import url(./styles/hotkeys.css); */
 @import url(./styles/palette.css);
 @import url(./styles/patterns/patterns.css);
 @import url(./styles/animations.css);
-
-@import url(./styles/button.css);
-@import url(./styles/inputs.css);
 
 @import url(./styles/question-list.css);
 
@@ -166,7 +165,7 @@ header {
   border-radius: 4px;
   padding: 3px;
 
-  transition: 200ms all;
+  transition: 200ms all, outline 0ms;
 }
 
 .answer.selected {
