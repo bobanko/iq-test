@@ -17,7 +17,7 @@ select {
 
   &:focus {
     border-color: hsla(from var(--input-color) h s calc(l / 1.5) / 1);
-    outline: 2px solid white;
+    outline: 3px solid white;
   }
 
   &:disabled {
