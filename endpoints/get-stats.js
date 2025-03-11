@@ -36,9 +36,7 @@ export async function getResultsLast24hCount() {
 
 export async function getResultsLast10() {
   const testResultsSnapshot = await getDocs(
-    quizResultsCol,
-    orderBy("datePassed"),
-    limit(10)
+    query(quizResultsCol, orderBy("datePassed", "desc"), limit(10))
   );
 
   const testResults = testResultsSnapshot.docs.map((doc) => ({
