@@ -1,6 +1,6 @@
 # test examples
 
-## international-iq-test.com
+## International IQ Test
 
 https://international-iq-test.com/  
 good detailed stats, by countries etc.
@@ -93,3 +93,29 @@ https://officialiqtests.com/
 ## new
 
 https://test.iq/
+
+## mega society test links (static docs)
+
+Langdon Adult Intelligence Test, IQ 175 (before 1994)
+The Mega Test, 43 raw score (before 1995)
+The Titan Test, 43 raw score (before September 1, 2020)
+The Ultra Test, 70 raw score*
+The Hoeflin Power Test, 34 raw score*
+
+https://megasociety.org/#admission
+
+## docs
+
+some test types and descriptions
+
+https://en.wikipedia.org/wiki/Wechsler_Adult_Intelligence_Scale#Index_scores_and_scales
+
+## high iq societies
+
+https://en.wikipedia.org/wiki/High-IQ_society#Societies
+
+| Name                | Eligibility / Rarity                                       | Approx. IQ |
+| ------------------- | ---------------------------------------------------------- | ---------- |
+| Mensa International | Top 2 percent of population (98th percentile; 1 out of 50) | 130        |
+| Intertel            | Top 1 percent (99th percentile; 1 out of 100)              | 135        |
+| Triple Nine Society | Top 0.1 percent (99.9th percentile; 1 out of 1,000)        | 146        |
