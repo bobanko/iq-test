@@ -69,6 +69,37 @@ export const cutoutConfigs = {
     renderer: renderCutoutQuestion,
   },
 
+  cutout_rays_wip: {
+    skip: true,
+    // todo(vmyshko): this is still wip pattern
+    order: 20,
+    viewBox: "4 4 320 320",
+    viewBox: defaultCutoutViewBox,
+    figureLink: "./images/cutout-rays.svg",
+    figures: ["pattern"],
+
+    styles: {
+      "--color": "#f44336",
+      "--bg-color": "var(--yellow)",
+    },
+    cutoutSize: 98,
+
+    cutoutPoints: [
+      [27, 113],
+      [191, 28],
+      [27, 30],
+      [27, 191],
+      [191, 189],
+      [191, 111],
+    ],
+
+    patternsInCol: 1,
+    patternsInRow: 1,
+    // maxAnswerCount: 8,
+
+    generator: generateCutoutQuestion,
+    renderer: renderCutoutQuestion,
+  },
   iq37alt_cutout_spikes: {
     order: 37,
     viewBox: defaultCutoutViewBox,
@@ -109,11 +140,8 @@ export const cutoutConfigs = {
     ],
     // variants: figsFn("lines-", 6),
     styles: {
-      // "--stroke": "#FF5455",
-      // "--fill": "#2A468E",
-
-      "--primary-color": "var(--stroke, #FF5455)",
-      "--secondary-color": "var(--fill, #2A468E)",
+      "--stroke": "var(--red)",
+      // "--fill": " var(--blue)",
     },
 
     cutoutSize: 78,
