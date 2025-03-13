@@ -1,4 +1,4 @@
-import { createQuestionMark } from "../../renderers/common.renderer.js";
+import { createQuestionMark } from "../renderers/common.renderer.js";
 
 function getPointFlatIndex({ point, mtxSize }) {
   return point.row * mtxSize + point.col;
