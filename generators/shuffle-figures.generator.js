@@ -2,7 +2,7 @@ import { getUid } from "../helpers/common.js";
 import { generateUniqueValues } from "../helpers/generate-unique-values.js";
 import { SeededRandom } from "../helpers/random.helpers.js";
 import { colors } from "../configs/common.config.js";
-import { getSafeIndex } from "../helpers/helpers.js";
+import { getSafeIndex, getSafeAt } from "../helpers/safe-index.js";
 
 const defaultPatternCount = { patternsInCol: 3, patternsInRow: 3 };
 // todo(vmyshko): refac to reuse same code? only yield differs (mostly)
@@ -11,6 +11,7 @@ export const shuffleTypes = {
    * single for all cols/rows but basically random
    * @param {*} param0
    * @returns same item for all rows/cols but basically random
+   * @deprecated use byteGenConfig instead
    */
   single: ({ items }) =>
     function* ({ random, config }) {
@@ -33,6 +34,7 @@ export const shuffleTypes = {
    *          row2: [B, B, B];
    *          row3: [C, C, C];
    * @returns same item for same row
+   * @deprecated use byteGenConfig instead
    */
   rowProgression: ({ items }) =>
     function* rowProgression({ random, config }) {
@@ -54,6 +56,7 @@ export const shuffleTypes = {
    * @example row1: [A, B, C];
    *          row2: [A, B, C];
    *          row3: [A, B, C];
+   * @deprecated use byteGenConfig instead
    */
   colProgression: ({ items }) =>
     function* colProgression({ random, config }) {
@@ -83,6 +86,7 @@ export const shuffleTypes = {
    * [A, B, C]
    * [B, C, A]
    * [B, C, A]
+   * @deprecated use byteGenConfig instead
    */
   randomInRow: ({ items }) =>
     function* randomInRow({ random, config }) {
@@ -106,6 +110,7 @@ export const shuffleTypes = {
    * [A, B, B]
    * [B, C, C]
    * [C, A, A]
+   * @deprecated use byteGenConfig instead
    */
   randomInCol: ({ items }) =>
     function* randomInCol({ random, config }) {
@@ -135,6 +140,7 @@ export const shuffleTypes = {
    *          row2: [C, A, B];
    *          row1: [B, C, A];
    *
+   * @deprecated use byteGenConfig instead
    */
   unique123: ({ items }) =>
     function* unique123({ random, config }) {
@@ -182,7 +188,7 @@ export const shuffleTypes = {
    *          row2: [2, 3, 4];
    *          row3: [3, 4, 5];
    *
-   *
+   * @deprecated use byteGenConfig instead
    */
   shiftedBy: ({ items, rowShift = 0, colShift = 0, shuffle = false }) =>
     function* shifted123({ random, config }) {
@@ -249,44 +255,63 @@ export function shuffleFiguresGeneratorGeneric({ random, config }) {
     //
     patternsInCol = 3,
     patternsInRow = 3,
-    preGenConfig,
+    byteGenConfig,
     fullShuffle = false,
     shuffleRows = false,
   } = config;
 
-  // todo(vmyshko): item count should come from config
   const mtx = getBaseMatrix({
     patternsInCol,
     patternsInRow,
-    byteCount: preGenConfig.length,
+    byteCount: byteGenConfig.length,
   });
 
-  const byteMappings = preGenConfig.map((byteCfg) => {
-    const map = Array(byteCfg.count)
-      .fill(0)
-      .map((_, index) => index);
+  // todo(vmyshko): impl staticRnd(one for all)
+  // and uniqueRnd (all unique for each cell)
 
-    return byteCfg.shuffle ? random.shuffle(map) : map;
+  const randoms = byteGenConfig.map(({ max }) => {
+    return {
+      rndPerRow: random.shuffle(
+        Array.from({ length: max }, (_, index) => index)
+      ),
+      rndPerCol: random.shuffle(
+        Array.from({ length: max }, (_, index) => index)
+      ),
+    };
   });
+
+  // one rnd between all bytes
+  const rndGlobal = random.fromRange(0, patternsInCol * patternsInRow);
+
+  console.log({ randoms, rndGlobal });
+
+  // todo(vmyshko): old formula for migration
+  // const [rowShift, colShift, extraShift = 0] = shifts;
+  // (rowIndex * rowShift + colIndex * colShift + extraShift) % count
 
   // apply rules
   applyToMtx({
     mtx,
     callback: ({ rowIndex, colIndex, mtx }) => {
-      preGenConfig.forEach((byteConfig, index) => {
-        const { count, shifts, shuffle = false } = byteConfig;
+      byteGenConfig.forEach(({ fn: byteFn, max }, index) => {
+        const { rndPerCol, rndPerRow } = randoms[index];
 
-        const [rowShift, colShift, extraShift = 0] = shifts;
-        // todo(vmyshko): mapping too complex, simplify
-        mtx[rowIndex][colIndex][index] =
-          byteMappings[index][
-            (rowIndex * rowShift + colIndex * colShift + extraShift) % count
-          ];
+        const byteValueRaw = byteFn({
+          row: rowIndex,
+          col: colIndex,
+          rndRow: getSafeAt({ array: rndPerRow, index: rowIndex }),
+          rndCol: getSafeAt({ array: rndPerCol, index: colIndex }),
+          rndGlobal,
+        });
+
+        mtx[rowIndex][colIndex][index] = getSafeIndex({
+          index: byteValueRaw,
+          length: max,
+        });
       });
     },
   });
-
-  // todo(vmyshko): maybe work with flat matrix from the begining?
+  // todo(vmyshko): somehow shuffle only selected bytetypes but keep order
 
   if (fullShuffle) {
     return random.shuffle(mtx.flat());
@@ -296,8 +321,7 @@ export function shuffleFiguresGeneratorGeneric({ random, config }) {
     return mtx.map((row) => random.shuffle(row)).flat();
   }
 
-  // todo(vmyshko): somehow shuffle only selected bytetypes but keep order
-
+  // todo(vmyshko): maybe work with flat matrix from the begining?
   return mtx.flat();
 }
 
@@ -312,12 +336,9 @@ function processVar({ variable, sets, bytes }) {
   if (variable.hasOwnProperty("static")) {
     return variable.static;
   } else if (variable.hasOwnProperty("byteIndex")) {
-    return sets[variable.from][
-      getSafeIndex({
-        index: bytes[variable.byteIndex] + (variable.shift ?? 0),
-        length: sets[variable.from].length,
-      })
-    ];
+    const unsafeIndex = bytes[variable.byteIndex] + (variable.shift ?? 0);
+
+    return getSafeAt({ array: sets[variable.from], index: unsafeIndex });
   }
 }
 
@@ -397,20 +418,9 @@ export function shuffleFiguresGenerator1triangles({ random, config }) {
 }
 
 function generateAnswer({ random, config }) {
-  const { preGenConfig } = config;
+  const { byteGenConfig } = config;
 
-  // todo(vmyshko): stub for not yet updated configs --remove
-  if (!preGenConfig)
-    return [
-      random.fromRange(0, 2),
-      random.fromRange(0, 2),
-      0,
-      // random.fromRange(1, 3),
-    ];
-
-  return preGenConfig.map((byteCfg) => {
-    return random.fromRange(0, byteCfg.count - 1);
-  });
+  return byteGenConfig.map(({ max }) => random.fromRange(0, max - 1));
 }
 
 // todo(vmyshko): this is sample for exact pre-renderer with triangles

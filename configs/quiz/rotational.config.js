@@ -101,23 +101,16 @@ export const rotationalConfigs = {
   },
 
   iq40_hexCircle_like_pentagon_shuffleBased: {
-    // todo(vmyshko): not enough wrong answers - only 5 avail. UPD: colors added
-    // skip: true,
     order: 40,
-    // skip: true,
-    //new
-    preGenConfig: [
+
+    byteGenConfig: [
       {
-        //degs
-        count: 5,
-        shifts: [1, 2],
-        // shuffle: true,
+        fn: ({ row, col, rndRow }) => (row + 1) * col + rndRow,
+        max: 5,
       },
       {
-        //cols
-        count: 2,
-        shifts: [0, 0],
-        shuffle: true,
+        fn: ({}) => 0,
+        max: 2, // to get extra color in answers
       },
     ],
 
@@ -157,14 +150,11 @@ export const rotationalConfigs = {
     // todo(vmyshko): this is replacement for pentagon orig, due to lack of answers (5)
     skip: true,
     order: 40,
-    // skip: true,
-    //new
-    preGenConfig: [
+
+    byteGenConfig: [
       {
-        //degs
-        count: 6,
-        shifts: [1, 2],
-        // shuffle: true,
+        fn: ({ row, col, rndRow }) => (row + 1) * col + rndRow,
+        max: 6,
       },
     ],
 
@@ -227,29 +217,27 @@ export const rotationalConfigs = {
   // true clock 45/45
   iq34alt_twoArrowClock: {
     order: 34,
-    preGenConfig: [
+
+    byteGenConfig: [
       {
-        //degs
-        count: 360 / 45,
-        shifts: [3, 1],
-        // shuffle: true,
+        // -1* to move hour arrow ccw
+        fn: ({ row, col, rndRow }) => -1 * (col + row + rndRow),
+        max: 360 / 90,
       },
       {
-        //degs
-        count: 360 / 90,
-        shifts: [3, 1],
-        // shuffle: true,
+        fn: ({ row, col, rndRow }) => col + row + rndRow,
+        max: 360 / 45,
       },
     ],
 
     preRenderConfig: {
       sets: {
-        rot1: Array(360 / 45)
-          .fill(null)
-          .map((_, i) => 45 * i),
-        rot2: Array(360 / 90)
+        rot1: Array(360 / 90)
           .fill(null)
           .map((_, i) => 90 * i),
+        rot2: Array(360 / 45)
+          .fill(null)
+          .map((_, i) => 45 * i),
       },
 
       figureParts: [
@@ -339,36 +327,15 @@ export const rotationalConfigs = {
 
   iq28alt_quarterFig90: {
     order: 28,
-    figs: [
-      {
-        pickFrom: [svgFigs.square, svgFigs.circle],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-      {
-        pickFrom: [svgFigs.quarter],
-        startDeg: 45, // initial rotation, before rules: 0, -45
-        stepDeg: 90, // min rotation step by rules
-        skipZero: true, // no zero rotation by rules
-      },
-    ],
 
-    shiftColorsBetweenRows: true,
-    onlyUniqueFigs: true, // [2 and more]
-    noOverlap: false, // [2 and more] figs can overlap each other - have same deg
-    answerCount: 6, // how many answers to generate per question
-
-    preGenConfig: [
+    byteGenConfig: [
       {
-        //degs
-        count: 360 / 45,
-        shifts: [3, 1],
+        fn: ({ row, col, rndRow }) => col + row * 3 + rndRow,
+        max: 360 / 90,
       },
       {
-        //degs
-        count: 360 / 90,
-        shifts: [1, 3, 1],
+        fn: ({ row, col, rndRow }) => col * 3 + row + 1 + rndRow,
+        max: 360 / 90,
       },
     ],
 
@@ -444,16 +411,15 @@ export const rotationalConfigs = {
   iq11alt_twoQuarters90sameDir: {
     skip: true,
     order: 11,
-    preGenConfig: [
+
+    byteGenConfig: [
       {
-        //degs
-        count: 360 / 45,
-        shifts: [3, 1],
+        fn: ({ row, col, rndRow }) => col + rndRow,
+        max: 360 / 90,
       },
       {
-        //degs
-        count: 360 / 90,
-        shifts: [1, 3, 1],
+        fn: ({ row, col, rndRow }) => col + rndRow,
+        max: 360 / 90,
       },
     ],
 
@@ -503,20 +469,15 @@ export const rotationalConfigs = {
 
     patternsInCol: 2,
     // maxAnswerCount: 10,
-
-    preGenConfig: [
+    byteGenConfig: [
       {
-        //degs
-        count: 360 / 90, //4
-        shifts: [3, 1],
-        // shuffle: true,
-        // todo(vmyshko): besides shuffle it should be random start shift
+        fn: ({ row, col, rndRow }) => col + row * 0 + rndRow * 1,
+        max: 360 / 90,
       },
       {
-        //colors
-        count: 2,
-        shifts: [0, 0],
-        shuffle: true,
+        fn: ({ row, col, rndRow, rndCol }) => 0 * row,
+        //two colors to have additional alt versions
+        max: 2,
       },
     ],
 
