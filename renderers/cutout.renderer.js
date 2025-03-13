@@ -1,5 +1,5 @@
 import { getUid } from "../helpers/common.js";
-import { createQuestionMark } from "../../renderers/common.renderer.js";
+import { createQuestionMark } from "../renderers/common.renderer.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
