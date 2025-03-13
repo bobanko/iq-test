@@ -112,19 +112,14 @@ export const shuffleFiguresConfigs = {
     // const [rowShift, colShift] = [1, 2]; //same as [2,1] but Vertical
     // todo(vmyshko): how to combine both secondary and primary diags? [2,1] & [1,2]
 
-    preGenConfig: [
-      // todo(vmyshko): add named bytes?
+    byteGenConfig: [
       {
-        // figs
-        count: 6,
-        // todo(vmyshko): randomize shifts [2,1] and [1,2]
-        shifts: [2, 1], // orig dice
+        fn: ({ row, col, rndRow }) => row * 2 + col,
+        max: 6,
       },
       {
-        //colors
-        count: 3,
-        shifts: [2, 1], // orig dice
-        shuffle: true,
+        fn: ({ row, col, rndRow }) => col + rndRow, // todo(vmyshko): add shuffle
+        max: 3,
       },
     ],
 
@@ -155,25 +150,20 @@ export const shuffleFiguresConfigs = {
 
   iq39_cardSuits: {
     order: 39,
-    // todo(vmyshko): recheck logic, seems unsolvable, diff with orig
+
     patternsInCol: 3,
-    // maxAnswerCount: 8,
-    // noRotationAnimation: true,
 
     // todo(vmyshko): move to pregenconf?
     fullShuffle: true,
 
-    preGenConfig: [
-      // todo(vmyshko): add named bytes?
+    byteGenConfig: [
       {
-        // figs
-        count: 3,
-        shifts: [2, 1],
+        fn: ({ row, col, rndRow }) => row * 2 + col,
+        max: 3,
       },
       {
-        //rots
-        count: 3,
-        shifts: [0, 1],
+        fn: ({ row, col, rndRow }) => col,
+        max: 3,
       },
     ],
 
@@ -213,25 +203,18 @@ export const shuffleFiguresConfigs = {
     patternsInCol: 3,
     // maxAnswerCount: 8,
 
-    preGenConfig: [
+    byteGenConfig: [
+      //figs
       {
-        // figs
-        count: 3,
-        // todo(vmyshko): add random [1,2]
-        shifts: [2, 1],
-        shuffle: true,
+        fn: ({ row, col, rndRow }) => col + rndRow, //unique123
+        max: 3,
       },
+      //rots
       {
-        //rots
-        count: 3,
-        shifts: [0, 1],
+        fn: ({ row, col, rndRow }) => col,
+        max: 3,
       },
-      // {
-      //   //cols
-      //   count: 3,
-      //   // todo(vmyshko): allow random
-      //   shifts: [0, 1],
-      // },
+      //cols   // todo(vmyshko): allow random colors
     ],
 
     preRenderConfig: {
@@ -264,23 +247,19 @@ export const shuffleFiguresConfigs = {
     // todo(vmyshko): gen answers with question colors only
     patternsInCol: 2, // hard to solve
 
-    preGenConfig: [
+    byteGenConfig: [
+      // figs
       {
-        // figs
-        count: 3,
-        shifts: [2, 1],
+        fn: ({ row, col, rndRow }) => row * 2 + col,
+        max: 3,
       },
+      //rots
       {
-        //rots
-        count: 2,
-        shifts: [1, 0],
+        fn: ({ row, col, rndRow }) => row,
+        max: 2,
       },
-      // {
       //   //cols
-      //   count: 3,
-      //   // todo(vmyshko): allow random
-      //   shifts: [0, 1],
-      // },
+      //   // todo(vmyshko): allow random colors
     ],
 
     shuffleRows: true,
@@ -319,24 +298,18 @@ export const shuffleFiguresConfigs = {
     patternsInRow: 3,
     // maxAnswerCount: 18,
 
-    preGenConfig: [
+    byteGenConfig: [
       {
-        //cols1
-        count: 3,
         // todo(vmyshko): allow random
-        shifts: [0, 1],
+        fn: ({ row, col, rndRow }) => col,
+        max: 3,
       },
-      // {
-      //   //cols2
-      //   count: 3,
-      //   // todo(vmyshko): allow random
-      //   shifts: [0, 1, 1],
-      // },
       {
         //rots
-        count: 2,
-        shifts: [1, 0],
+        fn: ({ row, col, rndRow }) => row,
+        max: 2,
       },
+      //cols // todo(vmyshko): allow random colors
     ],
 
     shuffleRows: true,
@@ -382,19 +355,19 @@ export const shuffleFiguresConfigs = {
     patternsInRow: 2,
     // maxAnswerCount: 8,
 
-    preGenConfig: [
+    byteGenConfig: [
       {
         //rots
-        count: 3,
-        shifts: [1, 1],
-        shuffle: true,
+        // shuffle: true,
+        fn: ({ row, col, rndRow }) => row + col,
+        max: 3,
       },
       {
         //cols - one for two, like theme
-        count: 2,
-        // todo(vmyshko): allow random
-        shifts: [1, 0],
-        shuffle: true,
+        // todo(vmyshko): allow random colors
+        // shuffle: true,
+        fn: ({ row, col, rndRow }) => row,
+        max: 2,
       },
     ],
 
@@ -431,27 +404,24 @@ export const shuffleFiguresConfigs = {
     order: 14,
     patternsInCol: 3,
     patternsInCol: 2,
-    // maxAnswerCount: 8,
+    // maxAnswerCount: 28,
 
-    preGenConfig: [
+    byteGenConfig: [
+      // unique123 based on rndGlobal:
+      // col + ((rndGlobal % 2) + 1) * row
+
+      //figs-1
       {
-        //figs-1
-        count: 3,
-        shifts: [1, 1],
-        shuffle: true,
+        fn: ({ row, col, rndRow, rndCol, rndGlobal }) =>
+          col + ((rndGlobal % 2) + 1) * row + rndGlobal,
+        max: 3,
       },
       {
         //figs-2
-        count: 3,
-        shifts: [1, 2, 1],
-        shuffle: true,
+        fn: ({ row, col, rndRow, rndCol, rndGlobal }) =>
+          col + ((rndGlobal % 2) + 1) * row + rndGlobal + rndRow,
+        max: 3,
       },
-      // {
-      //   //colors
-      //   count: 3,
-      //   shifts: [0, 0],
-      //   shuffle: true,
-      // },
     ],
 
     preRenderConfig: {
@@ -487,22 +457,20 @@ export const shuffleFiguresConfigs = {
 
   iq38_color3Frames: {
     order: 38,
-    // todo(vmyshko): randomize columns (not impl yet)
     patternsInCol: 3,
     // maxAnswerCount: 8,
 
-    preGenConfig: [
+    // todo(vmyshko): origin is more complex and not so beautiful (logically)
+    byteGenConfig: [
       {
         //color-theme
-        count: 3,
-        shifts: [1, 1],
-        shuffle: true,
+        fn: ({ row, col, rndRow }) => col + rndRow,
+        max: 3,
       },
       {
         //frame
-        count: 2,
-        shifts: [1, 1],
-        shuffle: true,
+        fn: ({ row, col, rndRow, rndGlobal }) => col + rndRow,
+        max: 2,
       },
     ],
 
@@ -551,22 +519,18 @@ export const shuffleFiguresConfigs = {
 
   iq13_rotColorQuarters: {
     order: 13,
-    // skip: true,
 
     patternsInCol: 2,
     maxAnswerCount: 6,
 
-    preGenConfig: [
+    byteGenConfig: [
       {
-        //color-theme
-        count: 3,
-        shifts: [1, 1],
-        shuffle: true,
+        fn: ({ row, col, rndRow }) => col + rndRow, //unique123
+        max: 3,
       },
       {
-        //rot
-        count: 2,
-        shifts: [1, 0],
+        fn: ({ row, col, rndRow }) => row,
+        max: 2,
       },
     ],
 
@@ -612,17 +576,16 @@ export const shuffleFiguresConfigs = {
     patternsInCol: 3,
     maxAnswerCount: 8,
 
-    //new
-    preGenConfig: [
+    byteGenConfig: [
       {
         //figs
-        count: 3,
-        shifts: [1, 1],
+        fn: ({ row, col, rndRow }) => row + col,
+        max: 3,
       },
       {
         //colors
-        count: 3,
-        shifts: [1, 0],
+        fn: ({ row, col, rndRow }) => row,
+        max: 3,
       },
     ],
 
