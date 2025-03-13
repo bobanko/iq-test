@@ -1,9 +1,4 @@
-import {
-  getLetter,
-  getSafeIndex,
-  preventSvgCache,
-  wait,
-} from "./helpers/helpers.js";
+import { getLetter, preventSvgCache, wait } from "./helpers/helpers.js";
 import { quizQuestionConfigs } from "./configs/quiz/quiz.config.js";
 import { SeededRandom } from "./helpers/random.helpers.js";
 
@@ -21,6 +16,7 @@ import { getCached } from "./helpers/local-cache.helper.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { getUserData, updateUserData } from "./endpoints/user-data.js";
 import { calcStaticIqByStats } from "./calc-iq.js";
+import { getSafeIndex } from "./helpers/safe-index.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -53,15 +49,6 @@ timer.onUpdate((diff) => {
   const oneMinMs = 60 * 1000;
   const timeGivenMs = currentQuiz.questions.length * oneMinMs;
 
-  if (timeGivenMs <= diff) {
-    console.log("stopping timer", timer.getDiff());
-
-    if (timer.isRunning) timer.stop();
-
-    // todo(vmyshko): stop quiz
-    return;
-  }
-
   $timerIcon.textContent =
     clockEmojis[Math.floor(diff / 1000) % clockEmojis.length];
 
@@ -81,6 +68,15 @@ timer.onUpdate((diff) => {
       // todo(vmyshko): calc based on diff? complex
       // todo(vmyshko): stop when all answered? is it cheat?
       (currentQuiz.questions[_currentQuestionIndex].timeSpent / 10).toFixed(1);
+  }
+
+  if (timeGivenMs <= diff) {
+    console.log("stopping timer", timer.getDiff());
+
+    if (timer.isRunning) timer.stop();
+
+    // todo(vmyshko): stop quiz
+    return;
   }
 });
 
@@ -107,12 +103,12 @@ function updateProgressQuiz({
 
 // todo(vmyshko): rename
 function navigateQuestions(shift = 1) {
-  const nextQuestion = getSafeIndex({
+  const nextQuestionIndex = getSafeIndex({
     length: currentQuiz.questions.length,
     index: _currentQuestionIndex + shift,
   });
 
-  $questionList.children[nextQuestion].click();
+  $questionList.children[nextQuestionIndex].click();
 }
 
 $btnPrevQuestion.addEventListener("click", () => navigateQuestions(-1));
@@ -195,6 +191,7 @@ function toggleControls(isEnabled = true) {
   $answerList.toggleAttribute("disabled", !isEnabled);
   $btnFinishQuiz.disabled = !isEnabled;
   $questionInfo.hidden = isEnabled;
+  // $questionInfo.hidden = false; //debug
 }
 
 function generateQuiz({ seed }) {
@@ -326,7 +323,9 @@ function generateQuiz({ seed }) {
   timer.start();
 }
 
-function markAnsweredQuestions(quizResults) {
+function markAnsweredQuestions() {
+  const quizResults = getQuizResults();
+
   quizResults
     .filter((answer) => answer.isAnswered)
     .forEach((answerData) => {
@@ -408,6 +407,10 @@ $btnFinishQuiz.addEventListener("click", () => {
   $modalOverlayFinishConfirm.hidden = false;
 });
 
+$btnMarkResults.addEventListener("click", () => {
+  markAnsweredQuestions();
+});
+
 $btnFinishConfirm.addEventListener("click", () => {
   $modalOverlayFinishConfirm.hidden = true;
   $modalOverlayPostQuiz.hidden = false;
@@ -431,7 +434,7 @@ $btnFinishConfirm.addEventListener("click", () => {
   🧠 your static iq: ${currentIq}
   `;
 
-  markAnsweredQuestions(quizResults);
+  markAnsweredQuestions();
 
   saveQuizResults({
     quizResults,
@@ -543,6 +546,7 @@ function bindingsOnKeypress({ code, target }) {
     ["Escape", () => $btnDebug.click()],
     ["KeyD", () => $debugCheckbox.click()],
     ["KeyF", () => $btnFinishQuiz.click()],
+    ["KeyM", () => $btnMarkResults.click()],
   ]);
 
   keyBindingsMap.get(code)?.();

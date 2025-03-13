@@ -210,38 +210,35 @@
       <div class="flex-col" id="$debugControlPanel" hidden>
         <hr />
         <div class="flex-row">
-          <label class="p-10">
-            <input type="checkbox" name="debug" id="$debugCheckbox" />
+          <label class="flex-row align-center gap-10 p-10">
+            <input type="checkbox" id="$debugCheckbox" />
             <span>show debug info</span>
           </label>
 
-          <label class="p-10">
-            <input type="checkbox" name="debug" id="$disableSvgCacheCheckbox" />
+          <label class="flex-row align-center gap-10 p-10">
+            <input type="checkbox" id="$disableSvgCacheCheckbox" />
             <span>disable svg cache</span>
           </label>
         </div>
 
-        <div class="flex-row align-center">
-          <button
-            id="$btnGenerate"
-            type="button"
-            class="small p-10 m-10"
-            hotkey="g"
-          >
+        <div class="flex-row align-center gap-10 p-10">
+          <button id="$btnGenerate" type="button" class="small p-10" hotkey="g">
             generate
           </button>
 
-          <label class="flex-row align-center"
+          <label class="flex-row align-center gap-10"
             ><span>seed</span>
-            <input
-              type="text"
-              id="$seed"
-              readonly
-              class="m-10"
-              style="width: 100%; font-size: 10px"
-              value="123123"
-            />
+            <input type="text" id="$seed" readonly value="123123" />
           </label>
+
+          <button
+            id="$btnMarkResults"
+            type="button"
+            class="small p-10"
+            hotkey="m"
+          >
+            mark results
+          </button>
         </div>
       </div>
     </footer>
