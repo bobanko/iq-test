@@ -12,7 +12,7 @@ export const numberProgressionConfigs = {
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
-    // todo(vmyshko): sum can be random
+    // todo(vmyshko): make random 7-11
     colRowSum: 8,
 
     generator: generateNumberProgressionQuestion,

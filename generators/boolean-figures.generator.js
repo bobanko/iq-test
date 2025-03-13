@@ -132,6 +132,7 @@ export function generateBooleanFiguresQuestion({
   seed,
   questionIndex,
 }) {
+  // todo(vmyshko): fix empty patterns
   const patternsInRow = 3; //always 3 -- a+b=c --like
 
   const {

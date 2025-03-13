@@ -12,6 +12,7 @@ export const booleanMatrixConfigs = {
     mtxSize: 3,
 
     // todo(vmyshko): impl v sequence?
+    // can be done simply using grid-auto-flow: column; on $patternArea
     generator: generateBooleanMatrixQuestion,
     renderer: renderMatrixQuestion,
   },

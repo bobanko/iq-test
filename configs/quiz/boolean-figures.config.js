@@ -84,6 +84,8 @@ export const booleanFiguresConfigs = {
   // difficulty - 6
 
   iq31alt_circle6xor: {
+    // todo(vmyshko): fix empty
+    // http://127.0.0.1:8080/quiz.html#seed=0.28389883371843405
     order: 31,
     figureGenRule: figureGenRules.random,
     patternsInCol: 3,
@@ -100,6 +102,8 @@ export const booleanFiguresConfigs = {
   },
 
   iq32alt_hexsym6xor: {
+    // todo(vmyshko): fix empty
+    // http://127.0.0.1:8080/quiz.html#seed=0.1365114497472648
     order: 32,
     figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,

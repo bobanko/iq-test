@@ -123,3 +123,10 @@ https://en.wikipedia.org/wiki/High-IQ_society#Societies
 | Mensa International | Top 2 percent of population (98th percentile; 1 out of 50) | 130        |
 | Intertel            | Top 1 percent (99th percentile; 1 out of 100)              | 135        |
 | Triple Nine Society | Top 0.1 percent (99.9th percentile; 1 out of 1,000)        | 146        |
+
+## to check
+
+https://wwiqtest.com
+currently blocking
+
+upd: static questions, some new, rich text and hooks on landing

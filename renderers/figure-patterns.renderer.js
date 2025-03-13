@@ -116,6 +116,7 @@ function createFigurePattern({ figureConfig, config }) {
       if (stroke) $use.style.setProperty("--stroke", stroke);
 
       (async () => {
+        // todo(vmyshko): rename to noTransitions cause it impacts all transitions, not only rotation
         // to help user to understand rotations
         if (!noRotationAnimation) await wait(0);
 
