@@ -78,7 +78,6 @@ function createFigurePattern({ figureConfig, config }) {
 
   for (let figurePart of figureParts) {
     const $svgPart = $svgPatternContainer;
-    $svgPart.classList.add("pattern-figure");
 
     if (questionMarkFigure) {
       $svgPart.classList.add("no-default-frame");
@@ -140,15 +139,19 @@ function createFigurePattern({ figureConfig, config }) {
         const [x1, y1, x2, y2] = viewBox.split(" ");
 
         //center of viewBox
+
+        const centerX = (x2 - x1) / 2;
+        const centerY = (y2 - y1) / 2;
+
         $use.style.setProperty(
           "--transform-origin",
-          `${(x2 - x1) / 2}px ${(y2 - y1) / 2}px`
+          `${centerX.toFixed(2)}px ${centerY.toFixed(2)}px`
         );
 
         if (Number.isFinite(transformX) && Number.isFinite(transformY)) {
           $use.style.setProperty(
             "--transform-origin",
-            `${transformX}px ${transformY}px`
+            `${transformX.toFixed(2)}px ${transformY.toFixed(2)}px`
           );
         }
       })();
