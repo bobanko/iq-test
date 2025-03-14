@@ -39,7 +39,7 @@ const clockEmojis = [
 ];
 
 function formatTimeSpan(timeMs) {
-  const totalSeconds = Math.floor(timeMs / 1000); // Convert ms to seconds
+  const totalSeconds = Math.floor(Math.max(timeMs, 0) / 1000); // Convert ms to seconds
   const minutes = Math.floor(totalSeconds / 60); // Get minutes
   const seconds = totalSeconds % 60; // Get remaining seconds
   return `${minutes}:${seconds.toString().padStart(2, "0")}`; // Format as "MM:SS"
@@ -72,10 +72,9 @@ timer.onUpdate((diff) => {
 
   if (timeGivenMs <= diff) {
     console.log("stopping timer", timer.getDiff());
-
     if (timer.isRunning) timer.stop();
 
-    // todo(vmyshko): stop quiz
+    // todo(vmyshko): stop quiz?
     return;
   }
 });
@@ -527,7 +526,7 @@ $debugCheckbox.addEventListener("change", (event) => {
   document.body.classList.toggle("debug", document.debugMode);
 });
 
-$debugCheckbox.click();
+// $debugCheckbox.click();
 
 // hotkeys
 function bindingsOnKeypress({ code, target }) {
