@@ -2,7 +2,31 @@ import { getUid } from "../helpers/common.js";
 import { generateUniqueValues } from "../helpers/generate-unique-values.js";
 import { SeededRandom } from "../helpers/random.helpers.js";
 import { colors } from "../configs/common.config.js";
-import { xorFigures } from "./boolean-figures.generator.js";
+
+// A&!B &~
+function subFigures(figures1, figures2) {
+  // all from 1 but no from 2
+  return figures1.filter((pt1) => !figures2.some((pt2) => pt2 === pt1));
+}
+
+// AND &
+function mulFigures(figures1, figures2) {
+  // only same from both
+  return figures1.filter((pt1) => figures2.some((pt2) => pt2 === pt1));
+}
+
+// XOR ^
+/**
+ * @deprecated use simplified bit-xor for numbers that represent bit array?
+ * maybe extract to helpers for future use?
+ */
+function xorFigures(figures1, figures2) {
+  //only unique from both
+  const mulResult = mulFigures(figures1, figures2);
+
+  return subFigures([...figures1, ...figures2], mulResult);
+}
+
 function* cropFiguresGenerator({ random, config }) {
   const { patternsInCol = 3, patternsInRow = 3 } = config;
 
