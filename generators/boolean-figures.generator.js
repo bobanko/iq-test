@@ -1,36 +1,4 @@
-import { getUid } from "../helpers/common.js";
 import { generateUniqueValues } from "../helpers/generate-unique-values.js";
-import { SeededRandom } from "../helpers//random.helpers.js";
-
-export const figureGenRules = {
-  random: 0,
-  symmetric: 1,
-};
-
-const figureGenerators = {
-  [figureGenRules.random]: generateRandomFigures,
-  [figureGenRules.symmetric]: generateSymmetricFigures,
-};
-
-// A&!B &~
-function subFigures(figures1, figures2) {
-  // all from 1 but no from 2
-  return figures1.filter((pt1) => !figures2.some((pt2) => pt2 === pt1));
-}
-
-// AND &
-function mulFigures(figures1, figures2) {
-  // only same from both
-  return figures1.filter((pt1) => figures2.some((pt2) => pt2 === pt1));
-}
-
-// XOR ^
-export function xorFigures(figures1, figures2) {
-  //only unique from both
-  const mulResult = mulFigures(figures1, figures2);
-
-  return subFigures([...figures1, ...figures2], mulResult);
-}
 
 // todo(vmyshko): all logical ops could be done with binaries
 // example
@@ -41,165 +9,99 @@ export function xorFigures(figures1, figures2) {
 // '0110'
 // each binary digit can be mapped to corresponding figure
 
-function generateSymmetricFigures({ random, config }) {
-  const { figureCount, figures } = config;
-  const basicFigures = [];
-
-  const freeFigures = getFreeFiguresIndexes(figureCount / 2);
-
-  const figuresLeft = [...freeFigures.map((f) => f * 2)];
-  // todo(vmyshko): rewrite to func approach? or not?
-  for (
-    let pointIndex = 0;
-    pointIndex < random.fromRange(1, figureCount / 2 - 1); // skip 'all-figs' pattern
-    pointIndex++
-  ) {
-    //new point for each row
-    const randomFigure = random.popFrom(figuresLeft);
-
-    basicFigures.push(figures ? figures[randomFigure] : randomFigure);
-    basicFigures.push(figures ? figures[randomFigure + 1] : randomFigure + 1);
-  } // ptColor
-
-  return basicFigures;
+/**
+ * @param {number} value decimal value
+ * @returns non-zero bit indexes
+ */
+function toBitIndexes(value) {
+  return value
+    .toString(2)
+    .split("")
+    .reverse()
+    .reduce((acc, value, i) => (value > 0 ? [...acc, i] : acc), []);
 }
 
-function generateRandomFigures({ random, config }) {
-  const { figureCount, figures } = config;
-  const basicFigures = [];
-
-  const freeFigures = getFreeFiguresIndexes(figureCount);
-
-  const figuresLeft = [...freeFigures];
-  // todo(vmyshko): rewrite to func approach? or not?
-  for (
-    let pointIndex = 0;
-    // todo(vmyshko): make configurable
-    pointIndex < random.fromRange(1, figureCount - 1); // skip 'all-figs' pattern
-    pointIndex++
-  ) {
-    //new point for each row
-    const randomFigure = random.popFrom(figuresLeft);
-
-    basicFigures.push(figures ? figures[randomFigure] : randomFigure);
-  } // ptColor
-
-  return basicFigures;
-}
-
-function generateXorRowPatterns({ basicFigures, random, config }) {
-  // [9]  rnd | all@part | first XOR mid
-  // first col
-  const firstPattern = {
-    figures: basicFigures,
-    id: getUid(),
-  };
-
-  // middle col
-
-  const middlePattern = {
-    figures: figureGenerators[config.figureGenRule]({ random, config }),
-    id: getUid(),
-  };
-
-  // last col
-  const lastPattern = {
-    figures: xorFigures(firstPattern.figures, middlePattern.figures),
-    id: getUid(),
-  };
-
-  return [firstPattern, middlePattern, lastPattern].map(mapToFigureParts);
-}
-
-function mapToFigureParts(oldPattern) {
-  return {
-    figureParts: [
-      {
-        figures: oldPattern.figures.sort((a, b) => a - b),
-      },
-    ],
-  };
-}
-
-function getFreeFiguresIndexes(figureCount) {
-  return Array(figureCount)
-    .fill(null)
-    .map((_, index) => index);
-}
-
-export function generateBooleanFiguresQuestion({
-  config,
-  seed,
-  questionIndex,
-}) {
-  // todo(vmyshko): fix empty patterns
-  const patternsInRow = 3; //always 3 -- a+b=c --like
+export function preGenBytesBOOLEAN({ random, config }) {
+  //gen bytes
 
   const {
-    patternsInCol = 3, // can be reduced by gen-non-unique reason
-    maxAnswerCount = 6, //over 8 will not fit
+    //
+    patternsInCol = 3,
+    patternsInRow = 3,
+    byteGenConfig,
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const { max: colRowSum } = byteGenConfig.at(0);
 
-  const patterns = [];
+  ///------------
 
-  //---
+  function removeItemFromArray(item, array) {
+    const index = array.indexOf(item);
 
-  const basicFiguresPerRow = generateUniqueValues({
-    existingValues: [],
-    maxValuesCount: patternsInCol,
-    generateFn: () =>
-      figureGenerators[config.figureGenRule]({ random, config }),
-    getValueHashFn: (figs) => figs.toSorted().toString(),
-  });
-  //
+    if (index < 0) return;
+    array.splice(index, 1);
+  }
 
-  basicFiguresPerRow.forEach((figures) => {
-    const rowPatterns = generateXorRowPatterns({
-      basicFigures: figures,
-      random,
-      config,
-    });
+  const uniqueValues = random.shuffle(
+    Array.from({ length: colRowSum }, (_, index) => index)
+  );
+  removeItemFromArray(0, uniqueValues);
 
-    patterns.push(...rowPatterns);
-  });
+  // todo(vmyshko): do we need this unique logic at all?
+  // todo(vmyshko): make it configurable?
 
-  //last block
-  const [correctAnswer] = patterns.splice(-1, 1, null);
-  correctAnswer.isCorrect = true;
-  correctAnswer.id = getUid();
+  // 6 is total popped count (below: 4pops 2removes)
+  if (uniqueValues.length < 6) {
+    console.error("not enough combinations to fill patterns");
+  }
+  // first row
+  const cell_00 = uniqueValues.pop();
 
-  // *******
-  // ANSWERS
-  // *******
+  // first row rest
+  const cell_01 = uniqueValues.pop();
+  const cell_02 = cell_00 ^ cell_01;
+  removeItemFromArray(cell_02, uniqueValues);
 
-  const answers = generateUniqueValues({
-    existingValues: [correctAnswer],
-    maxValuesCount: maxAnswerCount - 1,
-    generateFn: () =>
-      mapToFigureParts({
-        figures: figureGenerators[config.figureGenRule]({ random, config }),
-        id: getUid(),
-      }),
+  //first col rest
+  const cell_10 = uniqueValues.pop();
+  const cell_20 = cell_00 ^ cell_10;
+  removeItemFromArray(cell_20, uniqueValues);
 
-    getValueHashFn: ({ figureParts = [] }) =>
-      figureParts
-        .map(
-          // todo(vmyshko): why defaults are not set yet? re-check!
-          ({ figures, rotation = 0, color = "", strokeWidth = 0 }) =>
-            `${figures.toString()};${color};${rotation};${strokeWidth}`
-        )
-        .toString(),
-  });
+  // center cell
+  const cell_11 = uniqueValues.pop();
 
-  //
+  // last middle cells
+  const cell_12 = cell_11 ^ cell_10;
+  const cell_21 = cell_11 ^ cell_01;
+
+  // last cell
+  const cell_22 = cell_02 ^ cell_12;
+
+  return [
+    // todo(vmyshko): is it possible to get rid of arr in arr?
+    [[cell_00], [cell_01], [cell_02]],
+    [[cell_10], [cell_11], [cell_12]],
+    [[cell_20], [cell_21], [cell_22]],
+  ].flat();
+}
+
+export function preRenderPatternBOOLEAN({ bytes, preRenderConfig }) {
+  if (bytes === null) return null; //?
+  // bytes to figureparts
+  const { figureIds, color } = preRenderConfig;
+
+  const resultFigParts = bytes
+    .map(toBitIndexes)
+    .map((byteIndexArr) => byteIndexArr.map((i) => figureIds[i]))
+    .map((figsArr) => ({
+      color,
+      figures: figsArr,
+    }));
+
+  const debugBytes = bytes.map((byte) => `${byte}:[${toBitIndexes(byte)}];`);
+
   return {
-    seed,
-    patternsInRow,
-    patternsInCol,
-    //
-    patterns,
-    answers,
+    debugInfo: debugBytes,
+    figureParts: resultFigParts,
   };
 }

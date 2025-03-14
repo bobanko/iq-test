@@ -1,10 +1,11 @@
 import {
-  generateBooleanFiguresQuestion,
-  figureGenRules,
+  preGenBytesBOOLEAN,
+  preRenderPatternBOOLEAN,
 } from "../../generators/boolean-figures.generator.js";
-import { colors, defaultViewBox } from "../common.config.js";
+import { colors, defaultViewBox, rgbColors } from "../common.config.js";
 import { scaleViewBox } from "../../helpers/common.js";
 import { renderFigurePatternsQuestion } from "../../renderers/figure-patterns.renderer.js";
+import { generateSequenceQuestion } from "../../generators/shuffle-figures.generator.js";
 
 const alternateViewBox = "2 2 100 100";
 
@@ -14,17 +15,19 @@ export const booleanFiguresConfigs = {
     skip: true,
     order: 32,
     // todo(vmyshko): orig is not xor, its v seq AND. so impl diff gen types
-    figureGenRule: figureGenRules.random,
+
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/dot-4.svg",
-    figureCount: 4,
+
     staticFigures: ["circle"],
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
     color: colors.black,
     // maxAnswerCount: 8, //16
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
@@ -32,9 +35,7 @@ export const booleanFiguresConfigs = {
     skip: true,
     // todo(vmyshko): similar in crop-figures, decide which to keep #2
     order: 12,
-    figureGenRule: figureGenRules.random, // todo(vmyshko): group in sub-arrays instead?
     patternsInCol: 3,
-    figureLink: "./images/shuffle-quarters.svg",
     figureCount: 4,
     // maxAnswerCount: 8, //16
     color: colors.blue,
@@ -44,30 +45,46 @@ export const booleanFiguresConfigs = {
     // todo(vmyshko): new field introduced to boolean figs to replace figureCount
     figures: ["quarter-1", "quarter-2", "quarter-3", "quarter-4"],
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
 
-    renderer: renderFigurePatternsQuestion,
     questionMarkFigure: "circle",
     viewBox: defaultViewBox,
+    figureLink: "./images/shuffle-quarters.svg",
+    renderer: renderFigurePatternsQuestion,
   },
 
   iq12alt_triangles4xor: {
+    // skip: true,
     order: 12,
-    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): group in sub-arrays instead?
     patternsInCol: 3,
-    figureLink: "./images/boolean-figures/triangles-8.svg",
-    figureCount: 8,
-    viewBox: defaultViewBox,
-    color: colors.blue,
-    // maxAnswerCount: 8, //16
 
-    generator: generateBooleanFiguresQuestion,
+    byteGenConfig: [
+      {
+        max: 2 ** 4, // 4 figs - 2**4 combinations
+      },
+    ],
+    // todo(vmyshko): impl new config for xors
+    preRenderConfig: {
+      figureIds: ["g0", "g1", "g2", "g3"],
+      // color: colors.green,
+      color: colors.blue,
+      // todo(vmyshko): make similar as for shuffels?
+    },
+
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
+
+    viewBox: defaultViewBox,
+    figureLink: "./images/boolean-figures/triangles-8.svg",
     renderer: renderFigurePatternsQuestion,
   },
 
   flake4xor: {
     skip: true, // dupes konforki
-    figureGenRule: figureGenRules.random,
+
     patternsInCol: 3,
     // maxAnswerCount: 20,
     figureLink: "./images/boolean-figures/16-lines.svg",
@@ -77,50 +94,71 @@ export const booleanFiguresConfigs = {
     strokeWidth: 5,
     color: "deeppink",
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
   // difficulty - 6
 
   iq31alt_circle6xor: {
-    // todo(vmyshko): fix empty
-    // http://127.0.0.1:8080/quiz.html#seed=0.28389883371843405
     order: 31,
-    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
+
+    byteGenConfig: [
+      {
+        max: 2 ** 6, // n figs - 2**n combinations
+      },
+    ],
+    // todo(vmyshko): impl new config for xors
+    preRenderConfig: {
+      figureIds: ["0", "1", "2", "3", "4", "5"],
+      color: colors.red,
+      // todo(vmyshko): make similar as for shuffels?
+    },
+
     figureLink: "./images/boolean-figures/circle-6.svg",
-    figureCount: 6,
+
     staticFigures: ["circle"],
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
-    color: colors.red,
-    // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
   iq32alt_hexsym6xor: {
-    // todo(vmyshko): fix empty
-    // http://127.0.0.1:8080/quiz.html#seed=0.1365114497472648
     order: 32,
-    figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/hex-12.svg",
-    figureCount: 12,
+
+    byteGenConfig: [
+      {
+        max: 2 ** 6, // n figs - 2**n combinations
+      },
+    ],
+    // todo(vmyshko): impl new config for xors
+    preRenderConfig: {
+      figureIds: ["g0", "g1", "g2", "g3", "g4", "g5"],
+      color: colors.black,
+      // todo(vmyshko): make similar as for shuffels?
+    },
+
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     strokeWidth: (3 / 0.7).toFixed(2),
-    color: "black",
-    // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
   ortosym6xor: {
     skip: true, // same as hex, but hex is beautiful
-    figureGenRule: figureGenRules.symmetric,
+    // figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/12-lines-orto.svg",
     figureCount: 12,
@@ -129,7 +167,9 @@ export const booleanFiguresConfigs = {
     color: "black",
     // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
@@ -138,7 +178,7 @@ export const booleanFiguresConfigs = {
   crossDots8xor: {
     skip: true, // same as dice but uglier
     // todo(vmyshko): impl mul-dots xor-lines [new feature]
-    figureGenRule: figureGenRules.random,
+
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/cross-dots-8.svg",
     figureCount: 8, // todo(vmyshko): replace by fig-name array, like in shuffle
@@ -148,30 +188,43 @@ export const booleanFiguresConfigs = {
     color: "black",
     // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
   iq33alt_dice8xor: {
     order: 33,
-    figureGenRule: figureGenRules.random,
     patternsInCol: 3,
+
+    byteGenConfig: [
+      {
+        max: 2 ** 8, // n figs - 2**n combinations
+      },
+    ],
+    // todo(vmyshko): impl new config for xors
+    preRenderConfig: {
+      figureIds: ["0", "1", "2", "3", "4", "5", "6", "7"],
+      // color: colors.black,
+    },
+
     figureLink: "./images/boolean-figures/dice-8.svg",
-    figureCount: 8,
+
     // staticFigures: ["circle"],
     viewBox: scaleViewBox("4 4 100 100", 0.7),
     strokeWidth: (5 / 0.7).toFixed(2),
-    color: "black",
-    // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
   flake8xor_iq33: {
     skip: true, // easier than linessym visually
     // todo(vmyshko): allow v sequence
-    figureGenRule: figureGenRules.random,
+
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/16-lines.svg",
     figureCount: 8,
@@ -179,7 +232,9 @@ export const booleanFiguresConfigs = {
     strokeWidth: 3,
     color: "crimson",
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
@@ -188,7 +243,7 @@ export const booleanFiguresConfigs = {
     // http://127.0.0.1:8080/quiz.html#seed=0.10673593757500122
 
     skip: true,
-    figureGenRule: figureGenRules.symmetric, // todo(vmyshko): use enums for other configs as well
+    // figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/16-lines.svg",
     figureCount: 16,
@@ -197,7 +252,9 @@ export const booleanFiguresConfigs = {
     color: "black",
     // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 
@@ -205,7 +262,7 @@ export const booleanFiguresConfigs = {
 
   pentagon10xor: {
     skip: true, // because dro4
-    figureGenRule: figureGenRules.random,
+
     patternsInCol: 3,
     figureLink: "./images/boolean-figures/pentagon-10.svg",
     figureCount: 10,
@@ -213,7 +270,9 @@ export const booleanFiguresConfigs = {
     color: "black",
     // maxAnswerCount: 8,
 
-    generator: generateBooleanFiguresQuestion,
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
 
     viewBox: scaleViewBox(alternateViewBox, 0.7),
     // staticFigures: ["pentagon"],
