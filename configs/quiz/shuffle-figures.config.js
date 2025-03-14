@@ -248,7 +248,7 @@ export const shuffleFiguresConfigs = {
     byteGenConfig: [
       // figs
       {
-        fn: ({ row, col, rndRow }) => row * 2 + col,
+        fn: ({ row, col, rndRow }) => col,
         max: 3,
       },
       //rots
