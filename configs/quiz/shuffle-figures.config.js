@@ -223,8 +223,6 @@ export const shuffleFiguresConfigs = {
         rots: [0, 90, 180],
         cols: [...rgbColors],
       },
-
-      // shift or randomize?
       figureParts: [
         {
           figures: [{ byteIndex: 0, from: "figs" }],
