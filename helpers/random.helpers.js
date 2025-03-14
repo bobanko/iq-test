@@ -1,9 +1,9 @@
-import { seededRandom } from "./seeded-random.js";
+import { getSeededRandom } from "./seeded-random.js";
 
 export class SeededRandom {
   random;
   constructor(seed) {
-    this.random = seededRandom(seed);
+    this.random = getSeededRandom(seed);
 
     // todo(vmyshko): to fig rng first pseudo random results
     this.random(), this.random(), this.random(), this.random(), this.random();

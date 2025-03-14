@@ -1,4 +1,4 @@
-export function seededRandom(seed) {
+export function getSeededRandom(seed) {
   // Park-Miller LCG algorithm
   let m = 4294967296; // 2^32
   let a = 1664525;
@@ -13,7 +13,7 @@ export function seededRandom(seed) {
 
 // // Example usage:
 // const seed = 123; // Seed for reproducibility
-// const rng = seededRandom(seed);
+// const rng = getSeededRandom(seed);
 
 // // Generate random numbers
 // console.log(rng()); // First random number
