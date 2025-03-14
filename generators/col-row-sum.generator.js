@@ -55,7 +55,7 @@ function makeFigureParts({ figures, random, config }) {
 // minus 1 to keep at least 1 for 3rd column
 // Math.min(figsAvailable.length - 1, maxFigsPerCell);
 
-function generateColRowSumMatrix({ random, config }) {
+export function generateColRowSumMatrix({ random, config }) {
   const { colRowSum } = config;
 
   // first row

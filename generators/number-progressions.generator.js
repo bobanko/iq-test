@@ -2,6 +2,7 @@ import { getUid } from "../helpers/common.js";
 import { generateUniqueValues } from "../helpers/generate-unique-values.js";
 import { SeededRandom } from "../helpers/random.helpers.js";
 import { getLetter } from "../helpers/helpers.js";
+import { generateColRowSumMatrix } from "./col-row-sum.generator.js";
 
 export const progressionTypes = {
   numToAbc: 0, //15 -- 1=a, 2=b
@@ -304,40 +305,14 @@ const generators = {
       random.fromRange(config.maxRange, 100 - config.maxRange), //number
   },
   [progressionTypes.equalSumPerRowCol]: {
+    // todo(vmyshko): repeats generateColRowSumMatrix -- reuse
     rowGenerator: function* ({ random, config }) {
-      const { colRowSum } = config;
-
-      // first row
-      const cell_00 = random.fromRange(1, colRowSum - 2);
-
-      // first row rest
-      const cell_01 = random.fromRange(1, colRowSum - cell_00 - 1);
-      const cell_02 = colRowSum - cell_00 - cell_01;
-
-      //first col rest
-      const cell_10 = random.fromRange(1, colRowSum - cell_00 - 1);
-      const cell_20 = colRowSum - cell_00 - cell_10;
-
-      // center cell
-      const cell_11 = random.fromRange(
-        // todo(vmyshko): min range is unknown for now, i set safe min for now (less combinations)
-        Math.min(cell_02, cell_20),
-        colRowSum - Math.max(cell_01, cell_10) - 1
-      );
-
-      // last middle cells
-      const cell_12 = colRowSum - cell_11 - cell_10;
-      const cell_21 = colRowSum - cell_11 - cell_01;
-
-      // last cell
-      const cell_22 = colRowSum - cell_02 - cell_12;
-
-      // ----------------
+      const mtxBytes = generateColRowSumMatrix({ random, config });
 
       // todo(vmyshko): should return one by one, not rows? (for all progressions)
-      yield [cell_00, cell_01, cell_02].map(mapValueToPattern);
-      yield [cell_10, cell_11, cell_12].map(mapValueToPattern);
-      yield [cell_20, cell_21, cell_22].map(mapValueToPattern);
+      for (let row of mtxBytes) {
+        yield row.map(mapValueToPattern);
+      }
     },
     answerGenerator: ({ random, config }) =>
       random.fromRange(1, config.colRowSum), //number
