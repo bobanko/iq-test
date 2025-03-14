@@ -2,21 +2,28 @@ body text.debug-info {
   visibility: hidden;
 }
 
-body.debug text.debug-info {
-  visibility: visible;
-  dominant-baseline: text-before-edge;
-  text-anchor: start;
-  /* transform: translate(0%, 0%); */
+body.debug {
+  svg.pattern-figure {
+    container-type: size;
+  }
 
-  font-family: monospace;
-  font-size: 50%;
+  text.debug-info {
+    visibility: visible;
+    dominant-baseline: text-before-edge;
+    text-anchor: start;
+    /* transform: translate(0%, 0%); */
 
-  fill: var(--debug-color);
-  stroke: var(--debug-bg);
+    font-family: monospace;
+    font-size: 50%;
+    font-size: 20cqw;
 
-  stroke-width: 6px;
-  paint-order: stroke;
-  stroke-linejoin: round;
+    fill: var(--debug-color);
+    stroke: var(--debug-bg);
+
+    stroke-width: 6px;
+    paint-order: stroke;
+    stroke-linejoin: round;
+  }
 }
 
 .pattern-figure {
