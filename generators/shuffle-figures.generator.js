@@ -498,12 +498,7 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
     getValueHashFn: (bytes = []) => bytes.toString(),
   });
 
-  // mark correct
-  // answers.at(0).isCorrect = true;
-  // delete answers.at(0).id;
-
   console.log(config.figureLink);
-
   console.log({ patternsBytes });
   console.log({ answersBytes });
 
@@ -511,6 +506,7 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
     .map((bytes) => preRenderPattern({ bytes, preRenderConfig }))
     .map((a) => ({ ...a, isCorrect: false, id: getUid() }));
 
+  // mark correct
   answers.at(0).isCorrect = true;
 
   // todo(vmyshko): review, do those all are used?
