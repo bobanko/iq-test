@@ -1,15 +1,16 @@
 import { getHash, setHash } from "./helpers/hash-param.js";
-import { getSafeIndex, SeededRandom } from "./helpers/helpers.js";
+import { SeededRandom } from "./helpers/random.helpers.js";
+import { getSafeIndex } from "./helpers/safe-index.js";
 import { Timer } from "./helpers/timer.js";
-
-import { loadStats } from "./stats-results.js";
-import { countries, emojiFlags } from "./countries.mapping.js";
 import {
   applyTranslations,
   translationLangKeys,
 } from "./helpers/translation.helper.js";
-import { appConfig } from "./configs/app.config.js";
 import { getCached } from "./helpers/local-cache.helper.js";
+
+import { loadStats } from "./stats-results.js";
+import { countries, emojiFlags } from "./countries.mapping.js";
+import { appConfig } from "./configs/app.config.js";
 
 import {
   getResultsLast10,
