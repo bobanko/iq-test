@@ -5,6 +5,7 @@ import { generatePatternsQuestion_rowSub } from "../../generators/row-sub-figs.g
 export const rowSubFiguresConfigs = {
   // todo(vmyshko): fix empty col 2
   // http://127.0.0.1:8080/quiz.html#seed=0.10673593757500122
+  // http://127.0.0.1:8080/quiz.html#seed=0.12640931170707015
   iq36_rowSubFigsMany: {
     order: 36,
     patternsInCol: 3,
