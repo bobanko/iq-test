@@ -44,7 +44,8 @@
 
   box-shadow: inset 0 var(--shadow-offset) 0 0 var(--color-shadow),
     inset 0 calc(var(--shadow-diff) + var(--shadow-offset)) 0 0
-      var(--color-reflex);
+      var(--color-reflex),
+    inset 0 calc(var(--shadow-diff) - 10px) 10px 0px var(--color-shadow);
 
   > span {
     text-transform: uppercase;
@@ -58,7 +59,7 @@
 .pattern-formula-const {
   --color: hsl(228.68deg 50% 95%);
   --color: hsl(217.6deg 100% 96.71%);
-  --color: var(--white);
+  --color: var(--blueish-white);
 }
 
 .pattern-formula-const,

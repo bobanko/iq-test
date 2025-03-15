@@ -2,7 +2,7 @@
   position: relative;
   container-type: inline-size;
   /* prevent outside recoloring */
-  --color: var(--white);
+  --color: white;
   display: grid;
   grid-template-columns: repeat(var(--size), 1fr);
 

@@ -7,9 +7,7 @@
 }
 
 .pattern-value {
-  --color: var(--white);
-
-  /* --color-shadow: hsl(from var(--bg-color) h calc(s - 35) calc(l - 15)); */
+  --color: var(--blueish-white);
 
   width: var(--pattern-size);
   height: var(--pattern-size);
@@ -35,6 +33,11 @@
   box-shadow: inset 0 var(--shadow-offset) 0 0 var(--color-shadow),
     inset 0 calc(var(--shadow-diff) + var(--shadow-offset)) 0 0
       var(--color-reflex);
+
+  box-shadow: inset 0 var(--shadow-offset) 0 0 var(--color-shadow),
+    inset 0 calc(var(--shadow-diff) + var(--shadow-offset)) 0 0
+      var(--color-reflex),
+    inset 0 calc(var(--shadow-diff) - 10px) 10px 0px var(--color-shadow);
 
   > span {
     /* button weight reset for answers */
