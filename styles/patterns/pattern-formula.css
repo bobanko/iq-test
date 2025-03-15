@@ -3,18 +3,7 @@
   align-items: center;
   justify-content: center;
   user-select: none;
-}
-
-.pattern-formula-variable {
-  color: transparent;
-  text-shadow: none;
-}
-
-.debug .pattern-formula-variable,
-.pattern-formula-variable.white,
-.pattern-formula-variable.yellow {
-  color: black;
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+  box-sizing: border-box;
 }
 
 /* ad-hoc */
@@ -28,45 +17,54 @@
   }
 }
 
-.pattern-formula-const,
 .pattern-formula-variable-emoji,
+.pattern-formula-const,
 .pattern-formula-variable {
   /* fixed size due to op/const different widths  */
-
   --pattern-size: 70px;
 
   width: var(--pattern-size);
   height: var(--pattern-size);
 
   background-color: var(--color, transparent);
-  text-transform: uppercase;
-
-  font-weight: normal;
-
   border: 2px solid black;
-
   border-radius: 10px;
-  /* box-shadow: inset 0 -10px 0 0 rgba(0, 0, 0, 0.2); */
 
+  /* todo: unify with pattern-value */
   --shadow-diff: -2px;
   --shadow-offset: -10px;
 
   padding-bottom: calc(-1 * (calc(var(--shadow-diff) + var(--shadow-offset))));
-  box-sizing: border-box;
 
-  box-shadow: inset 0 var(--shadow-offset) 0 0
-      hsl(from var(--color) h calc(s - 30) calc(l - 10)),
+  --color-shadow: hsl(from var(--color) h calc(s - 30) calc(l - 10));
+  --reflex-shift: 9;
+  --color-reflex: hsl(
+    from var(--color) h calc(s - 0) calc(l + var(--reflex-shift))
+  );
+
+  box-shadow: inset 0 var(--shadow-offset) 0 0 var(--color-shadow),
     inset 0 calc(var(--shadow-diff) + var(--shadow-offset)) 0 0
-      hsl(from var(--color) h calc(s - 0) calc(l + 9));
+      var(--color-reflex);
 
   > span {
+    text-transform: uppercase;
+    /* button weight reset for answers */
+    font-weight: initial;
+
     animation: fadeIn 200ms ease-in forwards, slideUp 200ms ease-in forwards;
   }
+}
+
+.pattern-formula-const {
+  --color: hsl(228.68deg 50% 95%);
+  --color: hsl(217.6deg 100% 96.71%);
+  --color: var(--white);
 }
 
 .pattern-formula-const,
 .pattern-formula-variable {
   container-type: inline-size;
+  text-shadow: 2px 2px var(--color-shadow);
 
   > span {
     font-size: 60cqw;
@@ -81,11 +79,17 @@
   }
 }
 
-.pattern-formula-const {
+.pattern-formula-variable {
+  color: transparent;
+  text-shadow: none;
+}
+
+.debug .pattern-formula-variable {
+  color: black;
   text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 }
 
-.pattern-area .pattern-formula-variable-emoji:not(.pattern-question-mark) {
+.pattern-area .pattern-formula-variable-emoji {
   background: none;
   box-shadow: none;
   border: none;

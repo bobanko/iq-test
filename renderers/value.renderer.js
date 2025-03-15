@@ -6,14 +6,11 @@ export function applyValue($elem, value) {
 
 function createValuePattern({ pattern, config }) {
   const { value } = pattern;
-  const { color = "black" } = config;
 
   const $patternContainer =
     $tmplPatternValue.content.firstElementChild.cloneNode(true);
 
   applyValue($patternContainer, value);
-
-  $patternContainer.style.setProperty("--color", color);
 
   return $patternContainer;
 }

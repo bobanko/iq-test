@@ -27,7 +27,7 @@ function createFormulaPattern({
 
   applyValue($patternContainer, value);
 
-  if (!isOperator) {
+  if (isVar) {
     $patternContainer.classList.add(color);
   }
 
