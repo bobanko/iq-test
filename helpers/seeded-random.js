@@ -1,14 +1,21 @@
-export function getSeededRandom(seed) {
+export function getSeededRandom(rawSeed) {
   // Park-Miller LCG algorithm
-  let m = 4294967296; // 2^32
-  let a = 1664525;
-  let c = 1013904223;
-  let z = seed || Math.floor(Math.random() * m);
+  const m = 2 ** 32; // 2^32 modulus
+  const a = 1664525; // multiplier
+  const c = 1013904223; // increment
 
-  return () => {
-    z = (a * z + c) % m;
-    return z / m;
+  let stateSeed = rawSeed || Math.floor(Math.random() * m);
+
+  const randomFn = () => {
+    stateSeed = (a * stateSeed + c) % m;
+    return stateSeed / m;
   };
+
+  // todo(vmyshko): for seed 0..1 do progrev
+  // todo(vmyshko): to fig rng first pseudo random results
+  randomFn(), randomFn(), randomFn(), randomFn(), randomFn();
+
+  return randomFn;
 }
 
 // // Example usage:

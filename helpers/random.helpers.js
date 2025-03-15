@@ -4,9 +4,6 @@ export class SeededRandom {
   random;
   constructor(seed) {
     this.random = getSeededRandom(seed);
-
-    // todo(vmyshko): to fig rng first pseudo random results
-    this.random(), this.random(), this.random(), this.random(), this.random();
   }
 
   /**
