@@ -254,7 +254,9 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     }
 
     return {
-      points: incorrectPoints,
+      points: incorrectPoints.sort((a, b) =>
+        a.toString().localeCompare(b.toString())
+      ),
       isCorrect: false,
       // todo(vmyshko):  this spoils uids by bad gen attempts
       id: getUid(),
