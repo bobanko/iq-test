@@ -476,8 +476,15 @@ function wrapAnswers({
       });
 
       const $nextQuestion =
-        //first not-answered in question list
-        $questionList.querySelector(":not(.answered)");
+        // search first not-answered in question list, starting from current
+        [...$questionList.children]
+          .slice(questionIndex + 1)
+          .find(($q) => !$q.classList.contains("answered")) ??
+        // ...if not-found, then from start
+        [...$questionList.children]
+          .slice(0, questionIndex + 1)
+          .find(($q) => !$q.classList.contains("answered"));
+
       $answerList.toggleAttribute("disabled", true);
       await wait(500);
 
