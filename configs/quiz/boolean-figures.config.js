@@ -82,6 +82,31 @@ export const booleanFiguresConfigs = {
     renderer: renderFigurePatternsQuestion,
   },
 
+  triangles8xor_wechsler_wais_r: {
+    skip: true,
+    order: 12,
+    patternsInCol: 3,
+
+    byteGenConfig: [
+      {
+        max: 2 ** 8, // 8 figs - 2**8 combinations
+      },
+    ],
+    preRenderConfig: {
+      figureIds: ["0", "1", "2", "3", "4", "5", "6", "7"],
+      color: "crimson",
+      // todo(vmyshko): make similar as for shuffels?
+    },
+
+    preGenBytes: preGenBytesBOOLEAN,
+    preRenderPattern: preRenderPatternBOOLEAN,
+    generator: generateSequenceQuestion,
+
+    viewBox: defaultViewBox,
+    figureLink: "./images/triangles-8-wais-r.svg",
+    renderer: renderFigurePatternsQuestion,
+  },
+
   flake4xor: {
     skip: true, // dupes konforki
 
