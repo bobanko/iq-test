@@ -96,6 +96,13 @@ const mockNames = [
   "helenhlu",
   "kek",
   "kirayoha",
+  "Lea",
+  "Martyna",
+  "Khoirunnisa",
+  "saalz",
+  "Andrii",
+  "super hepi",
+  "Loo",
 ];
 
 const random = new SeededRandom(Date.now());
