@@ -264,9 +264,6 @@ export const booleanFiguresConfigs = {
   },
 
   linessym8xor: {
-    // todo(vmyshko): fix empty row 2 col 3
-    // http://127.0.0.1:8080/quiz.html#seed=0.10673593757500122
-
     skip: true,
     // figureGenRule: figureGenRules.symmetric,
     patternsInCol: 3,

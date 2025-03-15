@@ -86,7 +86,7 @@ export function preGenBytesBOOLEAN({ random, config }) {
 }
 
 export function preRenderPatternBOOLEAN({ bytes, preRenderConfig }) {
-  if (bytes === null) return null; //?
+  if (bytes === null) return null; // for [?]
   // bytes to figureparts
   const { figureIds, color } = preRenderConfig;
 
