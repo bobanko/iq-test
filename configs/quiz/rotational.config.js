@@ -105,7 +105,7 @@ export const rotationalConfigs = {
 
     byteGenConfig: [
       {
-        fn: ({ row, col, rndRow }) => (row + 1) * col + rndRow,
+        fn: ({ row, col, rndGlobal }) => (row + 1) * col + rndGlobal,
         max: 5,
       },
       {
@@ -153,7 +153,7 @@ export const rotationalConfigs = {
 
     byteGenConfig: [
       {
-        fn: ({ row, col, rndRow }) => (row + 1) * col + rndRow,
+        fn: ({ row, col, rndGlobal }) => (row + 1) * col + rndGlobal,
         max: 6,
       },
     ],
@@ -221,11 +221,11 @@ export const rotationalConfigs = {
     byteGenConfig: [
       {
         // -1* to move hour arrow ccw
-        fn: ({ row, col, rndRow }) => -1 * (col + row + rndRow),
+        fn: ({ row, col, rndGlobal }) => -1 * (col + row + rndGlobal),
         max: 360 / 90,
       },
       {
-        fn: ({ row, col, rndRow }) => col + row + rndRow,
+        fn: ({ row, col, rndGlobal }) => col + row + rndGlobal,
         max: 360 / 45,
       },
     ],
@@ -330,11 +330,11 @@ export const rotationalConfigs = {
 
     byteGenConfig: [
       {
-        fn: ({ row, col, rndRow }) => col + row * 3 + rndRow,
+        fn: ({ row, col, rndRow }) => col + rndRow,
         max: 360 / 90,
       },
       {
-        fn: ({ row, col, rndRow }) => col * 3 + row + 1 + rndRow,
+        fn: ({ row, col, rndRow }) => col * 3 + rndRow,
         max: 360 / 90,
       },
     ],
@@ -471,7 +471,7 @@ export const rotationalConfigs = {
     // maxAnswerCount: 10,
     byteGenConfig: [
       {
-        fn: ({ row, col, rndRow }) => col + row * 0 + rndRow * 1,
+        fn: ({ row, col, rndRow }) => col + rndRow,
         max: 360 / 90,
       },
       {
