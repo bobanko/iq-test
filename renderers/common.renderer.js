@@ -6,6 +6,7 @@ export function createQuestionMark({ classList = [] } = {}) {
 
   //easter-egg
   let countdown = 10;
+  const symbols = ["🖕", "🖕🏻", "🖕🏼", "🖕🏽", "🖕🏾", "🖕🏿"];
   $patternQuestionMark.addEventListener("click", questionMarkClick);
 
   function questionMarkClick() {
@@ -23,8 +24,6 @@ export function createQuestionMark({ classList = [] } = {}) {
         iterations: 1,
       }
     );
-
-    const symbols = ["🖕", "🖕🏻", "🖕🏼", "🖕🏽", "🖕🏾", "🖕🏿"];
 
     if (countdown <= 0) {
       $patternQuestionMark.setAttribute(
