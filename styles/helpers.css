@@ -127,6 +127,10 @@ svg[aria-hidden="true"] {
   font-size: small;
 }
 
+.rounded-10 {
+  border-radius: 10px;
+}
+
 .text-ellipsis {
   white-space: nowrap;
   text-overflow: ellipsis;

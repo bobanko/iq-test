@@ -19,7 +19,11 @@ export function renderValuesQuestion({ config, questionData }) {
   const { patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((pattern) =>
-    pattern ? createValuePattern({ pattern, config }) : createQuestionMark()
+    pattern
+      ? createValuePattern({ pattern, config })
+      : createQuestionMark({
+          classList: ["rounded-10"],
+        })
   );
 
   const answerPatterns = answers.map(({ value, id, isCorrect }) => {
