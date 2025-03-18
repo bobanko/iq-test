@@ -343,7 +343,7 @@ function processVar({ variable, sets, bytes }) {
 }
 
 export function preRenderPatternGeneric({ bytes, preRenderConfig }) {
-  if (bytes === null) return null;
+  if (bytes === null) return null; // for [?]
 
   const { figureParts, sets } = preRenderConfig;
 
