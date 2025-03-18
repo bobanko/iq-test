@@ -166,13 +166,21 @@ header {
   padding: 3px;
 
   transition: 200ms all, outline 0ms;
-}
 
-.answer.selected {
-  --color: var(--yellow);
-  --answer-letter-color: black;
+  &.selected {
+    --color: var(--yellow);
+    --answer-letter-color: black;
 
-  border-color: black;
+    border-color: black;
+  }
+
+  &.correct {
+    --color: var(--green);
+  }
+
+  &.wrong {
+    --color: var(--red);
+  }
 }
 
 .answer-letter {
@@ -181,6 +189,7 @@ header {
   justify-content: center;
 
   width: 25px;
+  height: 100%;
 
   text-align: center;
 
@@ -199,34 +208,36 @@ header {
 
   align-items: center;
   justify-content: center;
+  background-color: var(--dimgray);
   border: 3px solid black;
   border-style: dashed;
 
   color: black;
-}
+  cursor: help;
 
-.pattern-question-mark:after {
-  display: flex;
-  align-items: center;
+  &:after {
+    display: flex;
+    align-items: center;
 
-  content: attr(symbol);
-  position: relative;
-  font-size: calc(var(--pattern-size) * 2 / 3);
-  text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
+    content: attr(symbol);
+    position: relative;
+    font-size: calc(var(--pattern-size) * 2 / 3);
+    text-shadow: 2px 2px rgba(0, 0, 0, 0.2);
 
-  animation: fadeIn 200ms ease-in forwards, rotateUp 200ms ease-in forwards,
-    slideUp 200ms ease-in forwards;
-}
+    animation: fadeIn 200ms ease-in forwards, rotateUp 200ms ease-in forwards,
+      slideUp 200ms ease-in forwards;
+  }
 
-/* for svg content */
-.pattern-question-mark:not(:empty) {
-  border: none;
-  background: none;
-  stroke: black;
-  /* stroke-dasharray: 6 3; */
-  stroke-dasharray: 7 7;
-  /* stroke-dashoffset: 6; */
-  /* stroke-width: 3px; */
+  /* for svg content */
+  &:not(:empty) {
+    border: none;
+    background: none;
+    stroke: black;
+    /* stroke-dasharray: 6 3; */
+    stroke-dasharray: 7 7;
+    /* stroke-dashoffset: 6; */
+    /* stroke-width: 3px; */
+  }
 }
 
 .navigation-controls {

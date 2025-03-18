@@ -124,13 +124,3 @@
 
   --pattern-size: 100px;
 }
-
-.pattern-question-mark {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-
-  background-color: var(--dimgray);
-  color: black;
-  border-radius: 2px;
-}
