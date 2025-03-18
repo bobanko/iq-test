@@ -271,7 +271,7 @@
       hidden
     >
       <div class="popup-container flex-col p-20 gap-20 m-20">
-        <form id="$formPostQuiz" class="flex-col p-10 w-100p border-box">
+        <form id="$formPostQuiz" class="flex-col w-100p border-box">
           <fieldset id="$fieldset" class="quiz-details-form flex-col">
             <div style="grid-column: 1 / -1">
               <h1 class="flex-row align-center gap-10 my-10">
@@ -385,13 +385,25 @@
 
             <hr class="my-10" style="grid-column: 1 / -1" />
 
-            <button
+            <div
+              class="flex-row mobile-center justify-space-around gap-10"
               style="grid-column-end: -1"
-              class="primary p-10 my-10 mobile-center flex-row justify-center"
-              type="submit"
             >
-              Send →
-            </button>
+              <button
+                id="$btnCancelPostQuiz"
+                class="cancel p-10 w-100p flex justify-center"
+                type="button"
+              >
+                cancel
+              </button>
+
+              <button
+                class="primary p-10 w-100p flex justify-center"
+                type="submit"
+              >
+                Send →
+              </button>
+            </div>
           </fieldset>
         </form>
       </div>

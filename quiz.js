@@ -115,7 +115,7 @@ $btnNextQuestion.addEventListener("click", () => navigateQuestions(1));
 
 // question buttons
 
-function questionButtonClick($currentButton) {
+function selectQuestionButton($currentButton) {
   const questionButtons = [
     ...$questionList.querySelectorAll(".question-button"),
   ];
@@ -124,11 +124,12 @@ function questionButtonClick($currentButton) {
   });
 
   $currentButton.classList.add("selected");
-
-  // todo(vmyshko): load question
 }
 
-function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
+function addQuestionButton({
+  text = "x",
+  onQuestionButtonClick = () => void 0,
+}) {
   const $questionButton =
     $tmplQuestionButton.content.firstElementChild.cloneNode(true);
 
@@ -136,13 +137,13 @@ function addQuestionButton({ text = "x", callbackFn = () => void 0 }) {
   $questionList.appendChild($questionButton);
 
   $questionButton.addEventListener("click", async () => {
-    questionButtonClick($questionButton);
+    selectQuestionButton($questionButton);
 
     // console.log("start");
     // $patternArea.style.opacity = 0;
     // $answerList.style.opacity = 0;
     // await wait(100);
-    callbackFn($questionButton);
+    onQuestionButtonClick($questionButton);
     // await wait(100);
     // $patternArea.style.opacity = 1;
     // $answerList.style.opacity = 1;
@@ -181,6 +182,7 @@ function onHashChanged() {
 }
 
 const currentQuiz = {
+  isFinished: false,
   questions: [],
   answers: new Map(),
   seed: null,
@@ -204,7 +206,7 @@ function generateQuiz({ seed }) {
   $seed.value = seed;
 
   currentQuiz.seed = seed;
-
+  currentQuiz.isFinished = false;
   currentQuiz.answers.clear();
 
   $questionList.replaceChildren(); // delete all question buttons
@@ -244,7 +246,7 @@ function generateQuiz({ seed }) {
     ({ questionData, configName, questionIndex }) => {
       addQuestionButton({
         text: `${questionIndex + 1}`,
-        callbackFn: function _selectQuestion() {
+        onQuestionButtonClick: function _selectQuestion($questionButton) {
           const config = quizQuestionConfigs[configName];
 
           console.log("🔮", configName);
@@ -410,17 +412,16 @@ $btnMarkResults.addEventListener("click", () => {
   markAnsweredQuestions();
 });
 
-$btnFinishConfirm.addEventListener("click", () => {
-  $modalOverlayFinishConfirm.hidden = true;
-  $modalOverlayPostQuiz.hidden = false;
+function finishCurrentQuiz() {
   timer.stop();
 
   toggleControls(false);
+  currentQuiz.isFinished = true;
+
+  $questionList.firstElementChild.click(); // go to start
 
   const quizResults = getQuizResults();
-
   const resultsStats = getResultsStats(quizResults);
-
   const currentIq = calcStaticIqByStats(resultsStats);
 
   $msgTestResults.innerHTML = `
@@ -440,6 +441,13 @@ $btnFinishConfirm.addEventListener("click", () => {
     seed: currentQuiz.seed,
     stats: resultsStats,
   });
+}
+
+$btnFinishConfirm.addEventListener("click", () => {
+  $modalOverlayFinishConfirm.hidden = true;
+  $modalOverlayPostQuiz.hidden = false;
+
+  finishCurrentQuiz();
 });
 
 function wrapAnswers({
@@ -496,16 +504,31 @@ function wrapAnswers({
         $btnFinishQuiz.click();
       }
       $answerList.toggleAttribute("disabled", false);
-    });
+    }); //$answerButton
 
     $answerList.appendChild($answerButton);
   });
 
   // select previously selected answer if possible
   if (currentQuiz.answers.has(questionIndex)) {
-    $answerList
-      .querySelector(`[data-id='${currentQuiz.answers.get(questionIndex)}']`)
-      ?.classList.add("selected");
+    const $answerButton = $answerList.querySelector(
+      `[data-id='${currentQuiz.answers.get(questionIndex)}']`
+    );
+
+    $answerButton?.classList.add("selected");
+
+    const answerId = currentQuiz.answers.get(questionIndex);
+
+    if (currentQuiz.isFinished) {
+      const answer = currentQuiz.questions[
+        questionIndex
+      ].questionData.answers.find((a) => a.id === answerId);
+      if (answer.isCorrect) {
+        $answerButton.classList.add("correct");
+      } else {
+        $answerButton.classList.add("wrong");
+      }
+    }
   }
 }
 
@@ -532,8 +555,6 @@ $debugCheckbox.addEventListener("change", (event) => {
   document.debugMode = $debugCheckbox.checked;
   document.body.classList.toggle("debug", document.debugMode);
 });
-
-// $debugCheckbox.click();
 
 // hotkeys
 function bindingsOnKeypress({ code, target }) {
@@ -711,6 +732,12 @@ async function prefillQuizForm() {
   //loaded
   $fieldset.disabled = false;
 }
+
+$btnCancelPostQuiz.addEventListener("click", (e) => {
+  e.preventDefault();
+  $modalOverlayPostQuiz.hidden = true;
+  // todo(vmyshko): do stuff, decide wether user should or not see correct+stats
+});
 
 $formPostQuiz.addEventListener("submit", async (e) => {
   e.preventDefault();
