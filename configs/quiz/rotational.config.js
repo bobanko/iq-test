@@ -500,6 +500,8 @@ export const rotationalConfigs = {
           color: { byteIndex: 1, from: "cols" },
           stroke: { static: colorMixins.darken },
           "mix-blend-mode": { static: "multiply" },
+          // strokeWidth: { static: 3 },
+          scale: { static: 0.99 },
         },
         {
           figures: [{ static: "quarter" }],
@@ -507,6 +509,8 @@ export const rotationalConfigs = {
           color: { byteIndex: 1, from: "cols", shift: 1 },
           stroke: { static: colorMixins.darken },
           "mix-blend-mode": { static: "multiply" },
+          // strokeWidth: { static: 3 },
+          scale: { static: 0.99 },
         },
       ],
     },
