@@ -14,7 +14,7 @@ export const colors = {
 
 export const colorMixins = {
   contrast: "hsl(from var(--color) h s calc(l - 15))",
-  darken: "hsl(from var(--color) h s calc(l * 0.5))",
+  darken: "hsl(from var(--color) h s calc(l * 0.6))",
 };
 
 export const rgbColors = [colors.red, colors.green, colors.blue];
