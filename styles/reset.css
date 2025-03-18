@@ -30,3 +30,9 @@ button {
 textarea {
   resize: vertical;
 }
+
+fieldset {
+  padding: 0;
+  margin: 0;
+  border: none;
+}
