@@ -1,86 +1,156 @@
 import {
-  generateNumberProgressionQuestion,
-  progressionTypes,
+  answerGenerator_addToAbc,
+  answerGenerator_mulThenSub,
+  answerGenerator_numToAbc,
+  answerGenerator_subThenAdd,
+  preGenBytes_addProgression,
+  preGenBytes_addThenDiv,
+  preGenBytes_addToAbc,
+  preGenBytes_equalSumPerRowCol,
+  preGenBytes_mulThenSub,
+  preGenBytes_numToAbc,
+  preGenBytes_subIncrementAll,
+  preGenBytes_subPerRow,
+  preGenBytes_subProgression,
+  preGenBytes_subThenAdd,
+  preRenderPatternNUMBER,
 } from "../../generators/number-progressions.generator.js";
+import { generateSequenceQuestion } from "../../generators/shuffle-figures.generator.js";
 import { renderValuesQuestion } from "../../renderers/value.renderer.js";
 
 export const numberProgressionConfigs = {
   iq18alt_equalSumPerRowCol: {
     order: 18,
     // skip: true,
-    progressionType: progressionTypes.equalSumPerRowCol,
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
+
     // todo(vmyshko): make random 7-11
     colRowSum: 8,
 
-    generator: generateNumberProgressionQuestion,
+    byteGenConfig: [
+      // used to gen answers
+      {
+        max: 8,
+      },
+    ],
+
+    preGenBytes: preGenBytes_equalSumPerRowCol,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
   //  desc here
   iq15_numToAbc: {
     skip: true,
-    progressionType: progressionTypes.numToAbc,
     patternsInCol: 2, // todo(vmyshko): rename to row count or smth
     maxAnswerCount: 6,
 
-    generator: generateNumberProgressionQuestion,
+    answerGenerator: answerGenerator_numToAbc,
+    preGenBytes: preGenBytes_numToAbc,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
   iq16_addToAbc: {
     order: 16,
     // todo(vmyshko): sort by asc
-    progressionType: progressionTypes.addToAbc,
     patternsInCol: 3, // limits by maxAnswerCount as well
     maxAnswerCount: 6,
 
-    generator: generateNumberProgressionQuestion,
+    answerGenerator: answerGenerator_addToAbc,
+    preGenBytes: preGenBytes_addToAbc,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
   iq17_addProgression: {
     skip: true,
     // todo(vmyshko): seems orig 135 is not possible
-    progressionType: progressionTypes.addProgression,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 20,
 
-    generator: generateNumberProgressionQuestion,
+    byteGenConfig: [
+      // used to gen answers
+      {
+        max: 20, //maxRange
+      },
+    ],
+
+    preGenBytes: preGenBytes_addProgression,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
   iq18_subProgression: {
     skip: true,
     // todo(vmyshko): impossible orig 741
-    progressionType: progressionTypes.subProgression,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 20,
 
-    generator: generateNumberProgressionQuestion,
+    byteGenConfig: [
+      // used to gen answers
+      {
+        max: 20, //maxRange
+      },
+    ],
+
+    preGenBytes: preGenBytes_subProgression,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
   iq15alt_subIncrementAll: {
     order: 15,
     // skip: true,
-    progressionType: progressionTypes.subIncrementAll,
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
-    maxRange: 10,
 
-    generator: generateNumberProgressionQuestion,
+    maxRange: 10,
+    // todo(vmyshko): make random 7-11
+    colRowSum: 8,
+
+    byteGenConfig: [
+      // used to gen default answers
+      {
+        max: 8,
+      },
+    ],
+
+    preGenBytes: preGenBytes_subIncrementAll,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
   subPerRow: {
     skip: true,
-    progressionType: progressionTypes.subPerRow,
+
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 30,
 
-    generator: generateNumberProgressionQuestion,
+    byteGenConfig: [
+      // used to gen default answers
+      {
+        max: 30,
+      },
+    ],
+
+    preGenBytes: preGenBytes_subPerRow,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
 
@@ -88,38 +158,54 @@ export const numberProgressionConfigs = {
   // same for row/col
   addThenDiv: {
     skip: true,
-    progressionType: progressionTypes.addThenDiv,
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 20,
 
-    generator: generateNumberProgressionQuestion,
+    byteGenConfig: [
+      // used to gen default answers
+      {
+        max: 20,
+      },
+    ],
+
+    preGenBytes: preGenBytes_addThenDiv,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
 
   mulThenSubProgression: {
     skip: true,
-    progressionType: progressionTypes.mulThenSubProgression,
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 10,
 
-    generator: generateNumberProgressionQuestion,
+    answerGenerator: answerGenerator_mulThenSub,
+    preGenBytes: preGenBytes_mulThenSub,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
     renderer: renderValuesQuestion,
   },
 
   iq17alt_subThenAdd: {
     order: 17,
     // skip: true,
-    progressionType: progressionTypes.subThenAdd,
     patternsInRow: 3,
     patternsInCol: 3,
     maxAnswerCount: 6,
     maxRange: 15, //maxDiff
 
-    generator: generateNumberProgressionQuestion,
+    answerGenerator: answerGenerator_subThenAdd,
+    preGenBytes: preGenBytes_subThenAdd,
+
+    preRenderPattern: preRenderPatternNUMBER,
+    generator: generateSequenceQuestion,
+    renderer: renderValuesQuestion,
     renderer: renderValuesQuestion,
   },
 };
