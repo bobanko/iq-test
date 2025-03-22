@@ -2,7 +2,7 @@ import {
   preGenBytesBOOLEAN,
   preRenderPatternBOOLEAN,
 } from "../../generators/boolean-figures.generator.js";
-import { colors, defaultViewBox, rgbColors } from "../common.config.js";
+import { colors, defaultViewBox } from "../common.config.js";
 import { scaleViewBox } from "../../helpers/common.js";
 import { renderFigurePatternsQuestion } from "../../renderers/figure-patterns.renderer.js";
 import { generateSequenceQuestion } from "../../generators/shuffle-figures.generator.js";
@@ -44,6 +44,17 @@ export const booleanFiguresConfigs = {
 
     // todo(vmyshko): new field introduced to boolean figs to replace figureCount
     figures: ["quarter-1", "quarter-2", "quarter-3", "quarter-4"],
+
+    preRenderConfig: {
+      figureIds: ["quarter-1", "quarter-2", "quarter-3", "quarter-4"],
+      // color: colors.green,
+      color: colors.blue,
+    },
+    byteGenConfig: [
+      {
+        max: 2 ** 4, // 4 figs - 2**4 combinations
+      },
+    ],
 
     preGenBytes: preGenBytesBOOLEAN,
     preRenderPattern: preRenderPatternBOOLEAN,
