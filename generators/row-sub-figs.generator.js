@@ -1,6 +1,5 @@
 import { bytesToFigNames, patternsGenerator } from "./col-row-sum.generator.js";
-import { getUid } from "../helpers/common.js";
-import { generateUniqueValues } from "../helpers/generate-unique-values.js";
+
 import { SeededRandom } from "../helpers/random.helpers.js";
 
 const possiblePositions = [
@@ -19,8 +18,7 @@ const possiblePositions = [
 
 const maxFigsPerCell = possiblePositions.length;
 
-function makeFigureParts({ figures, random, config }) {
-  const { shufflePositions = true } = config;
+function makeFigureParts({ figures, random, shufflePositions = true }) {
   const colRowFigScale = 0.35;
 
   if (figures.length > maxFigsPerCell) {
@@ -45,6 +43,8 @@ function makeFigureParts({ figures, random, config }) {
 }
 
 function generateRowSubMatrix({ random, config }) {
+  // todo(vmyshko): fix - 2 zeros
+  // http://127.0.0.1:8080/quiz.html#seed=0.4443700301994924
   const { figureTypesCountToUse, patternsInCol = 3 } = config;
 
   const maxFigsPerType = Math.floor(maxFigsPerCell / figureTypesCountToUse);
@@ -53,7 +53,7 @@ function generateRowSubMatrix({ random, config }) {
 
   for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
     const cell_00 = random.fromRange(1, maxFigsPerType);
-    const cell_01 = random.fromRange(0, cell_00); // todo(vmyshko): can be 0 but not for all! how to impl?
+    const cell_01 = random.fromRange(1, cell_00 - 1); // todo(vmyshko): can be 0 but not for all! how to impl?
     const cell_02 = cell_00 - cell_01;
 
     mtxResult.push([cell_00, cell_01, cell_02]);
@@ -62,97 +62,93 @@ function generateRowSubMatrix({ random, config }) {
   return mtxResult;
 }
 
-function generateAnswer_rowSub({ random, config }) {
-  const { figures, figureTypesCountToUse } = config;
+export function preGenBytesROWSUBFIGS({ random, config }) {
+  //gen bytes
 
-  const maxFigsPerType = Math.floor(maxFigsPerCell / figureTypesCountToUse);
-
-  // todo(vmyshko): get rid of this copy-pasta
-
-  const figNamesToUse = random.popRangeFrom(
-    [...figures],
-    figureTypesCountToUse
-  );
-
-  const patternBytes = Array.from({ length: figureTypesCountToUse }, (_, i) => {
-    const figCount = random.fromRange(1, maxFigsPerType);
-
-    return figCount;
-  });
-
-  const randomAnswerFigs = bytesToFigNames({
-    patternBytes,
-    figNamesToUse,
-  });
-
-  return {
-    isCorrect: false,
-    id: getUid(),
-    debugInfo: patternBytes,
-    figureParts: makeFigureParts({ figures: randomAnswerFigs, random, config }),
-  };
-}
-
-export function generatePatternsQuestion_rowSub({
-  config,
-  seed,
-  questionIndex,
-}) {
-  //
   const {
+    //
+    patternsInCol = 3,
     patternsInRow = 3,
-    maxAnswerCount = 6, //over 8 will not fit
-    figureCount, // single pattern figure count [2..n]
+    byteGenConfig,
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const { max } = byteGenConfig.at(0);
 
-  const patterns = [
-    ...patternsGenerator({
-      random,
-      config,
-      mtxGenFn: generateRowSubMatrix,
-    }),
-  ];
+  ///------------
 
-  //last block
-  const [correctAnswer] = patterns.splice(-1, 1, null);
-  correctAnswer.isCorrect = true;
-  correctAnswer.id = getUid();
+  // first row
+  // const cell_00 = uniqueValues.pop();
 
-  // *******
-  // ANSWERS
-  // *******
+  // // first row rest
+  // const cell_01 = uniqueValues.pop();
+  // const cell_02 = cell_00 ^ cell_01;
+  // removeItemFromArray(cell_02, uniqueValues);
 
-  const answers = generateUniqueValues({
-    existingValues: [correctAnswer],
-    maxValuesCount: maxAnswerCount - 1,
-    generateFn: () => {
-      return generateAnswer_rowSub({
-        correctAnswer,
-        random,
-        config,
-      });
-    },
-    getValueHashFn: ({ figureParts = [] }) => {
-      const hash = figureParts
-        .map(
-          // todo(vmyshko): why defaults are not set yet? re-check!
-          ({ figures, rotation = 0, color = "", strokeWidth = 0 }) =>
-            `${figures.toString()};${color};${rotation};${strokeWidth}`
-        )
-        .toString();
+  // //first col rest
+  // const cell_10 = uniqueValues.pop();
+  // const cell_20 = cell_00 ^ cell_10;
+  // removeItemFromArray(cell_20, uniqueValues);
 
-      return hash;
-    },
-  });
+  // // center cell
+  // const cell_11 = uniqueValues.pop();
 
-  // todo(vmyshko): review, do those all are used?
+  // // last middle cells
+  // const cell_12 = cell_11 ^ cell_10;
+  // const cell_21 = cell_11 ^ cell_01;
+
+  // // last cell
+  // const cell_22 = cell_02 ^ cell_12;
+
+  return [
+    // todo(vmyshko): is it possible to get rid of arr in arr?
+    // [[cell_00], [cell_01], [cell_02]],
+    // [[cell_10], [cell_11], [cell_12]],
+    // [[cell_20], [cell_21], [cell_22]],
+
+    [
+      [3, 4, random.random()],
+      [3, 4, random.random()],
+      [3, 4, random.random()],
+    ],
+    [
+      [3, 4, random.random()],
+      [3, 4, random.random()],
+      [3, 4, random.random()],
+    ],
+    [
+      [3, 4, random.random()],
+      [3, 4, random.random()],
+      [3, 4, random.random()],
+    ],
+  ].flat();
+}
+
+export function preRenderPatternROWSUBFIGS({ bytes, preRenderConfig }) {
+  if (bytes === null) return null; // for [?]
+
+  const { figureIds, color } = preRenderConfig;
+
+  const maxFigsPerType = 9;
+  const figureTypesCountToUse = 2;
+
+  const figs = bytes
+    .slice(0, 2)
+    .map((byte, index) => Array(byte).fill(figureIds[index]))
+    .flat();
+
+  const seed = bytes[2];
+
+  console.log({ seed, b1: bytes[0], b2: bytes[1] });
+
+  const random = new SeededRandom(seed);
+
   return {
-    seed,
-    patternsInRow,
-    //
-    patterns,
-    answers,
+    debugInfo: bytes,
+    figureParts: makeFigureParts({
+      figures: figs,
+      random,
+    }),
   };
+
+  // ----
 }
