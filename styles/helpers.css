@@ -44,6 +44,11 @@
   white-space: nowrap;
 }
 
+.clip-ellipsis {
+  overflow-x: clip;
+  text-overflow: ellipsis;
+}
+
 [hidden] {
   display: none !important;
 }
