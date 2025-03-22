@@ -1,32 +1,51 @@
 import { defaultViewBox } from "../common.config.js";
 import { renderFigurePatternsQuestion } from "../../renderers/figure-patterns.renderer.js";
-import { generatePatternsQuestion_rowSub } from "../../generators/row-sub-figs.generator.js";
+import {
+  preGenBytesROWSUBFIGS,
+  preRenderPatternROWSUBFIGS,
+} from "../../generators/row-sub-figs.generator.js";
+import { generateSequenceQuestion } from "../../generators/shuffle-figures.generator.js";
 
 export const rowSubFiguresConfigs = {
-  // todo(vmyshko): fix empty col 2
-  // http://127.0.0.1:8080/quiz.html#seed=0.10673593757500122
-  // http://127.0.0.1:8080/quiz.html#seed=0.12640931170707015
   iq36_rowSubFigsMany: {
+    skip: true, // broken
     order: 36,
     patternsInCol: 3,
     patternsInRow: 3,
-    viewBox: defaultViewBox,
-    // noRotationAnimation: true,
 
-    figureLink: "./images/spark-icons.svg",
-
-    figures: [
-      //"spark-1",
-      "spark-2",
-      "spark-3",
-      //"spark-4", "spark-5"
-    ],
-    figureTypesCountToUse: 2,
     // shufflePositions: false,
     // maxAnswerCount: 8,
 
-    // todo(vmyshko): restrict empty patterns
-    generator: generatePatternsQuestion_rowSub,
+    byteGenConfig: [
+      {
+        max: 4,
+      },
+      {
+        max: 4,
+      },
+      {
+        max: 4,
+      },
+    ],
+
+    preRenderConfig: {
+      figureIds: [
+        //"spark-1",
+        "spark-2",
+        "spark-3",
+        //"spark-4", "spark-5"
+      ],
+      // color: colors.green,
+      // color: colors.blue,
+      // todo(vmyshko): make similar as for shuffels?
+    },
+
+    preGenBytes: preGenBytesROWSUBFIGS,
+    preRenderPattern: preRenderPatternROWSUBFIGS,
+    generator: generateSequenceQuestion,
+
+    viewBox: defaultViewBox,
+    figureLink: "./images/spark-icons.svg",
     renderer: renderFigurePatternsQuestion,
   },
 };
