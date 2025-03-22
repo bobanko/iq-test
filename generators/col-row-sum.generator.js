@@ -2,7 +2,7 @@ import { getUid } from "../helpers/common.js";
 import { generateUniqueValues } from "../helpers/generate-unique-values.js";
 import { SeededRandom } from "../helpers/random.helpers.js";
 
-const possiblePositions = [
+export const possiblePositions = [
   [0, 0],
   [50, 0],
   [100, 0],
@@ -16,10 +16,10 @@ const possiblePositions = [
   [100, 100],
 ];
 
-const maxFigsPerCell = possiblePositions.length;
+export const maxFigsPerCell = possiblePositions.length;
 
-function makeFigureParts({ figures, random, config }) {
-  const { shufflePositions = true } = config;
+export function makeFigureParts({ figures, random, config }) {
+  const { shufflePositions = true } = config ?? {};
   const colRowFigScale = 0.35;
 
   if (figures.length > maxFigsPerCell) {

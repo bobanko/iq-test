@@ -1,151 +1,108 @@
-import { bytesToFigNames, patternsGenerator } from "./col-row-sum.generator.js";
-
 import { SeededRandom } from "../helpers/random.helpers.js";
 
-const possiblePositions = [
-  [0, 0],
-  [50, 0],
-  [100, 0],
+import { makeFigureParts, maxFigsPerCell } from "./col-row-sum.generator.js";
 
-  [0, 50],
-  [50, 50],
-  [100, 50],
+function pickFrom({ pool, count, random }) {
+  // eg: [0, 0, 0, 1, 1, 2, 2, 2, 2, 2] for [3,2,5]
+  const indexPool = pool.map((count, index) => Array(count).fill(index)).flat();
 
-  [0, 100],
-  [50, 100],
-  [100, 100],
-];
+  const indexPoolShuffled = random.shuffle(indexPool);
 
-const maxFigsPerCell = possiblePositions.length;
+  const indexesPicked = random.popRangeFrom(indexPoolShuffled, count);
 
-function makeFigureParts({ figures, random, shufflePositions = true }) {
-  const colRowFigScale = 0.35;
+  const indexesCounts = pool.map((_, index) => {
+    // todo(vmyshko): refac to use reduce to decrease O*
+    return indexesPicked.filter((ip) => ip === index).length;
+  });
 
-  if (figures.length > maxFigsPerCell) {
-    throw new Error(
-      `Too many figures to fit in cell: ${figures.length}, max ${maxFigsPerCell}`
-    );
-  }
-
-  const figPositions = shufflePositions
-    ? random.popRangeFrom([...possiblePositions], figures.length)
-    : [...possiblePositions];
-
-  // todo(vmyshko): for debug
-  // const figPositions = [...possiblePositions];
-
-  return figures.map((fig, i) => ({
-    figures: [fig],
-    scale: colRowFigScale,
-    transformX: figPositions[i][0],
-    transformY: figPositions[i][1],
-  }));
+  return indexesCounts;
 }
 
-function generateRowSubMatrix({ random, config }) {
-  // todo(vmyshko): fix - 2 zeros
-  // http://127.0.0.1:8080/quiz.html#seed=0.4443700301994924
-  const { figureTypesCountToUse, patternsInCol = 3 } = config;
+function getCellSum(cell) {
+  return cell.reduce((acc, value) => acc + value, 0);
+}
 
-  const maxFigsPerType = Math.floor(maxFigsPerCell / figureTypesCountToUse);
+export function answerGeneratorROWSUBFIGS({
+  correctAnswer: correctAnswerBytes,
+  random,
+  config,
+}) {
+  const { byteGenConfig } = config;
 
-  const mtxResult = [];
+  const full = byteGenConfig.map(({ max }) => max);
 
-  for (let rowIndex = 0; rowIndex < patternsInCol; rowIndex++) {
-    const cell_00 = random.fromRange(1, maxFigsPerType);
-    const cell_01 = random.fromRange(1, cell_00 - 1); // todo(vmyshko): can be 0 but not for all! how to impl?
-    const cell_02 = cell_00 - cell_01;
+  const answerSum = getCellSum(correctAnswerBytes);
 
-    mtxResult.push([cell_00, cell_01, cell_02]);
-  }
+  const answerSumRange = [
+    Math.max(1, answerSum - 1),
+    Math.min(maxFigsPerCell, answerSum + 2),
+  ];
 
-  return mtxResult;
+  const answerBytes = pickFrom({
+    pool: full,
+    count: random.fromRange(...answerSumRange),
+    random,
+  });
+
+  return answerBytes;
 }
 
 export function preGenBytesROWSUBFIGS({ random, config }) {
-  //gen bytes
+  // todo(vmyshko): fix - 2 zeros
+  const { byteGenConfig, patternsInCol = 3 } = config;
 
-  const {
-    //
-    patternsInCol = 3,
-    patternsInRow = 3,
-    byteGenConfig,
-  } = config;
+  const full = byteGenConfig.map(({ max }) => max);
 
-  const { max } = byteGenConfig.at(0);
+  const pool = [4, 5]; // == full
 
-  ///------------
+  const rows = [];
 
-  // first row
-  // const cell_00 = uniqueValues.pop();
+  for (let _ of Array(patternsInCol).fill(0)) {
+    const cell_0 = pickFrom({
+      pool: full,
+      count: random.fromRange(2, maxFigsPerCell),
+      random,
+    });
 
-  // // first row rest
-  // const cell_01 = uniqueValues.pop();
-  // const cell_02 = cell_00 ^ cell_01;
-  // removeItemFromArray(cell_02, uniqueValues);
+    const cell_1 = pickFrom({
+      pool: cell_0,
+      count: random.fromRange(1, getCellSum(cell_0) - 1),
+      random,
+    });
+    const cell_2 = cell_0.map((_, index) => cell_0[index] - cell_1[index]);
 
-  // //first col rest
-  // const cell_10 = uniqueValues.pop();
-  // const cell_20 = cell_00 ^ cell_10;
-  // removeItemFromArray(cell_20, uniqueValues);
+    const row = [cell_0, cell_1, cell_2];
 
-  // // center cell
-  // const cell_11 = uniqueValues.pop();
+    rows.push(row);
+  }
 
-  // // last middle cells
-  // const cell_12 = cell_11 ^ cell_10;
-  // const cell_21 = cell_11 ^ cell_01;
-
-  // // last cell
-  // const cell_22 = cell_02 ^ cell_12;
-
-  return [
-    // todo(vmyshko): is it possible to get rid of arr in arr?
-    // [[cell_00], [cell_01], [cell_02]],
-    // [[cell_10], [cell_11], [cell_12]],
-    // [[cell_20], [cell_21], [cell_22]],
-
-    [
-      [3, 4, random.random()],
-      [3, 4, random.random()],
-      [3, 4, random.random()],
-    ],
-    [
-      [3, 4, random.random()],
-      [3, 4, random.random()],
-      [3, 4, random.random()],
-    ],
-    [
-      [3, 4, random.random()],
-      [3, 4, random.random()],
-      [3, 4, random.random()],
-    ],
-  ].flat();
+  return rows.flat();
 }
 
-export function preRenderPatternROWSUBFIGS({ bytes, preRenderConfig }) {
+export function preRenderPatternROWSUBFIGS({
+  bytes,
+  preRenderConfig,
+  random,
+  config,
+}) {
   if (bytes === null) return null; // for [?]
 
-  const { figureIds, color } = preRenderConfig;
+  const { figureIds } = preRenderConfig;
 
-  const maxFigsPerType = 9;
-  const figureTypesCountToUse = 2;
+  const rnd = new SeededRandom(random._seed);
+
+  const randomFigIds = rnd.shuffle(figureIds);
 
   const figs = bytes
     .slice(0, 2)
-    .map((byte, index) => Array(byte).fill(figureIds[index]))
+    .map((byte, index) => Array(byte).fill(randomFigIds[index]))
     .flat();
-
-  const seed = bytes[2];
-
-  console.log({ seed, b1: bytes[0], b2: bytes[1] });
-
-  const random = new SeededRandom(seed);
 
   return {
     debugInfo: bytes,
     figureParts: makeFigureParts({
       figures: figs,
+      config,
       random,
     }),
   };

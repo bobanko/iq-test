@@ -1,6 +1,7 @@
 import { defaultViewBox } from "../common.config.js";
 import { renderFigurePatternsQuestion } from "../../renderers/figure-patterns.renderer.js";
 import {
+  answerGeneratorROWSUBFIGS,
   preGenBytesROWSUBFIGS,
   preRenderPatternROWSUBFIGS,
 } from "../../generators/row-sub-figs.generator.js";
@@ -8,7 +9,6 @@ import { generateSequenceQuestion } from "../../generators/shuffle-figures.gener
 
 export const rowSubFiguresConfigs = {
   iq36_rowSubFigsMany: {
-    skip: true, // broken
     order: 36,
     patternsInCol: 3,
     patternsInRow: 3,
@@ -21,12 +21,11 @@ export const rowSubFiguresConfigs = {
         max: 4,
       },
       {
-        max: 4,
-      },
-      {
-        max: 4,
+        max: 5,
       },
     ],
+
+    colRowSum: 4,
 
     preRenderConfig: {
       figureIds: [
@@ -40,6 +39,7 @@ export const rowSubFiguresConfigs = {
       // todo(vmyshko): make similar as for shuffels?
     },
 
+    answerGenerator: answerGeneratorROWSUBFIGS,
     preGenBytes: preGenBytesROWSUBFIGS,
     preRenderPattern: preRenderPatternROWSUBFIGS,
     generator: generateSequenceQuestion,
