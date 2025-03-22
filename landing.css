@@ -298,8 +298,9 @@ section {
     display: flex;
     justify-content: center;
 
+    width: 180px;
+
     .item-name {
-      /* // */
     }
 
     .item-date {
