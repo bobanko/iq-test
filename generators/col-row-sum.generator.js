@@ -54,7 +54,11 @@ export function makeFigureParts({ figures, random, config }) {
 // Math.min(figsAvailable.length - 1, maxFigsPerCell);
 
 export function generateColRowSumMatrix({ random, config }) {
-  const { colRowSum } = config;
+  const { colRowSum: colRowSumRaw } = config;
+
+  const colRowSum = Number.isFinite(colRowSumRaw)
+    ? colRowSumRaw
+    : random.fromRange(...colRowSumRaw);
 
   // first row
   const cell_00 = random.fromRange(1, colRowSum - 2);

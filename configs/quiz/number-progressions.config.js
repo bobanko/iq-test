@@ -26,8 +26,7 @@ export const numberProgressionConfigs = {
     patternsInCol: 3,
     maxAnswerCount: 6,
 
-    // todo(vmyshko): make random 7-11
-    colRowSum: 8,
+    colRowSum: [7, 11],
 
     byteGenConfig: [
       // used to gen answers
