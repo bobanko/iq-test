@@ -417,7 +417,7 @@ export function shuffleFiguresGenerator1triangles({ random, config }) {
   return mtx.flat();
 }
 
-function generateAnswer({ random, config }) {
+function answerGeneratorGeneric({ random, config }) {
   const { byteGenConfig } = config;
 
   return byteGenConfig.map(({ max }) => random.fromRange(0, max - 1));
@@ -466,6 +466,7 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
     //
     preGenBytes = shuffleFiguresGeneratorGeneric,
     preRenderPattern = preRenderPatternGeneric,
+    answerGenerator = answerGeneratorGeneric,
     preRenderConfig,
   } = config;
 
@@ -489,7 +490,7 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
     existingValues: [correctAnswerBytes],
     maxValuesCount: maxAnswerCount - 1,
     generateFn: () => {
-      return generateAnswer({
+      return answerGenerator({
         correctAnswer: correctAnswerBytes,
         random,
         config,
