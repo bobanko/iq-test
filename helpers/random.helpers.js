@@ -2,7 +2,10 @@ import { getSeededRandom } from "./seeded-random.js";
 
 export class SeededRandom {
   random;
+  _seed;
+
   constructor(seed) {
+    this._seed = seed;
     this.random = getSeededRandom(seed);
   }
 
