@@ -504,7 +504,9 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
   console.log({ answersBytes });
 
   const answers = answersBytes
-    .map((bytes) => preRenderPattern({ bytes, preRenderConfig }))
+    .map((bytes) =>
+      preRenderPattern({ bytes, preRenderConfig, random, config })
+    )
     .map((a) => ({ ...a, isCorrect: false, id: getUid() }));
 
   // mark correct
@@ -516,7 +518,7 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
     patternsInRow,
     //
     patterns: patternsBytes.map((bytes) =>
-      preRenderPattern({ bytes, preRenderConfig })
+      preRenderPattern({ bytes, preRenderConfig, random, config })
     ),
     answers,
   };
