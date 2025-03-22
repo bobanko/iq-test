@@ -165,6 +165,9 @@ function generateAnswer_colRowSum({ random, config }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion approach
+ */
 export function generatePatternsQuestion_colRowSum({
   config,
   seed,

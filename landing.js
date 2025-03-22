@@ -10,7 +10,6 @@ import { getCached } from "./helpers/local-cache.helper.js";
 
 import { loadStats } from "./stats-results.js";
 import { countries, emojiFlags } from "./countries.mapping.js";
-import { appConfig } from "./configs/app.config.js";
 
 import {
   getResultsLast10,
