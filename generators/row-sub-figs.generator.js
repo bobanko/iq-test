@@ -2,7 +2,7 @@ import { SeededRandom } from "../helpers/random.helpers.js";
 
 import { makeFigureParts, maxFigsPerCell } from "./col-row-sum.generator.js";
 
-function pickFrom({ pool, count, random }) {
+export function pickFrom({ pool, count, random }) {
   // eg: [0, 0, 0, 1, 1, 2, 2, 2, 2, 2] for [3,2,5]
   const indexPool = pool.map((count, index) => Array(count).fill(index)).flat();
 
@@ -22,6 +22,14 @@ function getCellSum(cell) {
   return cell.reduce((acc, value) => acc + value, 0);
 }
 
+// todo(vmyshko): refac/rename
+function getDynamicRange(rangeMin, rangeMax, value) {
+  const shiftWidth = 2;
+  const B_min = Math.max(rangeMin, value - shiftWidth);
+  const B_max = Math.min(rangeMax, B_min + shiftWidth * 2);
+  return [B_min, B_max];
+}
+
 export function answerGeneratorROWSUBFIGS({
   correctAnswer: correctAnswerBytes,
   random,
@@ -33,10 +41,9 @@ export function answerGeneratorROWSUBFIGS({
 
   const answerSum = getCellSum(correctAnswerBytes);
 
-  const answerSumRange = [
-    Math.max(1, answerSum - 1),
-    Math.min(maxFigsPerCell, answerSum + 2),
-  ];
+  // todo(vmyshko): arrange possible variants and pick some
+  // todo(vmyshko): probably not possible for now, due to answer isolation
+  const answerSumRange = getDynamicRange(1, maxFigsPerCell, answerSum);
 
   const answerBytes = pickFrom({
     pool: full,
@@ -52,8 +59,6 @@ export function preGenBytesROWSUBFIGS({ random, config }) {
   const { byteGenConfig, patternsInCol = 3 } = config;
 
   const full = byteGenConfig.map(({ max }) => max);
-
-  const pool = [4, 5]; // == full
 
   const rows = [];
 
@@ -94,7 +99,6 @@ export function preRenderPatternROWSUBFIGS({
   const randomFigIds = rnd.shuffle(figureIds);
 
   const figs = bytes
-    .slice(0, 2)
     .map((byte, index) => Array(byte).fill(randomFigIds[index]))
     .flat();
 

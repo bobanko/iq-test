@@ -1,6 +1,4 @@
-import { getUid } from "../helpers/common.js";
-import { generateUniqueValues } from "../helpers/generate-unique-values.js";
-import { SeededRandom } from "../helpers/random.helpers.js";
+import { preGenBytes_equalSumPerRowCol } from "./number-progressions.generator.js";
 
 export const possiblePositions = [
   [0, 0],
@@ -89,145 +87,18 @@ export function generateColRowSumMatrix({ random, config }) {
   ];
 }
 
-export function bytesToFigNames({ patternBytes, figNamesToUse }) {
-  return patternBytes
-    .map((byte, byteIndex) => Array(byte).fill(figNamesToUse[byteIndex]))
-    .flat();
-}
+export function preGenBytes_equalSumPerRowColWrapped({ random, config }) {
+  const { byteGenConfig } = config;
 
-export function* patternsGenerator({ random, config, mtxGenFn }) {
-  const { figures, figureTypesCountToUse } = config;
+  const full = byteGenConfig.map(({ max }) => max);
 
-  const figNamesToUse = random.popRangeFrom(
-    [...figures],
-    figureTypesCountToUse
+  const figCounts = full.map((max) =>
+    preGenBytes_equalSumPerRowCol({ random, config })
   );
 
-  // todo(vmyshko): refac/simplify
-
-  const patternsFiguresMatrixes = Array.from(
-    { length: figureTypesCountToUse },
-    (_, index) => {
-      const mtxNumbers = mtxGenFn({ random, config }).flat();
-      return mtxNumbers;
-    }
+  const result = figCounts[0].map((_, index) =>
+    figCounts.map((arr) => arr[index])
   );
 
-  const patternsFigBytes = patternsFiguresMatrixes.at(0).map((_, index) => {
-    return patternsFiguresMatrixes.reduce((acc, mtx) => {
-      return [...acc, mtx[index]];
-    }, []);
-  });
-
-  for (let patternBytes of patternsFigBytes) {
-    // one pattern
-
-    const cellFigs = bytesToFigNames({ patternBytes, figNamesToUse });
-    yield {
-      debugInfo: patternBytes,
-      figureParts: makeFigureParts({ figures: cellFigs, random, config }),
-    };
-  }
-}
-
-function generateAnswer_colRowSum({ random, config }) {
-  const { colRowSum } = config;
-
-  const { figures, figureTypesCountToUse } = config;
-
-  // todo(vmyshko): get rid of this copy-pasta
-
-  const figNamesToUse = random.popRangeFrom(
-    [...figures],
-    figureTypesCountToUse
-  );
-
-  const patternBytes = Array.from({ length: figureTypesCountToUse }, (_, i) => {
-    const figCount = random.fromRange(
-      // todo(vmyshko): fit answers to be  similar to correct
-      Math.max(1, colRowSum - maxFigsPerCell * 2),
-      Math.min(colRowSum / 3, maxFigsPerCell)
-    );
-
-    return figCount;
-  });
-
-  const randomAnswerFigs = bytesToFigNames({
-    patternBytes,
-    figNamesToUse,
-  });
-
-  return {
-    isCorrect: false,
-    id: getUid(),
-    debugInfo: patternBytes,
-    figureParts: makeFigureParts({ figures: randomAnswerFigs, random, config }),
-  };
-}
-
-/**
- * @deprecated use generateSequenceQuestion approach
- */
-export function generatePatternsQuestion_colRowSum({
-  config,
-  seed,
-  questionIndex,
-}) {
-  //
-  const {
-    patternsInRow = 3,
-    maxAnswerCount = 6, //over 8 will not fit
-    figureCount, // single pattern figure count [2..n]
-  } = config;
-
-  const random = new SeededRandom(seed + questionIndex);
-
-  const patterns = [
-    ...patternsGenerator({
-      random,
-      config,
-      mtxGenFn: generateColRowSumMatrix,
-    }),
-  ];
-
-  //last block
-  const [correctAnswer] = patterns.splice(-1, 1, null);
-  correctAnswer.isCorrect = true;
-  correctAnswer.id = getUid();
-
-  // *******
-  // ANSWERS
-  // *******
-
-  const answers = generateUniqueValues({
-    existingValues: [correctAnswer],
-    maxValuesCount: maxAnswerCount - 1,
-    generateFn: () => {
-      return generateAnswer_colRowSum({
-        correctAnswer,
-        random,
-        config,
-      });
-    },
-    getValueHashFn: ({ figureParts = [] }) => {
-      const hash = figureParts
-        .map(
-          // todo(vmyshko): why defaults are not set yet? re-check!
-          ({ figures, rotation = 0, color = "", strokeWidth = 0 }) =>
-            `${figures.toString()};${color};${rotation};${strokeWidth}`
-        )
-        .toString();
-
-      return hash;
-    },
-  });
-
-  // todo(vmyshko): review, do those all are used?
-  return {
-    seed,
-    patternsInRow,
-    //
-    patterns,
-    answers,
-  };
+  return result;
 }

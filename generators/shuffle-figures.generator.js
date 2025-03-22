@@ -420,7 +420,9 @@ export function shuffleFiguresGenerator1triangles({ random, config }) {
 function answerGeneratorGeneric({ random, config }) {
   const { byteGenConfig } = config;
 
-  return byteGenConfig.map(({ max }) => random.fromRange(0, max - 1));
+  return byteGenConfig.map(({ max, min = 0 }) =>
+    random.fromRange(min, max - 1)
+  );
 }
 
 // todo(vmyshko): this is sample for exact pre-renderer with triangles

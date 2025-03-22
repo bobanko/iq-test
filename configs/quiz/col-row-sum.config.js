@@ -1,6 +1,12 @@
 import { defaultViewBox } from "../common.config.js";
 import { renderFigurePatternsQuestion } from "../../renderers/figure-patterns.renderer.js";
-import { generatePatternsQuestion_colRowSum } from "../../generators/col-row-sum.generator.js";
+import { preGenBytes_equalSumPerRowColWrapped } from "../../generators/col-row-sum.generator.js";
+import { generateSequenceQuestion } from "../../generators/shuffle-figures.generator.js";
+
+import {
+  answerGeneratorROWSUBFIGS,
+  preRenderPatternROWSUBFIGS,
+} from "../../generators/row-sub-figs.generator.js";
 
 export const colRowSumFiguresConfigs = {
   iq35_colRowSumFiguresMany: {
@@ -14,17 +20,39 @@ export const colRowSumFiguresConfigs = {
 
     figureLink: "./images/card-suits.svg",
 
-    figures: ["spade-1", "heart-1", "diamond-1", "club-1"],
     figureTypesCountToUse: 2,
-    colRowSum: 4, // possible 3*9=27 positions
+    colRowSum: 4 + 2, // possible 3*9=27 positions
+
     // shufflePositions: false,
 
+    preRenderConfig: {
+      figureIds: ["spade-1", "heart-1", "diamond-1", "club-1"],
+    },
+
+    byteGenConfig: [
+      // used to gen answers
+      {
+        max: 4,
+      },
+      {
+        max: 5,
+      },
+      // {
+      //   max: 3,
+      // },
+    ],
+
+    answerGenerator: answerGeneratorROWSUBFIGS,
+    preGenBytes: preGenBytes_equalSumPerRowColWrapped,
+
+    preRenderPattern: preRenderPatternROWSUBFIGS,
+    generator: generateSequenceQuestion,
     // todo(vmyshko): do not show unused figs in answers
-    generator: generatePatternsQuestion_colRowSum,
     renderer: renderFigurePatternsQuestion,
   },
 
   colRowSumFigures: {
+    order: 34,
     skip: true,
     patternsInCol: 3,
     patternsInRow: 3,
@@ -35,11 +63,27 @@ export const colRowSumFiguresConfigs = {
 
     figureLink: "./images/card-suits.svg",
 
-    figures: ["spade-1", "heart-1", "diamond-1", "club-1"],
     figureTypesCountToUse: 1,
     colRowSum: 9, // possible 3*9=27 positions
 
-    generator: generatePatternsQuestion_colRowSum,
+    //-----
+
+    preRenderConfig: {
+      figureIds: ["spade-1", "heart-1", "diamond-1", "club-1"],
+    },
+
+    byteGenConfig: [
+      // used to gen answers
+      {
+        max: 9 - 2,
+      },
+    ],
+
+    answerGenerator: answerGeneratorROWSUBFIGS,
+    preGenBytes: preGenBytes_equalSumPerRowColWrapped,
+
+    preRenderPattern: preRenderPatternROWSUBFIGS,
+    generator: generateSequenceQuestion,
     renderer: renderFigurePatternsQuestion,
   },
 };
