@@ -13,7 +13,7 @@
 <path id="arrow-hour" stroke-width="var(--stroke-width, 2)" d="M45.7444 20.5912L45.583 20.7545L45.6015 20.9833L46.8664 36.5838C40.9183 38.0127 36.5 43.4157 36.5 49.8571C36.5 57.3867 42.539 63.5 50 63.5C57.461 63.5 63.5 57.3867 63.5 49.8571C63.5 43.4156 59.0816 38.0126 53.1334 36.5837L54.3983 20.9833L54.4168 20.7545L54.2554 20.5912L50.3554 16.6484L49.9999 16.289L49.6444 16.6484L45.7444 20.5912ZM57.3 49.8573C57.3 53.9415 54.0265 57.243 50 57.243C45.9735 57.243 42.7 53.9415 42.7 49.8573C42.7 45.7731 45.9735 42.4715 50 42.4715C54.0265 42.4715 57.3 45.7731 57.3 49.8573Z"/>
 <path id="arrow-minute" stroke-width="var(--stroke-width, 2)" d="M59 50C59 54.9706 54.9706 59 50 59C45.0294 59 41 54.9706 41 50C41 45.7168 43.992 42.1325 48 41.223V13H52V41.223C56.008 42.1325 59 45.7168 59 50Z"/>
 
-<circle id="circle" stroke="var(--stroke, black)" cx="50" cy="50" r="calc(50 - 1.5)"  stroke-width="var(--stroke-width, 3px)" />
+<circle id="circle" stroke="var(--stroke, black)" cx="50" cy="50" r="calc(50px - 1.5px)"  stroke-width="var(--stroke-width, 3px)" />
 <path id="hexagon" stroke="black" stroke-width="var(--stroke-width, 3px)" stroke-linecap="round"  d="M50.012 98.8362L8 74.414V25.5858L50.0001 1.15679L91.9985 25.5745L92 74.4142L50.012 98.8362Z" />
 <path id="pentagon" stroke="black" stroke-width="var(--stroke-width, 3px)" stroke-linecap="round" stroke-linejoin="round" d="M3.67559 34.8927L49.9991 1.24137L96.3244 34.8928L78.6301 89.3502L21.3699 89.3505L3.67559 34.8927Z" />
 

@@ -10,7 +10,7 @@
 <path id="line-h" fill="none" d="M1 50H99" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 <path id="line-v" fill="none" d="M50 99V1" stroke="black" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
 
-<circle id="circle" stroke="black" cx="50" cy="50" r="calc(50 - 1.5)"  stroke-width="var(--stroke-width, 3px)" />
+<circle id="circle" stroke="black" cx="50" cy="50" r="calc(50px - 1.5px)"  stroke-width="var(--stroke-width, 3px)" />
 
 </g>
 </svg>
