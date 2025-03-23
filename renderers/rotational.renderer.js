@@ -77,7 +77,7 @@ function createCustomQuestionMark({ config }) {
 }
 
 /**
- * @deprecated use shuffle-figures, but it not finished 😢
+ * @deprecated use generateSequenceQuestion instead
  */
 export function renderRotationalQuestion({
   config,

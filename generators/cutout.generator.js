@@ -20,6 +20,9 @@ function generateAnswer({ random, config }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateCutoutQuestion({ config, seed, questionIndex }) {
   //
   const {

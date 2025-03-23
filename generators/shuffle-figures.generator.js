@@ -460,6 +460,7 @@ export function preRenderPattern1trigs(patternBytes) {
   };
 }
 
+// todo(vmyshko):  make it default?
 export function generateSequenceQuestion({ config, seed, questionIndex }) {
   //
   const {

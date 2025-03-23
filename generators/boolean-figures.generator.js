@@ -29,6 +29,7 @@ export function preGenBytesBOOLEAN({ random, config }) {
     byteGenConfig,
   } = config;
 
+  // todo(vmyshko): this is bad, rewrite config
   const { max: colRowSum } = byteGenConfig.at(0);
 
   ///------------

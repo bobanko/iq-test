@@ -142,6 +142,9 @@ function generateAnswer({ random, config, correctAnswer }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateCropFigurePatternsQuestion({
   config,
   seed,
@@ -333,6 +336,9 @@ function generateAnswerAlt({ random, config, correctAnswer }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateCropFigurePatternsQuestionAlt({
   config,
   seed,
@@ -496,6 +502,9 @@ function generateAnswerXorCustom({ random, config, correctAnswer }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateCropFigurePatternsQuestionXorCustom({
   config,
   seed,

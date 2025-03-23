@@ -50,6 +50,8 @@ export const cellMoveRules = {
 
 /**
  *
+ * @deprecated use generateSequenceQuestion instead
+ *
  * @param {object} params
  * @param {number} params.seed - generation seed
  * @param {number} params.questionIndex - for better seeding

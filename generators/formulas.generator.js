@@ -288,6 +288,9 @@ function generateAnswer({ random, config, correctAnswer }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateFormulasQuestion({ config, seed, questionIndex }) {
   const patternsInRow = 5; //always 5 = 3 vars + 2 ops -- a+b=c --like
 
