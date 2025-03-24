@@ -310,7 +310,7 @@ function generateSumAll3RowPatterns({
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
+export function generateBooleanMatrixQuestion({ config, seed }) {
   const patternsInRow = 3; //always 3 -- a+b=c --like
 
   const {
@@ -325,7 +325,7 @@ export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
 
   // todo(vmyshko): get rid of salting seeded random with question index!!!
   // todo(vmyshko): how to keep/migrate old results?
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patterns = [];
   // ---

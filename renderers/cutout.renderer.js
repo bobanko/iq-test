@@ -99,7 +99,7 @@ function createAnswerPattern({ figureConfig, config }) {
   return $answerPattern;
 }
 
-export function renderCutoutQuestion({ config, questionData, questionIndex }) {
+export function renderCutoutQuestion({ config, questionData }) {
   const { patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((figureConfig) =>

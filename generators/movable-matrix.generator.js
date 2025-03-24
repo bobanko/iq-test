@@ -54,7 +54,6 @@ export const cellMoveRules = {
  *
  * @param {object} params
  * @param {number} params.seed - generation seed
- * @param {number} params.questionIndex - for better seeding
  * @param {object} params.config
  * @param {number} params.config.patternsInRow - patterns in single row [2-6]
  * @param {number} params.config.patternsInCol - max row count [2-...]
@@ -63,7 +62,7 @@ export const cellMoveRules = {
  * @param {number} params.config.colorCount - number of colored cells to be generated
  * @returns
  */
-export function generateMovableQuestion({ config, seed, questionIndex }) {
+export function generateMovableQuestion({ config, seed }) {
   const {
     patternsInRow = 3, // 2 is too low to understand pattern in last row
     patternsInCol = 3, // can be reduced by gen-non-unique reason
@@ -74,7 +73,7 @@ export function generateMovableQuestion({ config, seed, questionIndex }) {
     interRowRules = [],
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const hasInterRowRules = interRowRules.length > 0;
 

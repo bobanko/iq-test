@@ -258,18 +258,14 @@ function generateAnswer({ random, config, correctAnswer }) {
 /**
  * @deprecated new one is in the shuffle-figures.gen
  */
-export function generateShuffleFigurePatternsQuestion({
-  config,
-  seed,
-  questionIndex,
-}) {
+export function generateShuffleFigurePatternsQuestion({ config, seed }) {
   //
   const {
     patternsInRow = 3,
     maxAnswerCount = 6, //over 8 will not fit
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patterns = [
     ...shuffleFiguresGenerator({

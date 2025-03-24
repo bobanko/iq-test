@@ -43,7 +43,6 @@ function createFormulaPattern({
     // ["🐷", "🍄", "🤖"],
   ];
 
-  // todo(vmyshko): add questionIndex to seed?
   const random = new SeededRandom(seed);
 
   const emojiSet = random.sample(emojiSets);

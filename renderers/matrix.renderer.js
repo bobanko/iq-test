@@ -42,7 +42,7 @@ function createPaintedMatrix({ points = [], mtxSize }) {
   return $patternMatrix;
 }
 
-export function renderMatrixQuestion({ config, questionData, questionIndex }) {
+export function renderMatrixQuestion({ config, questionData }) {
   const { mtxSize, patterns, answers } = questionData;
 
   const questionPatterns = patterns.map((pattern) =>

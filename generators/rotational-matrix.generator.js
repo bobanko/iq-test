@@ -74,11 +74,7 @@ function generateBasicPoints({ cellGroups, groupColors, random, mtxSize }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateRotationalMatrixQuestion({
-  config,
-  seed,
-  questionIndex,
-}) {
+export function generateRotationalMatrixQuestion({ config, seed }) {
   const {
     patternsInRow = 3,
     patternsInCol = 3, // can be reduced by gen-non-unique reason
@@ -88,7 +84,7 @@ export function generateRotationalMatrixQuestion({
     cellGroups,
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const groupColors = random.shuffle(defaultColors);
 

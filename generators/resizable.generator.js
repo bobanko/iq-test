@@ -83,7 +83,7 @@ function generateAnswer({ random, config }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateResizableQuestion({ config, seed, questionIndex }) {
+export function generateResizableQuestion({ config, seed }) {
   //
   const {
     maxAnswerCount = 6, //over 8 will not fit
@@ -92,7 +92,7 @@ export function generateResizableQuestion({ config, seed, questionIndex }) {
 
   const patternsInRow = 3;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patterns = [
     ...resizableGenerator({

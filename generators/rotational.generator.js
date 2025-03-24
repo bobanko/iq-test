@@ -41,9 +41,9 @@ export function makeUnique({
  * @deprecated use generateSequenceQuestion instead,
  * it should fully cover rotational cases as well
  */
-export function generateRotationalQuestion({ config, seed, questionIndex }) {
+export function generateRotationalQuestion({ config, seed }) {
   // todo(vmyshko): use hash/uid of question as seed
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   // todo(vmyshko): keep it here to ensure seeded random
   function getRandomDeg({ stepDeg = 45, skipZero = false }) {

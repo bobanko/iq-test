@@ -291,7 +291,7 @@ function generateAnswer({ random, config, correctAnswer }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateFormulasQuestion({ config, seed, questionIndex }) {
+export function generateFormulasQuestion({ config, seed }) {
   const patternsInRow = 5; //always 5 = 3 vars + 2 ops -- a+b=c --like
 
   const {
@@ -299,7 +299,7 @@ export function generateFormulasQuestion({ config, seed, questionIndex }) {
     figureCount, // single pattern figure count [2..n]
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const rowPatterns = [
     ...config.formulaGenerator({

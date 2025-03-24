@@ -29,7 +29,6 @@ function createPatternRotational({
 
   seed,
 }) {
-  // todo(vmyshko): add questionIndex to seed
   const random = new SeededRandom(seed);
   const $pattern = createPatternRotationalBase({ svgFrame });
   const $partContainer = $pattern.querySelector(".part-container");
@@ -79,11 +78,7 @@ function createCustomQuestionMark({ config }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function renderRotationalQuestion({
-  config,
-  questionData,
-  questionIndex,
-}) {
+export function renderRotationalQuestion({ config, questionData }) {
   async function rotateTo($elem, deg) {
     // to help user to understand rotations
     await wait(0);
@@ -102,7 +97,7 @@ export function renderRotationalQuestion({
 
   // todo(vmyshko): make it better, to randomize colors between questions,
   // mb use question hash/id as seed
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
   // todo(vmyshko): those who can't overlap -- rotate as pair
 
   const questionPatterns = [];

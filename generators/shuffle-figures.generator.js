@@ -461,7 +461,7 @@ export function preRenderPattern1trigs(patternBytes) {
 }
 
 // todo(vmyshko):  make it default?
-export function generateSequenceQuestion({ config, seed, questionIndex }) {
+export function generateSequenceQuestion({ config, seed }) {
   //
   const {
     patternsInRow = 3,
@@ -473,7 +473,7 @@ export function generateSequenceQuestion({ config, seed, questionIndex }) {
     preRenderConfig,
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patternsBytes = [
     ...preGenBytes({

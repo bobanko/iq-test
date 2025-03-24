@@ -145,11 +145,7 @@ function generateAnswer({ random, config, correctAnswer }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateCropFigurePatternsQuestion({
-  config,
-  seed,
-  questionIndex,
-}) {
+export function generateCropFigurePatternsQuestion({ config, seed }) {
   //
   const {
     patternsInRow = 3,
@@ -157,7 +153,7 @@ export function generateCropFigurePatternsQuestion({
     figureCount, // single pattern figure count [2..n]
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patterns = [
     ...cropFiguresGenerator({
@@ -339,11 +335,7 @@ function generateAnswerAlt({ random, config, correctAnswer }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateCropFigurePatternsQuestionAlt({
-  config,
-  seed,
-  questionIndex,
-}) {
+export function generateCropFigurePatternsQuestionAlt({ config, seed }) {
   //
   const {
     patternsInRow = 3,
@@ -351,7 +343,7 @@ export function generateCropFigurePatternsQuestionAlt({
     figureCount, // single pattern figure count [2..n]
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patterns = [
     ...cropFiguresGeneratorAlt({
@@ -505,18 +497,14 @@ function generateAnswerXorCustom({ random, config, correctAnswer }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateCropFigurePatternsQuestionXorCustom({
-  config,
-  seed,
-  questionIndex,
-}) {
+export function generateCropFigurePatternsQuestionXorCustom({ config, seed }) {
   //
   const {
     patternsInRow = 3,
     maxAnswerCount = 6, //over 8 will not fit
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const patterns = [
     ...cropFiguresGeneratorXorCustom({

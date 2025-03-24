@@ -23,14 +23,14 @@ function generateAnswer({ random, config }) {
 /**
  * @deprecated use generateSequenceQuestion instead
  */
-export function generateCutoutQuestion({ config, seed, questionIndex }) {
+export function generateCutoutQuestion({ config, seed }) {
   //
   const {
     maxAnswerCount = 6, //over 8 will not fit
     patternsInRow,
   } = config;
 
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   const questionPattern = cutoutGenerator({
     random,
