@@ -307,6 +307,9 @@ function generateSumAll3RowPatterns({
 
 // --------------------
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateBooleanMatrixQuestion({ config, seed, questionIndex }) {
   const patternsInRow = 3; //always 3 -- a+b=c --like
 

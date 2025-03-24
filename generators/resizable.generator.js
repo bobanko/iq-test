@@ -80,6 +80,9 @@ function generateAnswer({ random, config }) {
   };
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateResizableQuestion({ config, seed, questionIndex }) {
   //
   const {

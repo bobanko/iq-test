@@ -71,6 +71,9 @@ function generateBasicPoints({ cellGroups, groupColors, random, mtxSize }) {
   return basicPoints;
 }
 
+/**
+ * @deprecated use generateSequenceQuestion instead
+ */
 export function generateRotationalMatrixQuestion({
   config,
   seed,
