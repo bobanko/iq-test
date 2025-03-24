@@ -1,6 +1,7 @@
 import { getLetter, preventSvgCache, wait } from "./helpers/helpers.js";
 import { quizQuestionConfigs } from "./configs/quiz/quiz.config.js";
 import { SeededRandom } from "./helpers/random.helpers.js";
+import { stringToHash } from "./helpers/hash-string.js";
 
 import { Timer } from "./helpers/timer.js";
 import { updateHashParameter, getHashParameter } from "./helpers/hash-param.js";
@@ -17,6 +18,7 @@ import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { getUserData, updateUserData } from "./endpoints/user-data.js";
 import { calcStaticIqByStats } from "./calc-iq.js";
 import { getSafeIndex } from "./helpers/safe-index.js";
+import { getNormalizedSeed } from "./helpers/seeded-random.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -153,7 +155,7 @@ function addQuestionButton({
 }
 
 function generateSeed() {
-  const seed = Math.random();
+  const seed = getNormalizedSeed();
 
   updateHashParameter("seed", seed);
 }
@@ -220,14 +222,17 @@ function generateQuiz({ seed }) {
     ([configName, config], questionIndex) => {
       console.group(`🍀 generation: %c${configName}`, "color: gold");
 
+      const seedSalted = seed + stringToHash(configName);
+
       const questionData = config.generator({
         config,
-        seed,
+        seed: seedSalted,
         questionIndex,
       });
 
       console.log({
         seed,
+        seedSalted,
         config,
         questionData,
       });
@@ -293,7 +298,7 @@ function generateQuiz({ seed }) {
           //--- end -----------
 
           wrapAnswers({
-            seed: seed + questionIndex,
+            seed: seedSalted,
             $answerList,
             $tmplAnswer,
             answerPatterns,
@@ -457,7 +462,7 @@ function wrapAnswers({
   answerPatterns,
   questionIndex,
 }) {
-  const random = new SeededRandom(seed + questionIndex);
+  const random = new SeededRandom(seed);
 
   $answerList.replaceChildren();
 
