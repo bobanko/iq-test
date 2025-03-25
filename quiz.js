@@ -227,7 +227,6 @@ function generateQuiz({ seed }) {
       const questionData = config.generator({
         config,
         seed: seedSalted,
-        questionIndex,
       });
 
       console.log({
@@ -298,7 +297,7 @@ function generateQuiz({ seed }) {
           //--- end -----------
 
           wrapAnswers({
-            seed: seedSalted,
+            seed,
             $answerList,
             $tmplAnswer,
             answerPatterns,
@@ -363,7 +362,6 @@ function getQuizResults() {
         ? correctAnswer.id === selectedAnswerId
         : null;
       return {
-        // todo(vmyshko): add seed?
         configName,
         questionIndex,
         isAnswered,
