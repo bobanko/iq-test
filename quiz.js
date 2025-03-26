@@ -193,8 +193,6 @@ const currentQuiz = {
 function toggleControls(isEnabled = true) {
   $answerList.toggleAttribute("disabled", !isEnabled);
   $btnFinishQuiz.disabled = !isEnabled;
-  $questionInfo.hidden = isEnabled;
-  // $questionInfo.hidden = false; //debug
 }
 
 function generateQuiz({ seed }) {
@@ -294,10 +292,12 @@ function generateQuiz({ seed }) {
 
           $patternArea.replaceChildren(...questionPatterns);
 
+          const seedSalted = seed + stringToHash(configName);
+
           //--- end -----------
 
           wrapAnswers({
-            seed,
+            seed: seedSalted,
             $answerList,
             $tmplAnswer,
             answerPatterns,
