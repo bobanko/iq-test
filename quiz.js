@@ -426,16 +426,7 @@ function finishCurrentQuiz() {
   const quizResults = getQuizResults();
   const resultsStats = getResultsStats(quizResults);
   const currentIq = calcStaticIqByStats(resultsStats);
-
-  $msgTestResults.innerHTML = `
-  ⚪️ total questions answered: ${resultsStats.isAnswered} of ${
-    resultsStats.total
-  } </br>
-  🟢 correct answers: ${resultsStats.isCorrect}  </br>
-  🔴 wrong answers: ${resultsStats.isAnswered - resultsStats.isCorrect}  </br>
-  ⏱️ time spent: ${formatTimeSpan(resultsStats.timeSpent)} </br>
-  🧠 your static iq: ${currentIq}
-  `;
+  alert(`your iq is: ${currentIq}; return home to see global results`);
 
   markAnsweredQuestions();
 
