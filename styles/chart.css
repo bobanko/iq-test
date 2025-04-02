@@ -1,0 +1,90 @@
+.chart {
+  position: relative;
+
+  /* debugs */
+  background-color: cornsilk;
+
+  display: grid;
+
+  .lines,
+  .bars {
+    display: grid;
+
+    width: 100%;
+    height: 100%;
+  }
+
+  .lines {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    pointer-events: none;
+
+    .line-container {
+      display: flex;
+      flex-direction: row;
+    }
+
+    .line {
+      flex: 1;
+      box-sizing: border-box;
+      height: 2px;
+      margin: auto;
+
+      background-color: #0000003d;
+    }
+
+    .value {
+      padding: 5px;
+      line-height: 14px;
+    }
+  }
+
+  .bars {
+    display: grid;
+    grid-auto-flow: column;
+
+    /* space for vertical history */
+    padding-left: 48px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+
+    box-sizing: border-box;
+
+    .bar-container {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+
+      position: relative;
+    }
+
+    .bar {
+      /* flex: 1; */
+      box-sizing: border-box;
+      width: 30px;
+      width: 50%;
+      /* margin: auto; */
+
+      height: var(--value, 100%);
+
+      --default-color: cornflowerblue;
+
+      background-color: var(--color, var(--default-color));
+      border: 3px solid;
+      border-color: hsl(
+        from var(--color, var(--default-color)) h s calc(l / 2)
+      );
+    }
+
+    .value {
+      position: absolute;
+      padding: 5px;
+      /* white-space: nowrap; */
+      text-align: center;
+      background: #ffffff52;
+    }
+  }
+}
