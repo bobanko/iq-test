@@ -34,5 +34,5 @@ for (let currenAnswerIndex of answerIndexes) {
   console.log("selector", selector);
   correctLeft--;
 
-  await wait(800);
+  await wait(300);
 }
