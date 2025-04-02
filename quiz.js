@@ -19,6 +19,7 @@ import { getUserData, updateUserData } from "./endpoints/user-data.js";
 import { calcStaticIqByStats } from "./calc-iq.js";
 import { getSafeIndex } from "./helpers/safe-index.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
+import { formatTimeSpan } from "./helpers/common.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -39,13 +40,6 @@ const clockEmojis = [
   "🕙",
   "🕚",
 ];
-
-function formatTimeSpan(timeMs) {
-  const totalSeconds = Math.floor(Math.max(timeMs, 0) / 1000); // Convert ms to seconds
-  const minutes = Math.floor(totalSeconds / 60); // Get minutes
-  const seconds = totalSeconds % 60; // Get remaining seconds
-  return `${minutes}:${seconds.toString().padStart(2, "0")}`; // Format as "MM:SS"
-}
 
 timer.onUpdate((diff) => {
   const oneMinMs = 60 * 1000;
@@ -176,9 +170,7 @@ function preloadSvgs() {
 }
 
 function onHashChanged() {
-  const seedRaw = getHashParameter("seed");
-
-  const seed = +seedRaw;
+  const seed = +getHashParameter("seed");
 
   generateQuiz({ seed });
 }
