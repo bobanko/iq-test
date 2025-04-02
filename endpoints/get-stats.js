@@ -2,6 +2,7 @@ import {
   collection,
   doc,
   getCountFromServer,
+  getDoc,
   getDocs,
   limit,
   orderBy,
@@ -63,4 +64,23 @@ export async function getResultsLast10() {
 
 export function getRecentResultsInCountry(countryCode) {
   return getResultsLast10(); //stub
+}
+
+export async function getAllResults() {
+  const resultsSnapshot = await getDocs(quizResultsCol);
+
+  return resultsSnapshot.docs.map((doc) => doc.data());
+}
+
+export async function getResultById(id) {
+  const docRef = doc(db, "quiz-results", id);
+
+  const docSnap = await getDoc(docRef);
+
+  if (docSnap.exists()) {
+    return docSnap.data();
+  } else {
+    console.log("No such document!");
+    throw Error(`no document with id: ${id}`);
+  }
 }

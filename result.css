@@ -1,0 +1,72 @@
+@import url(./styles/reset.css);
+@import url(./styles/fonts.css);
+@import url(./styles/helpers.css);
+@import url(./styles/button.css);
+@import url(./styles/inputs.css);
+/* @import url(./styles/hotkeys.css); */
+@import url(./styles/palette.css);
+@import url(./styles/patterns/patterns.css);
+@import url(./styles/animations.css);
+
+@import url(./styles/question-list.css);
+
+@import url(./styles/chart.css);
+
+:root {
+  --body-bg-color: #c0c0c0;
+
+  --debug-color: black;
+  --debug-bg: greenyellow;
+  --input-color: gray;
+}
+
+::selection {
+  background-color: var(--yellow);
+}
+
+html {
+  min-height: 100%;
+  background-color: gray;
+}
+
+body {
+  max-width: 800px;
+  background-color: var(--body-bg-color);
+  box-shadow: 0 0 4px 0px black;
+  box-sizing: border-box;
+}
+
+.feedback-emoji {
+  position: relative;
+  width: 4rem;
+  height: 4rem;
+  line-height: 4rem;
+  appearance: none;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+
+  cursor: pointer;
+
+  &:hover {
+    opacity: 0.7;
+  }
+
+  &:not(:checked) {
+    opacity: 0.5;
+  }
+
+  &:checked {
+    opacity: 1;
+    animation: slideUp 500ms ease-in-out forwards;
+  }
+
+  &:after {
+    content: attr(content);
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+  }
+}

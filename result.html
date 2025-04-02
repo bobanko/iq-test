@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" class="flex-col align-center justify-space-around">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>IQ test results</title>
+    <link rel="icon" href="./images/brain-ios.png" type="image/png" />
+    <link rel="stylesheet" href="./result.css" />
+
+    <script src="./result.js" type="module" async></script>
+  </head>
+  <body class="inter-regular w-100p">
+    <!-- templates -->
+
+    <template id="$tmplChartBar">
+      <div class="bar-container align-center">
+        <div class="bar"></div>
+        <div class="value">123</div>
+      </div>
+    </template>
+    <template id="$tmplChartLine">
+      <div class="line-container align-center">
+        <div class="value">30</div>
+        <div class="line"></div>
+      </div>
+    </template>
+    <!-- main page -->
+
+    <section class="p-20">
+      <h1>iq test results</h1>
+      <div id="$questionInfo" class="flex-col border-box p-10 w-100p">
+        <div class="p-10" style="font-weight: bold">test results</div>
+
+        <div class="p-10" id="$msgTestResults" class="">message</div>
+
+        <div class="p-10">some static text explaining everything?</div>
+
+        <div class="p-10">some global stats comparison?</div>
+        <div class="p-10">now you can navigate to see correct answers?</div>
+        <div class="p-10">current question explanation?</div>
+
+        <div
+          id="$chartMain"
+          class="chart"
+          style="position: relative; height: 400px"
+        >
+          <div class="bars">
+            <!-- bars here -->
+          </div>
+
+          <div class="lines">
+            <!-- lines here -->
+          </div>
+        </div>
+
+        <div id="$chartMainLegend" class="p-10">you're at...</div>
+      </div>
+
+      <h1>What do you think?</h1>
+
+      <div class="flex-row gap-10 w-100p py-10" style="font-size: 50px">
+        <input
+          class="feedback-emoji"
+          type="radio"
+          name="reaction"
+          content="❤️"
+        />
+        <input
+          class="feedback-emoji"
+          type="radio"
+          name="reaction"
+          content="👍"
+        />
+        <input
+          class="feedback-emoji"
+          type="radio"
+          name="reaction"
+          content="👎"
+        />
+        <input
+          class="feedback-emoji"
+          type="radio"
+          name="reaction"
+          content="🔥"
+        />
+        <input
+          class="feedback-emoji"
+          type="radio"
+          name="reaction"
+          content="💩"
+        />
+      </div>
+
+      <label class="flex-col gap-10 w-100p">
+        <span class="nowrap">share your feedback</span>
+        <textarea id="$feedback" class="w-100p"></textarea>
+        <button class="p-10" style="align-self: center">send</button>
+      </label>
+
+      <h1>What is the IQ of your friends?</h1>
+
+      <div class="flex-row align-center w-100p gap-10 p-10">
+        <label class="flex-row align-center gap-10 w-100p">
+          <span class="nowrap">share your test result</span>
+          <input id="$resultLink" class="w-100p" readonly type="text" />
+          <button class="p-10">copy</button>
+        </label>
+      </div>
+
+      <div class="flex-row align-center w-100p gap-10 p-10">
+        <label class="flex-row align-center gap-10 w-100p">
+          <span class="nowrap">share test with friends</span>
+          <input id="$testLinkRef" class="w-100p" readonly type="text" />
+          <button class="p-10">copy</button>
+        </label>
+      </div>
+    </section>
+  </body>
+</html>
