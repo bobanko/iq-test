@@ -20,6 +20,7 @@ import { calcStaticIqByStats } from "./calc-iq.js";
 import { getSafeIndex } from "./helpers/safe-index.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
 import { formatTimeSpan } from "./helpers/common.js";
+import { exitTheFullscreen, requestFullScreen } from "./helpers/fullscreen.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -768,3 +769,16 @@ $formPostQuiz.addEventListener("submit", async (e) => {
 
   prefillQuizForm();
 }
+
+$btnFullscreen.addEventListener("click", () => {
+  const isFullscreen = !!document.fullscreenElement;
+
+  const fsElem = document.documentElement;
+
+  isFullscreen ? exitTheFullscreen(fsElem) : requestFullScreen(fsElem);
+
+  $btnFullscreen.classList.toggle("fullscreen-on", !isFullscreen);
+
+  $iconFullscreenOn.hidden = !isFullscreen;
+  $iconFullscreenOff.hidden = isFullscreen;
+});
