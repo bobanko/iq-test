@@ -166,8 +166,12 @@ function preloadSvgs() {
     }
   });
 
-  svgLinks.forEach((link) => preloadImageByLink(link));
-  // svgLinks.forEach((link) => preloadImageByImg(link));
+  // return Promise.all([...svgLinks].map(preloadImageByLink))
+  return Promise.all([...svgLinks].map(preloadImageByImg))
+    .then((loadedUrls) => {
+      console.log("All images loaded:", loadedUrls);
+    })
+    .catch((error) => console.error("Error preloading images:", error));
 }
 
 function onHashChanged() {
@@ -762,12 +766,16 @@ $formPostQuiz.addEventListener("submit", async (e) => {
 });
 
 {
-  preloadSvgs();
-  prepareQuiz();
+  Promise.all([
+    preloadSvgs(),
+    prepareQuiz(),
 
-  loadFormSelects();
+    loadFormSelects(),
 
-  prefillQuizForm();
+    prefillQuizForm(),
+  ]).then(() => {
+    $quizLoader.hidden = true;
+  });
 }
 
 $btnFullscreen.addEventListener("click", () => {

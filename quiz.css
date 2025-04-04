@@ -9,6 +9,7 @@
 @import url(./styles/animations.css);
 
 @import url(./styles/question-list.css);
+@import url(./styles/loader.css);
 
 :root {
   --body-bg-color: #c0c0c0;

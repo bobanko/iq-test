@@ -1,0 +1,31 @@
+.loader {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  z-index: 2;
+
+  .loader-icon {
+    position: absolute;
+    /* transform: translate(-50%, -50%); */
+
+    width: 7rem;
+    height: 7rem;
+
+    animation: pulse 500ms ease-in-out alternate infinite;
+  }
+
+  .loader-spinner {
+    position: absolute;
+    /* transform: translate(-50%, -50%); */
+
+    width: 10rem;
+    height: 10rem;
+
+    border: 0.5rem solid hsla(0, 0%, 100%, 0.2);
+    border-top-color: hsla(0, 0%, 100%, 0.8);
+    border-radius: 50%;
+
+    animation: spin 1s linear infinite;
+  }
+}

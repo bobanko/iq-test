@@ -1,17 +1,24 @@
 export function preloadImageByLink(imageUrl) {
-  const $preloadLink =
-    $tmplPreloadLink.content.firstElementChild.cloneNode(true);
+  return new Promise((resolve, reject) => {
+    const $preloadLink = document.createElement("link");
+    $preloadLink.rel = "preload";
+    $preloadLink.as = "image";
+    $preloadLink.href = imageUrl;
 
-  $preloadLink.href = imageUrl;
+    $preloadLink.onload = () => resolve(imageUrl);
+    $preloadLink.onerror = () =>
+      reject(new Error(`Failed to preload link: ${imageUrl}`));
 
-  document.head.append($preloadLink);
+    document.head.append($preloadLink);
+  });
 }
 
 export function preloadImageByImg(imageUrl) {
-  const img = new Image();
-  img.src = imageUrl;
+  return new Promise((resolve, reject) => {
+    const img = new Image();
+    img.src = imageUrl;
 
-  // Optional: Handle load/error events
-  img.onload = () => console.log("Image loaded:", imageUrl);
-  img.onerror = () => console.error("Error loading:", imageUrl);
+    img.onload = () => resolve(imageUrl);
+    img.onerror = () => reject(new Error(`Failed to load image: ${imageUrl}`));
+  });
 }

@@ -48,3 +48,21 @@
 
   box-shadow: 0 0 0px var(--shadow) gold;
 }
+
+@keyframes spin {
+  0% {
+    rotate: 0deg;
+  }
+  100% {
+    rotate: 360deg;
+  }
+}
+
+@keyframes pulse {
+  0% {
+    scale: 1;
+  }
+  100% {
+    scale: 0.8;
+  }
+}
