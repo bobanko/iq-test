@@ -256,9 +256,6 @@ header {
     /* background-color: lightgreen; */
 
     .btn-nav {
-      /* display: flex; */
-      /* flex-direction: row; */
-
       .btn-nav-icon {
         @container (80px< width <95px) {
           display: none;

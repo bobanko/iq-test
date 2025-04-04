@@ -105,42 +105,40 @@
     <!-- templates end -->
 
     <header class="flex-col" style="z-index: 1">
-      <div class="flex-col w-100p">
-        <div class="flex-col w-100p py-10">
-          <div
-            class="flex-row align-center"
-            style="
-              justify-content: space-between;
-              text-transform: capitalize;
-              line-height: 24px;
-            "
-          >
-            <div class="flex-row gap-5 px-10">
-              <span>answered:</span>
-              <span id="$quizProgressAnswered" class="tabular-nums">99/99</span>
-            </div>
+      <div class="flex-col w-100p border-box p-10">
+        <div
+          class="flex-row align-center"
+          style="
+            justify-content: space-between;
+            text-transform: capitalize;
+            line-height: 24px;
+          "
+        >
+          <div class="flex-row gap-5">
+            <span>answered:</span>
+            <span id="$quizProgressAnswered" class="tabular-nums">99/99</span>
+          </div>
 
-            <div class="px-10 gap-5 flex-row align-center">
-              <span id="$timerIcon" style="font-size: 24px; line-height: 24px"
-                >⏱️</span
-              >
-              <span> time left:</span>
-              <!-- <span>remaining time:</span> -->
-              <span id="$timer" class="tabular-nums">99:99</span>
-              <button id="$btnFullscreen" class="flex">
-                <img
-                  id="$iconFullscreenOn"
-                  src="./images/icons/fullscreen.svg"
-                  alt="fullscreen"
-                />
-                <img
-                  id="$iconFullscreenOff"
-                  hidden
-                  src="./images/icons/fullscreen_exit.svg"
-                  alt="exit fullscreen"
-                />
-              </button>
-            </div>
+          <div class="flex-row align-center gap-5">
+            <span id="$timerIcon" style="font-size: 24px; line-height: 24px"
+              >⏱️</span
+            >
+            <span> time left:</span>
+            <!-- <span>remaining time:</span> -->
+            <span id="$timer" class="tabular-nums">99:99</span>
+            <button id="$btnFullscreen" class="flex">
+              <img
+                id="$iconFullscreenOn"
+                src="./images/icons/fullscreen.svg"
+                alt="fullscreen"
+              />
+              <img
+                id="$iconFullscreenOff"
+                hidden
+                src="./images/icons/fullscreen_exit.svg"
+                alt="exit fullscreen"
+              />
+            </button>
           </div>
         </div>
       </div>
@@ -165,10 +163,8 @@
         </div>
         <hr />
 
-        <div class="flex-col" style="container-type: normal">
-          <div id="$answerList" class="answer-list justify-center p-10">
-            <!-- answers go here -->
-          </div>
+        <div id="$answerList" class="answer-list justify-center p-10">
+          <!-- answers go here -->
         </div>
       </div>
 
@@ -189,8 +185,16 @@
 
         <div class="navigation-controls flex-row align-center">
           <div class="btn-container" style="justify-content: right">
-            <button id="$btnPrevQuestion" class="btn-nav p-10" hotkey="←">
-              <span class="btn-nav-icon">←</span>
+            <button
+              id="$btnPrevQuestion"
+              class="btn-nav flex-row align-center p-10"
+              hotkey="←"
+            >
+              <img
+                class="btn-nav-icon"
+                src="./images/icons/arrow_back.svg"
+                alt="prev"
+              />
               <span class="btn-nav-text">prev</span>
             </button>
           </div>
@@ -202,9 +206,17 @@
             99/99
           </div>
           <div class="btn-container">
-            <button id="$btnNextQuestion" class="btn-nav p-10" hotkey="→">
+            <button
+              id="$btnNextQuestion"
+              class="btn-nav flex-row align-center p-10"
+              hotkey="→"
+            >
               <span class="btn-nav-text">next</span>
-              <span class="btn-nav-icon">→</span>
+              <img
+                class="btn-nav-icon"
+                src="./images/icons/arrow_forward.svg"
+                alt="next"
+              />
             </button>
           </div>
         </div>
