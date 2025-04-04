@@ -4,14 +4,20 @@ export function createQuestionMark({ classList = [] } = {}) {
   //additional classes
   classList.forEach((_class) => $patternQuestionMark.classList.add(_class));
 
+  applyEaster($patternQuestionMark);
+
+  return $patternQuestionMark;
+}
+
+export function applyEaster($element) {
   //easter-egg
   let countdown = 10;
   const symbols = ["🖕", "🖕🏻", "🖕🏼", "🖕🏽", "🖕🏾", "🖕🏿"];
-  $patternQuestionMark.addEventListener("click", questionMarkClick);
+  $element.addEventListener("click", easterClick);
 
-  function questionMarkClick() {
+  function easterClick() {
     countdown--;
-    $patternQuestionMark.animate(
+    $element.animate(
       [
         // keyframes
         { transform: "rotate(30deg)" },
@@ -26,12 +32,10 @@ export function createQuestionMark({ classList = [] } = {}) {
     );
 
     if (countdown <= 0) {
-      $patternQuestionMark.setAttribute(
+      $element.setAttribute(
         "symbol",
         symbols[(symbols.length - countdown) % symbols.length]
       );
     }
   }
-
-  return $patternQuestionMark;
 }

@@ -1,5 +1,6 @@
 import { colors, defaultViewBox } from "../configs/common.config.js";
 import { wait } from "../helpers/helpers.js";
+import { applyEaster } from "./common.renderer.js";
 
 function getFigureUrl({ link, id }) {
   return `${link}#${id}`;
@@ -9,6 +10,8 @@ function getFigureUrl({ link, id }) {
 function createQuestionMark({ config }) {
   const $patternQuestionMark =
     $tmplPatternQuestionMark.content.firstElementChild.cloneNode(true);
+
+  applyEaster($patternQuestionMark);
 
   if (!config.questionMarkFigure) return $patternQuestionMark;
 
