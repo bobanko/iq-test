@@ -2,10 +2,22 @@
 
 iq test with generated questions
 
-## Demo
+## Links
+
+### live
+
+https://420iq.lol
+
+### Demo
 
 https://bobanko.github.io/iq-test/
 
-## to run local
+## tips
+
+### to run local
 
 % http-server . -c-1
+
+### to publish on hosting
+
+% firebase deploy
