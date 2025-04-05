@@ -767,7 +767,8 @@ $formPostQuiz.addEventListener("submit", async (e) => {
 
 {
   Promise.all([
-    preloadSvgs(),
+    // todo(vmyshko): re-check preload, seems <use> with hash not work
+    // preloadSvgs(),
     prepareQuiz(),
 
     loadFormSelects(),
