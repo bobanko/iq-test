@@ -5,8 +5,8 @@ export function requestFullScreen(element) {
     element.msRequestFullscreen();
   } else if (element.mozRequestFullScreen) {
     element.mozRequestFullScreen();
-  } else if (element.webkitRequestFullScreen) {
-    element.webkitRequestFullScreen();
+  } else if (element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
   }
 }
 
