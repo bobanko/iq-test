@@ -415,22 +415,24 @@ function finishCurrentQuiz() {
   currentQuiz.isFinished = true;
 
   $questionList.firstElementChild.click(); // go to start
-
-  const quizResults = getQuizResults();
-  const resultsStats = getResultsStats(quizResults);
-
-  const resultId = saveQuizResults({
-    quizResults,
-    seed: currentQuiz.seed,
-    stats: resultsStats,
-  });
 }
 
-$btnFinishConfirm.addEventListener("click", () => {
+let resultId = null;
+
+$btnFinishConfirm.addEventListener("click", async () => {
   $modalOverlayFinishConfirm.hidden = true;
   $modalOverlayPostQuiz.hidden = false;
 
   finishCurrentQuiz();
+
+  const quizResults = getQuizResults();
+  const resultsStats = getResultsStats(quizResults);
+
+  resultId = await saveQuizResults({
+    quizResults,
+    seed: currentQuiz.seed,
+    stats: resultsStats,
+  });
 });
 
 function wrapAnswers({
@@ -719,7 +721,13 @@ $btnCancelPostQuiz.addEventListener("click", (e) => {
   e.preventDefault();
   $modalOverlayPostQuiz.hidden = true;
   // todo(vmyshko): do stuff, decide wether user should or not see correct+stats
+
+  redirectToResultPage();
 });
+
+function redirectToResultPage() {
+  location.href = `/result.html#id=${resultId}`;
+}
 
 $formPostQuiz.addEventListener("submit", async (e) => {
   e.preventDefault();
@@ -753,7 +761,7 @@ $formPostQuiz.addEventListener("submit", async (e) => {
 
   $modalOverlayPostQuiz.hidden = true;
 
-  // todo(vmyshko): save quiz results
+  redirectToResultPage();
 });
 
 {
