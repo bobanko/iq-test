@@ -27,33 +27,128 @@
     <!-- main page -->
 
     <section class="p-20">
-      <h1>iq test results</h1>
-      <div id="$questionInfo" class="flex-col border-box p-10 w-100p">
-        <div class="p-10" style="font-weight: bold">test results</div>
+      <h1 class="flex-row align-center gap-10">
+        <img src="./images/brain-ios.png" alt="brain" width="40px" />
 
-        <div class="p-10" id="$msgTestResults" class="">message</div>
+        <span> IQ test report </span>
+      </h1>
+
+      <hr />
+
+      <div
+        class="flex-row justify-space-around"
+        style="--color: var(--blue-alt)"
+      >
+        <div class="result-stat flex-col align-center rounded-10 p-10">
+          <span class="stat-label">IQ score</span>
+          <span id="$iqScoreValue" class="stat-value empty-loader"></span>
+        </div>
+
+        <div class="result-stat flex-col align-center rounded-10 p-10">
+          <span class="stat-label">percentile rank</span>
+          <span
+            id="$percentileRankValue"
+            class="stat-value empty-loader"
+          ></span>
+        </div>
+
+        <div class="result-stat flex-col align-center rounded-10 p-10">
+          <span class="stat-label">performance</span>
+          <span
+            hidden
+            id="$cognitiveGroupValue"
+            class="stat-value empty-loader"
+          ></span>
+          <span
+            id="$cognitiveSubgroupValue"
+            class="stat-value empty-loader"
+          ></span>
+        </div>
+      </div>
+
+      <h2>some stats</h2>
+
+      <div class="flex-row">
+        <div class="flex-col p-10 gap-10">
+          <div class="result-stat flex-col align-center rounded-10 p-10">
+            <span class="stat-label">⏱️ completion time</span>
+            <span
+              id="$completionTimeValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
+
+          <div class="result-stat flex-col align-center rounded-10 p-10">
+            <span class="stat-label">❓ questions answered</span>
+            <span
+              id="$questionsAnsweredValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
+
+          <div class="result-stat flex-col align-center rounded-10 p-10">
+            <span class="stat-label">📅 date taken</span>
+            <span id="$dateTakenValue" class="stat-value empty-loader"></span>
+          </div>
+
+          <div class="result-stat flex-col align-center rounded-10 p-10">
+            <span class="stat-label">🏆 global rank</span>
+            <span id="$globalRankValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <div class="flex-col">
+          <div
+            id="$chartMain"
+            class="chart"
+            style="position: relative; height: 400px"
+          >
+            <div class="bars">
+              <!-- bars here -->
+            </div>
+
+            <div class="lines">
+              <!-- lines here -->
+            </div>
+          </div>
+
+          <div id="$chartMainLegend" class="p-10">you're at...</div>
+        </div>
+      </div>
+
+      <hr />
+
+      <div>
+        <h2>performance summary</h2>
+
+        <div>
+          <div class="flex-row p-5 gap-10">
+            <span>✅ correct answers</span>
+            <span id="$correctAnswersValue" class="empty-loader"></span>
+          </div>
+          <div class="flex-row p-5 gap-10">
+            <span>🔝 percentile rank </span>
+            <span id="$percentileRankValue2" class="empty-loader"></span>
+          </div>
+          <div class="flex-row p-5 gap-10">
+            <span>🎯 accuracy rate </span>
+            <span id="$accuracyRateValue" class="empty-loader"></span>
+          </div>
+          <div class="flex-row p-5 gap-10">
+            <span>🏎️ answer speed</span>
+            <span id="$answerSpeedValue" class="empty-loader"></span>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex-col border-box p-10 w-100p">
+        <div class="p-10" style="font-weight: bold">test results</div>
 
         <div class="p-10">some static text explaining everything?</div>
 
         <div class="p-10">some global stats comparison?</div>
         <div class="p-10">now you can navigate to see correct answers?</div>
         <div class="p-10">current question explanation?</div>
-
-        <div
-          id="$chartMain"
-          class="chart"
-          style="position: relative; height: 400px"
-        >
-          <div class="bars">
-            <!-- bars here -->
-          </div>
-
-          <div class="lines">
-            <!-- lines here -->
-          </div>
-        </div>
-
-        <div id="$chartMainLegend" class="p-10">you're at...</div>
       </div>
 
       <h1>What do you think?</h1>
@@ -93,25 +188,29 @@
 
       <label class="flex-col gap-10 w-100p">
         <span class="nowrap">share your feedback</span>
-        <textarea id="$feedback" class="w-100p"></textarea>
-        <button class="p-10" style="align-self: center">send</button>
+        <textarea id="$feedbackLink" class="w-100p"></textarea>
+        <button
+          id="$btnCopyFeedbackLink"
+          class="p-10"
+          style="align-self: center"
+        >
+          send
+        </button>
       </label>
 
       <h1>What is the IQ of your friends?</h1>
 
-      <div class="flex-row align-center w-100p gap-10 p-10">
+      <div class="flex-col gap-10">
         <label class="flex-row align-center gap-10 w-100p">
           <span class="nowrap">share your test result</span>
-          <input id="$resultLink" class="w-100p" readonly type="text" />
-          <button class="p-10">copy</button>
+          <input id="$testResultLink" class="w-100p" readonly type="text" />
+          <button id="$btnCopyTestResultLink" class="p-10">copy</button>
         </label>
-      </div>
 
-      <div class="flex-row align-center w-100p gap-10 p-10">
         <label class="flex-row align-center gap-10 w-100p">
           <span class="nowrap">share test with friends</span>
-          <input id="$testLinkRef" class="w-100p" readonly type="text" />
-          <button class="p-10">copy</button>
+          <input id="$testShareLink" class="w-100p" readonly type="text" />
+          <button id="$btnCopyTestShareLink" class="p-10">copy</button>
         </label>
       </div>
     </section>

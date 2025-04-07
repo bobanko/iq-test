@@ -21,6 +21,7 @@ import { getSafeIndex } from "./helpers/safe-index.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
 import { formatTimeSpan } from "./helpers/common.js";
 import { exitTheFullscreen, requestFullScreen } from "./helpers/fullscreen.js";
+import { copyTextFrom } from "./helpers/copy.js";
 
 // globals
 const patternsInRowDefault = 3;
@@ -399,10 +400,7 @@ $btnGenerate.addEventListener("click", () => generateSeed());
 
 window.addEventListener("hashchange", onHashChanged);
 
-$seed.addEventListener("click", () => {
-  $seed.select();
-  document.execCommand("copy");
-});
+$seed.addEventListener("click", () => copyTextFrom($seed));
 
 $btnFinishQuiz.addEventListener("click", () => {
   $modalOverlayFinishConfirm.hidden = false;

@@ -70,3 +70,23 @@ body {
     bottom: 0;
   }
 }
+
+.result-stat {
+  background-color: hsl(from var(--color) h s calc(l * 1.5));
+  text-transform: capitalize;
+
+  .stat-label {
+    font-size: x-large;
+  }
+
+  .stat-value {
+    font-size: xx-large;
+  }
+}
+
+.empty-loader {
+  &:empty:after {
+    content: "...";
+    animation: fadeIn 400ms alternate infinite;
+  }
+}

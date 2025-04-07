@@ -1,6 +1,11 @@
 import { calcStaticIqByStats, sampleAnswers } from "./calc-iq.js";
 import { getAllResults, getResultById } from "./endpoints/get-stats.js";
+import {
+  findCognitiveGroup,
+  findCognitiveSubgroup,
+} from "./helpers/cognitive-classification-system.js";
 import { formatTimeSpan } from "./helpers/common.js";
+import { copyTextFrom } from "./helpers/copy.js";
 import { getHashParameter, updateHashParameter } from "./helpers/hash-param.js";
 import { SeededRandom } from "./helpers/random.helpers.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
@@ -162,7 +167,7 @@ function onHashChanged() {
     return;
   }
 
-  $resultLink.value = location.href;
+  $testResultLink.value = location.href;
 
   // todo(vmyshko): get requested id
 
@@ -171,15 +176,15 @@ function onHashChanged() {
     const results = await getAllResults();
     console.log(results);
 
-    const globalAnsweredStats = results
+    const allResultsIqs = results
       .map((result) => result.stats)
       .map(calcStaticIqByStats);
 
     const userResult = await getResultById(resultId);
 
-    $testLinkRef.value = `${location.origin}#ref=${userResult._userId}`;
+    $testShareLink.value = `${location.origin}#ref=${userResult._userId}`;
 
-    displayResult({ userResult, globalAnsweredStats });
+    displayResult({ userResult, allResultsIqs });
   })();
 
   //debug
@@ -189,37 +194,65 @@ function onHashChanged() {
   initChart({ chartData: fakeStatsGauss });
 }
 
-function displayResult({ userResult, globalAnsweredStats }) {
+function displayResult({ userResult, allResultsIqs }) {
   console.log({ result: userResult });
 
-  const { stats: resultsStats } = userResult;
+  const { stats: resultsStats, datePassed } = userResult;
   const currentIq = calcStaticIqByStats(resultsStats);
 
+  initChart({ chartData: allResultsIqs, highlightValue: currentIq });
+
+  const allResultsIqsSorted = allResultsIqs.toSorted((a, b) => a - b);
+
+  // PR = [(N_below + 0.5 × N_equal) / N_total] × 100
+  const resultsBelowCount = allResultsIqsSorted.filter(
+    (iq) => iq < currentIq
+  ).length;
+  const sameResultsCount = allResultsIqsSorted.filter(
+    (iq) => iq === currentIq
+  ).length;
+  const totalResultsCount = allResultsIqsSorted.length;
+  const globalRank =
+    totalResultsCount - (resultsBelowCount + sameResultsCount / 2);
+  const percetileRank =
+    ((resultsBelowCount + sameResultsCount / 2) / totalResultsCount) * 100;
+
+  const topPt = 100 - percetileRank;
+
+  //update values
+
+  // const performanceClass = getCognitiveClassification(currentIq);
+  const performanceClass = findCognitiveGroup(currentIq);
+  // const performanceClass = findCognitiveSubgroup(currentIq);
+
+  $iqScoreValue.textContent = currentIq;
+  $percentileRankValue.textContent = `${percetileRank.toFixed(0)}%`;
+  $cognitiveGroupValue.textContent = findCognitiveGroup(currentIq).name;
+  $cognitiveSubgroupValue.textContent = findCognitiveSubgroup(currentIq).name;
+
   //
-  $msgTestResults.innerHTML = `
-  ⚪️ total questions answered: ${resultsStats.isAnswered} of ${
-    resultsStats.total
-  } </br>
-  🟢 correct answers: ${resultsStats.isCorrect}  </br>
-  🔴 wrong answers: ${resultsStats.isAnswered - resultsStats.isCorrect}  </br>
-  ⏱️ time spent: ${formatTimeSpan(resultsStats.timeSpent)} </br>
-  🧠 your static iq: ${currentIq}
-  `;
 
-  initChart({ chartData: globalAnsweredStats, highlightValue: currentIq });
+  const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
-  const indexOfCurrent = globalAnsweredStats
-    .toSorted((a, b) => a - b)
-    .findLastIndex((x) => x < currentIq);
+  $completionTimeValue.textContent = formatTimeSpan(timeSpent, true);
+  $questionsAnsweredValue.textContent = `${isAnswered}/${total}`;
+  $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
+  $globalRankValue.textContent = `#${globalRank}`;
+  //
 
-  const smarterPt = (indexOfCurrent / globalAnsweredStats.length) * 100;
-  const topPt = 100 - smarterPt;
+  const accuracyRate = (isCorrect / total) * 100;
+  const answerSpeed = timeSpent / 1000 / total;
+
+  $correctAnswersValue.textContent = `${isCorrect}`;
+  $percentileRankValue2.textContent = `${percetileRank.toFixed(0)}`;
+  $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
+  $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)} sec`;
 
   $chartMainLegend.innerHTML = `
   You are among the <b>${topPt.toFixed(
     0
   )}%</b> of the smartest people in the world. 
-  You are smarter than <b>${smarterPt.toFixed(0)}%</b> of the population.`;
+  You are smarter than <b>${percetileRank.toFixed(0)}%</b> of the population.`;
 }
 
 window.addEventListener("hashchange", onHashChanged);
@@ -238,14 +271,12 @@ document.addEventListener("keydown", bindingsOnKeypress);
 
 onHashChanged();
 
-[];
+$testResultLink.addEventListener("click", () => copyTextFrom($testResultLink));
+$testShareLink.addEventListener("click", () => copyTextFrom($testShareLink));
 
-$resultLink.addEventListener("click", () => {
-  $resultLink.select();
-  document.execCommand("copy");
-});
-
-$testLinkRef.addEventListener("click", () => {
-  $testLinkRef.select();
-  document.execCommand("copy");
-});
+$btnCopyTestResultLink.addEventListener("click", () =>
+  copyTextFrom($testResultLink)
+);
+$btnCopyTestShareLink.addEventListener("click", () =>
+  copyTextFrom($testShareLink)
+);
