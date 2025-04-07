@@ -408,10 +408,6 @@ $btnFinishQuiz.addEventListener("click", () => {
   $modalOverlayFinishConfirm.hidden = false;
 });
 
-$btnMarkResults.addEventListener("click", () => {
-  markAnsweredQuestions();
-});
-
 function finishCurrentQuiz() {
   timer.stop();
 
@@ -422,12 +418,8 @@ function finishCurrentQuiz() {
 
   const quizResults = getQuizResults();
   const resultsStats = getResultsStats(quizResults);
-  const currentIq = calcStaticIqByStats(resultsStats);
-  alert(`your iq is: ${currentIq}; return home to see global results`);
 
-  markAnsweredQuestions();
-
-  saveQuizResults({
+  const resultId = saveQuizResults({
     quizResults,
     seed: currentQuiz.seed,
     stats: resultsStats,
@@ -564,7 +556,6 @@ function bindingsOnKeypress({ code, target }) {
     ["Escape", () => $btnDebug.click()],
     ["KeyD", () => $debugCheckbox.click()],
     ["KeyF", () => $btnFinishQuiz.click()],
-    ["KeyM", () => $btnMarkResults.click()],
   ]);
 
   keyBindingsMap.get(code)?.();

@@ -20,4 +20,6 @@ export async function saveQuizResults({ quizResults, seed, stats }) {
   });
 
   console.log("quizResultRef written with ID: ", quizResultRef.id);
+
+  return quizResultRef.id;
 }
