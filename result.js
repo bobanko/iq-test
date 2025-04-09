@@ -1,4 +1,4 @@
-import { calcStaticIqByStats, sampleAnswers } from "./calc-iq.js";
+import { calcStaticIqByStats } from "./calc-iq.js";
 import { getAllResults, getResultById } from "./endpoints/get-stats.js";
 import {
   findCognitiveGroup,
