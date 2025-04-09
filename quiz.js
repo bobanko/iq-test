@@ -724,7 +724,9 @@ $btnCancelPostQuiz.addEventListener("click", (e) => {
 });
 
 function redirectToResultPage() {
-  location.href = `/result.html#id=${resultId}`;
+  const resultEndpoint = location.pathname.replace("quiz.html", "result.html");
+
+  location.href = `${resultEndpoint}#id=${resultId}`;
 }
 
 $formPostQuiz.addEventListener("submit", async (e) => {
