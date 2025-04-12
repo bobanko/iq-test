@@ -27,7 +27,7 @@ function createResultItem({
   return $resultItem;
 }
 
-export function loadStats({ $container, data, locale, replace = true }) {
+export function showResults({ $container, data, locale, replace = true }) {
   if (replace) {
     $container.replaceChildren();
   }

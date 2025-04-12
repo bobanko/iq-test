@@ -8,7 +8,7 @@ import {
 } from "./helpers/translation.helper.js";
 import { getCached } from "./helpers/local-cache.helper.js";
 
-import { loadStats } from "./stats-results.js";
+import { showResults } from "./stats-results.js";
 import { countries, emojiFlags } from "./countries.mapping.js";
 
 import {
@@ -171,7 +171,7 @@ async function loadStatsFb() {
   });
 
   $results_recent.classList.add("is-loading");
-  loadStats({
+  showResults({
     $container: $results_recent,
     data: data_results_recent_stub,
     locale: defaultLocale,
@@ -188,7 +188,7 @@ async function loadStatsFb() {
       date: data.datePassed.toDate(),
     }));
 
-    loadStats({
+    showResults({
       $container: $results_recent,
       data: data_results_recent,
       locale: defaultLocale,
@@ -197,12 +197,12 @@ async function loadStatsFb() {
   });
 
   //stubs
-  loadStats({
+  showResults({
     $container: $results_currentCountry,
     data: data_results_current,
     locale: defaultLocale,
   });
-  loadStats({
+  showResults({
     $container: $results_perCountry,
     data: data_results_perCountry,
     locale: defaultLocale,
