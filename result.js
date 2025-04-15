@@ -225,7 +225,7 @@ function displayResult({ userResult, allResultsIqs }) {
   const performanceClass = findCognitiveGroup(currentIq);
   // const performanceClass = findCognitiveSubgroup(currentIq);
 
-  $iqScoreValue.textContent = currentIq;
+  $iqScoreValue.textContent = currentIq.toFixed(0);
   $percentileRankValue.textContent = `${percetileRank.toFixed(0)}%`;
   $cognitiveGroupValue.textContent = findCognitiveGroup(currentIq).name;
   $cognitiveSubgroupValue.textContent = findCognitiveSubgroup(currentIq).name;
@@ -237,7 +237,7 @@ function displayResult({ userResult, allResultsIqs }) {
   $completionTimeValue.textContent = formatTimeSpan(timeSpent, true);
   $questionsAnsweredValue.textContent = `${isAnswered}/${total}`;
   $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
-  $globalRankValue.textContent = `#${globalRank}`;
+  $globalRankValue.textContent = `#${globalRank.toFixed(0)}`;
   //
 
   const accuracyRate = (isCorrect / total) * 100;
