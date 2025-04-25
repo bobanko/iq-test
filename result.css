@@ -113,6 +113,14 @@ section {
 
   --size: 3;
 
+  @container (width < 600px) {
+    --size: 2;
+  }
+
+  @container (width < 450px) {
+    --size: 1;
+  }
+
   grid-template-columns: repeat(var(--size), 1fr);
 }
 

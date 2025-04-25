@@ -48,134 +48,142 @@
         ></span>
       </div>
 
-      <div class="result-stat-grid gap-10">
-        <!-- stat items -->
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: var(--blue)"
-        >
-          <div class="stat-icon">💦</div>
-
-          <div class="flex-col">
-            <span class="stat-label">percentile rank</span>
-            <span
-              id="$percentileRankValue"
-              class="stat-value empty-loader"
-            ></span>
+      <div class="container">
+        <div class="result-stat-grid gap-10">
+          <!-- stat items -->
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #d3ac00"
+          >
+            <div class="stat-icon">🏆</div>
+            <div class="flex-col">
+              <span class="stat-label">global rank</span>
+              <span
+                id="$globalRankValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #0063db"
-        >
-          <div class="stat-icon">⏱️</div>
-          <div class="flex-col">
-            <span class="stat-label" style="font-size: 16px"
-              >completion time</span
-            >
-            <span
-              id="$completionTimeValue"
-              style="font-size: 20px"
-              class="stat-value empty-loader"
-            ></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: gray"
+          >
+            <div class="stat-icon">🔝</div>
+            <div class="flex-col">
+              <span class="stat-label">top rank</span>
+              <span
+                id="$percentileRankValue2"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #e00201"
-        >
-          <div class="stat-icon">❓</div>
-          <div class="flex-col">
-            <span class="stat-label">questions answered</span>
-            <span
-              id="$questionsAnsweredValue"
-              class="stat-value empty-loader"
-            ></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: var(--blue)"
+          >
+            <div class="stat-icon">💦</div>
+
+            <div class="flex-col">
+              <span class="stat-label">percentile rank</span>
+              <span
+                id="$percentileRankValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #e40d0d"
-        >
-          <div class="stat-icon">📅</div>
-          <div class="flex-col">
-            <span class="stat-label">date taken</span>
-            <span
-              id="$dateTakenValue"
-              class="stat-value empty-loader"
-              style="font-size: 20px"
-            ></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #0063db"
+          >
+            <div class="stat-icon">⏱️</div>
+            <div class="flex-col">
+              <span class="stat-label" style="font-size: 16px"
+                >completion time</span
+              >
+              <span
+                id="$completionTimeValue"
+                style="font-size: 20px"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #d3ac00"
-        >
-          <div class="stat-icon">🏆</div>
-          <div class="flex-col">
-            <span class="stat-label">global rank</span>
-            <span id="$globalRankValue" class="stat-value empty-loader"></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #e00201"
+          >
+            <div class="stat-icon">❓</div>
+            <div class="flex-col">
+              <span class="stat-label">questions answered</span>
+              <span
+                id="$questionsAnsweredValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #00bc02"
-        >
-          <div class="stat-icon">✅</div>
-          <div class="flex-col">
-            <span class="stat-label">correct answers</span>
-            <span
-              id="$correctAnswersValue"
-              class="stat-value empty-loader"
-            ></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #00bc02"
+          >
+            <div class="stat-icon">✅</div>
+            <div class="flex-col">
+              <span class="stat-label">correct answers</span>
+              <span
+                id="$correctAnswersValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: gray"
-        >
-          <div class="stat-icon">🔝</div>
-          <div class="flex-col">
-            <span class="stat-label">percentile rank</span>
-            <span
-              id="$percentileRankValue2"
-              class="stat-value empty-loader"
-            ></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #e40d0d"
+          >
+            <div class="stat-icon">📅</div>
+            <div class="flex-col">
+              <span class="stat-label">date taken</span>
+              <span
+                id="$dateTakenValue"
+                class="stat-value empty-loader"
+                style="font-size: 20px"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #500d0e"
-        >
-          <div class="stat-icon">🎯</div>
-          <div class="flex-col">
-            <span class="stat-label">accuracy rate</span>
-            <span
-              id="$accuracyRateValue"
-              class="stat-value empty-loader"
-            ></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #500d0e"
+          >
+            <div class="stat-icon">🎯</div>
+            <div class="flex-col">
+              <span class="stat-label">accuracy rate</span>
+              <span
+                id="$accuracyRateValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <div
-          class="result-stat flex-row align-center gap-20 radius-10 p-10"
-          style="--color: #f50003"
-        >
-          <div class="stat-icon">🏎️</div>
-          <div class="flex-col">
-            <span class="stat-label">answer speed</span>
-            <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
+          <div
+            class="result-stat flex-row align-center gap-20 radius-10 p-10"
+            style="--color: #f50003"
+          >
+            <div class="stat-icon">🏎️</div>
+            <div class="flex-col">
+              <span class="stat-label">answer speed</span>
+              <span
+                id="$answerSpeedValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
           </div>
-        </div>
 
-        <!-- -- -->
+          <!-- -- -->
+        </div>
       </div>
 
       <h2>some stats</h2>
@@ -276,16 +284,26 @@
       </h1>
 
       <div class="flex-col gap-10 my-20">
-        <label class="flex-row align-center gap-10 w-100p">
+        <label
+          class="flex-row align-center gap-10 w-100p"
+          style="flex-wrap: wrap"
+        >
           <span class="nowrap">share your test result</span>
-          <input id="$testResultLink" class="w-100p" readonly type="text" />
-          <button id="$btnCopyTestResultLink" class="p-10">copy</button>
+          <div class="flex-row gap-10" style="flex: 1 0 auto">
+            <input id="$testResultLink" class="w-100p" readonly type="text" />
+            <button id="$btnCopyTestResultLink" class="p-10">copy</button>
+          </div>
         </label>
 
-        <label class="flex-row align-center gap-10 w-100p">
+        <label
+          class="flex-row align-center gap-10 w-100p"
+          style="flex-wrap: wrap"
+        >
           <span class="nowrap">share test with friends</span>
-          <input id="$testShareLink" class="w-100p" readonly type="text" />
-          <button id="$btnCopyTestShareLink" class="p-10">copy</button>
+          <div class="flex-row gap-10" style="flex: 1 0 auto">
+            <input id="$testShareLink" class="w-100p" readonly type="text" />
+            <button id="$btnCopyTestShareLink" class="p-10">copy</button>
+          </div>
         </label>
       </div>
     </section>
