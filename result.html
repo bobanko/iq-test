@@ -26,76 +26,162 @@
     </template>
     <!-- main page -->
 
-    <section class="p-20">
+    <section class="flex-col p-20 py-10 m-20 gap-10 radius-30">
       <h1 class="flex-row align-center gap-10">
         <img src="./images/brain-ios.png" alt="brain" width="40px" />
-
-        <span> IQ test report </span>
+        <span>Your IQ test results</span>
       </h1>
 
       <hr />
 
-      <div
-        class="flex-row justify-space-around"
-        style="--color: var(--blue-alt)"
-      >
-        <div class="result-stat flex-col align-center rounded-10 p-10">
-          <span class="stat-label">IQ score</span>
-          <span id="$iqScoreValue" class="stat-value empty-loader"></span>
-        </div>
-
-        <div class="result-stat flex-col align-center rounded-10 p-10">
-          <span class="stat-label">percentile rank</span>
-          <span
-            id="$percentileRankValue"
-            class="stat-value empty-loader"
-          ></span>
-        </div>
-
-        <div class="result-stat flex-col align-center rounded-10 p-10">
-          <span class="stat-label">performance</span>
-          <span
-            hidden
-            id="$cognitiveGroupValue"
-            class="stat-value empty-loader"
-          ></span>
-          <span
-            id="$cognitiveSubgroupValue"
-            class="stat-value empty-loader"
-          ></span>
-        </div>
+      <div class="iq-score-block flex-col align-center my-20">
+        <span class="iq-score-text">IQ score</span>
+        <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
+        <span
+          hidden
+          id="$cognitiveGroupValue"
+          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+        ></span>
+        <span
+          id="$cognitiveSubgroupValue"
+          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+        ></span>
       </div>
 
-      <h2>some stats</h2>
+      <div class="result-stat-grid gap-10">
+        <!-- stat items -->
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: var(--blue)"
+        >
+          <div class="stat-icon">💦</div>
 
-      <div class="flex-row">
-        <div class="flex-col p-10 gap-10">
-          <div class="result-stat flex-col align-center rounded-10 p-10">
-            <span class="stat-label">⏱️ completion time</span>
+          <div class="flex-col">
+            <span class="stat-label">percentile rank</span>
             <span
-              id="$completionTimeValue"
+              id="$percentileRankValue"
               class="stat-value empty-loader"
             ></span>
           </div>
+        </div>
 
-          <div class="result-stat flex-col align-center rounded-10 p-10">
-            <span class="stat-label">❓ questions answered</span>
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #0063db"
+        >
+          <div class="stat-icon">⏱️</div>
+          <div class="flex-col">
+            <span class="stat-label" style="font-size: 16px"
+              >completion time</span
+            >
+            <span
+              id="$completionTimeValue"
+              style="font-size: 20px"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
+        </div>
+
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #e00201"
+        >
+          <div class="stat-icon">❓</div>
+          <div class="flex-col">
+            <span class="stat-label">questions answered</span>
             <span
               id="$questionsAnsweredValue"
               class="stat-value empty-loader"
             ></span>
           </div>
+        </div>
 
-          <div class="result-stat flex-col align-center rounded-10 p-10">
-            <span class="stat-label">📅 date taken</span>
-            <span id="$dateTakenValue" class="stat-value empty-loader"></span>
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #e40d0d"
+        >
+          <div class="stat-icon">📅</div>
+          <div class="flex-col">
+            <span class="stat-label">date taken</span>
+            <span
+              id="$dateTakenValue"
+              class="stat-value empty-loader"
+              style="font-size: 20px"
+            ></span>
           </div>
+        </div>
 
-          <div class="result-stat flex-col align-center rounded-10 p-10">
-            <span class="stat-label">🏆 global rank</span>
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #d3ac00"
+        >
+          <div class="stat-icon">🏆</div>
+          <div class="flex-col">
+            <span class="stat-label">global rank</span>
             <span id="$globalRankValue" class="stat-value empty-loader"></span>
           </div>
         </div>
+
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #00bc02"
+        >
+          <div class="stat-icon">✅</div>
+          <div class="flex-col">
+            <span class="stat-label">correct answers</span>
+            <span
+              id="$correctAnswersValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
+        </div>
+
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: gray"
+        >
+          <div class="stat-icon">🔝</div>
+          <div class="flex-col">
+            <span class="stat-label">percentile rank</span>
+            <span
+              id="$percentileRankValue2"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
+        </div>
+
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #500d0e"
+        >
+          <div class="stat-icon">🎯</div>
+          <div class="flex-col">
+            <span class="stat-label">accuracy rate</span>
+            <span
+              id="$accuracyRateValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
+        </div>
+
+        <div
+          class="result-stat flex-row align-center gap-20 radius-10 p-10"
+          style="--color: #f50003"
+        >
+          <div class="stat-icon">🏎️</div>
+          <div class="flex-col">
+            <span class="stat-label">answer speed</span>
+            <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <!-- -- -->
+      </div>
+
+      <h2>some stats</h2>
+
+      <div class="flex-row">
+        <div class="flex-col p-10 gap-10"></div>
 
         <div class="flex-col">
           <div
@@ -116,30 +202,7 @@
         </div>
       </div>
 
-      <hr />
-
-      <div>
-        <h2>performance summary</h2>
-
-        <div>
-          <div class="flex-row p-5 gap-10">
-            <span>✅ correct answers</span>
-            <span id="$correctAnswersValue" class="empty-loader"></span>
-          </div>
-          <div class="flex-row p-5 gap-10">
-            <span>🔝 percentile rank </span>
-            <span id="$percentileRankValue2" class="empty-loader"></span>
-          </div>
-          <div class="flex-row p-5 gap-10">
-            <span>🎯 accuracy rate </span>
-            <span id="$accuracyRateValue" class="empty-loader"></span>
-          </div>
-          <div class="flex-row p-5 gap-10">
-            <span>🏎️ answer speed</span>
-            <span id="$answerSpeedValue" class="empty-loader"></span>
-          </div>
-        </div>
-      </div>
+      <hr class="my-20" />
 
       <div class="flex-col border-box p-10 w-100p">
         <div class="p-10" style="font-weight: bold">test results</div>
@@ -150,8 +213,13 @@
         <div class="p-10">now you can navigate to see correct answers?</div>
         <div class="p-10">current question explanation?</div>
       </div>
+    </section>
 
-      <h1>What do you think?</h1>
+    <section class="contact-form p-20 py-0 m-20 radius-10">
+      <h1>
+        <span>🤔</span>
+        <span>What do you think?</span>
+      </h1>
 
       <div class="flex-row gap-10 w-100p py-10" style="font-size: 50px">
         <input
@@ -189,18 +257,25 @@
       <label class="flex-col gap-10 w-100p">
         <span class="nowrap">share your feedback</span>
         <textarea id="$feedbackLink" class="w-100p"></textarea>
+      </label>
+      <div class="flex-row my-20" style="justify-content: end">
         <button
           id="$btnCopyFeedbackLink"
-          class="p-10"
-          style="align-self: center"
+          class="flex-row align-center p-10 gap-5"
         >
-          send
+          <span>send</span>
+          <span>→</span>
         </button>
-      </label>
+      </div>
+    </section>
 
-      <h1>What is the IQ of your friends?</h1>
+    <section class="p-20 py-0 m-20 radius-10">
+      <h1>
+        <span>🧑‍🤝‍🧑</span>
+        <span>What is the IQ of your friends?</span>
+      </h1>
 
-      <div class="flex-col gap-10">
+      <div class="flex-col gap-10 my-20">
         <label class="flex-row align-center gap-10 w-100p">
           <span class="nowrap">share your test result</span>
           <input id="$testResultLink" class="w-100p" readonly type="text" />

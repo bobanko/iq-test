@@ -9,15 +9,21 @@
 @import url(./styles/animations.css);
 
 @import url(./styles/question-list.css);
+@import url(./styles/contact-form.css);
 
 @import url(./styles/chart.css);
 
 :root {
-  --body-bg-color: #c0c0c0;
+  --body-bg-color: white;
+  --accent-color: #2196f3;
 
   --debug-color: black;
   --debug-bg: greenyellow;
-  --input-color: gray;
+
+  --input-color: hsl(from var(--accent-color) h s calc(l * 1.5) / 1);
+
+  /* --hr-color: var(--input-color); */
+  --hr-color: #0000002b;
 }
 
 ::selection {
@@ -26,14 +32,43 @@
 
 html {
   min-height: 100%;
-  background-color: gray;
+  background-color: #f1f3f5;
 }
 
 body {
   max-width: 800px;
-  background-color: var(--body-bg-color);
-  box-shadow: 0 0 4px 0px black;
+  /* background-color: var(--body-bg-color); */
+  /* box-shadow: 0 0 4px 0px black; */
   box-sizing: border-box;
+}
+
+section {
+  background-color: #fff;
+  border: 2px solid #0000002b;
+  /* border: 2px solid var(--input-color); */
+}
+
+/* --- */
+
+.iq-score-block {
+  .iq-score-text {
+    font-size: 30px;
+  }
+
+  .iq-score-value {
+    font-size: 70px;
+    font-weight: 600;
+  }
+
+  .iq-score-cognitive {
+    font-size: 20px;
+    font-weight: 600;
+
+    --color: var(--green);
+    /* todo: recalc? */
+    color: hsl(from var(--color) h s calc(l - 20));
+    background-color: hsl(from var(--color) h calc(s/1.2) calc(l + 20));
+  }
 }
 
 .feedback-emoji {
@@ -71,16 +106,56 @@ body {
   }
 }
 
+.result-stat-grid {
+  position: relative;
+  display: grid;
+  box-sizing: border-box;
+
+  --size: 3;
+
+  grid-template-columns: repeat(var(--size), 1fr);
+}
+
 .result-stat {
-  background-color: hsl(from var(--color) h s calc(l * 1.5));
+  opacity: 0;
+  transform: translateY(20px);
+  animation: fadeInUp 0.6s ease forwards;
+  animation-delay: var(--delay, 0s);
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.result-stat {
+  --color: gray;
+
+  color: black;
+
+  background-color: hsl(from var(--color) h s calc(l + 45));
+  border-style: solid;
+  border-width: 2px;
+  border-color: hsla(from var(--color) h s calc(l - 20) / 0.3);
+
   text-transform: capitalize;
 
+  ::selection {
+    background-color: var(--color);
+  }
+
+  .stat-icon {
+    font-size: 50px;
+  }
+
   .stat-label {
-    font-size: x-large;
+    font-size: 20px;
   }
 
   .stat-value {
-    font-size: xx-large;
+    font-size: 30px;
   }
 }
 
@@ -89,4 +164,15 @@ body {
     content: "...";
     animation: fadeIn 400ms alternate infinite;
   }
+}
+
+hr {
+  padding: 0;
+  margin: 0;
+  /* width: 100%; */
+  border-width: 1px;
+  /* border-style: dashed; */
+  box-sizing: border-box;
+  align-self: stretch;
+  border-color: var(--hr-color);
 }
