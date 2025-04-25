@@ -87,6 +87,16 @@ svg[aria-hidden="true"] {
   padding: 30px;
 }
 
+.px-0 {
+  padding-left: 0px;
+  padding-right: 0px;
+}
+
+.py-0 {
+  padding-top: 0px;
+  padding-bottom: 0px;
+}
+
 .px-10 {
   padding-left: 10px;
   padding-right: 10px;
@@ -136,8 +146,12 @@ svg[aria-hidden="true"] {
   font-size: small;
 }
 
-.rounded-10 {
+.radius-10 {
   border-radius: 10px;
+}
+
+.radius-30 {
+  border-radius: 30px;
 }
 
 .text-ellipsis {

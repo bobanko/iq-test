@@ -22,7 +22,7 @@ export function renderValuesQuestion({ config, questionData }) {
     pattern
       ? createValuePattern({ pattern, config })
       : createQuestionMark({
-          classList: ["rounded-10"],
+          classList: ["radius-10"],
         })
   );
 
