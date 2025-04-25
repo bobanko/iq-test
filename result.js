@@ -243,8 +243,8 @@ function displayResult({ userResult, allResultsIqs }) {
   const accuracyRate = (isCorrect / total) * 100;
   const answerSpeed = timeSpent / 1000 / total;
 
-  $correctAnswersValue.textContent = `${isCorrect}`;
-  $percentileRankValue2.textContent = `${percetileRank.toFixed(0)}`;
+  $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`;
+  $percentileRankValue2.textContent = `${topPt.toFixed(0)}%`;
   $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
   $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)} sec`;
 
