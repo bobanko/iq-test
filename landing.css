@@ -4,6 +4,7 @@
 @import url(./styles/animations.css);
 @import url(./styles/palette.css);
 @import url(./styles/inputs.css);
+@import url(./styles/contact-form.css);
 
 @import url(./styles/app-preview.css);
 
@@ -22,6 +23,7 @@
   --splash-mob-frame-color: hsl(from var(--color-primary) calc(h + 150) s l);
 
   --input-color: hsl(from var(--accent-color) h s calc(l * 1.5) / 1);
+  --hr-color: var(--bg-primary);
 }
 
 html {
@@ -175,10 +177,6 @@ section {
   }
 }
 
-.radius-30 {
-  border-radius: 30px;
-}
-
 .section-splash {
   overflow: hidden;
 
@@ -205,48 +203,6 @@ section {
     .stat-text {
       font-size: min(3cqw, 20px);
     }
-  }
-}
-
-.contact-form {
-  box-shadow: 0px 0px 10px 0px #000000a3;
-
-  --pw: 15px;
-  --red: #f44336;
-  --white: #f2f2f2;
-  --blue: #2196f3;
-
-  --shift: 0px; /* to 60 */
-
-  /* animation: shift60 1500ms infinite ease-in-out alternate-reverse; */
-
-  background: linear-gradient(white, white),
-    repeating-linear-gradient(
-      -45deg,
-      var(--red) calc(var(--pw) * 0 + var(--shift)),
-      var(--red) calc(var(--pw) * 1 + var(--shift)),
-      var(--white) calc(var(--pw) * 1 + var(--shift)),
-      var(--white) calc(var(--pw) * 2 + var(--shift)),
-      var(--blue) calc(var(--pw) * 2 + var(--shift)),
-      var(--blue) calc(var(--pw) * 3 + var(--shift)),
-      var(--white) calc(var(--pw) * 3 + var(--shift)),
-      var(--white) calc(var(--pw) * 4 + var(--shift))
-    );
-
-  /* background-position: var(--shift); */
-
-  background-origin: padding-box, border-box;
-  background-repeat: no-repeat; /* this is important */
-  border: 5px solid transparent;
-  border-radius: 5px;
-
-  fieldset {
-    /* border: 2px solid; */
-    /* background-color: var(--bg-secondary); */
-    /* background-color: white; */
-    /* border-color: var(--bg-secondary); */
-    /* border-radius: 30px; */
-    padding: 20px 30px;
   }
 }
 
@@ -319,7 +275,7 @@ hr {
   border-style: dashed;
   box-sizing: border-box;
   align-self: stretch;
-  border-color: var(--bg-primary);
+  border-color: var(--hr-color);
 }
 
 dl.faq-list {
