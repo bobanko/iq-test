@@ -16,7 +16,6 @@ import { countries, emojiFlags } from "./countries.mapping.js";
 import { getCached } from "./helpers/local-cache.helper.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { getUserData, updateUserData } from "./endpoints/user-data.js";
-import { calcStaticIqByStats } from "./calc-iq.js";
 import { getSafeIndex } from "./helpers/safe-index.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
 import { formatTimeSpan } from "./helpers/common.js";

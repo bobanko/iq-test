@@ -7,8 +7,12 @@ import {
 import { formatTimeSpan } from "./helpers/common.js";
 import { copyTextFrom } from "./helpers/copy.js";
 import { getHashParameter, updateHashParameter } from "./helpers/hash-param.js";
-import { SeededRandom } from "./helpers/random.helpers.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
+import {
+  calculateIQ,
+  calculateMean,
+  calculateStandardDeviation,
+} from "./helpers/statistics.js";
 
 function getPairs(array) {
   return Array.from({ length: array.length - 1 }, (_, i) => [
@@ -134,30 +138,6 @@ function updateSeed() {
   updateHashParameter("seed", seed);
 }
 
-function getFakeData() {
-  const seed = +getHashParameter("seed");
-
-  const random = new SeededRandom(seed);
-
-  const fakeStatsGauss = [
-    [60, 69, 2],
-    [70, 79, 7],
-    [80, 89, 16],
-    [90, 109, 50],
-    [110, 119, 16],
-    [120, 129, 7],
-    [130, 140, 2],
-  ]
-    .map(([min, max, count]) => {
-      return Array.from({ length: count }, (_, index) =>
-        random.fromRange(min, max)
-      );
-    })
-    .flat();
-
-  return fakeStatsGauss;
-}
-
 function onHashChanged() {
   const resultId = getHashParameter("id");
 
@@ -173,43 +153,54 @@ function onHashChanged() {
 
   (async () => {
     //
-    const results = await getAllResults();
-    console.log(results);
-
-    const allResultsIqs = results
-      .map((result) => result.stats)
-      .map(calcStaticIqByStats);
-
+    const allResults = await getAllResults();
     const userResult = await getResultById(resultId);
 
-    $testShareLink.value = `${location.origin}#ref=${userResult._userId}`;
+    console.log({ allResults });
+    console.log({ userResult });
 
-    displayResult({ userResult, allResultsIqs });
+    displayResult({ userResult, allResults });
   })();
-
-  //debug
-
-  const fakeStatsGauss = getFakeData();
-
-  initChart({ chartData: fakeStatsGauss });
 }
 
-function displayResult({ userResult, allResultsIqs }) {
-  console.log({ result: userResult });
+function displayResult({ userResult, allResults }) {
+  $testShareLink.value = `${location.origin}#ref=${userResult._userId}`;
 
   const { stats: resultsStats, datePassed } = userResult;
-  const currentIq = calcStaticIqByStats(resultsStats);
 
-  initChart({ chartData: allResultsIqs, highlightValue: currentIq });
+  // all answer counts
+  const sampleCorrectAnswers = allResults.map(
+    (result) => result.stats.isCorrect
+  );
+
+  const correctAnswersMean = calculateMean(sampleCorrectAnswers);
+  const correctAnswersStd = calculateStandardDeviation(
+    sampleCorrectAnswers,
+    correctAnswersMean
+  );
+
+  const scientificIq = calculateIQ({
+    rawScore: userResult.stats.isCorrect,
+    mean: correctAnswersMean,
+    standardDeviation: correctAnswersStd,
+  });
+
+  const staticIq = calcStaticIqByStats(resultsStats);
+
+  const allResultsIqs = allResults
+    .map((result) => result.stats)
+    .map(calcStaticIqByStats);
+
+  initChart({ chartData: allResultsIqs, highlightValue: staticIq });
 
   const allResultsIqsSorted = allResultsIqs.toSorted((a, b) => a - b);
 
   // PR = [(N_below + 0.5 × N_equal) / N_total] × 100
   const resultsBelowCount = allResultsIqsSorted.filter(
-    (iq) => iq < currentIq
+    (iq) => iq < staticIq
   ).length;
   const sameResultsCount = allResultsIqsSorted.filter(
-    (iq) => iq === currentIq
+    (iq) => iq === staticIq
   ).length;
   const totalResultsCount = allResultsIqsSorted.length;
   const globalRank =
@@ -220,15 +211,10 @@ function displayResult({ userResult, allResultsIqs }) {
   const topPt = 100 - percetileRank;
 
   //update values
-
-  // const performanceClass = getCognitiveClassification(currentIq);
-  const performanceClass = findCognitiveGroup(currentIq);
-  // const performanceClass = findCognitiveSubgroup(currentIq);
-
-  $iqScoreValue.textContent = currentIq.toFixed(0);
-  $percentileRankValue.textContent = `${percetileRank.toFixed(0)}%`;
-  $cognitiveGroupValue.textContent = findCognitiveGroup(currentIq).name;
-  $cognitiveSubgroupValue.textContent = findCognitiveSubgroup(currentIq).name;
+  $iqScoreValue.textContent = `${staticIq.toFixed(0)}`;
+  $scientificIqValue.textContent = `${scientificIq.toFixed(0)}`;
+  $cognitiveGroupValue.textContent = findCognitiveGroup(staticIq).name;
+  $cognitiveSubgroupValue.textContent = findCognitiveSubgroup(staticIq).name;
 
   //
 
@@ -244,14 +230,13 @@ function displayResult({ userResult, allResultsIqs }) {
   const answerSpeed = timeSpent / 1000 / total;
 
   $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`;
-  $percentileRankValue2.textContent = `${topPt.toFixed(0)}%`;
+  $topRankValue.textContent = `${topPt.toFixed(0)}%`;
   $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
   $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)} sec`;
 
   $chartMainLegend.innerHTML = `
-  You are among the <b>${topPt.toFixed(
-    0
-  )}%</b> of the smartest people in the world. 
+  You are among the <b>${topPt.toFixed(0)}%</b> of the smartest people 
+  in the world. 
   You are smarter than <b>${percetileRank.toFixed(0)}%</b> of the population.`;
 }
 
