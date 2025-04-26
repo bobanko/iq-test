@@ -9,9 +9,11 @@ export function calcStaticIqByStats(stats) {
   const minIq = 60;
   const maxIq = 140;
 
-  const { isCorrect, total } = stats;
+  const { isCorrect: correctAnswerCount, total: maxCorrectAnswers } = stats;
 
-  const resultIq = minIq + (isCorrect / total) * (maxIq - minIq);
+  const iqRange = maxIq - minIq;
+
+  const resultIq = minIq + (correctAnswerCount / maxCorrectAnswers) * iqRange;
 
   return Math.floor(resultIq);
 }
