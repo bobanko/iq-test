@@ -35,8 +35,9 @@
       <hr />
 
       <div class="iq-score-block flex-col align-center my-20">
-        <span class="iq-score-text">IQ score</span>
+        <span class="iq-score-text">IQ score*</span>
         <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
+
         <span
           hidden
           id="$cognitiveGroupValue"
@@ -72,10 +73,7 @@
             <div class="stat-icon">🔝</div>
             <div class="flex-col">
               <span class="stat-label">top rank</span>
-              <span
-                id="$percentileRankValue2"
-                class="stat-value empty-loader"
-              ></span>
+              <span id="$topRankValue" class="stat-value empty-loader"></span>
             </div>
           </div>
 
@@ -83,12 +81,12 @@
             class="result-stat flex-row align-center gap-20 radius-10 p-10"
             style="--color: var(--blue)"
           >
-            <div class="stat-icon">💦</div>
+            <div class="stat-icon">🧠</div>
 
             <div class="flex-col">
-              <span class="stat-label">percentile rank</span>
+              <span class="stat-label">scientific IQ</span>
               <span
-                id="$percentileRankValue"
+                id="$scientificIqValue"
                 class="stat-value empty-loader"
               ></span>
             </div>
@@ -215,7 +213,29 @@
       <div class="flex-col border-box p-10 w-100p">
         <div class="p-10" style="font-weight: bold">test results</div>
 
-        <div class="p-10">some static text explaining everything?</div>
+        <div class="p-10">
+          <p>
+            ✣ static IQ - your iq calculated only by correct answers, no
+            correlation with others who passed the test
+          </p>
+          <p>
+            🏆 global rank - this means your place in global ranking, based on
+            correct answers
+          </p>
+          <p>🔝 top rank - your place in %</p>
+          <p>
+            🧠 scientific IQ - your iq based on other results, based on mean and
+            standard deviation
+          </p>
+          <p>⏱️ completion time - how much time you spent to complete test</p>
+          <p>❓ questions answered - how many answers you made</p>
+          <p>✅ correct answers - how many were correct</p>
+          <p>📅 date taken - date when you passed (the test)</p>
+          <p>
+            🎯 accuracy rate - correct answers compared to total answer count
+          </p>
+          <p>🏎️ answer speed - how much time you spent per question (avg)</p>
+        </div>
 
         <div class="p-10">some global stats comparison?</div>
         <div class="p-10">now you can navigate to see correct answers?</div>
