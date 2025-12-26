@@ -286,8 +286,24 @@
 
         <hr />
         <div class="flex-row justify-space-around gap-10">
-          <button id="$btnFinishCancel" class="cancel p-10">cancel</button>
-          <button id="$btnFinishConfirm" class="primary p-10">confirm</button>
+          <button
+            id="$btnFinishCancel"
+            class="cancel p-10"
+            data-fbq="trackCustom"
+            data-fbq-event="QuizFinishCancel"
+            data-fbq-params='{"source": "confirmation_popup"}'
+          >
+            cancel
+          </button>
+          <button
+            id="$btnFinishConfirm"
+            class="primary p-10"
+            data-fbq="trackCustom"
+            data-fbq-event="QuizFinishConfirm"
+            data-fbq-params='{"source": "confirmation_popup"}'
+          >
+            confirm
+          </button>
         </div>
       </div>
     </div>
