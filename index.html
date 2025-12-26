@@ -504,9 +504,13 @@
       <hr />
 
       <div class="flex-col align-center">
-        <p data-translation="footer-copyright">
-          © 2025 420iq.lol. All rights reserved.
-        </p>
+        <div class="p-20" id="$footerCopyright">
+          <div data-translation="footer-copyright" class="cursor-pointer">
+            © 2025 420iq.lol. All rights reserved.
+          </div>
+          <div id="$buildInfo" class="build-info" hidden>version here</div>
+        </div>
+        <script type="module" src="./show-version.js" async></script>
       </div>
     </footer>
   </body>

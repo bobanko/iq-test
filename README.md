@@ -21,3 +21,12 @@ https://bobanko.github.io/iq-test/
 ### to publish on hosting
 
 % firebase deploy
+
+if fails, re-login first:
+
+% firebase login --reauth
+
+### deployment timestamp
+
+- A predeploy hook writes `version.json` with the deployment timestamp.
+- Check the footer on the landing page to see when the current version was deployed.

@@ -57,7 +57,7 @@
   display: none !important;
 }
 
-svg[aria-hidden="true"] {
+svg[aria-hidden='true'] {
   display: none !important;
 }
 
@@ -168,4 +168,8 @@ svg[aria-hidden="true"] {
   right: 0;
   backdrop-filter: blur(5px);
   z-index: 1;
+}
+
+.cursor-pointer {
+  cursor: pointer;
 }
