@@ -12,28 +12,29 @@ export function createQuestionMark({ classList = [] } = {}) {
 export function applyEaster($element) {
   //easter-egg
   let countdown = 10;
-  const symbols = ["🖕", "🖕🏻", "🖕🏼", "🖕🏽", "🖕🏾", "🖕🏿"];
-  $element.addEventListener("click", easterClick);
+  const symbols = ['🖕', '🖕🏻', '🖕🏼', '🖕🏽', '🖕🏾', '🖕🏿'];
+  $element.addEventListener('click', easterClick);
 
   function easterClick() {
     countdown--;
     $element.animate(
       [
         // keyframes
-        { transform: "rotate(30deg)" },
-        { transform: "rotate(0deg)" },
+        { transform: 'rotate(30deg)' },
+        { transform: 'rotate(0deg)' },
       ],
       {
         // timing options
         duration: 200,
-        easing: "ease-in-out",
+        easing: 'ease-in-out',
         iterations: 1,
       }
     );
 
     if (countdown <= 0) {
+      $btnDebug.hidden = false;
       $element.setAttribute(
-        "symbol",
+        'symbol',
         symbols[(symbols.length - countdown) % symbols.length]
       );
     }
