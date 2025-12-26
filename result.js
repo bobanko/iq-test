@@ -14,6 +14,8 @@ import {
   calculateStandardDeviation,
 } from "./helpers/statistics.js";
 
+import "./result.fbq.js";
+
 function getPairs(array) {
   return Array.from({ length: array.length - 1 }, (_, i) => [
     array[i],

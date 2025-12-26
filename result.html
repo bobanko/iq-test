@@ -300,6 +300,9 @@
         <button
           id="$btnCopyFeedbackLink"
           class="flex-row align-center p-10 gap-5"
+          data-fbq="trackCustom"
+          data-fbq-event="SendFeedback"
+          data-fbq-params='{"source": "result_page"}'
         >
           <span>send</span>
           <span>→</span>
@@ -321,7 +324,15 @@
           <span class="nowrap">share your test result</span>
           <div class="flex-row gap-10" style="flex: 1 0 auto">
             <input id="$testResultLink" class="w-100p" readonly type="text" />
-            <button id="$btnCopyTestResultLink" class="p-10">copy</button>
+            <button
+              id="$btnCopyTestResultLink"
+              class="p-10"
+              data-fbq="trackCustom"
+              data-fbq-event="ShareResult"
+              data-fbq-params='{"source": "result_footer"}'
+            >
+              copy
+            </button>
           </div>
         </label>
 
@@ -332,7 +343,15 @@
           <span class="nowrap">share test with friends</span>
           <div class="flex-row gap-10" style="flex: 1 0 auto">
             <input id="$testShareLink" class="w-100p" readonly type="text" />
-            <button id="$btnCopyTestShareLink" class="p-10">copy</button>
+            <button
+              id="$btnCopyTestShareLink"
+              class="p-10"
+              data-fbq="trackCustom"
+              data-fbq-event="ShareTestWithFriends"
+              data-fbq-params='{"source": "result_footer"}'
+            >
+              copy
+            </button>
           </div>
         </label>
       </div>
