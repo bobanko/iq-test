@@ -231,7 +231,15 @@
           </div>
         </div>
 
-        <button id="$btnFinishQuiz" type="button" class="p-10">finish</button>
+        <button
+          id="$btnFinishQuiz"
+          type="button"
+          class="p-10"
+          data-fbq="trackCustom"
+          data-fbq-event="FinishQuizAttempt"
+        >
+          finish
+        </button>
       </div>
 
       <!-- debug below -->
@@ -412,6 +420,9 @@
                 id="$btnCancelPostQuiz"
                 class="cancel p-10 w-100p flex justify-center"
                 type="button"
+                data-fbq="trackCustom"
+                data-fbq-event="CancelFormQuiz"
+                data-fbq-params='{"button": "btnCancelPostQuiz"}'
               >
                 cancel
               </button>
@@ -419,6 +430,9 @@
               <button
                 class="primary gap-5 p-10 w-100p flex justify-center"
                 type="submit"
+                data-fbq="track"
+                data-fbq-event="CompleteRegistration"
+                data-fbq-params='{"button": "submit"}'
               >
                 <span>send</span>
                 <span>→</span>

@@ -21,6 +21,8 @@ import { getUserData, updateUserData } from "./endpoints/user-data.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { calcStaticIqByStats } from "./calc-iq.js";
 
+import "./landing.fbq.js";
+
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
 function onHashChanged() {
