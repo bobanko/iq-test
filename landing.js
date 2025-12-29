@@ -17,7 +17,8 @@ import {
   getResultsTotalCount,
 } from "./endpoints/get-stats.js";
 import { getCurrentUser, signAnonUser } from "./endpoints/auth.js";
-import { getUserData, updateUserData } from "./endpoints/user-data.js";
+import { getUserData } from "./endpoints/user-data.js";
+import { saveFeedback } from "./endpoints/save-feedback.endpoint.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { calcStaticIqByStats } from "./calc-iq.js";
 
@@ -341,15 +342,8 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
       ipInfo,
     };
 
-    const user = await getCurrentUser();
-    const result = await updateUserData({
-      userId: user.uid,
-      userData,
-    });
-
-    console.log("result", result);
+    await saveFeedback(userData);
 
     $fieldset.disabled = false;
-    // window.open(`mailto:${email}?subject=${subject}&body=${name}: ${message}`);
   });
 }
