@@ -1,0 +1,71 @@
+button {
+  align-items: center;
+  border: 2px solid transparent;
+  box-sizing: border-box;
+  font-weight: 600;
+  border-radius: 5px;
+  user-select: none;
+
+  color: black;
+  text-decoration: none;
+
+  text-transform: capitalize;
+
+  transition: background-color 100ms ease-in-out;
+
+  --color: var(--accent-color);
+
+  &.btn-primary {
+    color: white;
+    background-color: var(--color);
+    border-color: rgba(0, 0, 0, 0.3);
+
+    &:hover {
+      background-color: hsla(from var(--color) h s l / 0.8);
+    }
+
+    &:active {
+      background-color: hsla(
+        from var(--color) h calc(s + 10) calc(l - 10) / 0.4
+      );
+    }
+  }
+
+  &.btn-secondary {
+    border-color: var(--color);
+
+    &:hover {
+      background-color: hsla(from var(--color) h s l / 0.2);
+    }
+
+    &:active {
+      background-color: hsla(
+        from var(--color) h calc(s + 10) calc(l - 10) / 0.4
+      );
+    }
+  }
+
+  &.btn-cancel {
+    --color: gray;
+    border-color: var(--color);
+
+    &:hover {
+      background-color: hsla(from var(--color) h s l / 0.2);
+    }
+
+    &:active {
+      background-color: hsla(
+        from var(--color) h calc(s + 10) calc(l - 10) / 0.4
+      );
+    }
+  }
+
+  &:disabled {
+    background-color: gray;
+  }
+}
+
+a.button-link {
+  display: inline-block;
+  text-decoration: none;
+}
