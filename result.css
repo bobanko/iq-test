@@ -10,6 +10,7 @@
 
 @import url(./styles/question-list.css);
 @import url(./styles/contact-form.css);
+@import url(./styles/buton.css);
 
 @import url(./styles/chart.css);
 
@@ -48,6 +49,11 @@ section {
   /* border: 2px solid var(--input-color); */
 }
 
+h1 {
+  font-size: min(6cqw, 40px);
+  margin: 10px 0;
+}
+
 /* --- */
 
 .iq-score-block {
@@ -72,10 +78,14 @@ section {
 }
 
 .feedback-emoji {
+  /* 4rem */
+  --size: min(10cqw, 50px);
   position: relative;
-  width: 4rem;
-  height: 4rem;
-  line-height: 4rem;
+  width: var(--size);
+  height: var(--size);
+  line-height: var(--size);
+  font-size: var(--size);
+
   appearance: none;
   margin: 0;
   text-align: center;

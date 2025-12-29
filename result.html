@@ -253,61 +253,121 @@
       </div>
     </section>
 
-    <section class="contact-form p-20 py-0 m-20 radius-10">
-      <h1>
-        <span>🤔</span>
-        <span>What do you think?</span>
-      </h1>
+    <section class="contact-form p-0 m-20 radius-10">
+      <form id="$formContact" class="flex-col">
+        <fieldset class="flex-col">
+          <h1 class="flex-row">
+            <span>🤔</span>
+            <span>What do you think?</span>
+          </h1>
 
-      <div class="flex-row gap-10 w-100p py-10" style="font-size: 50px">
-        <input
-          class="feedback-emoji"
-          type="radio"
-          name="reaction"
-          content="❤️"
-        />
-        <input
-          class="feedback-emoji"
-          type="radio"
-          name="reaction"
-          content="👍"
-        />
-        <input
-          class="feedback-emoji"
-          type="radio"
-          name="reaction"
-          content="👎"
-        />
-        <input
-          class="feedback-emoji"
-          type="radio"
-          name="reaction"
-          content="🔥"
-        />
-        <input
-          class="feedback-emoji"
-          type="radio"
-          name="reaction"
-          content="💩"
-        />
-      </div>
+          <div class="flex-row gap-10 w-100p py-10">
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              content="❤️"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              content="👍"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              content="👎"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              content="🔥"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              content="💩"
+            />
+          </div>
 
-      <label class="flex-col gap-10 w-100p">
-        <span class="nowrap">share your feedback</span>
-        <textarea id="$feedbackLink" class="w-100p"></textarea>
-      </label>
-      <div class="flex-row my-20" style="justify-content: end">
-        <button
-          id="$btnCopyFeedbackLink"
-          class="flex-row align-center p-10 gap-5"
-          data-fbq="trackCustom"
-          data-fbq-event="SendFeedback"
-          data-fbq-params='{"source": "result_page"}'
-        >
-          <span>send</span>
-          <span>→</span>
-        </button>
-      </div>
+          <div class="flex-row col-gap-20 flex-wrap">
+            <label class="flex-col flex-auto">
+              <span class="py-10" data-translation="contact-label-name"
+                >Name:</span
+              >
+              <input
+                type="text"
+                id="displayName"
+                name="displayName"
+                required
+                placeholder="enter your name"
+                data-translation="contact-placeholder-name"
+                data-translation-attr="placeholder"
+              />
+            </label>
+
+            <label class="flex-col flex-auto">
+              <span class="py-10" data-translation="contact-label-email"
+                >Email:</span
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="enter your email address"
+                data-translation="contact-placeholder-email"
+                data-translation-attr="placeholder"
+              />
+            </label>
+          </div>
+
+          <label class="flex-col">
+            <span class="py-10" data-translation="contact-label-subject"
+              >Subject:</span
+            >
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              placeholder="email subject"
+              data-translation="contact-placeholder-subject"
+              data-translation-attr="placeholder"
+            />
+          </label>
+
+          <label class="flex-col">
+            <span class="py-10" data-translation="contact-label-message"
+              >Message:</span
+            >
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="your message"
+              data-translation="contact-placeholder-message"
+              data-translation-attr="placeholder"
+            ></textarea>
+          </label>
+
+          <button
+            class="btn-primary p-10 my-10 gap-5 mobile-center flex-row justify-center"
+            type="submit"
+            data-translation="contact-btn-send"
+            data-fbq="trackCustom"
+            data-fbq-event="SendFeedback"
+            data-fbq-params='{"source": "landing_footer"}'
+          >
+            <span>send</span>
+            <span>→</span>
+          </button>
+        </fieldset>
+      </form>
     </section>
 
     <section class="p-20 py-0 m-20 radius-10">
