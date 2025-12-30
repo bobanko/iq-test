@@ -107,7 +107,7 @@ h1 {
   }
 
   &:after {
-    content: attr(content);
+    content: attr(value);
     position: absolute;
     left: 0;
     right: 0;

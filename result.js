@@ -15,6 +15,11 @@ import {
 } from "./helpers/statistics.js";
 
 import "./result.fbq.js";
+import { signAnonUser, getCurrentUser } from "./endpoints/auth.js";
+import { saveFeedback } from "./endpoints/save-feedback.endpoint.js";
+import { getUserData } from "./endpoints/user-data.js";
+import { getCached } from "./helpers/local-cache.helper.js";
+import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 
 function getPairs(array) {
   return Array.from({ length: array.length - 1 }, (_, i) => [
@@ -267,3 +272,81 @@ $btnCopyTestResultLink.addEventListener("click", () =>
 $btnCopyTestShareLink.addEventListener("click", () =>
   copyTextFrom($testShareLink)
 );
+
+{
+  const $fieldset = $formContact.querySelector("fieldset");
+
+  // ensure user is signed in (anon)
+  await signAnonUser();
+
+  // try to pre-fill form
+  $fieldset.disabled = true;
+
+  const user = await getCurrentUser();
+  const userData = (await getUserData(user.uid)) ?? {};
+  const { displayName = "", email = "" } = userData;
+  const formData = { displayName, email };
+
+  for (let [key, value] of Object.entries(formData)) {
+    const input = $formContact.elements[key];
+
+    input.value = value ?? "";
+  }
+
+  $fieldset.disabled = false;
+
+  const $emojiInputs = document.querySelectorAll(".feedback-emoji");
+  let selectedReaction = null;
+
+  $emojiInputs.forEach(($input) => {
+    $input.addEventListener("change", () => {
+      if ($input.checked) {
+        selectedReaction = $input.getAttribute("content");
+      }
+    });
+  });
+
+  $fieldset.disabled = false;
+
+  $formContact.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const formData = new FormData($formContact);
+    //disabling fieldset disables formdata fields from reading
+    $fieldset.disabled = true;
+
+    const resultId = getHashParameter("id");
+    const email = formData.get("email");
+    const displayName = formData.get("displayName");
+    const subject = formData.get("subject");
+    const message = formData.get("message");
+    const selectedReaction = formData.get("reaction");
+
+    const ipInfo = await getCached({
+      fn: fetchClientIpInfo,
+      cacheKey: "client-ip-info",
+    });
+
+    const userData = {
+      email,
+      displayName,
+      subject,
+      message,
+      resultId,
+
+      reaction: selectedReaction,
+
+      countryCode: ipInfo.location.country.code,
+
+      ipInfo,
+    };
+
+    await saveFeedback(userData);
+
+    // clear form
+    $formContact.subject.value = "";
+    $formContact.message.value = "";
+
+    $fieldset.disabled = false;
+  });
+}
