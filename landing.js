@@ -297,14 +297,13 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
 
   await signAnonUser();
 
-  // fill form
+  // try to pre-fill form
   $fieldset.disabled = true;
 
   const user = await getCurrentUser();
-
   const userData = (await getUserData(user.uid)) ?? {};
-  const { displayName = "", email = "", subject = "", message = "" } = userData;
-  const formData = { displayName, email, subject, message };
+  const { displayName = "", email = "" } = userData;
+  const formData = { displayName, email };
 
   for (let [key, value] of Object.entries(formData)) {
     const input = $formContact.elements[key];
@@ -313,6 +312,7 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
   }
 
   $fieldset.disabled = false;
+  // ---
 
   $formContact.addEventListener("submit", async (e) => {
     e.preventDefault();
@@ -343,6 +343,10 @@ const langsCountryCodes = translationLangKeys.map((key) => ({
     };
 
     await saveFeedback(userData);
+
+    // clear form
+    $formContact.subject.value = "";
+    $formContact.message.value = "";
 
     $fieldset.disabled = false;
   });
