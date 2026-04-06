@@ -31,7 +31,7 @@ function getPairs(array) {
 function groupBySplitPoints({ numbers, splitPoints }) {
   const sortedNumbers = numbers.toSorted((a, b) => a - b);
   const sortedSplitPoints = [-Infinity, ...splitPoints, Infinity].toSorted(
-    (a, b) => a - b
+    (a, b) => a - b,
   );
 
   const resultGroups = [];
@@ -177,13 +177,13 @@ function displayResult({ userResult, allResults }) {
 
   // all answer counts
   const sampleCorrectAnswers = allResults.map(
-    (result) => result.stats.isCorrect
+    (result) => result.stats.isCorrect,
   );
 
   const correctAnswersMean = calculateMean(sampleCorrectAnswers);
   const correctAnswersStd = calculateStandardDeviation(
     sampleCorrectAnswers,
-    correctAnswersMean
+    correctAnswersMean,
   );
 
   const scientificIq = calculateIQ({
@@ -204,10 +204,10 @@ function displayResult({ userResult, allResults }) {
 
   // PR = [(N_below + 0.5 × N_equal) / N_total] × 100
   const resultsBelowCount = allResultsIqsSorted.filter(
-    (iq) => iq < staticIq
+    (iq) => iq < staticIq,
   ).length;
   const sameResultsCount = allResultsIqsSorted.filter(
-    (iq) => iq === staticIq
+    (iq) => iq === staticIq,
   ).length;
   const totalResultsCount = allResultsIqsSorted.length;
   const globalRank =
@@ -216,6 +216,7 @@ function displayResult({ userResult, allResults }) {
     ((resultsBelowCount + sameResultsCount / 2) / totalResultsCount) * 100;
 
   const topPt = 100 - percetileRank;
+  const sampleSize = allResults.length;
 
   //update values
   $iqScoreValue.textContent = `${staticIq.toFixed(0)}`;
@@ -242,9 +243,8 @@ function displayResult({ userResult, allResults }) {
   $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)} sec`;
 
   $chartMainLegend.innerHTML = `
-  You are among the <b>${topPt.toFixed(0)}%</b> of the smartest people 
-  in the world. 
-  You are smarter than <b>${percetileRank.toFixed(0)}%</b> of the population.`;
+  Based on <b>${sampleSize}</b> results, you are among the <b>${topPt.toFixed(0)}%</b>.
+  Scientific IQ is still a sample-based estimate, so we treat it as provisional.`;
 }
 
 window.addEventListener("hashchange", onHashChanged);
@@ -267,10 +267,10 @@ $testResultLink.addEventListener("click", () => copyTextFrom($testResultLink));
 $testShareLink.addEventListener("click", () => copyTextFrom($testShareLink));
 
 $btnCopyTestResultLink.addEventListener("click", () =>
-  copyTextFrom($testResultLink)
+  copyTextFrom($testResultLink),
 );
 $btnCopyTestShareLink.addEventListener("click", () =>
-  copyTextFrom($testShareLink)
+  copyTextFrom($testShareLink),
 );
 
 {

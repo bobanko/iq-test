@@ -1,420 +1,316 @@
 <!DOCTYPE html>
 <html lang="en" class="flex-col align-center justify-space-around">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>IQ test results</title>
-    <link rel="icon" href="./images/brain-ios.png" type="image/png" />
-    <link rel="stylesheet" href="./result.css" />
 
-    <script src="./result.js" type="module" async></script>
-    <!-- Meta Pixel Code -->
-    <script src="./meta-pixel-code.js" type="module" async></script>
-    <noscript
-      ><img
-        height="1"
-        width="1"
-        style="display: none"
-        src="https://www.facebook.com/tr?id=852927004197226&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
-  </head>
-  <body class="inter-regular w-100p">
-    <!-- templates -->
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>IQ test results</title>
+  <link rel="icon" href="./images/brain-ios.png" type="image/png" />
+  <link rel="stylesheet" href="./result.css" />
 
-    <template id="$tmplChartBar">
-      <div class="bar-container align-center">
-        <div class="bar"></div>
-        <div class="value">123</div>
-      </div>
-    </template>
-    <template id="$tmplChartLine">
-      <div class="line-container align-center">
-        <div class="value">30</div>
-        <div class="line"></div>
-      </div>
-    </template>
-    <!-- main page -->
+  <script src="./result.js" type="module" async></script>
+  <!-- Meta Pixel Code -->
+  <script src="./meta-pixel-code.js" type="module" async></script>
+  <noscript><img height="1" width="1" style="display: none"
+      src="https://www.facebook.com/tr?id=852927004197226&ev=PageView&noscript=1" /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
 
-    <section class="flex-col p-20 py-10 m-20 gap-10 radius-30">
-      <h1 class="flex-row align-center gap-10">
+<body class="inter-regular w-100p">
+  <!-- templates -->
+
+  <template id="$tmplChartBar">
+    <div class="bar-container align-center">
+      <div class="bar"></div>
+      <div class="value">123</div>
+    </div>
+  </template>
+  <template id="$tmplChartLine">
+    <div class="line-container align-center">
+      <div class="value">30</div>
+      <div class="line"></div>
+    </div>
+  </template>
+  <!-- main page -->
+
+  <section class="result-layout flex-col p-20 py-10 m-20 gap-20 radius-30">
+    <div class="result-hero">
+      <div class="result-hero-head flex-row align-center gap-10">
         <img src="./images/brain-ios.png" alt="brain" width="40px" />
-        <span>Your IQ test results</span>
-      </h1>
-
-      <hr />
-
-      <div class="iq-score-block flex-col align-center my-20">
-        <span class="iq-score-text">IQ score*</span>
-        <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
-
-        <span
-          hidden
-          id="$cognitiveGroupValue"
-          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
-        ></span>
-        <span
-          id="$cognitiveSubgroupValue"
-          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
-        ></span>
-      </div>
-
-      <div class="container">
-        <div class="result-stat-grid gap-10">
-          <!-- stat items -->
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #d3ac00"
-          >
-            <div class="stat-icon">🏆</div>
-            <div class="flex-col">
-              <span class="stat-label">global rank</span>
-              <span
-                id="$globalRankValue"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: gray"
-          >
-            <div class="stat-icon">🔝</div>
-            <div class="flex-col">
-              <span class="stat-label">top rank</span>
-              <span id="$topRankValue" class="stat-value empty-loader"></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: var(--blue)"
-          >
-            <div class="stat-icon">🧠</div>
-
-            <div class="flex-col">
-              <span class="stat-label">scientific IQ</span>
-              <span
-                id="$scientificIqValue"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #0063db"
-          >
-            <div class="stat-icon">⏱️</div>
-            <div class="flex-col">
-              <span class="stat-label" style="font-size: 16px"
-                >completion time</span
-              >
-              <span
-                id="$completionTimeValue"
-                style="font-size: 20px"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #e00201"
-          >
-            <div class="stat-icon">❓</div>
-            <div class="flex-col">
-              <span class="stat-label">questions answered</span>
-              <span
-                id="$questionsAnsweredValue"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #00bc02"
-          >
-            <div class="stat-icon">✅</div>
-            <div class="flex-col">
-              <span class="stat-label">correct answers</span>
-              <span
-                id="$correctAnswersValue"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #e40d0d"
-          >
-            <div class="stat-icon">📅</div>
-            <div class="flex-col">
-              <span class="stat-label">date taken</span>
-              <span
-                id="$dateTakenValue"
-                class="stat-value empty-loader"
-                style="font-size: 20px"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #500d0e"
-          >
-            <div class="stat-icon">🎯</div>
-            <div class="flex-col">
-              <span class="stat-label">accuracy rate</span>
-              <span
-                id="$accuracyRateValue"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <div
-            class="result-stat flex-row align-center gap-20 radius-10 p-10"
-            style="--color: #f50003"
-          >
-            <div class="stat-icon">🏎️</div>
-            <div class="flex-col">
-              <span class="stat-label">answer speed</span>
-              <span
-                id="$answerSpeedValue"
-                class="stat-value empty-loader"
-              ></span>
-            </div>
-          </div>
-
-          <!-- -- -->
+        <div class="result-hero-title-wrap">
+          <h1>Your IQ test results</h1>
+          <p class="result-hero-subtitle">Personal cognitive profile</p>
         </div>
       </div>
 
-      <h2>some stats</h2>
+      <div class="result-hero-grid">
+        <div class="iq-score-block result-card flex-col align-center my-20">
+          <span class="iq-score-text">IQ score*</span>
+          <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
 
-      <div class="flex-row">
-        <div class="flex-col p-10 gap-10"></div>
+          <span hidden id="$cognitiveGroupValue" class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"></span>
+          <span id="$cognitiveSubgroupValue" class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"></span>
+          <span class="iq-score-note">Preliminary estimate based on the current dataset.</span>
+        </div>
 
-        <div class="flex-col">
-          <div
-            id="$chartMain"
-            class="chart"
-            style="position: relative; height: 400px"
-          >
-            <div class="bars">
-              <!-- bars here -->
-            </div>
+        <div class="result-hero-facts result-card flex-col gap-10">
+          <div class="result-hero-fact">
+            <span class="result-hero-fact-label">Global rank</span>
+            <span id="$globalRankValue" class="result-hero-fact-value empty-loader"></span>
+          </div>
+          <div class="result-hero-fact">
+            <span class="result-hero-fact-label">Top rank</span>
+            <span id="$topRankValue" class="result-hero-fact-value empty-loader"></span>
+          </div>
+          <div class="result-hero-fact">
+            <span class="result-hero-fact-label">Scientific IQ</span>
+            <span id="$scientificIqValue" class="result-hero-fact-value empty-loader"></span>
+          </div>
+        </div>
+      </div>
+    </div>
 
-            <div class="lines">
-              <!-- lines here -->
-            </div>
+    <div class="container">
+      <h2 class="section-title">Detailed metrics</h2>
+      <div class="result-stat-grid gap-10">
+        <!-- stat items -->
+        <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: #0063db">
+          <div class="stat-icon">⏱️</div>
+          <div class="flex-col">
+            <span class="stat-label" style="font-size: 16px">completion time</span>
+            <span id="$completionTimeValue" style="font-size: 20px" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: #e00201">
+          <div class="stat-icon">❓</div>
+          <div class="flex-col">
+            <span class="stat-label">questions answered</span>
+            <span id="$questionsAnsweredValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: #00bc02">
+          <div class="stat-icon">✅</div>
+          <div class="flex-col">
+            <span class="stat-label">correct answers</span>
+            <span id="$correctAnswersValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: #e40d0d">
+          <div class="stat-icon">📅</div>
+          <div class="flex-col">
+            <span class="stat-label">date taken</span>
+            <span id="$dateTakenValue" class="stat-value empty-loader" style="font-size: 20px"></span>
+          </div>
+        </div>
+
+        <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: #500d0e">
+          <div class="stat-icon">🎯</div>
+          <div class="flex-col">
+            <span class="stat-label">accuracy rate</span>
+            <span id="$accuracyRateValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: #f50003">
+          <div class="stat-icon">🏎️</div>
+          <div class="flex-col">
+            <span class="stat-label">answer speed</span>
+            <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
+
+        <!-- -- -->
+      </div>
+    </div>
+
+    <div class="result-chart-block">
+      <h2 class="section-title">IQ distribution</h2>
+
+      <div class="result-card p-10">
+        <div id="$chartMain" class="chart" style="position: relative; height: 400px">
+          <div class="bars">
+            <!-- bars here -->
           </div>
 
-          <div id="$chartMainLegend" class="p-10">you're at...</div>
+          <div class="lines">
+            <!-- lines here -->
+          </div>
+        </div>
+
+        <div id="$chartMainLegend" class="p-10">you're at...</div>
+      </div>
+    </div>
+
+    <div class="result-card paywall-demo flex-col gap-14">
+      <div class="paywall-demo-top flex-row align-center gap-10">
+        <div class="paywall-badge">Premium</div>
+        <div class="section-title">What sits behind the paywall</div>
+      </div>
+
+      <div class="paywall-demo-copy">
+        Full answer review, solved logic, and question-by-question explanations.
+        This section shows how the locked experience will look before unlock.
+      </div>
+
+      <div class="paywall-summary-card flex-col gap-10">
+        <div class="paywall-summary-title">Complete answer key</div>
+        <div class="paywall-summary-row">
+          <span>Questions reviewed</span>
+          <span>40 / 40</span>
+        </div>
+        <div class="paywall-summary-row">
+          <span>Mistakes explained</span>
+          <span>24</span>
+        </div>
+        <div class="paywall-summary-row">
+          <span>Weak areas highlighted</span>
+          <span>4</span>
         </div>
       </div>
 
-      <hr class="my-20" />
+      <div class="paywall-preview-grid">
+        <div class="paywall-preview-item paywall-locked">
+          <span class="paywall-preview-label">Question 01</span>
+          <span class="paywall-preview-value">correct answer hidden</span>
+          <span class="paywall-preview-note">Tap to unlock explanation</span>
+        </div>
+        <div class="paywall-preview-item paywall-locked">
+          <span class="paywall-preview-label">Question 12</span>
+          <span class="paywall-preview-value">why the chosen option fails</span>
+          <span class="paywall-preview-note">Pattern-based feedback</span>
+        </div>
+        <div class="paywall-preview-item paywall-locked">
+          <span class="paywall-preview-label">Question 27</span>
+          <span class="paywall-preview-value">step-by-step solution</span>
+          <span class="paywall-preview-note">Locked until premium</span>
+        </div>
+        <div class="paywall-preview-item paywall-locked">
+          <span class="paywall-preview-label">Question 40</span>
+          <span class="paywall-preview-value">benchmark comparison</span>
+          <span class="paywall-preview-note">See where you lost points</span>
+        </div>
+      </div>
 
-      <div class="flex-col border-box p-10 w-100p">
-        <div class="p-10" style="font-weight: bold">test results</div>
+      <div class="paywall-footer flex-row align-center gap-10">
+        <button class="paywall-cta btn-primary" type="button">Unlock full review</button>
+        <span class="paywall-footer-note">All answers stay blurred here until purchase.</span>
+      </div>
+    </div>
 
-        <div class="p-10">
-          <p>
-            ✣ static IQ - your iq calculated only by correct answers, no
-            correlation with others who passed the test
-          </p>
-          <p>
-            🏆 global rank - this means your place in global ranking, based on
-            correct answers
-          </p>
-          <p>🔝 top rank - your place in %</p>
-          <p>
-            🧠 scientific IQ - your iq based on other results, based on mean and
-            standard deviation
-          </p>
-          <p>⏱️ completion time - how much time you spent to complete test</p>
-          <p>❓ questions answered - how many answers you made</p>
-          <p>✅ correct answers - how many were correct</p>
-          <p>📅 date taken - date when you passed (the test)</p>
-          <p>
-            🎯 accuracy rate - correct answers compared to total answer count
-          </p>
-          <p>🏎️ answer speed - how much time you spent per question (avg)</p>
+    <div class="result-card flex-col border-box p-10 w-100p">
+      <div class="p-10 section-title">How to read your report</div>
+
+      <div class="p-10 result-description">
+        <p>
+          ✣ static IQ - your iq calculated only by correct answers, no
+          correlation with others who passed the test
+        </p>
+        <p>
+          🏆 global rank - this means your place in global ranking, based on
+          correct answers
+        </p>
+        <p>🔝 top rank - your place in %</p>
+        <p>
+          🧠 scientific IQ - a local estimate based on mean and standard
+          deviation from the current sample
+        </p>
+        <p>⏱️ completion time - how much time you spent to complete test</p>
+        <p>❓ questions answered - how many answers you made</p>
+        <p>✅ correct answers - how many were correct</p>
+        <p>📅 date taken - date when you passed (the test)</p>
+        <p>
+          🎯 accuracy rate - correct answers compared to total answer count
+        </p>
+        <p>🏎️ answer speed - how much time you spent per question (avg)</p>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact-form result-subsection p-0 m-20 radius-10">
+    <form id="$formContact" class="flex-col">
+      <fieldset class="flex-col">
+        <h1 class="flex-row">
+          <span>🤔</span>
+          <span>What do you think?</span>
+        </h1>
+
+        <div class="flex-row gap-10 w-100p py-10">
+          <input class="feedback-emoji" type="radio" name="reaction" value="❤️" />
+          <input class="feedback-emoji" type="radio" name="reaction" value="👍" />
+          <input class="feedback-emoji" type="radio" name="reaction" value="👎" />
+          <input class="feedback-emoji" type="radio" name="reaction" value="🔥" />
+          <input class="feedback-emoji" type="radio" name="reaction" value="💩" />
         </div>
 
-        <div class="p-10">some global stats comparison?</div>
-        <div class="p-10">now you can navigate to see correct answers?</div>
-        <div class="p-10">current question explanation?</div>
-      </div>
-    </section>
-
-    <section class="contact-form p-0 m-20 radius-10">
-      <form id="$formContact" class="flex-col">
-        <fieldset class="flex-col">
-          <h1 class="flex-row">
-            <span>🤔</span>
-            <span>What do you think?</span>
-          </h1>
-
-          <div class="flex-row gap-10 w-100p py-10">
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="❤️"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="👍"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="👎"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="🔥"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="💩"
-            />
-          </div>
-
-          <div class="flex-row col-gap-20 flex-wrap">
-            <label class="flex-col flex-auto">
-              <span class="py-10" data-translation="contact-label-name"
-                >Name:</span
-              >
-              <input
-                type="text"
-                id="displayName"
-                name="displayName"
-                required
-                placeholder="enter your name"
-                data-translation="contact-placeholder-name"
-                data-translation-attr="placeholder"
-              />
-            </label>
-
-            <label class="flex-col flex-auto">
-              <span class="py-10" data-translation="contact-label-email"
-                >Email:</span
-              >
-              <input
-                type="email"
-                id="email"
-                name="email"
-                required
-                placeholder="enter your email address"
-                data-translation="contact-placeholder-email"
-                data-translation-attr="placeholder"
-              />
-            </label>
-          </div>
-
-          <label class="flex-col">
-            <span class="py-10" data-translation="contact-label-subject"
-              >Subject:</span
-            >
-            <input
-              type="text"
-              id="subject"
-              name="subject"
-              placeholder="email subject"
-              data-translation="contact-placeholder-subject"
-              data-translation-attr="placeholder"
-            />
+        <div class="flex-row col-gap-20 flex-wrap">
+          <label class="flex-col flex-auto">
+            <span class="py-10" data-translation="contact-label-name">Name:</span>
+            <input type="text" id="displayName" name="displayName" required placeholder="enter your name"
+              data-translation="contact-placeholder-name" data-translation-attr="placeholder" />
           </label>
 
-          <label class="flex-col">
-            <span class="py-10" data-translation="contact-label-message"
-              >Message:</span
-            >
-            <textarea
-              id="message"
-              name="message"
-              rows="4"
-              required
-              placeholder="your message"
-              data-translation="contact-placeholder-message"
-              data-translation-attr="placeholder"
-            ></textarea>
+          <label class="flex-col flex-auto">
+            <span class="py-10" data-translation="contact-label-email">Email:</span>
+            <input type="email" id="email" name="email" required placeholder="enter your email address"
+              data-translation="contact-placeholder-email" data-translation-attr="placeholder" />
           </label>
+        </div>
 
-          <button
-            class="btn-primary p-10 my-10 gap-5 mobile-center flex-row justify-center"
-            type="submit"
-            data-translation="contact-btn-send"
-            data-fbq="trackCustom"
-            data-fbq-event="SendFeedback"
-            data-fbq-params='{"source": "landing_footer"}'
-          >
-            <span>send</span>
-            <span>→</span>
+        <label class="flex-col">
+          <span class="py-10" data-translation="contact-label-subject">Subject:</span>
+          <input type="text" id="subject" name="subject" placeholder="email subject"
+            data-translation="contact-placeholder-subject" data-translation-attr="placeholder" />
+        </label>
+
+        <label class="flex-col">
+          <span class="py-10" data-translation="contact-label-message">Message:</span>
+          <textarea id="message" name="message" rows="4" required placeholder="your message"
+            data-translation="contact-placeholder-message" data-translation-attr="placeholder"></textarea>
+        </label>
+
+        <button class="btn-primary p-10 my-10 gap-5 mobile-center flex-row justify-center" type="submit"
+          data-translation="contact-btn-send" data-fbq="trackCustom" data-fbq-event="SendFeedback"
+          data-fbq-params='{"source": "landing_footer"}'>
+          <span>send</span>
+          <span>→</span>
+        </button>
+      </fieldset>
+    </form>
+  </section>
+
+  <section class="result-subsection p-20 py-0 m-20 radius-10">
+    <h1>
+      <span>🧑‍🤝‍🧑</span>
+      <span>What is the IQ of your friends?</span>
+    </h1>
+
+    <div class="flex-col gap-10 my-20">
+      <label class="flex-row align-center gap-10 w-100p" style="flex-wrap: wrap">
+        <span class="nowrap">share your test result</span>
+        <div class="flex-row gap-10" style="flex: 1 0 auto">
+          <input id="$testResultLink" class="w-100p" readonly type="text" />
+          <button id="$btnCopyTestResultLink" class="p-10" data-fbq="trackCustom" data-fbq-event="ShareResult"
+            data-fbq-params='{"source": "result_footer"}'>
+            copy
           </button>
-        </fieldset>
-      </form>
-    </section>
+        </div>
+      </label>
 
-    <section class="p-20 py-0 m-20 radius-10">
-      <h1>
-        <span>🧑‍🤝‍🧑</span>
-        <span>What is the IQ of your friends?</span>
-      </h1>
+      <label class="flex-row align-center gap-10 w-100p" style="flex-wrap: wrap">
+        <span class="nowrap">share test with friends</span>
+        <div class="flex-row gap-10" style="flex: 1 0 auto">
+          <input id="$testShareLink" class="w-100p" readonly type="text" />
+          <button id="$btnCopyTestShareLink" class="p-10" data-fbq="trackCustom" data-fbq-event="ShareTestWithFriends"
+            data-fbq-params='{"source": "result_footer"}'>
+            copy
+          </button>
+        </div>
+      </label>
+    </div>
+  </section>
+</body>
 
-      <div class="flex-col gap-10 my-20">
-        <label
-          class="flex-row align-center gap-10 w-100p"
-          style="flex-wrap: wrap"
-        >
-          <span class="nowrap">share your test result</span>
-          <div class="flex-row gap-10" style="flex: 1 0 auto">
-            <input id="$testResultLink" class="w-100p" readonly type="text" />
-            <button
-              id="$btnCopyTestResultLink"
-              class="p-10"
-              data-fbq="trackCustom"
-              data-fbq-event="ShareResult"
-              data-fbq-params='{"source": "result_footer"}'
-            >
-              copy
-            </button>
-          </div>
-        </label>
-
-        <label
-          class="flex-row align-center gap-10 w-100p"
-          style="flex-wrap: wrap"
-        >
-          <span class="nowrap">share test with friends</span>
-          <div class="flex-row gap-10" style="flex: 1 0 auto">
-            <input id="$testShareLink" class="w-100p" readonly type="text" />
-            <button
-              id="$btnCopyTestShareLink"
-              class="p-10"
-              data-fbq="trackCustom"
-              data-fbq-event="ShareTestWithFriends"
-              data-fbq-params='{"source": "result_footer"}'
-            >
-              copy
-            </button>
-          </div>
-        </label>
-      </div>
-    </section>
-  </body>
 </html>
