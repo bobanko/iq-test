@@ -148,6 +148,14 @@ svg[aria-hidden="true"] {
   margin: 20px;
 }
 
+.mt-20 {
+  margin-top: 20px;
+}
+
+.block {
+  display: block;
+}
+
 .my-20 {
   margin-top: 20px;
   margin-bottom: 20px;

@@ -57,12 +57,16 @@ h1 {
 /* --- */
 
 .iq-score-block {
+  display: flex;
   .iq-score-text {
     font-size: 30px;
+    img {
+      width: 30px;
+    }
   }
 
   .iq-score-value {
-    font-size: 70px;
+    font-size: 140px;
     font-weight: 600;
   }
 
@@ -75,6 +79,24 @@ h1 {
     color: hsl(from var(--color) h s calc(l - 20));
     background-color: hsl(from var(--color) h calc(s/1.2) calc(l + 20));
   }
+}
+
+.brain-img {
+  width: 250px;
+}
+
+.verdict {
+  img {
+    width: 30px;
+    margin-left: 5px;
+  }
+  span {
+    text-align: center;
+  }
+}
+
+.motivation {
+  line-height: 2;
 }
 
 .feedback-emoji {
