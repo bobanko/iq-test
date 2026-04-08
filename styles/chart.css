@@ -1,9 +1,6 @@
 .chart {
   position: relative;
 
-  /* debugs */
-  background-color: cornsilk;
-
   display: grid;
 
   .lines,
@@ -16,29 +13,44 @@
 
   .lines {
     position: absolute;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+    inset: 0;
+    display: grid;
+    grid-template-columns: max-content 1fr;
+    column-gap: 6px;
+    align-content: space-between;
 
     pointer-events: none;
 
     .line-container {
-      display: flex;
-      flex-direction: row;
+      display: contents;
     }
 
     .line {
-      flex: 1;
       box-sizing: border-box;
-      height: 2px;
-      margin: auto;
+      width: auto;
+      min-height: 1px;
+      margin: 0;
+      align-self: center;
+      justify-self: stretch;
 
-      background-color: #0000003d;
+      border-bottom: 3px dotted;
+      border-color: rgba(0, 0, 0, 0.2);
+
+      .line-container:last-child & {
+        border-style: solid;
+        border-width: 1px;
+      }
     }
 
     .value {
       padding: 5px;
+      text-align: right;
+
+      font-size: 16px;
+      font-weight: 600;
       line-height: 14px;
+
+      opacity: 0.4;
     }
   }
 
@@ -59,6 +71,12 @@
       justify-content: end;
 
       position: relative;
+
+      margin-bottom: -1px;
+    }
+
+    .bar-container:first-child {
+      border-left: 2px solid hsla(0, 0%, 0%, 0.3);
     }
 
     .bar {
@@ -69,14 +87,17 @@
       /* margin: auto; */
 
       height: var(--value, 100%);
+      border: 2px solid;
+      border-radius: 3px;
 
-      --default-color: cornflowerblue;
+      --color: #74b0fc;
 
-      background-color: var(--color, var(--default-color));
-      border: 3px solid;
-      border-color: hsl(
-        from var(--color, var(--default-color)) h s calc(l / 2)
-      );
+      background-color: rgba(from var(--color) r g b / 0.2);
+      border-color: var(--color);
+
+      .active & {
+        --color: rgb(244 140 183);
+      }
     }
 
     .value {
