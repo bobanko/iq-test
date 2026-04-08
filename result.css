@@ -168,6 +168,16 @@ b.highlight {
 
 .smarter-card {
   border: 2px solid #0000002b;
+  position: relative;
+}
+
+.smarter-note {
+  position: absolute;
+  top: 4px;
+  right: 8px;
+  font-size: 12px;
+  font-style: italic;
+  opacity: 0.5;
 }
 
 /* --- Actions Row --- */
@@ -180,8 +190,6 @@ b.highlight {
 }
 
 .action-btn {
-  display: flex;
-  flex-direction: column;
   align-items: center;
   gap: 4px;
   cursor: pointer;
@@ -316,6 +324,30 @@ b.highlight {
   --color: var(--green);
   color: hsl(from var(--color) h s calc(l - 20));
   background-color: hsl(from var(--color) h calc(s/1.2) calc(l + 20));
+}
+
+.hero-description {
+  font-size: 16px;
+  opacity: 0.7;
+  margin-top: 6px;
+  text-align: center;
+}
+
+.stat-sub {
+  font-size: 13px;
+  opacity: 0.5;
+  font-style: italic;
+}
+
+.type-body {
+  flex: 1;
+}
+
+.type-motto {
+  font-size: 15px;
+  font-style: italic;
+  opacity: 0.5;
+  text-decoration: underline wavy;
 }
 
 .empty-loader {

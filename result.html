@@ -53,12 +53,14 @@
           id="$cognitiveGroupValue"
           class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
         ></span>
+        <p id="$heroDescription" class="hero-description"></p>
       </div>
       <div class="hero-rank flex-col align-center gap-10 radius-10 p-20">
         <img src="./images/emojis/trophy.png" alt="trophy" width="50" />
         <span class="stat-label">GLOBAL RANK</span>
         <span id="$globalRankValue" class="stat-value empty-loader"></span>
         <span id="$topRankValue" class="stat-value-sub empty-loader"></span>
+        <span id="$topRankLabel" class="stat-sub"></span>
       </div>
     </section>
 
@@ -68,7 +70,11 @@
         <img src="./images/emojis/stopwatch.png" alt="time" width="40" />
         <div class="flex-col">
           <span class="stat-label">TIME</span>
-          <span id="$completionTimeValue" class="stat-value empty-loader"></span>
+          <span
+            id="$completionTimeValue"
+            class="stat-value empty-loader"
+          ></span>
+          <span id="$completionTimeSub" class="stat-sub"></span>
         </div>
       </div>
       <div class="result-stat radius-10 p-10" style="--color: #e40d0d">
@@ -76,6 +82,7 @@
         <div class="flex-col">
           <span class="stat-label">ACCURACY</span>
           <span id="$accuracyRateValue" class="stat-value empty-loader"></span>
+          <span id="$accuracyRateSub" class="stat-sub"></span>
         </div>
       </div>
       <div class="result-stat radius-10 p-10" style="--color: #f50003">
@@ -83,13 +90,18 @@
         <div class="flex-col">
           <span class="stat-label">SPEED</span>
           <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
+          <span class="stat-sub">Per question</span>
         </div>
       </div>
       <div class="result-stat radius-10 p-10" style="--color: #00bc02">
         <img src="./images/emojis/check-mark.png" alt="correct" width="40" />
         <div class="flex-col">
           <span class="stat-label">CORRECT</span>
-          <span id="$correctAnswersValue" class="stat-value empty-loader"></span>
+          <span
+            id="$correctAnswersValue"
+            class="stat-value empty-loader"
+          ></span>
+          <span id="$correctAnswersSub" class="stat-sub"></span>
         </div>
       </div>
     </section>
@@ -124,9 +136,34 @@
           <strong>YOUR TYPE</strong>
           <span>ⓘ</span>
         </div>
-        <div id="$cognitiveTypeName" class="type-name empty-loader"></div>
-        <div id="$cognitiveTypeDesc" class="type-desc empty-loader"></div>
-        <div id="$cognitiveTypeTags" class="type-tags flex-row gap-5 flex-wrap"></div>
+        <div class="type-body flex-row gap-20">
+          <div class="flex-col gap-10" style="flex: 1">
+            <div class="flex-row">
+              <div class="flex-col">
+                <div id="$cognitiveTypeName" class="type-name">
+                  Chaotic Clicker
+                </div>
+                <div id="$cognitiveTypeDesc" class="type-desc">
+                  You play fast, think faster, and sometimes just guess.
+                </div>
+                <div id="$cognitiveTypeMotto" class="type-motto">
+                  It works... somehow.
+                </div>
+              </div>
+              <div class="type-illustration">
+                <img src="./images/result/thinker.png" alt="type" width="140" />
+              </div>
+            </div>
+            <div
+              id="$cognitiveTypeTags"
+              class="type-tags flex-row gap-5 flex-wrap"
+            >
+              <span class="tag">Fast Thinker</span>
+              <span class="tag">Risk Taker</span>
+              <span class="tag">Unpredictable</span>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
 
@@ -137,23 +174,24 @@
         <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
           <img src="./images/emojis/video-game.png" alt="gamers" width="40" />
           <div class="flex-col">
-            <span id="$smarterGamers" class="stat-value empty-loader"></span>
+            <span id="$smarterGamers" class="stat-value">42%</span>
             <span class="stat-label">of gamers 🎮</span>
           </div>
         </div>
         <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
           <span style="font-size: 36px">&lt;/&gt;</span>
           <div class="flex-col">
-            <span id="$smarterCoders" class="stat-value empty-loader"></span>
+            <span id="$smarterCoders" class="stat-value">67%</span>
             <span class="stat-label">of coders 💻</span>
           </div>
         </div>
         <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
           <span style="font-size: 36px">🐠</span>
           <div class="flex-col">
-            <span id="$smarterGoldfish" class="stat-value empty-loader"></span>
+            <span id="$smarterGoldfish" class="stat-value">100%</span>
             <span class="stat-label">of goldfish 🐡</span>
           </div>
+          <span class="smarter-note">* probably</span>
         </div>
       </div>
     </section>
@@ -161,24 +199,36 @@
     <!-- Action Buttons -->
     <section class="actions-row">
       <button
-        class="action-btn action-btn--share radius-10 p-10"
+        class="action-btn action-btn--share flex-row radius-10 p-10"
         data-fbq="trackCustom"
         data-fbq-event="ShareResult"
       >
-        <strong>SHARE RESULT</strong>
-        <span>Let the world see your IQ 🎉</span>
+        <span>📸</span>
+        <div class="flex-col">
+          <strong>SHARE RESULT</strong>
+          <span>Let the world see your IQ 🎉</span>
+        </div>
       </button>
-      <button class="action-btn radius-10 p-10">
-        <strong>CHALLENGE A FRIEND</strong>
-        <span>Beat their score</span>
+      <button class="action-btn flex-row radius-10 p-10">
+        <span>⚔️</span>
+        <div class="flex-col">
+          <strong>CHALLENGE A FRIEND</strong>
+          <span>Beat their score</span>
+        </div>
       </button>
-      <button class="action-btn radius-10 p-10">
-        <strong>TRY AGAIN</strong>
-        <span>Improve your IQ</span>
+      <button class="action-btn flex-row radius-10 p-10">
+        <span>🔄</span>
+        <div class="flex-col">
+          <strong>TRY AGAIN</strong>
+          <span>Improve your IQ</span>
+        </div>
       </button>
-      <button class="action-btn radius-10 p-10">
-        <strong>SAVE RESULT</strong>
-        <span>Create a free account</span>
+      <button class="action-btn flex-row radius-10 p-10">
+        <span>💾</span>
+        <div class="flex-col">
+          <strong>SAVE RESULT</strong>
+          <span>Create a free account 👤</span>
+        </div>
       </button>
     </section>
 
@@ -193,8 +243,12 @@
       <span id="$dateTakenValue"></span>
     </div>
 
-    <footer class="p-20" style="text-align: center; opacity: 0.5; font-size: 14px">
-      * IQ score is calculated based on correct answers and compared to other test takers.
+    <footer
+      class="p-20"
+      style="text-align: center; opacity: 0.5; font-size: 14px"
+    >
+      * IQ score is calculated based on correct answers and compared to other
+      test takers.
     </footer>
   </body>
 </html>
