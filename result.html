@@ -55,54 +55,98 @@
         ></span>
         <p id="$heroDescription" class="hero-description"></p>
       </div>
-      <div class="hero-rank flex-col align-center gap-10 radius-10 p-20">
-        <img src="./images/emojis/trophy.png" alt="trophy" width="50" />
-        <span class="stat-label">GLOBAL RANK</span>
-        <span id="$globalRankValue" class="stat-value empty-loader"></span>
-        <span id="$topRankValue" class="stat-value-sub empty-loader"></span>
+
+      <div
+        class="hero-rank result-stat flex-col align-center gap-10 radius-10 p-20"
+        style="--color: #fef7d9"
+      >
+        <div class="flex-row gap-20 align-center">
+          <img src="./images/emojis/trophy.png" alt="trophy" width="50" />
+
+          <div class="flex-col align-start">
+            <span class="stat-label">GLOBAL RANK</span>
+            <span id="$globalRankValue" class="stat-value empty-loader"></span>
+          </div>
+        </div>
         <span id="$topRankLabel" class="stat-sub"></span>
       </div>
     </section>
 
     <!-- Quick Stats Row -->
     <section class="stats-row">
-      <div class="result-stat radius-10 p-10" style="--color: #0063db">
-        <img src="./images/emojis/stopwatch.png" alt="time" width="40" />
-        <div class="flex-col">
-          <span class="stat-label">TIME</span>
-          <span
-            id="$completionTimeValue"
-            class="stat-value empty-loader"
-          ></span>
-          <span id="$completionTimeSub" class="stat-sub"></span>
+      <div
+        class="result-stat flex-col radius-10 p-10 gap-10"
+        style="--color: #eaf4fe"
+      >
+        <div class="flex-row gap-10 w-100p justify-unset">
+          <img src="./images/emojis/stopwatch.png" alt="time" />
+
+          <div class="flex-col">
+            <span class="stat-label">TIME</span>
+            <span
+              id="$completionTimeValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
         </div>
+        <span
+          id="$completionTimeSub"
+          class="stat-sub flex-row justify-center"
+        ></span>
       </div>
-      <div class="result-stat radius-10 p-10" style="--color: #e40d0d">
-        <img src="./images/emojis/direct-hit.png" alt="accuracy" width="40" />
-        <div class="flex-col">
-          <span class="stat-label">ACCURACY</span>
-          <span id="$accuracyRateValue" class="stat-value empty-loader"></span>
-          <span id="$accuracyRateSub" class="stat-sub"></span>
+      <div
+        class="result-stat flex-col radius-10 p-10 gap-10"
+        style="--color: #feebee"
+      >
+        <div class="flex-row gap-10 w-100p justify-unset">
+          <img src="./images/emojis/direct-hit.png" alt="accuracy" />
+
+          <div class="flex-col">
+            <span class="stat-label">ACCURACY</span>
+            <span
+              id="$accuracyRateValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
         </div>
+        <span
+          id="$accuracyRateSub"
+          class="stat-sub flex-row justify-center"
+        ></span>
       </div>
-      <div class="result-stat radius-10 p-10" style="--color: #f50003">
-        <img src="./images/emojis/racing-car.png" alt="speed" width="40" />
-        <div class="flex-col">
-          <span class="stat-label">SPEED</span>
-          <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
-          <span class="stat-sub">Per question</span>
+      <div
+        class="result-stat flex-col radius-10 p-10 gap-10"
+        style="--color: #fef8e2"
+      >
+        <div class="flex-row gap-10 w-100p justify-unset">
+          <img src="./images/emojis/racing-car.png" alt="speed" />
+
+          <div class="flex-col">
+            <span class="stat-label">SPEED</span>
+            <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
+          </div>
         </div>
+        <span class="stat-sub flex-row justify-center">Per question</span>
       </div>
-      <div class="result-stat radius-10 p-10" style="--color: #00bc02">
-        <img src="./images/emojis/check-mark.png" alt="correct" width="40" />
-        <div class="flex-col">
-          <span class="stat-label">CORRECT</span>
-          <span
-            id="$correctAnswersValue"
-            class="stat-value empty-loader"
-          ></span>
-          <span id="$correctAnswersSub" class="stat-sub"></span>
+      <div
+        class="result-stat flex-col radius-10 p-10 gap-10"
+        style="--color: #edfaee"
+      >
+        <div class="flex-row gap-10 w-100p justify-unset">
+          <img src="./images/emojis/check-mark.png" alt="correct" />
+
+          <div class="flex-col">
+            <span class="stat-label">CORRECT</span>
+            <span
+              id="$correctAnswersValue"
+              class="stat-value empty-loader"
+            ></span>
+          </div>
         </div>
+        <span
+          id="$correctAnswersSub"
+          class="stat-sub flex-row justify-center"
+        ></span>
       </div>
     </section>
 
@@ -171,21 +215,30 @@
     <section class="smarter-section p-20 radius-10">
       <h2>YOU ARE SMARTER THAN...</h2>
       <div class="smarter-row">
-        <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
-          <img src="./images/emojis/video-game.png" alt="gamers" width="40" />
+        <div
+          class="smarter-card result-stat flex-row align-center gap-10 p-10 radius-10"
+          style="--color: #f6f7f9"
+        >
+          <img src="./images/emojis/video-game.png" alt="gamers" />
           <div class="flex-col">
             <span id="$smarterGamers" class="stat-value">42%</span>
             <span class="stat-label">of gamers 🎮</span>
           </div>
         </div>
-        <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
+        <div
+          class="smarter-card result-stat flex-row align-center gap-10 p-10 radius-10"
+          style="--color: #f1f7ff"
+        >
           <span style="font-size: 36px">&lt;/&gt;</span>
           <div class="flex-col">
             <span id="$smarterCoders" class="stat-value">67%</span>
             <span class="stat-label">of coders 💻</span>
           </div>
         </div>
-        <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
+        <div
+          class="smarter-card result-stat flex-row align-center gap-10 p-10 radius-10"
+          style="--color: #f0faf1"
+        >
           <span style="font-size: 36px">🐠</span>
           <div class="flex-col">
             <span id="$smarterGoldfish" class="stat-value">100%</span>

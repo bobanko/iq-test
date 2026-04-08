@@ -110,7 +110,7 @@ function displayResult({ userResult, allResults }) {
 
   const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
-  $completionTimeValue.textContent = formatTimeSpan(timeSpent, true);
+  $completionTimeValue.textContent = formatTimeSpan(timeSpent);
 
   $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
   $globalRankValue.textContent = `#${globalRank.toFixed(0)}`;
@@ -120,7 +120,7 @@ function displayResult({ userResult, allResults }) {
   const answerSpeed = timeSpent / 1000 / total;
 
   $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`; ///${total}`;
-  $topRankValue.textContent = `${topPt.toFixed(0)}%`;
+  // $topRankValue.textContent = `${topPt.toFixed(0)}%`;
   $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
   $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)}s`;
 
