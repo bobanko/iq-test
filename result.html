@@ -63,7 +63,33 @@
         <span class="motivation block mt-20">
           Yor`e picking things up. <br> Keep training that brain </br>
         </span>
+    <!-- Hero: IQ Score -->
+    <section class="result-hero">
+      <div class="hero-brain">
+        <img src="./images/result/brain.png" alt="brain" width="160" />
       </div>
+      <div class="hero-score flex-col align-center">
+        <span class="iq-score-text">✨ YOUR IQ SCORE ✨</span>
+        <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
+        <span
+          id="$cognitiveSubgroupValue"
+          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+        ></span>
+        <span
+          hidden
+          id="$cognitiveGroupValue"
+          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+        ></span>
+        <p id="$heroDescription" class="hero-description"></p>
+      </div>
+      <div class="hero-rank flex-col align-center gap-10 radius-10 p-20">
+        <img src="./images/emojis/trophy.png" alt="trophy" width="50" />
+        <span class="stat-label">GLOBAL RANK</span>
+        <span id="$globalRankValue" class="stat-value empty-loader"></span>
+        <span id="$topRankValue" class="stat-value-sub empty-loader"></span>
+        <span id="$topRankLabel" class="stat-sub"></span>
+      </div>
+    </section>
 
       <div class="result-stat flex-row align-center gap-20 radius-10 p-10" style="--color: gray">
         <div class="stat-icon">🔝</div>
@@ -148,6 +174,134 @@
             <span class="stat-label">answer speed</span>
             <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
           </div>
+    <!-- Quick Stats Row -->
+    <section class="stats-row">
+      <div class="result-stat radius-10 p-10" style="--color: #0063db">
+        <img src="./images/emojis/stopwatch.png" alt="time" width="40" />
+        <div class="flex-col">
+          <span class="stat-label">TIME</span>
+          <span
+            id="$completionTimeValue"
+            class="stat-value empty-loader"
+          ></span>
+          <span id="$completionTimeSub" class="stat-sub"></span>
+        </div>
+      </div>
+      <div class="result-stat radius-10 p-10" style="--color: #e40d0d">
+        <img src="./images/emojis/direct-hit.png" alt="accuracy" width="40" />
+        <div class="flex-col">
+          <span class="stat-label">ACCURACY</span>
+          <span id="$accuracyRateValue" class="stat-value empty-loader"></span>
+          <span id="$accuracyRateSub" class="stat-sub"></span>
+        </div>
+      </div>
+      <div class="result-stat radius-10 p-10" style="--color: #f50003">
+        <img src="./images/emojis/racing-car.png" alt="speed" width="40" />
+        <div class="flex-col">
+          <span class="stat-label">SPEED</span>
+          <span id="$answerSpeedValue" class="stat-value empty-loader"></span>
+          <span class="stat-sub">Per question</span>
+        </div>
+      </div>
+      <div class="result-stat radius-10 p-10" style="--color: #00bc02">
+        <img src="./images/emojis/check-mark.png" alt="correct" width="40" />
+        <div class="flex-col">
+          <span class="stat-label">CORRECT</span>
+          <span
+            id="$correctAnswersValue"
+            class="stat-value empty-loader"
+          ></span>
+          <span id="$correctAnswersSub" class="stat-sub"></span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Chart + Type Row -->
+    <div class="chart-type-row">
+      <!-- IQ Distribution -->
+      <section class="chart-section flex-col p-20 gap-10 radius-10">
+        <div class="flex-row align-center gap-5">
+          <strong>IQ DISTRIBUTION</strong>
+          <span>ⓘ</span>
+        </div>
+        <div>See where you stand on the IQ bell curve.</div>
+        <div
+          id="$chartMain"
+          class="chart"
+          style="position: relative; height: 300px"
+        >
+          <div class="lines"></div>
+          <svg class="curve" viewBox="0 0 100 100" preserveAspectRatio="none">
+            <path class="curve-area" d=""></path>
+          </svg>
+          <div class="bars"></div>
+          <div class="x-labels" aria-hidden="true"></div>
+        </div>
+        <div id="$chartMainLegend" class="p-10">you're at...</div>
+      </section>
+
+      <!-- Your Type -->
+      <section class="type-section flex-col p-20 gap-10 radius-10">
+        <div class="flex-row align-center gap-5">
+          <strong>YOUR TYPE</strong>
+          <span>ⓘ</span>
+        </div>
+        <div class="type-body flex-row gap-20">
+          <div class="flex-col gap-10" style="flex: 1">
+            <div class="flex-row">
+              <div class="flex-col">
+                <div id="$cognitiveTypeName" class="type-name">
+                  Chaotic Clicker
+                </div>
+                <div id="$cognitiveTypeDesc" class="type-desc">
+                  You play fast, think faster, and sometimes just guess.
+                </div>
+                <div id="$cognitiveTypeMotto" class="type-motto">
+                  It works... somehow.
+                </div>
+              </div>
+              <div class="type-illustration">
+                <img src="./images/result/thinker.png" alt="type" width="140" />
+              </div>
+            </div>
+            <div
+              id="$cognitiveTypeTags"
+              class="type-tags flex-row gap-5 flex-wrap"
+            >
+              <span class="tag">Fast Thinker</span>
+              <span class="tag">Risk Taker</span>
+              <span class="tag">Unpredictable</span>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+    <!-- Smarter Than -->
+    <section class="smarter-section p-20 radius-10">
+      <h2>YOU ARE SMARTER THAN...</h2>
+      <div class="smarter-row">
+        <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
+          <img src="./images/emojis/video-game.png" alt="gamers" width="40" />
+          <div class="flex-col">
+            <span id="$smarterGamers" class="stat-value">42%</span>
+            <span class="stat-label">of gamers 🎮</span>
+          </div>
+        </div>
+        <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
+          <span style="font-size: 36px">&lt;/&gt;</span>
+          <div class="flex-col">
+            <span id="$smarterCoders" class="stat-value">67%</span>
+            <span class="stat-label">of coders 💻</span>
+          </div>
+        </div>
+        <div class="smarter-card flex-row align-center gap-10 p-10 radius-10">
+          <span style="font-size: 36px">🐠</span>
+          <div class="flex-col">
+            <span id="$smarterGoldfish" class="stat-value">100%</span>
+            <span class="stat-label">of goldfish 🐡</span>
+          </div>
+          <span class="smarter-note">* probably</span>
         </div>
 
         <!-- -- -->
@@ -202,6 +356,91 @@
         </p>
         <p>🏎️ answer speed - how much time you spent per question (avg)</p>
       </div>
+    </section>
+
+    <!-- Action Buttons -->
+    <section class="actions-row">
+      <button
+        class="action-btn action-btn--share flex-row radius-10 p-10"
+        data-fbq="trackCustom"
+        data-fbq-event="ShareResult"
+      >
+        <span>📸</span>
+        <div class="flex-col">
+          <strong>SHARE RESULT</strong>
+          <span>Let the world see your IQ 🎉</span>
+        </div>
+      </button>
+      <button class="action-btn flex-row radius-10 p-10">
+        <span>⚔️</span>
+        <div class="flex-col">
+          <strong>CHALLENGE A FRIEND</strong>
+          <span>Beat their score</span>
+        </div>
+      </button>
+      <button class="action-btn flex-row radius-10 p-10">
+        <span>🔄</span>
+        <div class="flex-col">
+          <strong>TRY AGAIN</strong>
+          <span>Improve your IQ</span>
+        </div>
+      </button>
+      <button class="action-btn flex-row radius-10 p-10">
+        <span>💾</span>
+        <div class="flex-col">
+          <strong>SAVE RESULT</strong>
+          <span>Create a free account 👤</span>
+        </div>
+      </button>
+    </section>
+
+    <!-- Hidden share inputs (kept for JS) -->
+    <div hidden>
+      <!-- hidden stat fields for JS compatibility -->
+      <span id="$scientificIqValue"></span>
+      <span id="$dateTakenValue"></span>
+    </div>
+
+    <section class="contact-form p-0 m-20 radius-10">
+      <form id="$formContact" class="flex-col">
+        <fieldset class="flex-col">
+          <h1 class="flex-row">
+            <span>🤔</span>
+            <span>What do you think?</span>
+          </h1>
+
+          <div class="flex-row gap-10 w-100p py-10">
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="❤️"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="👍"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="👎"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="🔥"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="💩"
+            />
+          </div>
 
       <div class="p-10">some global stats comparison?</div>
       <div class="p-10">now you can navigate to see correct answers?</div>
@@ -293,4 +532,16 @@
   </section>
 </body>
 
+</html>
+      </div>
+    </section>
+
+    <footer
+      class="p-20"
+      style="text-align: center; opacity: 0.5; font-size: 14px"
+    >
+      * IQ score is calculated based on correct answers and compared to other
+      test takers.
+    </footer>
+  </body>
 </html>

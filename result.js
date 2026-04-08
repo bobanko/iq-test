@@ -111,7 +111,7 @@ function displayResult({ userResult, allResults }) {
   const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
   $completionTimeValue.textContent = formatTimeSpan(timeSpent, true);
-  $questionsAnsweredValue.textContent = `${isAnswered}/${total}`;
+
   $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
   $globalRankValue.textContent = `#${globalRank.toFixed(0)}`;
   //
@@ -119,15 +119,49 @@ function displayResult({ userResult, allResults }) {
   const accuracyRate = (isCorrect / total) * 100;
   const answerSpeed = timeSpent / 1000 / total;
 
-  $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`;
+  $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`; ///${total}`;
   $topRankValue.textContent = `${topPt.toFixed(0)}%`;
   $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
-  $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)} sec`;
+  $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)}s`;
+
+  // sublabels
+  $topRankLabel.textContent = `Top ${topPt.toFixed(0)}% of test takers ✨`;
+
+  $heroDescription.textContent =
+    staticIq >= 120
+      ? "Impressive! You're a sharp thinker."
+      : staticIq >= 100
+        ? "Solid score! You're doing great."
+        : staticIq >= 80
+          ? "You're picking things up. Keep training that brain."
+          : "Every brain has potential. Keep going!";
+
+  const timeMinutes = timeSpent / 1000 / 60;
+  $completionTimeSub.textContent =
+    timeMinutes < 2
+      ? "Fast and clean"
+      : timeMinutes < 5
+        ? "Steady pace"
+        : "Took your time";
+
+  $accuracyRateSub.textContent =
+    accuracyRate >= 80
+      ? "Sharpshooter"
+      : accuracyRate >= 50
+        ? "Getting there"
+        : "Room to improve";
+
+  $correctAnswersSub.textContent =
+    isCorrect === total
+      ? "All or nothing 😎"
+      : isCorrect >= total * 0.8
+        ? "Almost perfect"
+        : `${total - isCorrect} missed`;
 
   $chartMainLegend.innerHTML = `
-  You are among the <b>${topPt.toFixed(0)}%</b> of the smartest people 
+  You are among the <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people 
   in the world. 
-  You are smarter than <b>${percetileRank.toFixed(0)}%</b> of the population.`;
+  You are smarter than <b class="highlight">${percetileRank.toFixed(0)}%</b> of the population.`;
 }
 
 window.addEventListener("hashchange", onHashChanged);
