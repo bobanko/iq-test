@@ -234,14 +234,174 @@
 
     <!-- Hidden share inputs (kept for JS) -->
     <div hidden>
-      <input id="$testResultLink" readonly type="text" />
-      <button id="$btnCopyTestResultLink">copy</button>
-      <input id="$testShareLink" readonly type="text" />
-      <button id="$btnCopyTestShareLink">copy</button>
       <!-- hidden stat fields for JS compatibility -->
       <span id="$scientificIqValue"></span>
       <span id="$dateTakenValue"></span>
     </div>
+
+    <section class="contact-form p-0 m-20 radius-10">
+      <form id="$formContact" class="flex-col">
+        <fieldset class="flex-col">
+          <h1 class="flex-row">
+            <span>🤔</span>
+            <span>What do you think?</span>
+          </h1>
+
+          <div class="flex-row gap-10 w-100p py-10">
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="❤️"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="👍"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="👎"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="🔥"
+            />
+            <input
+              class="feedback-emoji"
+              type="radio"
+              name="reaction"
+              value="💩"
+            />
+          </div>
+
+          <div class="flex-row col-gap-20 flex-wrap">
+            <label class="flex-col flex-auto">
+              <span class="py-10" data-translation="contact-label-name"
+                >Name:</span
+              >
+              <input
+                type="text"
+                id="displayName"
+                name="displayName"
+                required
+                placeholder="enter your name"
+                data-translation="contact-placeholder-name"
+                data-translation-attr="placeholder"
+              />
+            </label>
+
+            <label class="flex-col flex-auto">
+              <span class="py-10" data-translation="contact-label-email"
+                >Email:</span
+              >
+              <input
+                type="email"
+                id="email"
+                name="email"
+                required
+                placeholder="enter your email address"
+                data-translation="contact-placeholder-email"
+                data-translation-attr="placeholder"
+              />
+            </label>
+          </div>
+
+          <label class="flex-col">
+            <span class="py-10" data-translation="contact-label-subject"
+              >Subject:</span
+            >
+            <input
+              type="text"
+              id="subject"
+              name="subject"
+              placeholder="email subject"
+              data-translation="contact-placeholder-subject"
+              data-translation-attr="placeholder"
+            />
+          </label>
+
+          <label class="flex-col">
+            <span class="py-10" data-translation="contact-label-message"
+              >Message:</span
+            >
+            <textarea
+              id="message"
+              name="message"
+              rows="4"
+              required
+              placeholder="your message"
+              data-translation="contact-placeholder-message"
+              data-translation-attr="placeholder"
+            ></textarea>
+          </label>
+
+          <button
+            class="btn-primary p-10 my-10 gap-5 mobile-center flex-row justify-center"
+            type="submit"
+            data-translation="contact-btn-send"
+            data-fbq="trackCustom"
+            data-fbq-event="SendFeedback"
+            data-fbq-params='{"source": "landing_footer"}'
+          >
+            <span>send</span>
+            <span>→</span>
+          </button>
+        </fieldset>
+      </form>
+    </section>
+
+    <section class="p-20 py-0 m-20 radius-10">
+      <h1>
+        <span>🧑‍🤝‍🧑</span>
+        <span>What is the IQ of your friends?</span>
+      </h1>
+
+      <div class="flex-col gap-10 my-20">
+        <label
+          class="flex-row align-center gap-10 w-100p"
+          style="flex-wrap: wrap"
+        >
+          <span class="nowrap">share your test result</span>
+          <div class="flex-row gap-10" style="flex: 1 0 auto">
+            <input id="$testResultLink" class="w-100p" readonly type="text" />
+            <button
+              id="$btnCopyTestResultLink"
+              class="p-10"
+              data-fbq="trackCustom"
+              data-fbq-event="ShareResult"
+              data-fbq-params='{"source": "result_footer"}'
+            >
+              copy
+            </button>
+          </div>
+        </label>
+
+        <label
+          class="flex-row align-center gap-10 w-100p"
+          style="flex-wrap: wrap"
+        >
+          <span class="nowrap">share test with friends</span>
+          <div class="flex-row gap-10" style="flex: 1 0 auto">
+            <input id="$testShareLink" class="w-100p" readonly type="text" />
+            <button
+              id="$btnCopyTestShareLink"
+              class="p-10"
+              data-fbq="trackCustom"
+              data-fbq-event="ShareTestWithFriends"
+              data-fbq-params='{"source": "result_footer"}'
+            >
+              copy
+            </button>
+          </div>
+        </label>
+      </div>
+    </section>
 
     <footer
       class="p-20"
