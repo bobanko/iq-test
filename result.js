@@ -79,7 +79,7 @@ function initChart({ chartData, highlightValue = null }) {
 
   console.log("🍆", groups);
 
-  const maxLinesY = 11;
+  const maxLinesY = 6;
 
   //
   const maxCount = Math.max(...groups.map(({ items }) => items.length));
@@ -91,22 +91,44 @@ function initChart({ chartData, highlightValue = null }) {
   const maxY = Math.ceil(maxCount / chartYstep) * chartYstep;
   console.log(linesCount, maxY);
 
+  const bellCenterIndex = (groups.length - 1) / 2;
+  const bellSigmaIndex = Math.max(groups.length / 5, 1);
+
+  const gaussianValues = groups.map((_, index) => {
+    const z = (index - bellCenterIndex) / bellSigmaIndex;
+
+    return Math.exp(-0.5 * z * z);
+  });
+  const gaussianPeak = Math.max(...gaussianValues, 1);
+
   const $bars = $chartMain.querySelector(".bars");
   const $lines = $chartMain.querySelector(".lines");
+  const $xLabels = $chartMain.querySelector(".x-labels");
+  const $curveArea = $chartMain.querySelector(".curve-area");
 
   $bars.replaceChildren();
   $lines.replaceChildren();
+  $xLabels?.replaceChildren();
 
-  groups.forEach(({ name, min, max, items }) => {
+  groups.forEach(({ name, min, max, items }, index) => {
     const $bar = $tmplChartBar.content.firstElementChild.cloneNode(true);
+    const $xLabel = document.createElement("div");
 
     const groupTitle = getGroupRangeName({ min, max });
     const count = items.length;
+    const gaussianRatio = gaussianValues[index] / gaussianPeak;
+    const gaussianCount = gaussianRatio * maxY;
 
-    const countPt = ((count / maxY) * 100).toFixed(2);
+    // TEMP: stub heights with normal distribution shape.
+    const countPt = ((gaussianCount / maxY) * 100).toFixed(2);
 
-    $bar.title = items.sort();
+    // Original logic (real histogram counts):
+    // const countPt = ((count / maxY) * 100).toFixed(2);
 
+    // todo(vmyshko): debug
+    // $bar.title = items.sort();
+
+    // TEMP: keep all bars uniform, without highlighted bucket.
     if (
       Number.isFinite(highlightValue) &&
       highlightValue >= min &&
@@ -118,8 +140,11 @@ function initChart({ chartData, highlightValue = null }) {
     $bar.style.setProperty("--value", `${countPt}%`);
 
     $bar.querySelector(".value").textContent = `${groupTitle}`; // [${count}]
+    $xLabel.className = "x-label";
+    $xLabel.textContent = `${groupTitle}`;
 
     $bars.appendChild($bar);
+    $xLabels?.appendChild($xLabel);
   });
 
   Array(linesCount)
@@ -134,6 +159,44 @@ function initChart({ chartData, highlightValue = null }) {
 
       $lines.appendChild($line);
     });
+
+  if ($curveArea) {
+    const curvePeak = maxY * 0.9;
+    const edgeZ = (0 - bellCenterIndex) / bellSigmaIndex;
+    const edgeValue = Math.exp(-0.5 * edgeZ * edgeZ);
+    const normDenominator = Math.max(gaussianPeak - edgeValue, 1e-6);
+
+    const sampleCount = 72;
+    const points = Array.from({ length: sampleCount + 1 }, (_, i) => {
+      const x = (i / sampleCount) * 100;
+      const idx = groups.length > 1 ? (x / 100) * (groups.length - 1) : 0;
+      const z = (idx - bellCenterIndex) / bellSigmaIndex;
+      const value = Math.exp(-0.5 * z * z);
+      const normalizedValue = Math.max(
+        0,
+        (value - edgeValue) / normDenominator,
+      );
+      const yValue = normalizedValue * curvePeak;
+      let y = 100 - (yValue / maxY) * 100;
+
+      if (i === 0 || i === sampleCount) {
+        y = 100;
+      }
+
+      return { x, y };
+    });
+
+    const areaTopD = points
+      .map(
+        ({ x, y }, i) =>
+          `${i === 0 ? "M" : "L"} ${x.toFixed(2)} ${y.toFixed(2)}`,
+      )
+      .join(" ");
+
+    const areaD = `${areaTopD} L 100 100 L 0 100 Z`;
+
+    $curveArea.setAttribute("d", areaD);
+  }
 }
 
 // const quizResults = getQuizResults();

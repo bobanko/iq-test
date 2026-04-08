@@ -1,7 +1,7 @@
 .chart {
   position: relative;
-
-  display: grid;
+  --x-axis-height: 52px;
+  --y-axis-width: 48px;
 
   .lines,
   .bars {
@@ -9,6 +9,36 @@
 
     width: 100%;
     height: 100%;
+  }
+
+  margin-bottom: var(--x-axis-height);
+
+  --v-margin: calc(12px - 1px);
+
+  .curve,
+  .bars {
+    padding-top: var(--v-margin);
+    padding-bottom: var(--v-margin);
+  }
+
+  .curve {
+    position: absolute;
+    inset: 0;
+
+    /* match bars plot area so curve aligns with bar columns */
+    padding-left: var(--y-axis-width);
+
+    box-sizing: border-box;
+    pointer-events: none;
+    z-index: 0;
+
+    width: 100%;
+    height: 100%;
+    overflow: visible;
+
+    .curve-area {
+      fill: rgba(33, 150, 243, 0.1);
+    }
   }
 
   .lines {
@@ -20,6 +50,7 @@
     align-content: space-between;
 
     pointer-events: none;
+    z-index: 1;
 
     .line-container {
       display: contents;
@@ -57,11 +88,12 @@
   .bars {
     display: grid;
     grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    position: absolute;
+    inset: 0;
+    z-index: 2;
 
-    /* space for vertical history */
-    padding-left: 48px;
-    padding-top: 12px;
-    padding-bottom: 12px;
+    padding-left: var(--y-axis-width);
 
     box-sizing: border-box;
 
@@ -69,10 +101,9 @@
       display: flex;
       flex-direction: column;
       justify-content: end;
+      height: 100%;
 
       position: relative;
-
-      margin-bottom: -1px;
     }
 
     .bar-container:first-child {
@@ -101,11 +132,38 @@
     }
 
     .value {
-      position: absolute;
-      padding: 5px;
-      /* white-space: nowrap; */
-      text-align: center;
-      background: #ffffff52;
+      display: none;
     }
+  }
+
+  .x-labels {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 100%;
+    height: var(--x-axis-height);
+
+    display: grid;
+    grid-auto-flow: column;
+    grid-auto-columns: 1fr;
+    align-items: start;
+
+    padding-left: var(--y-axis-width);
+    padding-top: 6px;
+    padding-bottom: 0;
+
+    box-sizing: border-box;
+    z-index: 3;
+  }
+
+  .x-label {
+    box-sizing: border-box;
+    padding-top: 5px;
+    text-align: center;
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 14px;
+    opacity: 0.4;
+    white-space: nowrap;
   }
 }
