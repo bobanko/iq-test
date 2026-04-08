@@ -65,7 +65,7 @@
       justify-self: stretch;
 
       border-bottom: 3px dotted;
-      border-color: rgba(0, 0, 0, 0.2);
+      border-color: rgba(0, 0, 0, 0.15);
 
       .line-container:last-child & {
         border-style: solid;
@@ -124,7 +124,7 @@
     }
 
     .bar-container:first-child {
-      border-left: 2px solid hsla(0, 0%, 0%, 0.3);
+      border-left: 2px solid hsla(0, 0%, 0%, 0.15);
     }
 
     .bar {
