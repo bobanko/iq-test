@@ -31,7 +31,7 @@ function getPairs(array) {
 function groupBySplitPoints({ numbers, splitPoints }) {
   const sortedNumbers = numbers.toSorted((a, b) => a - b);
   const sortedSplitPoints = [-Infinity, ...splitPoints, Infinity].toSorted(
-    (a, b) => a - b
+    (a, b) => a - b,
   );
 
   const resultGroups = [];
@@ -112,7 +112,7 @@ function initChart({ chartData, highlightValue = null }) {
       highlightValue >= min &&
       highlightValue <= max - 1
     ) {
-      $bar.style.setProperty("--color", "var(--pink)");
+      $bar.classList.add("active");
     }
 
     $bar.style.setProperty("--value", `${countPt}%`);
@@ -177,13 +177,13 @@ function displayResult({ userResult, allResults }) {
 
   // all answer counts
   const sampleCorrectAnswers = allResults.map(
-    (result) => result.stats.isCorrect
+    (result) => result.stats.isCorrect,
   );
 
   const correctAnswersMean = calculateMean(sampleCorrectAnswers);
   const correctAnswersStd = calculateStandardDeviation(
     sampleCorrectAnswers,
-    correctAnswersMean
+    correctAnswersMean,
   );
 
   const scientificIq = calculateIQ({
@@ -204,10 +204,10 @@ function displayResult({ userResult, allResults }) {
 
   // PR = [(N_below + 0.5 × N_equal) / N_total] × 100
   const resultsBelowCount = allResultsIqsSorted.filter(
-    (iq) => iq < staticIq
+    (iq) => iq < staticIq,
   ).length;
   const sameResultsCount = allResultsIqsSorted.filter(
-    (iq) => iq === staticIq
+    (iq) => iq === staticIq,
   ).length;
   const totalResultsCount = allResultsIqsSorted.length;
   const globalRank =
@@ -267,10 +267,10 @@ $testResultLink.addEventListener("click", () => copyTextFrom($testResultLink));
 $testShareLink.addEventListener("click", () => copyTextFrom($testShareLink));
 
 $btnCopyTestResultLink.addEventListener("click", () =>
-  copyTextFrom($testResultLink)
+  copyTextFrom($testResultLink),
 );
 $btnCopyTestShareLink.addEventListener("click", () =>
-  copyTextFrom($testShareLink)
+  copyTextFrom($testShareLink),
 );
 
 {
