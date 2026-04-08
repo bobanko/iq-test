@@ -111,7 +111,7 @@ function displayResult({ userResult, allResults }) {
   const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
   $completionTimeValue.textContent = formatTimeSpan(timeSpent, true);
-  $questionsAnsweredValue.textContent = `${isAnswered}/${total}`;
+
   $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
   $globalRankValue.textContent = `#${globalRank.toFixed(0)}`;
   //
@@ -119,15 +119,15 @@ function displayResult({ userResult, allResults }) {
   const accuracyRate = (isCorrect / total) * 100;
   const answerSpeed = timeSpent / 1000 / total;
 
-  $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`;
+  $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`; ///${total}`;
   $topRankValue.textContent = `${topPt.toFixed(0)}%`;
   $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
   $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)} sec`;
 
   $chartMainLegend.innerHTML = `
-  You are among the <b>${topPt.toFixed(0)}%</b> of the smartest people 
+  You are among the <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people 
   in the world. 
-  You are smarter than <b>${percetileRank.toFixed(0)}%</b> of the population.`;
+  You are smarter than <b class="highlight">${percetileRank.toFixed(0)}%</b> of the population.`;
 }
 
 window.addEventListener("hashchange", onHashChanged);

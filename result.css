@@ -46,7 +46,6 @@ body {
 section {
   background-color: #fff;
   border: 2px solid #0000002b;
-  /* border: 2px solid var(--input-color); */
 }
 
 h1 {
@@ -54,26 +53,177 @@ h1 {
   margin: 10px 0;
 }
 
-/* --- */
+b.highlight {
+  color: #23c541;
+}
 
-.iq-score-block {
-  .iq-score-text {
-    font-size: 30px;
+/* --- Hero Section --- */
+
+.result-hero {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 20px;
+  padding: 30px;
+  margin: 10px 20px;
+  border-radius: 15px;
+  background-color: #fff;
+  border: 2px solid #0000002b;
+}
+
+.hero-brain img {
+  display: block;
+}
+
+.hero-score {
+  text-align: center;
+}
+
+.hero-rank {
+  border: 2px solid #0000002b;
+  text-align: center;
+  min-width: 140px;
+}
+
+.hero-rank .stat-value {
+  font-size: 36px;
+  font-weight: 700;
+}
+
+.hero-rank .stat-value-sub {
+  font-size: 16px;
+  opacity: 0.6;
+}
+
+/* --- Stats Row --- */
+
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 10px 20px;
+}
+
+.stats-row .result-stat {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
+  background-color: #fff;
+  border: 2px solid #0000002b;
+}
+
+/* --- Chart + Type Row --- */
+
+.chart-type-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin: 10px 20px;
+}
+
+.chart-section,
+.type-section {
+  background-color: #fff;
+  border: 2px solid #0000002b;
+}
+
+.type-name {
+  font-size: 24px;
+  font-weight: 700;
+  color: #2196f3;
+}
+
+.type-desc {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+.type-tags {
+  margin-top: auto;
+}
+
+.type-tags .tag {
+  padding: 4px 12px;
+  border: 2px solid #0000002b;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* --- Smarter Section --- */
+
+.smarter-section {
+  margin: 10px 20px;
+  background-color: #fff;
+  border: 2px solid #0000002b;
+}
+
+.smarter-row {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.smarter-card {
+  border: 2px solid #0000002b;
+}
+
+/* --- Actions Row --- */
+
+.actions-row {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 10px 20px;
+}
+
+.action-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  background-color: #fff;
+  border: 2px solid #0000002b;
+  text-align: center;
+}
+
+.action-btn--share {
+  background-color: #23c541;
+  color: white;
+  border-color: #1ba534;
+}
+
+/* --- Mobile --- */
+
+@media (max-width: 700px) {
+  .result-hero {
+    grid-template-columns: auto 1fr;
+    grid-template-rows: auto auto;
   }
 
-  .iq-score-value {
-    font-size: 70px;
-    font-weight: 600;
+  .hero-rank {
+    grid-column: 1 / -1;
+    flex-direction: row;
+    justify-content: center;
   }
 
-  .iq-score-cognitive {
-    font-size: 20px;
-    font-weight: 600;
+  .stats-row {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    --color: var(--green);
-    /* todo: recalc? */
-    color: hsl(from var(--color) h s calc(l - 20));
-    background-color: hsl(from var(--color) h calc(s/1.2) calc(l + 20));
+  .chart-type-row {
+    grid-template-columns: 1fr;
+  }
+
+  .smarter-row {
+    grid-template-columns: 1fr;
+  }
+
+  .actions-row {
+    grid-template-columns: 1fr;
   }
 }
 
@@ -116,24 +266,6 @@ h1 {
   }
 }
 
-.result-stat-grid {
-  position: relative;
-  display: grid;
-  box-sizing: border-box;
-
-  --size: 3;
-
-  @container (width < 600px) {
-    --size: 2;
-  }
-
-  @container (width < 450px) {
-    --size: 1;
-  }
-
-  grid-template-columns: repeat(var(--size), 1fr);
-}
-
 .result-stat {
   opacity: 0;
   transform: translateY(20px);
@@ -150,31 +282,40 @@ h1 {
 
 .result-stat {
   --color: gray;
-
   color: black;
-
-  background-color: hsl(from var(--color) h s calc(l + 45));
-  border-style: solid;
-  border-width: 2px;
-  border-color: hsla(from var(--color) h s calc(l - 20) / 0.3);
-
   text-transform: capitalize;
 
-  ::selection {
-    background-color: var(--color);
-  }
-
-  .stat-icon {
-    font-size: 50px;
-  }
-
   .stat-label {
-    font-size: 20px;
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    opacity: 0.6;
   }
 
   .stat-value {
-    font-size: 30px;
+    font-size: 24px;
+    font-weight: 700;
   }
+}
+
+.iq-score-text {
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.iq-score-value {
+  font-size: 70px;
+  font-weight: 600;
+}
+
+.iq-score-cognitive {
+  font-size: 20px;
+  font-weight: 600;
+
+  --color: var(--green);
+  color: hsl(from var(--color) h s calc(l - 20));
+  background-color: hsl(from var(--color) h calc(s/1.2) calc(l + 20));
 }
 
 .empty-loader {
