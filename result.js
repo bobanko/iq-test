@@ -60,9 +60,9 @@ function groupBySplitPoints({ numbers, splitPoints }) {
 
 function getGroupRangeName({ min, max }) {
   if (min === -Infinity) return `<${max}`;
-  if (max === Infinity) return `>${min}`;
+  if (max === Infinity) return `${min}+`;
 
-  return `${min}-${max - 1}`;
+  return `${min}`;
 }
 
 function initChart({ chartData, highlightValue = null }) {
@@ -74,7 +74,7 @@ function initChart({ chartData, highlightValue = null }) {
 
   const groups = groupBySplitPoints({
     numbers: chartData,
-    splitPoints: [70, 80, 90, 110, 120, 130],
+    splitPoints: [60, 70, 80, 90, 100, 110, 120, 130, 140],
   });
 
   console.log("🍆", groups);
@@ -129,12 +129,18 @@ function initChart({ chartData, highlightValue = null }) {
     // $bar.title = items.sort();
 
     // TEMP: keep all bars uniform, without highlighted bucket.
-    if (
+    const isActive =
       Number.isFinite(highlightValue) &&
       highlightValue >= min &&
-      highlightValue <= max - 1
-    ) {
+      highlightValue <= max - 1;
+
+    if (isActive) {
       $bar.classList.add("active");
+
+      const $label = document.createElement("div");
+      $label.className = "bar-label";
+      $label.textContent = `You: ${highlightValue}`;
+      $bar.prepend($label);
     }
 
     $bar.style.setProperty("--value", `${countPt}%`);
@@ -161,23 +167,14 @@ function initChart({ chartData, highlightValue = null }) {
     });
 
   if ($curveArea) {
-    const curvePeak = maxY * 0.9;
-    const edgeZ = (0 - bellCenterIndex) / bellSigmaIndex;
-    const edgeValue = Math.exp(-0.5 * edgeZ * edgeZ);
-    const normDenominator = Math.max(gaussianPeak - edgeValue, 1e-6);
-
     const sampleCount = 72;
     const points = Array.from({ length: sampleCount + 1 }, (_, i) => {
       const x = (i / sampleCount) * 100;
       const idx = groups.length > 1 ? (x / 100) * (groups.length - 1) : 0;
       const z = (idx - bellCenterIndex) / bellSigmaIndex;
       const value = Math.exp(-0.5 * z * z);
-      const normalizedValue = Math.max(
-        0,
-        (value - edgeValue) / normDenominator,
-      );
-      const yValue = normalizedValue * curvePeak;
-      let y = 100 - (yValue / maxY) * 100;
+      const ratio = value / gaussianPeak;
+      let y = 100 - ratio * 100;
 
       if (i === 0 || i === sampleCount) {
         y = 100;
