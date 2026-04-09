@@ -285,11 +285,26 @@ b.highlight {
 
 .smarter-note {
   position: absolute;
-  top: 4px;
-  right: 8px;
+  bottom: 105%;
+  rotate: 10deg;
+  right: 10%;
   font-size: 12px;
   font-style: italic;
-  opacity: 0.5;
+  opacity: 0.7;
+  text-transform: none;
+
+  &:after {
+    content: "";
+    width: 50px;
+    background-image: url(./images/result/up-hand-drawn-arrow.png);
+    background-size: contain;
+    height: 50px;
+    display: block;
+    position: absolute;
+    top: -15%;
+    right: 85%;
+    rotate: 140deg;
+  }
 }
 
 /* --- Actions Row --- */
@@ -517,8 +532,7 @@ b.highlight {
 .type-motto {
   font-size: 15px;
   font-style: italic;
-  opacity: 0.5;
-  text-decoration: underline wavy;
+  color: #2196f3;
 }
 
 .empty-loader {

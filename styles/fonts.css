@@ -3,8 +3,8 @@
 
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gloria+Hallelujah&display=swap");
-
-/* @import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gloria+Hallelujah&family=Gochi+Hand&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap"); */
+/* unused */
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Gloria+Hallelujah&family=Gochi+Hand&family=Shantell+Sans:ital,wght@0,300..800;1,300..800&display=swap");
 
 .inter-regular {
   font-family: "Inter", sans-serif;
