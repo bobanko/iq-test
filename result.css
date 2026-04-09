@@ -205,7 +205,6 @@ b.highlight {
 .chart-section,
 .type-section {
   background-color: #fff;
-  border: none;
   border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
@@ -251,7 +250,7 @@ b.highlight {
 .smarter-section {
   margin: 0 0 10px;
   background-color: #fff;
-  border: none;
+
   border-radius: 16px;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
 }
