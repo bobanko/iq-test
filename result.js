@@ -202,13 +202,6 @@ $btnCopyTestShareLink.addEventListener("click", () =>
   const user = await getCurrentUser();
   const userData = (await getUserData(user.uid)) ?? {};
   const { displayName = "", email = "" } = userData;
-  const formData = { displayName, email };
-
-  for (let [key, value] of Object.entries(formData)) {
-    const input = $formContact.elements[key];
-
-    input.value = value ?? "";
-  }
 
   $fieldset.disabled = false;
 
@@ -233,9 +226,6 @@ $btnCopyTestShareLink.addEventListener("click", () =>
     $fieldset.disabled = true;
 
     const resultId = getHashParameter("id");
-    const email = formData.get("email");
-    const displayName = formData.get("displayName");
-    const subject = formData.get("subject");
     const message = formData.get("message");
     const selectedReaction = formData.get("reaction");
 
@@ -245,9 +235,6 @@ $btnCopyTestShareLink.addEventListener("click", () =>
     });
 
     const userData = {
-      email,
-      displayName,
-      subject,
       message,
       resultId,
 
@@ -259,9 +246,7 @@ $btnCopyTestShareLink.addEventListener("click", () =>
     };
 
     await saveFeedback(userData);
-
     // clear form
-    $formContact.subject.value = "";
     $formContact.message.value = "";
 
     $fieldset.disabled = false;
