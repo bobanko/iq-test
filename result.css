@@ -33,7 +33,7 @@
 
 html {
   min-height: 100%;
-  background-color: #f0f2f5;
+  background-color: #fefefe;
 }
 
 body {
@@ -80,11 +80,39 @@ b.highlight {
 }
 
 .hero-brain {
+  position: relative;
+}
+
+.hero-brain .brain-label {
+  position: absolute;
+
+  width: 100px;
+  text-align: center;
+  rotate: -10deg;
+  bottom: 0;
+  opacity: 0.7;
+
+  &::after {
+    content: "";
+    width: 50px;
+    /* taken from: https://thenounproject.com/icon/up-hand-drawn-arrow-1563367/ */
+    background-image: url(./images/result/up-hand-drawn-arrow.png);
+    background-size: contain;
+    height: 50px;
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 80%;
+  }
+
+  animation: updown 2000ms ease-in-out infinite alternate;
+}
+
+.hero-brain img {
   animation:
     updown 2000ms ease-in-out infinite alternate,
     rotleftright 3000ms ease-in-out infinite alternate;
   transform-origin: center;
-  cursor: pointer;
   filter: drop-shadow(0px 20px 9px var(--color));
   --color: #00000033;
 }
@@ -102,7 +130,7 @@ b.highlight {
 }
 
 .hero-brain img {
-  display: block;
+  width: 300px;
 }
 
 .hero-score {
@@ -145,26 +173,27 @@ b.highlight {
 
   .result-stat {
     display: flex;
-    background-color: var(--color);
-    border: 1px solid;
-    border-color: hsl(from var(--color) h s calc(l - 15));
-    border-radius: 12px;
-    box-shadow:
-      0 2px 3px rgba(0, 0, 0, 0.1),
-      inset 0px 2px 2px 0px white;
   }
 }
 
 .result-stat {
+  --color: white;
   background-color: var(--color);
   border: 1px solid;
-  border-color: hsl(from var(--color) h s calc(l - 15));
+  border-color: hsl(from var(--color) h s calc(l - 10));
   border-radius: 12px;
   box-shadow:
-    0 2px 3px rgba(0, 0, 0, 0.1),
-    inset 0px 2px 2px 0px white;
+    0 2px 3px hsla(from var(--color) h s calc(l - 80) / 0.1),
+    inset 0px 1px 2px 0px white;
 }
 /* --- Chart + Type Row --- */
+#\$chartMain {
+  height: 200px;
+
+  @media (max-width: 700px) {
+    height: 180px;
+  }
+}
 
 .chart-type-row {
   display: grid;
@@ -200,12 +229,21 @@ b.highlight {
 
 .type-tags .tag {
   padding: 5px 14px;
-  border: 2px solid #d0e8d0;
-  border-radius: 20px;
+  border: 2px solid;
+  border-radius: 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #2e7d32;
-  background-color: #f0f8f0;
+
+  background-color: var(--color);
+  border-color: hsl(from var(--color) h s calc(l - 10));
+  color: hsl(from var(--color) h s calc(l - 60));
+}
+
+.info-icon {
+  color: #0000003d;
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 1;
 }
 
 /* --- Smarter Section --- */
@@ -271,9 +309,6 @@ b.highlight {
   align-items: center;
   gap: 6px;
   cursor: pointer;
-  background-color: #fff;
-  border: 2px solid #e8e8e8;
-  border-radius: 12px;
   text-align: left;
   padding: 14px;
   transition:
@@ -282,32 +317,18 @@ b.highlight {
 }
 
 .action-btn:hover {
-  background-color: #f5f5f5;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
 .action-btn strong {
   font-size: 13px;
   letter-spacing: 0.3px;
+  font-weight: 700;
 }
 
 .action-btn span {
   font-size: 12px;
   opacity: 0.6;
-}
-
-.action-btn--share {
-  background-color: #23c541;
-  color: white;
-  border-color: #1ba534;
-}
-
-.action-btn--share:hover {
-  background-color: #1fb53a;
-}
-
-.action-btn--share span {
-  opacity: 0.9;
 }
 
 /* --- Mobile --- */
@@ -325,7 +346,7 @@ b.highlight {
   }
 
   .hero-brain img {
-    width: 100px;
+    width: 140px;
   }
 
   .hero-rank {
@@ -410,7 +431,6 @@ b.highlight {
 }
 
 .result-stat {
-  --color: gray;
   color: hsl(from var(--color) h s calc(l - 80));
   text-transform: capitalize;
 
@@ -436,11 +456,28 @@ b.highlight {
 }
 
 .iq-score-text {
+  position: relative;
+  display: flex;
+  align-items: center;
   font-size: 14px;
   font-weight: 700;
   letter-spacing: 1.5px;
   text-transform: uppercase;
   opacity: 0.7;
+
+  &:before,
+  &:after {
+    content: "✨";
+    position: absolute;
+    font-size: 2em;
+  }
+
+  &:before {
+    right: 100%;
+  }
+  &:after {
+    left: 100%;
+  }
 }
 
 .iq-score-value {

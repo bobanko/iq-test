@@ -40,9 +40,14 @@
     <section class="result-hero">
       <div class="hero-brain">
         <img src="./images/result/brain.png" alt="brain" width="160" />
+
+        <div class="brain-label handwritten">
+          <span hidden>not bad for a human</span>
+          <span>нот бед фор э хьюман</span>
+        </div>
       </div>
       <div class="hero-score flex-col align-center">
-        <span class="iq-score-text">✨ YOUR IQ SCORE ✨</span>
+        <span class="iq-score-text">YOUR IQ SCORE</span>
         <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
         <span
           id="$cognitiveSubgroupValue"
@@ -156,14 +161,12 @@
       <section class="chart-section flex-col p-20 gap-10 radius-10">
         <div class="flex-row align-center gap-5">
           <strong>IQ DISTRIBUTION</strong>
-          <span>ⓘ</span>
+          <span class="info-icon">ⓘ</span>
         </div>
-        <div>See where you stand on the IQ bell curve.</div>
-        <div
-          id="$chartMain"
-          class="chart"
-          style="position: relative; height: 300px"
-        >
+        <div style="opacity: 0.4">
+          See where you stand on the IQ bell curve.
+        </div>
+        <div id="$chartMain" class="chart">
           <div class="lines"></div>
           <svg class="curve" viewBox="0 0 100 100" preserveAspectRatio="none">
             <path class="curve-area" d=""></path>
@@ -178,7 +181,7 @@
       <section class="type-section flex-col p-20 gap-10 radius-10">
         <div class="flex-row align-center gap-5">
           <strong>YOUR TYPE</strong>
-          <span>ⓘ</span>
+          <span class="info-icon">ⓘ</span>
         </div>
         <div class="type-body flex-row gap-20">
           <div class="flex-col gap-10" style="flex: 1">
@@ -202,9 +205,9 @@
               id="$cognitiveTypeTags"
               class="type-tags flex-row gap-5 flex-wrap"
             >
-              <span class="tag">Fast Thinker</span>
-              <span class="tag">Risk Taker</span>
-              <span class="tag">Unpredictable</span>
+              <span class="tag" style="--color: #e5f2fe">Fast Thinker</span>
+              <span class="tag" style="--color: #fdf4d2">Risk Taker</span>
+              <span class="tag" style="--color: #fedfe9">Unpredictable</span>
             </div>
           </div>
         </div>
@@ -252,9 +255,10 @@
     <!-- Action Buttons -->
     <section class="actions-row">
       <button
-        class="action-btn action-btn--share flex-row radius-10 p-10"
+        class="action-btn result-stat flex-row radius-10 p-10"
         data-fbq="trackCustom"
         data-fbq-event="ShareResult"
+        style="--color: #2dd67d"
       >
         <span>📸</span>
         <div class="flex-col">
@@ -262,21 +266,21 @@
           <span>Let the world see your IQ 🎉</span>
         </div>
       </button>
-      <button class="action-btn flex-row radius-10 p-10">
+      <button class="action-btn result-stat flex-row radius-10 p-10">
         <span>⚔️</span>
         <div class="flex-col">
           <strong>CHALLENGE A FRIEND</strong>
           <span>Beat their score</span>
         </div>
       </button>
-      <button class="action-btn flex-row radius-10 p-10">
+      <button class="action-btn result-stat flex-row radius-10 p-10">
         <span>🔄</span>
         <div class="flex-col">
           <strong>TRY AGAIN</strong>
           <span>Improve your IQ</span>
         </div>
       </button>
-      <button class="action-btn flex-row radius-10 p-10">
+      <button class="action-btn result-stat flex-row radius-10 p-10">
         <span>💾</span>
         <div class="flex-col">
           <strong>SAVE RESULT</strong>
