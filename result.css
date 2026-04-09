@@ -198,13 +198,20 @@ hr {
 
 /* ===== Hero Section ===== */
 
-.result-hero {
+.hero-row {
   display: grid;
-  grid-template-columns: auto 1fr auto;
+  grid-template-columns: repeat(4, 1fr);
+  gap: var(--gap-section);
+  margin: 0 0 var(--gap-section);
+}
+
+.result-hero {
+  grid-column: span 3;
+  display: grid;
+  grid-template-columns: auto 1fr;
   align-items: center;
   gap: 20px;
   padding: 30px;
-  margin: 0 0 var(--gap-section);
 }
 
 .hero-brain {
@@ -297,26 +304,53 @@ hr {
   text-align: center;
 }
 
-.hero-rank {
-  border: 2px solid #e8e8e8;
-  background-color: #f8fdf8;
-  text-align: center;
-  min-width: 160px;
-  border-radius: 12px;
+/* ===== Percentile Rank ===== */
 
-  img {
-    aspect-ratio: 1 / 1;
-  }
-
+.percentile-rank {
   .stat-value {
-    font-size: 40px;
+    font-size: 32px;
     font-weight: 700;
   }
+}
 
-  .stat-value-sub {
-    font-size: 14px;
-    opacity: 0.5;
-  }
+.percentile-gauge {
+  width: 100%;
+  max-width: 160px;
+  margin: 0 auto;
+}
+
+.gauge-svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.gauge-track {
+  fill: none;
+  stroke: #e0e0e0;
+  stroke-width: 8;
+  stroke-linecap: round;
+}
+
+.gauge-fill {
+  fill: none;
+  stroke: #4caf50;
+  stroke-width: 8;
+  stroke-linecap: round;
+  transition: stroke-dashoffset 800ms ease;
+}
+
+.gauge-dot {
+  fill: #7c4dff;
+  transition:
+    cx 800ms ease,
+    cy 800ms ease;
+}
+
+.gauge-labels {
+  font-size: 11px;
+  opacity: 0.5;
+  margin-top: -4px;
 }
 
 /* ===== Stats Row ===== */
@@ -504,22 +538,24 @@ hr {
     padding: 6px;
   }
 
+  .hero-row {
+    grid-template-columns: 1fr;
+  }
+
   .result-hero {
+    grid-column: span 1;
     grid-template-columns: auto 1fr;
-    grid-template-rows: auto auto;
     padding: 20px;
     gap: 15px;
   }
 
-  .hero-brain img {
-    width: 140px;
+  .hero-sidebar {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
   }
 
-  .hero-rank {
-    grid-column: 1 / -1;
-    flex-direction: row;
-    justify-content: center;
-    gap: 15px;
+  .hero-brain img {
+    width: 140px;
   }
 
   .stats-row {

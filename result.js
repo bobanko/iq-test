@@ -22,6 +22,24 @@ import { getCached } from "./helpers/local-cache.helper.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { initChart } from "./chart.js";
 
+function updatePercentileGauge(percentile) {
+  const fraction = Math.min(Math.max(percentile / 100, 0), 1);
+
+  // arc from (10,65) to (110,65) with radius 50 — semicircle
+  const totalLength = Math.PI * 50; // ≈157
+  const arcLength = totalLength * fraction;
+
+  $gaugeArc.style.strokeDasharray = `${totalLength}`;
+  $gaugeArc.style.strokeDashoffset = `${totalLength - arcLength}`;
+
+  // position dot along the arc
+  const angle = Math.PI * (1 - fraction); // π..0 (left to right)
+  const cx = 60 - 50 * Math.cos(angle);
+  const cy = 65 - 50 * Math.sin(angle);
+  $gaugeDot.setAttribute("cx", cx);
+  $gaugeDot.setAttribute("cy", cy);
+}
+
 function updateSeed() {
   const seed = getNormalizedSeed();
 
@@ -114,6 +132,11 @@ function displayResult({ userResult, allResults }) {
 
   $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
   $globalRankValue.textContent = `#${globalRank.toFixed(0)}`;
+
+  // percentile rank card
+  $percentileValue.textContent = `Top ${topPt.toFixed(0)}%`;
+  $percentileDesc.textContent = `You are smarter than ${percetileRank.toFixed(0)}% of people`;
+  updatePercentileGauge(percetileRank);
   //
 
   const accuracyRate = (isCorrect / total) * 100;
@@ -159,9 +182,7 @@ function displayResult({ userResult, allResults }) {
         : `${total - isCorrect} missed`;
 
   $chartMainLegend.innerHTML = `
-  You are among the <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people 
-  in the world. 
-  You are smarter than <b class="highlight">${percetileRank.toFixed(0)}%</b> of the population.`;
+  You are in the top  <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people in the world.`;
 }
 
 window.addEventListener("hashchange", onHashChanged);

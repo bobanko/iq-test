@@ -36,46 +36,82 @@
     </template>
     <!-- main page -->
 
-    <!-- Hero: IQ Score -->
-    <section class="result-hero">
-      <div class="hero-brain">
-        <img src="./images/result/brain.png" alt="brain" width="160" />
+    <!-- Hero: IQ Score + Rank Cards -->
+    <div class="hero-row">
+      <section class="result-hero">
+        <div class="hero-brain">
+          <img src="./images/result/brain.png" alt="brain" width="160" />
 
-        <div class="brain-label handwritten">
-          <span hidden>not bad for a human</span>
-          <span>нот бед фор э хьюман</span>
-        </div>
-      </div>
-      <div class="hero-score flex-col align-center">
-        <span class="iq-score-text">YOUR IQ SCORE</span>
-        <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
-        <span
-          id="$cognitiveSubgroupValue"
-          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
-        ></span>
-        <span
-          hidden
-          id="$cognitiveGroupValue"
-          class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
-        ></span>
-        <p id="$heroDescription" class="hero-description"></p>
-      </div>
-
-      <div
-        class="hero-rank result-stat flex-col align-center gap-10 radius-10 p-20"
-        style="--color: #fef7d9"
-      >
-        <div class="flex-row gap-20 align-center">
-          <img src="./images/emojis/trophy.png" alt="trophy" width="50" />
-
-          <div class="flex-col align-start">
-            <span class="stat-label">GLOBAL RANK</span>
-            <span id="$globalRankValue" class="stat-value empty-loader"></span>
+          <div class="brain-label handwritten">
+            <span hidden>not bad for a human</span>
+            <span>нот бед фор э хьюман</span>
           </div>
         </div>
-        <span id="$topRankLabel" class="stat-sub"></span>
+        <div class="hero-score flex-col align-center">
+          <span class="iq-score-text">YOUR IQ SCORE</span>
+          <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
+          <span
+            id="$cognitiveSubgroupValue"
+            class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+          ></span>
+          <span
+            hidden
+            id="$cognitiveGroupValue"
+            class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+          ></span>
+          <p id="$heroDescription" class="hero-description"></p>
+        </div>
+      </section>
+
+      <div class="hero-sidebar flex-col gap-10">
+        <!-- Percentile Rank -->
+        <div
+          class="percentile-rank result-stat flex-col gap-10 radius-10 p-20"
+          style="--color: #e8f5e9"
+        >
+          <span class="stat-label">PERCENTILE RANK</span>
+          <span id="$percentileValue" class="stat-value empty-loader"></span>
+          <p id="$percentileDesc" class="stat-sub"></p>
+          <div class="percentile-gauge" aria-hidden="true">
+            <svg viewBox="0 0 120 70" class="gauge-svg">
+              <path d="M 10 65 A 50 50 0 0 1 110 65" class="gauge-track" />
+              <path
+                id="$gaugeArc"
+                d="M 10 65 A 50 50 0 0 1 110 65"
+                class="gauge-fill"
+              />
+              <circle id="$gaugeDot" cx="110" cy="65" r="5" class="gauge-dot" />
+            </svg>
+            <div class="gauge-labels flex-row justify-space-between">
+              <span>0%</span>
+              <span>100%</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Global Rank -->
+        <div
+          class="result-stat flex-col radius-10 p-10 gap-10"
+          style="--color: #fef7d9"
+        >
+          <div class="flex-row gap-10 w-100p justify-unset">
+            <img src="./images/emojis/trophy.png" alt="trophy" />
+
+            <div class="flex-col">
+              <span class="stat-label">GLOBAL RANK</span>
+              <span
+                id="$globalRankValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
+          </div>
+          <span
+            id="$topRankLabel"
+            class="stat-sub flex-row justify-center"
+          ></span>
+        </div>
       </div>
-    </section>
+    </div>
 
     <!-- Quick Stats Row -->
     <section class="stats-row">

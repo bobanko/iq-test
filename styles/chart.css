@@ -11,7 +11,7 @@
     height: 100%;
   }
 
-  margin-bottom: var(--x-axis-height);
+  margin-bottom: calc(var(--x-axis-height) / 2);
 
   --v-margin: calc(12px - 1px);
 
@@ -190,7 +190,7 @@
     left: 0;
     right: 0;
     top: 100%;
-    height: var(--x-axis-height);
+    height: calc(var(--x-axis-height) / 2);
 
     display: grid;
     grid-auto-flow: column;
