@@ -465,7 +465,7 @@
 
     <section class="feedback-section radius-10">
       <div class="feedback-bubble" aria-hidden="true">
-        <img src="./images/emojis/cloud.png" alt="" width="28" />
+        <img src="./images/emojis/cloud.png" alt="🗣️" />
       </div>
       <h2 class="feedback-title">What's your verdict?</h2>
       <p class="feedback-subtitle">Help us improve the experience ✨</p>
@@ -527,12 +527,51 @@
 
     <div id="$toast" class="toast" hidden>Link copied to clipboard</div>
 
-    <footer
-      class="p-20"
-      style="text-align: center; opacity: 0.5; font-size: 14px"
-    >
-      * IQ score is calculated based on correct answers and compared to other
-      test takers.
+    <footer class="flex-col">
+      <hr />
+      <div class="flex-row p-10" style="justify-content: space-between">
+        <div class="flex-row align-center">
+          <img src="./images/brain-ios.png" width="40px" />
+          <div class="flex-col px-10">
+            <span style="font-weight: bold">IQ Test</span>
+            <span style="font-size: 10px">challenge your brain</span>
+          </div>
+        </div>
+
+        <nav class="menu flex flex-row align-center">
+          <a class="p-10" href="./">home</a>
+          <a
+            class="p-10 gap-5"
+            href="https://discord.gg/wjGYzVj6Ys"
+            data-fbq="trackCustom"
+            data-fbq-event="OpenDiscord"
+            data-fbq-params='{"source": "result_footer"}'
+          >
+            <img
+              src="./images/icons/Discord-Symbol-Black.svg"
+              alt="discord"
+              width="20px"
+            />
+            <span>discord</span>
+          </a>
+        </nav>
+      </div>
+
+      <hr />
+
+      <div class="flex-col align-center">
+        <div class="p-20" style="opacity: 0.5; font-size: 14px">
+          <p
+            id="$footerCopyright"
+            class="cursor-pointer"
+            style="margin: 8px 0 0"
+          >
+            © 2025—2026 420iq.lol. All rights reserved.
+          </p>
+          <div id="$buildInfo" class="build-info" hidden>version here</div>
+        </div>
+        <script type="module" src="./show-version.js" async></script>
+      </div>
     </footer>
   </body>
 </html>

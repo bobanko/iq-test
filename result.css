@@ -173,7 +173,7 @@ hr {
   align-items: center;
   gap: 6px;
   padding: 30px 20px;
-  margin-block: 30px;
+  margin-top: 30px;
   position: relative;
 
   background:
@@ -213,11 +213,9 @@ hr {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  background: #e8eaf0;
-  color: #4a5568;
-  border-radius: 50%;
+  img {
+    width: 70px;
+  }
 }
 
 .feedback-title {
@@ -340,10 +338,15 @@ hr {
 
 .hero-brain {
   position: relative;
-  zoom: clamp(0.45, tan(atan2(100vw, 1400px)), 1);
+  align-self: stretch;
+  display: flex;
+  align-items: center;
 
   img {
-    width: 300px;
+    height: 100%;
+    width: auto;
+    max-width: 300px;
+    object-fit: contain;
     animation:
       updown 2s ease-in-out infinite alternate,
       rotleftright 3s ease-in-out infinite alternate;
@@ -704,6 +707,32 @@ button.action-btn {
   z-index: 3;
   animation: fadeInUp 300ms ease-out;
   pointer-events: none;
+}
+
+/* ===== Footer ===== */
+
+footer {
+  margin-top: 10px;
+
+  hr {
+    padding: 0;
+    margin: 0;
+    border-width: 1px;
+    border-style: dashed;
+    align-self: stretch;
+    border-color: var(--hr-color);
+  }
+
+  nav.menu a {
+    display: flex;
+    text-transform: capitalize;
+    text-decoration: none;
+    color: var(--inactive-color, #999);
+
+    &:hover {
+      color: var(--accent-color);
+    }
+  }
 }
 
 /* ===== Mobile ===== */
