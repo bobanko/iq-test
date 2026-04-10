@@ -137,7 +137,7 @@ function displayResult({ userResult, allResults }) {
   $globalRankValue.textContent = `#${globalRank.toFixed(0)}`;
 
   // percentile rank card
-  $percentileValue.textContent = `Top ${topPt.toFixed(0)}%`;
+  $percentileValue.textContent = `${topPt.toFixed(0)}%`;
   $percentileDesc.textContent = `You are smarter than ${percetileRank.toFixed(0)}% of people`;
   updatePercentileGauge(percetileRank);
   //
@@ -225,6 +225,48 @@ $btnCopyTestResultLink.addEventListener("click", () =>
 $btnCopyTestShareLink.addEventListener("click", () =>
   copyTextFrom($testShareLink),
 );
+
+$btnShareResult.addEventListener("click", async () => {
+  const shareData = {
+    title: "My IQ Test Result",
+    text: `I scored ${$iqScoreValue.textContent} on the IQ test! Can you beat me?`,
+    url: $testResultLink.value,
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      await navigator.clipboard.writeText(shareData.url);
+      alert("Link copied to clipboard!");
+    }
+  } catch (err) {
+    if (err.name !== "AbortError") {
+      console.error("Share failed:", err);
+    }
+  }
+});
+
+$btnChallengeFriend.addEventListener("click", async () => {
+  const shareData = {
+    title: "IQ Test Challenge",
+    text: "Think you're smarter than me? Take this IQ test and find out!",
+    url: $testShareLink.value,
+  };
+
+  try {
+    if (navigator.share) {
+      await navigator.share(shareData);
+    } else {
+      await navigator.clipboard.writeText(shareData.url);
+      alert("Link copied to clipboard!");
+    }
+  } catch (err) {
+    if (err.name !== "AbortError") {
+      console.error("Share failed:", err);
+    }
+  }
+});
 
 $btnDownloadCertificate.addEventListener("click", () =>
   generateCertificatePdf(currentCertificateData),

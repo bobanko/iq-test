@@ -112,6 +112,7 @@ hr {
   font-size: 13px;
   opacity: 0.5;
   font-style: italic;
+  text-align: center;
 }
 
 .info-icon {
@@ -138,7 +139,7 @@ hr {
     0 2px 3px hsla(from var(--color) h s calc(l - 80) / 0.1),
     inset 0px 1px 2px 0px white;
 
-  img {
+  img.stat-icon {
     aspect-ratio: 1 / 1;
     width: 60px;
     object-fit: contain;
@@ -216,6 +217,7 @@ hr {
 
 .hero-brain {
   position: relative;
+  zoom: clamp(0.45, tan(atan2(100vw, 1400px)), 1);
 
   img {
     width: 300px;
@@ -383,7 +385,7 @@ hr {
 .type-illustration {
   flex-shrink: 0;
   align-self: flex-start;
-  margin-top: -40px;
+  /* margin-top: -40px; */
   margin-right: -10px;
 
   img {
@@ -466,12 +468,15 @@ hr {
 .smarter-note {
   position: absolute;
   bottom: 105%;
-  rotate: 10deg;
   right: 10%;
+
+  opacity: 0.7;
+
   font-size: 12px;
   font-style: italic;
-  opacity: 0.7;
+  white-space: nowrap;
   text-transform: none;
+  text-shadow: none;
 
   &::after {
     content: "";
@@ -493,14 +498,16 @@ hr {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: var(--gap-section);
-  margin: 0 0 var(--gap-section);
-  padding: 0;
+  padding-top: 30px;
+
   background: none;
   box-shadow: none;
   border: none;
 }
 
-.action-btn {
+button.action-btn {
+  --color: gray;
+
   align-items: center;
   gap: 6px;
   cursor: pointer;
@@ -508,8 +515,22 @@ hr {
   padding: 14px;
   transition: box-shadow 150ms;
 
+  background-color: var(--color);
+  color: white;
+  /* border-radius: 32px; */
+  text-shadow: 1px 1px 2px hsl(from var(--color) h s calc(l - 35));
+  border: 2px solid hsl(from var(--color) h s calc(l + 15));
+  box-shadow:
+    0 0 2px 2px #00000030,
+    inset 0 0 0 2px white;
+
+  box-sizing: border-box;
+
   &:hover {
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+  }
+  &:active {
+    background-color: hsl(from var(--color) h calc(s - 10) calc(l - 15));
   }
 
   strong {
@@ -521,6 +542,26 @@ hr {
   span {
     font-size: 12px;
     opacity: 0.6;
+  }
+
+  .btn-arrow {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 28px;
+    height: 28px;
+
+    background: #00000018;
+    border-radius: 50%;
+    border: 2px solid hsl(from var(--color) h calc(s * 0.6) calc(l - 15));
+    box-shadow: inset 0 0 0 1px white;
+
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1;
+    flex-shrink: 0;
+    opacity: 1;
   }
 }
 
@@ -545,10 +586,6 @@ hr {
   .hero-sidebar {
     display: grid;
     grid-template-columns: 1fr 1fr;
-  }
-
-  .hero-brain img {
-    width: 140px;
   }
 
   .stats-row {

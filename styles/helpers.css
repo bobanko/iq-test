@@ -40,6 +40,10 @@
   justify-content: space-around;
 }
 
+.justify-space-between {
+  justify-content: space-between;
+}
+
 /* gaps */
 .gap-5 {
   gap: 5px;
@@ -115,23 +119,23 @@ svg[aria-hidden="true"] {
 }
 
 .px-0 {
-  padding-left: 0px;
-  padding-right: 0px;
+  padding-inline: 0px;
 }
 
 .py-0 {
-  padding-top: 0px;
-  padding-bottom: 0px;
+  padding-block: 0px;
+}
+
+.py-5 {
+  padding-block: 5px;
 }
 
 .px-10 {
-  padding-left: 10px;
-  padding-right: 10px;
+  padding-inline: 10px;
 }
 
 .py-10 {
-  padding-top: 10px;
-  padding-bottom: 10px;
+  padding-block: 10px;
 }
 
 .m-0 {
@@ -143,13 +147,11 @@ svg[aria-hidden="true"] {
 }
 
 .mx-10 {
-  margin-left: 10px;
-  margin-right: 10px;
+  margin-inline: 10px;
 }
 
 .my-10 {
-  margin-top: 10px;
-  margin-bottom: 10px;
+  margin-block: 10px;
 }
 
 .m-20 {
@@ -157,8 +159,7 @@ svg[aria-hidden="true"] {
 }
 
 .my-20 {
-  margin-top: 20px;
-  margin-bottom: 20px;
+  margin-block: 20px;
 }
 
 .w-100p {

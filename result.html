@@ -43,8 +43,7 @@
           <img src="./images/result/brain.png" alt="brain" width="160" />
 
           <div class="brain-label handwritten">
-            <span hidden>not bad for a human</span>
-            <span>нот бед фор э хьюман</span>
+            <span>not bad for a human</span>
           </div>
         </div>
         <div class="hero-score flex-col align-center">
@@ -52,7 +51,7 @@
           <span id="$iqScoreValue" class="iq-score-value empty-loader"></span>
           <span
             id="$cognitiveSubgroupValue"
-            class="iq-score-cognitive p-20 py-10 radius-10 empty-loader"
+            class="iq-score-cognitive p-10 py-5 radius-10 empty-loader"
           ></span>
           <span
             hidden
@@ -67,21 +66,34 @@
         <!-- Percentile Rank -->
         <div
           class="percentile-rank result-stat flex-col radius-10 p-10 gap-10"
-          style="--color: #e8f5e9"
+          style="--color: #d4f4ff"
         >
           <div class="flex-row gap-10 w-100p justify-unset">
-            <img src="./images/emojis/profile.png" alt="percentile" />
+            <img
+              class="stat-icon"
+              src="./images/emojis/profile.png"
+              alt="percentile"
+            />
 
             <div class="flex-col">
               <span class="stat-label">PERCENTILE RANK</span>
-              <span
-                id="$percentileValue"
-                class="stat-value empty-loader"
-              ></span>
+              <div
+                class="stat-value empty-loader flex-row align-center justify-center"
+              >
+                <img
+                  src="./images/emojis/top-arrow.png"
+                  alt="🔝"
+                  style="height: 1em"
+                />
+                <span id="$percentileValue"></span>
+              </div>
             </div>
           </div>
-          <p id="$percentileDesc" class="stat-sub flex-row justify-center"></p>
-          <div class="percentile-gauge" aria-hidden="true">
+          <span
+            id="$percentileDesc"
+            class="stat-sub flex-row justify-center"
+          ></span>
+          <div class="percentile-gauge" aria-hidden="true" hidden>
             <svg viewBox="0 0 120 70" class="gauge-svg">
               <path d="M 10 65 A 50 50 0 0 1 110 65" class="gauge-track" />
               <path
@@ -104,7 +116,11 @@
           style="--color: #fef7d9"
         >
           <div class="flex-row gap-10 w-100p justify-unset">
-            <img src="./images/emojis/trophy.png" alt="trophy" />
+            <img
+              class="stat-icon"
+              src="./images/emojis/trophy.png"
+              alt="trophy"
+            />
 
             <div class="flex-col">
               <span class="stat-label">GLOBAL RANK</span>
@@ -129,7 +145,11 @@
         style="--color: #eaf4fe"
       >
         <div class="flex-row gap-10 w-100p justify-unset">
-          <img src="./images/emojis/stopwatch.png" alt="time" />
+          <img
+            class="stat-icon"
+            src="./images/emojis/stopwatch.png"
+            alt="time"
+          />
 
           <div class="flex-col">
             <span class="stat-label">TIME</span>
@@ -149,7 +169,11 @@
         style="--color: #feebee"
       >
         <div class="flex-row gap-10 w-100p justify-unset">
-          <img src="./images/emojis/direct-hit.png" alt="accuracy" />
+          <img
+            class="stat-icon"
+            src="./images/emojis/direct-hit.png"
+            alt="accuracy"
+          />
 
           <div class="flex-col">
             <span class="stat-label">ACCURACY</span>
@@ -169,7 +193,11 @@
         style="--color: #fef8e2"
       >
         <div class="flex-row gap-10 w-100p justify-unset">
-          <img src="./images/emojis/racing-car.png" alt="speed" />
+          <img
+            class="stat-icon"
+            src="./images/emojis/racing-car.png"
+            alt="speed"
+          />
 
           <div class="flex-col">
             <span class="stat-label">SPEED</span>
@@ -183,7 +211,11 @@
         style="--color: #edfaee"
       >
         <div class="flex-row gap-10 w-100p justify-unset">
-          <img src="./images/emojis/check-mark.png" alt="correct" />
+          <img
+            class="stat-icon"
+            src="./images/emojis/check-mark.png"
+            alt="correct"
+          />
 
           <div class="flex-col">
             <span class="stat-label">CORRECT</span>
@@ -219,7 +251,7 @@
           <div class="bars"></div>
           <div class="x-labels" aria-hidden="true"></div>
         </div>
-        <div id="$chartMainLegend" class="p-10">you're at...</div>
+        <div id="$chartMainLegend">you're at...</div>
       </section>
 
       <!-- Your Type -->
@@ -267,7 +299,11 @@
           class="smarter-card result-stat flex-row align-center gap-10 p-10 radius-10"
           style="--color: #f6f7f9"
         >
-          <img src="./images/emojis/video-game.png" alt="🎮" />
+          <img
+            class="stat-icon"
+            src="./images/emojis/video-game.png"
+            alt="🎮"
+          />
           <div class="flex-col">
             <span id="$smarterGamers" class="stat-value">42%</span>
             <span class="stat-label">of gamers 🎮</span>
@@ -277,7 +313,11 @@
           class="smarter-card result-stat flex-row align-center gap-10 p-10 radius-10"
           style="--color: #f1f7ff"
         >
-          <img src="./images/emojis/code-tag.png" alt="&lt;/&gt;" />
+          <img
+            class="stat-icon"
+            src="./images/emojis/code-tag.png"
+            alt="&lt;/&gt;"
+          />
           <div class="flex-col">
             <span id="$smarterCoders" class="stat-value">67%</span>
             <span class="stat-label">of coders 💻</span>
@@ -287,12 +327,14 @@
           class="smarter-card result-stat flex-row align-center gap-10 p-10 radius-10"
           style="--color: #f0faf1"
         >
-          <img src="./images/emojis/goldfish.png" alt="🐡" />
+          <img class="stat-icon" src="./images/emojis/goldfish.png" alt="🐡" />
           <div class="flex-col">
             <span id="$smarterGoldfish" class="stat-value">100%</span>
             <span class="stat-label">of goldfish 🐡</span>
           </div>
-          <span class="smarter-note handwritten">* probably</span>
+          <span class="smarter-note handwritten" style="rotate: 10deg"
+            >* probably</span
+          >
         </div>
       </div>
     </section>
@@ -300,39 +342,88 @@
     <!-- Action Buttons -->
     <section class="actions-row">
       <button
-        class="action-btn result-stat flex-row radius-10 p-10"
+        id="$btnShareResult"
+        class="action-btn result-stat flex-col radius-10 p-10"
         data-fbq="trackCustom"
         data-fbq-event="ShareResult"
         style="--color: #2dd67d"
       >
-        <img src="./images/emojis/photocamera.png" alt="" width="36" />
-        <div class="flex-col">
+        <div class="flex-row align-center gap-10">
+          <img
+            class="stat-icon"
+            src="./images/emojis/photocamera.png"
+            alt=""
+            width="36"
+          />
           <strong>SHARE RESULT</strong>
-          <span>Let the world see your IQ 🎉</span>
         </div>
+
+        <div class="flex-row align-center justify-space-between w-100p">
+          <span class="stat-sub">Let the world see your IQ 🎉</span>
+          <span class="btn-arrow" aria-hidden="true">›</span>
+        </div>
+
+        <span
+          class="smarter-note handwritten"
+          style="color: black; left: 50%; bottom: 110%"
+          >* primary action</span
+        >
       </button>
-      <button class="action-btn result-stat flex-row radius-10 p-10">
-        <img src="./images/emojis/swords.png" alt="" width="36" />
-        <div class="flex-col">
+      <button
+        id="$btnChallengeFriend"
+        class="action-btn result-stat flex-col radius-10 p-10"
+        style="--color: #ffb514"
+      >
+        <div class="flex-row align-center gap-10">
+          <img
+            class="stat-icon"
+            src="./images/emojis/swords.png"
+            alt=""
+            width="36"
+          />
           <strong>CHALLENGE A FRIEND</strong>
-          <span>Beat their score</span>
+        </div>
+        <div class="flex-row align-center justify-space-between w-100p">
+          <span class="stat-sub">Beat their score</span>
+          <span class="btn-arrow" aria-hidden="true">›</span>
         </div>
       </button>
-      <button class="action-btn result-stat flex-row radius-10 p-10">
-        <img src="./images/emojis/restart.png" alt="" width="36" />
-        <div class="flex-col">
+      <button
+        class="action-btn result-stat flex-col radius-10 p-10"
+        style="--color: #ff6262"
+      >
+        <div class="flex-row align-center gap-10">
+          <img
+            class="stat-icon"
+            src="./images/emojis/restart.png"
+            alt=""
+            width="36"
+            style="filter: brightness(0) invert(1)"
+          />
           <strong>TRY AGAIN</strong>
-          <span>Improve your IQ</span>
+        </div>
+        <div class="flex-row align-center justify-space-between w-100p">
+          <span class="stat-sub">Improve your IQ</span>
+          <span class="btn-arrow" aria-hidden="true">›</span>
         </div>
       </button>
       <button
         id="$btnDownloadCertificate"
-        class="action-btn result-stat flex-row radius-10 p-10"
+        class="action-btn result-stat flex-col radius-10 p-10"
+        style="--color: #4aa3e7"
       >
-        <img src="./images/emojis/floppy.png" alt="" width="36" />
-        <div class="flex-col">
+        <div class="flex-row align-center gap-10">
+          <img
+            class="stat-icon"
+            src="./images/emojis/floppy.png"
+            alt=""
+            width="36"
+          />
           <strong>DOWNLOAD CERTIFICATE</strong>
-          <span>Get your PDF report</span>
+        </div>
+        <div class="flex-row align-center justify-space-between w-100p">
+          <span class="stat-sub">Get your PDF report</span>
+          <span class="btn-arrow" aria-hidden="true">›</span>
         </div>
       </button>
     </section>
@@ -401,15 +492,15 @@
           </label>
 
           <button
-            class="btn-primary p-10 my-10 gap-5 mobile-center flex-row justify-center"
+            class="action-btn result-stat flex-col radius-10 p-10"
+            style="--color: #4aa3e7"
             type="submit"
             data-translation="contact-btn-send"
             data-fbq="trackCustom"
             data-fbq-event="SendFeedback"
             data-fbq-params='{"source": "landing_footer"}'
           >
-            <span>send</span>
-            <span>→</span>
+            <strong>send</strong>
           </button>
         </fieldset>
       </form>
