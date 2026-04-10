@@ -21,6 +21,7 @@ import { getUserData } from "./endpoints/user-data.js";
 import { getCached } from "./helpers/local-cache.helper.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { initChart } from "./chart.js";
+import { generateCertificatePdf } from "./certificate.js";
 
 let currentCertificateData = null;
 
@@ -447,7 +448,9 @@ $btnCopyTestShareLink.addEventListener("click", () =>
   copyTextFrom($testShareLink),
 );
 
-$btnDownloadCertificate.addEventListener("click", generateCertificatePdf);
+$btnDownloadCertificate.addEventListener("click", () =>
+  generateCertificatePdf(currentCertificateData),
+);
 
 {
   const $fieldset = $formContact.querySelector("fieldset");

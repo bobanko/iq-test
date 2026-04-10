@@ -7,7 +7,6 @@
     <link rel="icon" href="./images/brain-ios.png" type="image/png" />
     <link rel="stylesheet" href="./result.css" />
 
-    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script src="./result.js" type="module" async></script>
     <!-- Meta Pixel Code -->
     <script src="./meta-pixel-code.js" type="module" async></script>
@@ -67,12 +66,21 @@
       <div class="hero-sidebar flex-col gap-10">
         <!-- Percentile Rank -->
         <div
-          class="percentile-rank result-stat flex-col gap-10 radius-10 p-20"
+          class="percentile-rank result-stat flex-col radius-10 p-10 gap-10"
           style="--color: #e8f5e9"
         >
-          <span class="stat-label">PERCENTILE RANK</span>
-          <span id="$percentileValue" class="stat-value empty-loader"></span>
-          <p id="$percentileDesc" class="stat-sub"></p>
+          <div class="flex-row gap-10 w-100p justify-unset">
+            <img src="./images/emojis/profile.png" alt="percentile" />
+
+            <div class="flex-col">
+              <span class="stat-label">PERCENTILE RANK</span>
+              <span
+                id="$percentileValue"
+                class="stat-value empty-loader"
+              ></span>
+            </div>
+          </div>
+          <p id="$percentileDesc" class="stat-sub flex-row justify-center"></p>
           <div class="percentile-gauge" aria-hidden="true">
             <svg viewBox="0 0 120 70" class="gauge-svg">
               <path d="M 10 65 A 50 50 0 0 1 110 65" class="gauge-track" />

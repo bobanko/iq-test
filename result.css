@@ -304,14 +304,7 @@ hr {
   text-align: center;
 }
 
-/* ===== Percentile Rank ===== */
-
-.percentile-rank {
-  .stat-value {
-    font-size: 32px;
-    font-weight: 700;
-  }
-}
+/* ===== Percentile Gauge ===== */
 
 .percentile-gauge {
   width: 100%;
