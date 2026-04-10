@@ -7,6 +7,7 @@
     <link rel="icon" href="./images/brain-ios.png" type="image/png" />
     <link rel="stylesheet" href="./result.css" />
 
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
     <script src="./result.js" type="module" async></script>
     <!-- Meta Pixel Code -->
     <script src="./meta-pixel-code.js" type="module" async></script>
@@ -316,11 +317,14 @@
           <span>Improve your IQ</span>
         </div>
       </button>
-      <button class="action-btn result-stat flex-row radius-10 p-10">
+      <button
+        id="$btnDownloadCertificate"
+        class="action-btn result-stat flex-row radius-10 p-10"
+      >
         <img src="./images/emojis/floppy.png" alt="" width="36" />
         <div class="flex-col">
-          <strong>SAVE RESULT</strong>
-          <span>Create a free account 👤</span>
+          <strong>DOWNLOAD CERTIFICATE</strong>
+          <span>Get your PDF report</span>
         </div>
       </button>
     </section>
