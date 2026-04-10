@@ -5,7 +5,6 @@ import {
   findCognitiveSubgroup,
 } from "./helpers/cognitive-classification-system.js";
 import { formatTimeSpan } from "./helpers/common.js";
-import { copyTextFrom } from "./helpers/copy.js";
 import { getHashParameter, updateHashParameter } from "./helpers/hash-param.js";
 import { getNormalizedSeed } from "./helpers/seeded-random.js";
 import {
@@ -216,54 +215,56 @@ document.addEventListener("keydown", bindingsOnKeypress);
 
 onHashChanged();
 
-$testResultLink.addEventListener("click", () => copyTextFrom($testResultLink));
-$testShareLink.addEventListener("click", () => copyTextFrom($testShareLink));
-
-$btnCopyTestResultLink.addEventListener("click", () =>
-  copyTextFrom($testResultLink),
-);
-$btnCopyTestShareLink.addEventListener("click", () =>
-  copyTextFrom($testShareLink),
-);
+function showToast(message) {
+  $toast.textContent = message;
+  $toast.hidden = false;
+  setTimeout(() => {
+    $toast.hidden = true;
+  }, 2000);
+}
 
 $btnShareResult.addEventListener("click", async () => {
+  const url = $testResultLink.value;
   const shareData = {
     title: "My IQ Test Result",
     text: `I scored ${$iqScoreValue.textContent} on the IQ test! Can you beat me?`,
-    url: $testResultLink.value,
+    url,
   };
 
   try {
     if (navigator.share) {
       await navigator.share(shareData);
     } else {
-      await navigator.clipboard.writeText(shareData.url);
-      alert("Link copied to clipboard!");
+      await navigator.clipboard.writeText(url);
+      showToast("Link copied to clipboard");
     }
   } catch (err) {
     if (err.name !== "AbortError") {
-      console.error("Share failed:", err);
+      await navigator.clipboard.writeText(url);
+      showToast("Link copied to clipboard");
     }
   }
 });
 
 $btnChallengeFriend.addEventListener("click", async () => {
+  const url = $testShareLink.value;
   const shareData = {
     title: "IQ Test Challenge",
     text: "Think you're smarter than me? Take this IQ test and find out!",
-    url: $testShareLink.value,
+    url,
   };
 
   try {
     if (navigator.share) {
       await navigator.share(shareData);
     } else {
-      await navigator.clipboard.writeText(shareData.url);
-      alert("Link copied to clipboard!");
+      await navigator.clipboard.writeText(url);
+      showToast("Link copied to clipboard");
     }
   } catch (err) {
     if (err.name !== "AbortError") {
-      console.error("Share failed:", err);
+      await navigator.clipboard.writeText(url);
+      showToast("Link copied to clipboard");
     }
   }
 });
@@ -287,18 +288,13 @@ $btnDownloadCertificate.addEventListener("click", () =>
 
   $fieldset.disabled = false;
 
-  const $emojiInputs = document.querySelectorAll(".feedback-emoji");
-  let selectedReaction = null;
+  const $$emojiInputs = document.querySelectorAll(".feedback-emoji");
 
-  $emojiInputs.forEach(($input) => {
+  $$emojiInputs.forEach(($input) => {
     $input.addEventListener("change", () => {
-      if ($input.checked) {
-        selectedReaction = $input.getAttribute("content");
-      }
+      $feedbackExtra.hidden = false;
     });
   });
-
-  $fieldset.disabled = false;
 
   $formContact.addEventListener("submit", async (e) => {
     e.preventDefault();

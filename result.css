@@ -8,7 +8,6 @@
 @import url(./styles/animations.css);
 
 @import url(./styles/question-list.css);
-@import url(./styles/contact-form.css);
 @import url(./styles/buton.css);
 
 @import url(./styles/chart.css);
@@ -161,39 +160,163 @@ hr {
   }
 }
 
-.feedback-emoji {
-  /* 4rem */
-  --size: min(10cqw, 50px);
+/* ===== Feedback Section ===== */
+
+.feedback-section {
+  --pw: 15px;
+  --red: #f44336;
+  --white: #f2f2f2;
+  --blue: #2196f3;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 30px 20px;
+  margin-block: 30px;
   position: relative;
-  width: var(--size);
-  height: var(--size);
-  line-height: var(--size);
-  font-size: var(--size);
 
-  appearance: none;
+  background:
+    linear-gradient(white, white),
+    repeating-linear-gradient(
+      -45deg,
+      var(--red) calc(var(--pw) * 0),
+      var(--red) calc(var(--pw) * 1),
+      var(--white) calc(var(--pw) * 1),
+      var(--white) calc(var(--pw) * 2),
+      var(--blue) calc(var(--pw) * 2),
+      var(--blue) calc(var(--pw) * 3),
+      var(--white) calc(var(--pw) * 3),
+      var(--white) calc(var(--pw) * 4)
+    );
+  background-origin: padding-box, border-box;
+  background-repeat: no-repeat;
+  border: 5px solid transparent;
+  border-radius: var(--section-radius, 10px);
+  box-shadow: var(--section-shadow);
+  position: relative;
+
+  fieldset {
+    border: none;
+    padding: 0;
+    margin: 0;
+    width: 100%;
+    align-items: center;
+  }
+}
+
+.feedback-bubble {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  translate: -50% -50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  background: #e8eaf0;
+  color: #4a5568;
+  border-radius: 50%;
+}
+
+.feedback-title {
+  font-size: 22px;
+  font-weight: 700;
   margin: 0;
-  text-align: center;
-  box-sizing: border-box;
+}
 
+.feedback-subtitle {
+  font-size: 14px;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.feedback-options {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.feedback-option {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 16px 8px;
+  border-radius: 12px;
+  border: 2px solid #e8eaf0;
   cursor: pointer;
+  transition:
+    border-color 150ms,
+    background 150ms;
 
   &:hover {
-    opacity: 0.7;
+    background: #f5f6f8;
   }
 
-  &:not(:checked) {
-    opacity: 0.5;
+  &:has(input:checked) {
+    border-color: var(--accent-color, #4a90d9);
+    background: #f0f4ff;
   }
 
-  &:checked {
-    opacity: 1;
-    animation: slideUp 500ms ease-in-out forwards;
-  }
-
-  &::after {
-    content: attr(value);
+  input {
     position: absolute;
-    inset: 0;
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.feedback-option-emoji {
+  font-size: 42px;
+  line-height: 1;
+}
+
+.feedback-option-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-align: center;
+}
+
+.feedback-extra {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  animation: fadeInUp 300ms ease-out;
+
+  textarea {
+    width: 100%;
+    border: 2px solid #e8eaf0;
+    border-radius: 10px;
+    padding: 12px;
+    font-size: 14px;
+    resize: vertical;
+    font-family: inherit;
+
+    &:focus {
+      outline: none;
+      border-color: var(--accent-color, #4a90d9);
+    }
+  }
+}
+
+.feedback-send {
+  align-self: flex-end;
+  padding: 10px 24px;
+  border-radius: 10px;
+  border: none;
+  background: var(--accent-color, #4a90d9);
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 150ms;
+
+  &:hover {
+    opacity: 0.85;
   }
 }
 
@@ -563,6 +686,24 @@ button.action-btn {
     flex-shrink: 0;
     opacity: 1;
   }
+}
+
+/* ===== Toast ===== */
+
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  translate: -50% 0;
+  background: #333;
+  color: #fff;
+  padding: 10px 24px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  z-index: 3;
+  animation: fadeInUp 300ms ease-out;
+  pointer-events: none;
 }
 
 /* ===== Mobile ===== */

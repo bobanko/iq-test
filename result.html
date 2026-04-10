@@ -282,9 +282,36 @@
               id="$cognitiveTypeTags"
               class="type-tags flex-row gap-5 flex-wrap"
             >
-              <span class="tag" style="--color: #e5f2fe">Fast Thinker</span>
-              <span class="tag" style="--color: #fdf4d2">Risk Taker</span>
-              <span class="tag" style="--color: #fedfe9">Unpredictable</span>
+              <span
+                class="tag flex-row align-center gap-5"
+                style="--color: #e5f2fe"
+                ><img
+                  src="./images/emojis/bolt.png"
+                  alt=""
+                  style="height: 1em"
+                />
+                Fast Thinker</span
+              >
+              <span
+                class="tag flex-row align-center gap-5"
+                style="--color: #fdf4d2"
+                ><img
+                  src="./images/emojis/shield.png"
+                  alt=""
+                  style="height: 1em"
+                />
+                Risk Taker</span
+              >
+              <span
+                class="tag flex-row align-center gap-5"
+                style="--color: #fedfe9"
+                ><img
+                  src="./images/emojis/dice.png"
+                  alt=""
+                  style="height: 1em"
+                />
+                Unpredictable</span
+              >
             </div>
           </div>
         </div>
@@ -430,128 +457,75 @@
 
     <!-- Hidden share inputs (kept for JS) -->
     <div hidden>
-      <!-- hidden stat fields for JS compatibility -->
       <span id="$scientificIqValue"></span>
       <span id="$dateTakenValue"></span>
+      <input id="$testResultLink" type="text" />
+      <input id="$testShareLink" type="text" />
     </div>
 
-    <section class="contact-form p-0 m-20 radius-10">
-      <form id="$formContact" class="flex-col">
-        <fieldset class="flex-col">
-          <h1 class="flex-row">
-            <span>🤔</span>
-            <span>What do you think?</span>
-          </h1>
+    <section class="feedback-section radius-10">
+      <div class="feedback-bubble" aria-hidden="true">
+        <img src="./images/emojis/cloud.png" alt="" width="28" />
+      </div>
+      <h2 class="feedback-title">What's your verdict?</h2>
+      <p class="feedback-subtitle">Help us improve the experience ✨</p>
 
-          <div class="flex-row gap-10 w-100p py-10">
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="❤️"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="👍"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="👎"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="🔥"
-            />
-            <input
-              class="feedback-emoji"
-              type="radio"
-              name="reaction"
-              value="💩"
-            />
+      <form id="$formContact">
+        <fieldset class="flex-col gap-10">
+          <div class="feedback-options">
+            <label class="feedback-option">
+              <input
+                class="feedback-emoji"
+                type="radio"
+                name="reaction"
+                value="too-easy"
+              />
+              <span class="feedback-option-emoji">😎</span>
+              <span class="feedback-option-label">Too easy</span>
+            </label>
+            <label class="feedback-option">
+              <input
+                class="feedback-emoji"
+                type="radio"
+                name="reaction"
+                value="hard"
+              />
+              <span class="feedback-option-emoji">🤯</span>
+              <span class="feedback-option-label">Hard</span>
+            </label>
+            <label class="feedback-option">
+              <input
+                class="feedback-emoji"
+                type="radio"
+                name="reaction"
+                value="guessed"
+              />
+              <span class="feedback-option-emoji">💀</span>
+              <span class="feedback-option-label">I guessed everything</span>
+            </label>
           </div>
 
-          <label class="flex-col">
-            <span class="py-10" data-translation="contact-label-message"
-              >Message:</span
-            >
+          <div id="$feedbackExtra" class="feedback-extra" hidden>
             <textarea
               id="message"
               name="message"
-              rows="4"
-              required
-              placeholder="your message"
-              data-translation="contact-placeholder-message"
-              data-translation-attr="placeholder"
+              rows="3"
+              placeholder="Tell us more (optional)"
             ></textarea>
-          </label>
-
-          <button
-            class="action-btn result-stat flex-col radius-10 p-10"
-            style="--color: #4aa3e7"
-            type="submit"
-            data-translation="contact-btn-send"
-            data-fbq="trackCustom"
-            data-fbq-event="SendFeedback"
-            data-fbq-params='{"source": "landing_footer"}'
-          >
-            <strong>send</strong>
-          </button>
+            <button
+              class="feedback-send"
+              type="submit"
+              data-fbq="trackCustom"
+              data-fbq-event="SendFeedback"
+            >
+              Send feedback
+            </button>
+          </div>
         </fieldset>
       </form>
     </section>
 
-    <section class="p-20 py-0 m-20 radius-10">
-      <h1>
-        <span>🧑‍🤝‍🧑</span>
-        <span>What is the IQ of your friends?</span>
-      </h1>
-
-      <div class="flex-col gap-10 my-20">
-        <label
-          class="flex-row align-center gap-10 w-100p"
-          style="flex-wrap: wrap"
-        >
-          <span class="nowrap">share your test result</span>
-          <div class="flex-row gap-10" style="flex: 1 0 auto">
-            <input id="$testResultLink" class="w-100p" readonly type="text" />
-            <button
-              id="$btnCopyTestResultLink"
-              class="p-10"
-              data-fbq="trackCustom"
-              data-fbq-event="ShareResult"
-              data-fbq-params='{"source": "result_footer"}'
-            >
-              copy
-            </button>
-          </div>
-        </label>
-
-        <label
-          class="flex-row align-center gap-10 w-100p"
-          style="flex-wrap: wrap"
-        >
-          <span class="nowrap">share test with friends</span>
-          <div class="flex-row gap-10" style="flex: 1 0 auto">
-            <input id="$testShareLink" class="w-100p" readonly type="text" />
-            <button
-              id="$btnCopyTestShareLink"
-              class="p-10"
-              data-fbq="trackCustom"
-              data-fbq-event="ShareTestWithFriends"
-              data-fbq-params='{"source": "result_footer"}'
-            >
-              copy
-            </button>
-          </div>
-        </label>
-      </div>
-    </section>
+    <div id="$toast" class="toast" hidden>Link copied to clipboard</div>
 
     <footer
       class="p-20"
