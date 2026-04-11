@@ -23,6 +23,7 @@ import { exitTheFullscreen, requestFullScreen } from "./helpers/fullscreen.js";
 import { copyTextFrom } from "./helpers/copy.js";
 
 import "./quiz.fbq.js";
+import "./quiz.ga.js";
 
 // globals
 const patternsInRowDefault = 3;

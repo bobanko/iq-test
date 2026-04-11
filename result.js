@@ -14,6 +14,8 @@ import {
 } from "./helpers/statistics.js";
 
 import "./result.fbq.js";
+import "./result.ga.js";
+import { analytics, logEvent } from "./endpoints/firebase.init.js";
 import { signAnonUser, getCurrentUser } from "./endpoints/auth.js";
 import { saveFeedback } from "./endpoints/save-feedback.endpoint.js";
 import { getUserData } from "./endpoints/user-data.js";
@@ -125,6 +127,14 @@ function displayResult({ userResult, allResults }) {
   $scientificIqValue.textContent = `${scientificIq.toFixed(0)}`;
   $cognitiveGroupValue.textContent = findCognitiveGroup(staticIq).name;
   $cognitiveSubgroupValue.textContent = findCognitiveSubgroup(staticIq).name;
+
+  // ===== GA: view_result =====
+  logEvent(analytics, "view_result", {
+    iq_score: Math.round(staticIq),
+    percentile: Math.round(percetileRank),
+    correct_answers: resultsStats.isCorrect,
+    total_questions: resultsStats.total,
+  });
 
   //
 

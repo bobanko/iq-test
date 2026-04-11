@@ -23,6 +23,7 @@ import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { calcStaticIqByStats } from "./calc-iq.js";
 
 import "./landing.fbq.js";
+import "./landing.ga.js";
 
 // handle menu item highlights
 const menuItems = $navMenu.querySelectorAll("a");
