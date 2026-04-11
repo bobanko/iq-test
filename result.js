@@ -71,12 +71,15 @@ function onHashChanged() {
     console.log({ allResults });
     console.log({ userResult });
 
-    displayResult({ userResult, allResults });
+    await displayResult({ userResult, allResults });
   })();
 }
 
-function displayResult({ userResult, allResults }) {
+async function displayResult({ userResult, allResults }) {
   $testShareLink.value = `${location.origin}#ref=${userResult._userId}`;
+
+  const userData = (await getUserData(userResult._userId)) ?? {};
+  const playerName = userData.displayName?.trim() || "Anonymous player";
 
   const { stats: resultsStats, datePassed } = userResult;
 
@@ -211,6 +214,7 @@ function displayResult({ userResult, allResults }) {
   You are in the top  <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people in the world.`;
 
   currentCertificateData = {
+    playerName,
     iq: staticIq.toFixed(0),
     dateTaken: datePassed.toDate().toLocaleDateString(),
     percentileLabel: `Top ${topPt.toFixed(0)}%`,

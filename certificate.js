@@ -1,217 +1,306 @@
-// ===== jsPDF library (loaded lazily) =====
-let jsPdfReady = import("https://cdn.jsdelivr.net/npm/jspdf@2.5.1/+esm").then(
-  (m) => m.jsPDF,
-);
+// ===== html2pdf library (loaded lazily) =====
+let html2pdfReady = null;
 
-// ===== Certificate PDF Generation =====
+function loadHtml2Pdf() {
+  if (html2pdfReady) return html2pdfReady;
 
+  html2pdfReady = new Promise((resolve, reject) => {
+    if (window.html2pdf) {
+      resolve(window.html2pdf);
+      return;
+    }
+
+    const $script = document.createElement("script");
+    $script.src =
+      "https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js";
+    $script.async = true;
+    $script.onload = () => resolve(window.html2pdf);
+    $script.onerror = () => reject(new Error("html2pdf failed to load"));
+    document.head.append($script);
+  });
+
+  return html2pdfReady;
+}
+
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
+// ===== Certificate PDF Generation (HTML -> PDF) =====
 export async function generateCertificatePdf(certificateData) {
-  let jsPDF;
-  try {
-    jsPDF = await jsPdfReady;
-  } catch {
-    alert("PDF library failed to load. Please try again.");
-    return;
-  }
-
   if (!certificateData) {
     alert("Result data is not ready yet.");
     return;
   }
 
-  const doc = new jsPDF({
-    orientation: "landscape",
-    unit: "pt",
-    format: "a4",
-  });
-
-  const pageWidth = doc.internal.pageSize.getWidth();
-  const pageHeight = doc.internal.pageSize.getHeight();
-  const margin = 34;
-  const gold = [172, 132, 58];
-  const dark = [31, 27, 22];
-  const parchment = [250, 245, 233];
-
-  doc.setFillColor(parchment[0], parchment[1], parchment[2]);
-  doc.rect(0, 0, pageWidth, pageHeight, "F");
-
-  for (let y = 0; y < pageHeight; y += 14) {
-    doc.setDrawColor(243, 235, 219);
-    doc.setLineWidth(0.4);
-    doc.line(0, y, pageWidth, y);
+  let html2pdf;
+  try {
+    html2pdf = await loadHtml2Pdf();
+  } catch {
+    alert("PDF library failed to load. Please try again.");
+    return;
   }
 
-  doc.setDrawColor(120, 93, 42);
-  doc.setLineWidth(2.5);
-  doc.rect(
-    margin,
-    margin,
-    pageWidth - margin * 2,
-    pageHeight - margin * 2,
-    "S",
+  const playerName = certificateData.playerName || "Anonymous player";
+  const safeDate = String(certificateData.dateTaken || "date").replaceAll(
+    "/",
+    "-",
   );
 
-  doc.setDrawColor(gold[0], gold[1], gold[2]);
-  doc.setLineWidth(1.1);
-  doc.rect(
-    margin + 8,
-    margin + 8,
-    pageWidth - (margin + 8) * 2,
-    pageHeight - (margin + 8) * 2,
-    "S",
-  );
+  const pageWidthPx = 1122;
+  const pageHeightPx = 793;
 
-  const cornerOrnament = (x, y, flipX = 1, flipY = 1) => {
-    doc.setDrawColor(gold[0], gold[1], gold[2]);
-    doc.setLineWidth(1.2);
-    doc.line(x, y, x + 30 * flipX, y);
-    doc.line(x, y, x, y + 30 * flipY);
-    doc.line(x + 10 * flipX, y + 10 * flipY, x + 22 * flipX, y + 10 * flipY);
-    doc.line(x + 10 * flipX, y + 10 * flipY, x + 10 * flipX, y + 22 * flipY);
-    doc.setFillColor(191, 152, 74);
-    doc.circle(x + 6 * flipX, y + 6 * flipY, 2.4, "F");
+  const $container = document.createElement("div");
+  $container.style.position = "fixed";
+  $container.style.left = "0";
+  $container.style.top = "0";
+  $container.style.width = `${pageWidthPx}px`;
+  $container.style.height = `${pageHeightPx}px`;
+  $container.style.zIndex = "-1";
+  $container.style.overflow = "hidden";
+  $container.style.opacity = "0";
+  $container.style.pointerEvents = "none";
+
+  $container.innerHTML = `
+    <section style="
+      width: ${pageWidthPx}px;
+      height: ${pageHeightPx}px;
+      box-sizing: border-box;
+      margin: 0;
+      border: 0;
+      border-radius: 0;
+      box-shadow: none;
+      padding: 36px;
+      font-family: 'Segoe UI', 'Trebuchet MS', Arial, sans-serif;
+      background: linear-gradient(130deg, #0f1022 0%, #172147 35%, #274a95 100%);
+      color: #f6f7ff;
+      position: relative;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    ">
+      <div style="
+        position: absolute;
+        width: 400px;
+        height: 400px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #6c6cff80 0%, #6c6cff00 68%);
+        top: -170px;
+        right: -120px;
+        filter: blur(1px);
+      "></div>
+
+      <div style="
+        position: absolute;
+        width: 320px;
+        height: 320px;
+        border-radius: 50%;
+        background: radial-gradient(circle, #00d1b25c 0%, #00d1b200 68%);
+        bottom: -160px;
+        left: -60px;
+      "></div>
+
+      <div style="
+        position: absolute;
+        inset: 18px;
+        border: 1px solid #ffffff30;
+        border-radius: 0px;
+        pointer-events: none;
+      "></div>
+
+      <div style="
+        position: relative;
+        z-index: 1;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+      ">
+        <div style="display: flex; flex-direction: column; gap: 6px;">
+          <div style="
+            font-size: 12px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #cfd8ff;
+          ">420IQ.LOL CERTIFICATE</div>
+          <h1 style="
+            margin: 10px 0;
+            font-size: 44px;
+            line-height: 1;
+            letter-spacing: -0.7px;
+            color: #ffffff;
+            font-family: 'Caveat Adjusted', 'Gloria Hallelujah', cursive;
+          ">Brain Flex Certificate</h1>
+          <p style="margin: 0; font-size: 15px; color: #d0dafb;">
+            Verified result from your latest IQ run.
+          </p>
+        </div>
+
+        <div style="
+          width: 164px;
+          height: 164px;
+          border-radius: 50%;
+          background: linear-gradient(150deg, #38ffe4 0%, #35a4ff 52%, #8b7cff 100%);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          color: #ffff;
+          font-weight: 900;
+          font-size: 56px;
+          box-shadow: 0 14px 30px #0000004d;
+        ">
+          ${escapeHtml(certificateData.iq)}
+        </div>
+      </div>
+
+      <div style="
+        position: relative;
+        z-index: 1;
+        margin-top: 6px;
+        background: #ffffff12;
+        border: 1px solid #ffffff26;
+        border-radius: 18px;
+        padding: 20px 22px;
+        display: grid;
+        grid-template-columns: 1.1fr 1fr;
+        gap: 18px;
+      ">
+        <div style="display: flex; flex-direction: column; justify-content: space-between; gap: 10px;">
+          <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 1.4px; color: #b6c4ff;">
+            This certifies that
+          </div>
+          <div style="
+            font-size: 40px;
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -0.5px;
+            word-break: break-word;
+            text-shadow: 0 2px 16px #00000040;
+            font-family: 'Gloria Hallelujah', 'Caveat Adjusted', cursive;
+          ">${escapeHtml(playerName)}</div>
+          <div style="font-size: 17px; color: #d9e1ff;">
+            reached <b>${escapeHtml(certificateData.percentileLabel)}</b> and earned rank <b>${escapeHtml(certificateData.globalRank)}</b>.
+          </div>
+          <div style="
+            align-self: flex-start;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: linear-gradient(90deg, #3ee6cf 0%, #5ac5ff 100%);
+            color: #112247;
+            font-size: 13px;
+            font-weight: 800;
+            letter-spacing: 0.6px;
+            text-transform: uppercase;
+          ">${escapeHtml(certificateData.cognitiveSubgroup)}</div>
+        </div>
+
+        <div style="
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 10px;
+        ">
+          <div style="padding: 10px 12px; border-radius: 12px; background: #ffffff0d; border: 1px solid #ffffff22;">
+            <div style="font-size: 11px; color: #afbeff; text-transform: uppercase; letter-spacing: 1px;">Date</div>
+            <div style="font-size: 19px; font-weight: 700;">${escapeHtml(certificateData.dateTaken)}</div>
+          </div>
+          <div style="padding: 10px 12px; border-radius: 12px; background: #ffffff0d; border: 1px solid #ffffff22;">
+            <div style="font-size: 11px; color: #afbeff; text-transform: uppercase; letter-spacing: 1px;">Correct answers</div>
+            <div style="font-size: 19px; font-weight: 700;">${escapeHtml(certificateData.correctAnswers)}</div>
+          </div>
+          <div style="padding: 10px 12px; border-radius: 12px; background: #ffffff0d; border: 1px solid #ffffff22;">
+            <div style="font-size: 11px; color: #afbeff; text-transform: uppercase; letter-spacing: 1px;">Completion time</div>
+            <div style="font-size: 19px; font-weight: 700;">${escapeHtml(certificateData.completionTime)}</div>
+          </div>
+          <div style="padding: 10px 12px; border-radius: 12px; background: #ffffff0d; border: 1px solid #ffffff22;">
+            <div style="font-size: 11px; color: #afbeff; text-transform: uppercase; letter-spacing: 1px;">Average speed</div>
+            <div style="font-size: 19px; font-weight: 700;">${escapeHtml(certificateData.answerSpeed)}</div>
+          </div>
+        </div>
+      </div>
+
+      <div style="
+        position: relative;
+        z-index: 1;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: auto;
+        gap: 20px;
+      ">
+        <div style="display: flex; flex-direction: column; gap: 8px; color: #d5ddff; font-size: 12px;">
+          <div style="width: 260px; border-bottom: 1px solid #c9d6ff6e;"></div>
+          <div style="font-family: 'Caveat Adjusted', 'Gloria Hallelujah', cursive; font-size: 18px;">Issued by iq-test</div>
+        </div>
+
+        <div style="
+          font-size: 11px;
+          color: #b3c2fb;
+          letter-spacing: 1px;
+          text-transform: uppercase;
+        ">Keep training your brain</div>
+
+        <div style="text-align: right; display: flex; align-items: center; gap: 10px;">
+          <div style="
+            font-size: 12px;
+            color: #d5deff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-family: 'Gloria Hallelujah', 'Caveat Adjusted', cursive;
+          ">Verified</div>
+          <div style="
+            width: 86px;
+            height: 86px;
+            border-radius: 50%;
+            border: 2px solid #7bd5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: #96e7ff;
+            line-height: 1.2;
+            font-size: 14px;
+            background: #1b2f66;
+            font-family: 'Caveat Adjusted', 'Gloria Hallelujah', cursive;
+          ">
+            IQ CERT
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
+
+  document.body.append($container);
+
+  const options = {
+    margin: 0,
+    filename: `iq-certificate-${safeDate}.pdf`,
+    image: { type: "jpeg", quality: 0.98 },
+    html2canvas: {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: "#0f1022",
+      windowWidth: pageWidthPx,
+      windowHeight: pageHeightPx,
+      scrollX: 0,
+      scrollY: 0,
+      x: 0,
+      y: 0,
+    },
+    jsPDF: {
+      unit: "mm",
+      format: "a4",
+      orientation: "landscape",
+    },
   };
 
-  cornerOrnament(margin + 10, margin + 10, 1, 1);
-  cornerOrnament(pageWidth - margin - 10, margin + 10, -1, 1);
-  cornerOrnament(margin + 10, pageHeight - margin - 10, 1, -1);
-  cornerOrnament(pageWidth - margin - 10, pageHeight - margin - 10, -1, -1);
-
-  doc.setTextColor(gold[0], gold[1], gold[2]);
-  doc.setFont("times", "bold");
-  doc.setFontSize(14);
-  doc.text("IQ TEST CERTIFICATE", pageWidth / 2, 72, { align: "center" });
-
-  doc.setTextColor(dark[0], dark[1], dark[2]);
-  doc.setFont("times", "bold");
-  doc.setFontSize(42);
-  doc.text("Certificate of Excellence", pageWidth / 2, 124, {
-    align: "center",
-  });
-
-  doc.setFont("times", "italic");
-  doc.setFontSize(14);
-  doc.text(
-    "Presented for outstanding cognitive performance",
-    pageWidth / 2,
-    154,
-    {
-      align: "center",
-    },
-  );
-
-  doc.setDrawColor(205, 178, 124);
-  doc.setLineWidth(0.9);
-  doc.line(pageWidth / 2 - 155, 170, pageWidth / 2 + 155, 170);
-
-  doc.setFont("times", "bold");
-  doc.setFontSize(64);
-  doc.setTextColor(110, 79, 23);
-  doc.text(`${certificateData.iq}`, pageWidth / 2, 246, {
-    align: "center",
-  });
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(17);
-  doc.setTextColor(dark[0], dark[1], dark[2]);
-  doc.text("IQ SCORE", pageWidth / 2, 274, { align: "center" });
-
-  doc.setFillColor(255, 251, 242);
-  doc.roundedRect(pageWidth / 2 - 265, 292, 530, 132, 8, 8, "F");
-  doc.setDrawColor(214, 190, 144);
-  doc.setLineWidth(0.8);
-  doc.roundedRect(pageWidth / 2 - 265, 292, 530, 132, 8, 8, "S");
-
-  const leftColumnX = pageWidth / 2 - 238;
-  const rightColumnX = pageWidth / 2 + 28;
-  const rowStartY = 324;
-  const rowGap = 30;
-  const leftValueOffset = 96;
-  const leftValueOffsetWide = 126;
-
-  doc.setFont("helvetica", "bold");
-  doc.setFontSize(12);
-  doc.text("Date:", leftColumnX, rowStartY);
-  doc.text("Percentile:", leftColumnX, rowStartY + rowGap);
-  doc.text("Correct Answers:", leftColumnX, rowStartY + rowGap * 2);
-  doc.text("Cognitive Profile:", leftColumnX, rowStartY + rowGap * 3);
-
-  doc.text("Completion Time:", rightColumnX, rowStartY);
-  doc.text("Average Speed:", rightColumnX, rowStartY + rowGap);
-  doc.text("Global Rank:", rightColumnX, rowStartY + rowGap * 2);
-
-  doc.setFont("helvetica", "normal");
-  doc.text(certificateData.dateTaken, leftColumnX + leftValueOffset, rowStartY);
-  doc.text(
-    certificateData.percentileLabel,
-    leftColumnX + leftValueOffset,
-    rowStartY + rowGap,
-  );
-  doc.text(
-    certificateData.correctAnswers,
-    leftColumnX + leftValueOffsetWide,
-    rowStartY + rowGap * 2,
-  );
-  doc.text(
-    certificateData.cognitiveSubgroup,
-    leftColumnX + leftValueOffsetWide,
-    rowStartY + rowGap * 3,
-  );
-
-  doc.text(certificateData.completionTime, rightColumnX + 112, rowStartY);
-  doc.text(certificateData.answerSpeed, rightColumnX + 112, rowStartY + rowGap);
-  doc.text(
-    certificateData.globalRank,
-    rightColumnX + 112,
-    rowStartY + rowGap * 2,
-  );
-
-  const sealX = pageWidth - margin - 96;
-  const sealY = pageHeight - margin - 96;
-  doc.setDrawColor(120, 93, 42);
-  doc.setLineWidth(2);
-  doc.circle(sealX, sealY, 42, "S");
-  doc.setDrawColor(199, 160, 82);
-  doc.setLineWidth(1);
-  doc.circle(sealX, sealY, 37, "S");
-  doc.setFont("times", "bold");
-  doc.setFontSize(12);
-  doc.setTextColor(120, 93, 42);
-  doc.text("CERTIFIED", sealX, sealY - 3, { align: "center" });
-  doc.text("IQ SCORE", sealX, sealY + 12, { align: "center" });
-
-  doc.setDrawColor(166, 134, 63);
-  doc.setLineWidth(1);
-  doc.line(margin + 36, pageHeight - 92, margin + 220, pageHeight - 92);
-  doc.line(
-    pageWidth / 2 - 84,
-    pageHeight - 92,
-    pageWidth / 2 + 84,
-    pageHeight - 92,
-  );
-
-  doc.setFont("times", "italic");
-  doc.setFontSize(12);
-  doc.setTextColor(97, 87, 68);
-  doc.text("Authorized by iq-test", margin + 36, pageHeight - 76);
-  doc.text(
-    "Date: " + certificateData.dateTaken,
-    pageWidth / 2,
-    pageHeight - 76,
-    {
-      align: "center",
-    },
-  );
-
-  // doc.setFont("helvetica", "normal");
-  // doc.setFontSize(9);
-  // doc.setTextColor(126, 120, 106);
-  // doc.text(
-  //   "Result link: " + certificateData.resultUrl,
-  //   margin + 10,
-  //   pageHeight - 44,
-  // );
-
-  const safeDate = certificateData.dateTaken.replaceAll("/", "-");
-  doc.save(`iq-certificate-${safeDate}.pdf`);
+  try {
+    await html2pdf().set(options).from($container.firstElementChild).save();
+  } finally {
+    $container.remove();
+  }
 }
