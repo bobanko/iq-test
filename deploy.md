@@ -2,11 +2,11 @@
 
 run:
 
-% firebase deploy
+`% firebase deploy`
 
 if fails, re-login first:
 
-% firebase login --reauth
+`% firebase login --reauth`
 
 ### deployment versioning
 
@@ -19,5 +19,5 @@ Advanced:
 
 to add readable tag use:
 
-% git tag v1.0.0
-% git push --tags
+`% git tag v1.0.0`  
+`% git push --tags`
