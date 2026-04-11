@@ -28,6 +28,7 @@
 - Pure utility functions → free-standing `export function` in a `utils`-style module
 - use ES6 classes when they better fit (e.g., multiple instances, seeded helpers)
 - Each module has a single responsibility and is imported where needed
+- **No code duplication across files** — if the same logic is needed in two or more places, extract it into a shared module in `helpers/` and import it. Never copy-paste computation blocks between page scripts
 
 ### DOM
 
