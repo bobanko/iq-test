@@ -30,3 +30,9 @@ if fails, re-login first:
 
 - A predeploy hook writes `version.json` with the deployment timestamp.
 - Check the footer on the landing page to see when the current version was deployed.
+
+## results samples
+
+130iq - https://420iq.lol/result.html#id=XRlH4A268FKnvb7yK96o
+
+72iq - https://420iq.lol/result.html#id=KEK09csFY1fWvZgK8iVO
