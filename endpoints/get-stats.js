@@ -12,6 +12,7 @@ import {
 } from "./firebase.js";
 
 import { db } from "./firebase.init.js";
+import { calcStaticIqByStats } from "../calc-iq.js";
 
 const quizResultsCol = collection(db, "quiz-results");
 
@@ -133,4 +134,54 @@ export async function getResultById(id) {
     console.log("No such document!");
     throw Error(`no document with id: ${id}`);
   }
+}
+
+export async function getStatsByCountry() {
+  const resultsSnapshot = await getDocs(quizResultsCol);
+  const results = resultsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  const userIds = [...new Set(results.map((r) => r._userId))];
+
+  const usersRef = collection(db, "user-data");
+  const users = {};
+  for (let i = 0; i < userIds.length; i += 30) {
+    const batch = userIds.slice(i, i + 30);
+    const usersSnapshot = await getDocs(
+      query(usersRef, where("__name__", "in", batch)),
+    );
+    usersSnapshot.docs.forEach((doc) => {
+      users[doc.id] = doc.data();
+    });
+  }
+
+  const countryStats = {};
+  const countedUsers = {};
+  results.forEach((result) => {
+    const user = users[result._userId];
+    const countryCode = user?.countryCode ?? "__";
+
+    if (!countryStats[countryCode]) {
+      countryStats[countryCode] = { totalIq: 0, count: 0 };
+      countedUsers[countryCode] = new Set();
+    }
+
+    const iq = calcStaticIqByStats(result.stats);
+    countryStats[countryCode].totalIq += iq;
+
+    if (!countedUsers[countryCode].has(result._userId)) {
+      countedUsers[countryCode].add(result._userId);
+      countryStats[countryCode].count += 1;
+    }
+  });
+
+  return Object.entries(countryStats)
+    .map(([countryCode, { totalIq, count }]) => ({
+      countryCode,
+      count,
+      avgIq: Math.round(totalIq / count),
+    }))
+    .sort((a, b) => b.count - a.count);
 }

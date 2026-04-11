@@ -1,0 +1,41 @@
+<!doctype html>
+<html lang="en" class="flex-col align-center justify-space-around">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title data-translation="feedback-title">User Feedback</title>
+    <link rel="icon" href="./images/brain-ios.png" type="image/png" />
+    <link rel="stylesheet" href="./landing.css" />
+    <link rel="stylesheet" href="./styles/feedback.css" />
+    <script src="./feedback.js" type="module" async></script>
+  </head>
+  <body class="inter-regular w-100p">
+    <header
+      class="flex-row align-center py-10"
+      style="justify-content: space-between"
+    >
+      <div class="flex-row align-center py-10 nowrap">
+        <img src="./images/brain-ios.png" width="40px" />
+        <div class="flex-col px-10">
+          <span
+            class="beta"
+            style="font-weight: bold; font-size: 28px"
+            data-translation="feedback-title"
+            >User Feedback</span
+          >
+          <span style="font-size: 10px" data-translation="logo-slogan"
+            >challenge your brain</span
+          >
+        </div>
+      </div>
+      <a href="./index.html" class="button px-10">← Back to main</a>
+    </header>
+    <main
+      class="flex-col align-center w-100p"
+      style="max-width: 600px; margin: 0 auto"
+    >
+      <h2 data-translation="feedback-list-title">Feedback from Users</h2>
+      <div id="$feedbackList" class="flex-col gap-2 w-100p"></div>
+    </main>
+  </body>
+</html>

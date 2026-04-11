@@ -10,7 +10,8 @@
 
   /* animation: shift60 1500ms infinite ease-in-out alternate-reverse; */
 
-  background: linear-gradient(white, white),
+  background:
+    linear-gradient(white, white),
     repeating-linear-gradient(
       -45deg,
       var(--red) calc(var(--pw) * 0 + var(--shift)),
@@ -37,5 +38,32 @@
     /* border-color: var(--bg-secondary); */
     /* border-radius: 30px; */
     padding: 20px 30px;
+  }
+}
+
+.contact-row {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+}
+
+.contact-or {
+  font-size: 20px;
+  font-weight: bold;
+  color: #999;
+  text-transform: uppercase;
+}
+
+.contact-discord {
+  gap: 10px;
+
+  a {
+    text-decoration: none;
+    text-transform: capitalize;
+    white-space: nowrap;
   }
 }

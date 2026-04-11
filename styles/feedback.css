@@ -1,0 +1,49 @@
+.feedback-item {
+  border: 1px solid var(--hr-color);
+  border-radius: 8px;
+  background: var(--bg-secondary);
+  margin-bottom: 8px;
+  padding: 12px;
+}
+.feedback-subject {
+  font-weight: bold;
+  font-size: 1.1em;
+  margin-bottom: 2px;
+}
+.feedback-message {
+  font-size: 1.1em;
+  margin-bottom: 4px;
+}
+.feedback-meta {
+  color: #888;
+  font-size: 0.9em;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.delete-feedback-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1em;
+  padding: 2px 6px;
+  opacity: 0.6;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+.admin-toggle-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

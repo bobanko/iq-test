@@ -1,5 +1,4 @@
 import { getHash, setHash } from "./helpers/hash-param.js";
-import { SeededRandom } from "./helpers/random.helpers.js";
 import { getSafeIndex } from "./helpers/safe-index.js";
 import { Timer } from "./helpers/timer.js";
 import {
@@ -15,6 +14,7 @@ import {
   getResultsLast10,
   getResultsLast24hCount,
   getResultsTotalCount,
+  getStatsByCountry,
   getTop10AllTime,
 } from "./endpoints/get-stats.js";
 import { getCurrentUser, signAnonUser } from "./endpoints/auth.js";
@@ -89,53 +89,6 @@ function initSlider() {
 }
 
 initSlider();
-
-const mockNames = [
-  "Belyash",
-  "Mukola",
-  "yana",
-  "Margosha30",
-  "Володимир",
-  "Світлана",
-  "helenhlu",
-  "kek",
-  "kirayoha",
-  "Lea",
-  "Martyna",
-  "Khoirunnisa",
-  "saalz",
-  "Andrii",
-  "super hepi",
-  "Loo",
-];
-
-const random = new SeededRandom(Date.now());
-
-const countryCodes = Object.keys(countries);
-
-const getRandomDate = () => new Date(174e10 + random.fromRange(0, 9e9));
-
-const data_results_recent = Array.from({ length: 10 }, (_) => {
-  const randomCountryCode = random.sample(countryCodes);
-
-  return {
-    name: random.sample(mockNames),
-    countryCode: randomCountryCode,
-    value: random.fromRange(60, 140),
-    date: getRandomDate(),
-  };
-});
-
-const data_results_perCountry = Array.from({ length: 10 }, (_) => {
-  const randomCountryCode = random.sample(countryCodes);
-
-  return {
-    displayName: countries[randomCountryCode],
-    countryCode: randomCountryCode,
-    value: random.fromRange(60, 140),
-    // no date
-  };
-});
 
 // -----
 
@@ -218,10 +171,35 @@ async function loadStatsFb() {
     $results_top10.classList.remove("is-loading");
   });
 
+  const data_perCountry_stub = Array(10).fill({
+    countryCode: "__",
+    displayName: "...",
+    value: "...",
+  });
+
+  $results_perCountry.classList.add("is-loading");
   showResults({
     $container: $results_perCountry,
-    data: data_results_perCountry,
+    data: data_perCountry_stub,
     locale: defaultLocale,
+  });
+
+  getStatsByCountry().then((data) => {
+    const data_perCountry = data
+      .slice(0, 10)
+      .map(({ countryCode, count, avgIq }) => ({
+        countryCode,
+        displayName: countries[countryCode] ?? countryCode,
+        value: avgIq,
+        date: `${count} players`,
+      }));
+
+    showResults({
+      $container: $results_perCountry,
+      data: data_perCountry,
+      locale: defaultLocale,
+    });
+    $results_perCountry.classList.remove("is-loading");
   });
 }
 
