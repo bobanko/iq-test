@@ -1,5 +1,8 @@
 export { initializeApp } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-app.js";
-export { getAnalytics } from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
+export {
+  getAnalytics,
+  logEvent,
+} from "https://www.gstatic.com/firebasejs/11.4.0/firebase-analytics.js";
 export {
   getFirestore,
   query,

@@ -79,6 +79,8 @@
             data-fbq="trackCustom"
             data-fbq-event="OpenDiscord"
             data-fbq-params='{"source": "landing_header"}'
+            data-ga="open_discord"
+            data-ga-params='{"source": "landing_header"}'
           >
             <img
               src="./images/icons/Discord-Symbol-Black.svg"
@@ -94,6 +96,8 @@
             data-fbq="trackCustom"
             data-fbq-event="StartQuiz"
             data-fbq-params='{"source": "landing_header"}'
+            data-ga="start_quiz"
+            data-ga-params='{"source": "landing_header"}'
           >
             <button
               class="p-10 btn-primary"
@@ -194,6 +198,8 @@
               data-fbq="trackCustom"
               data-fbq-event="StartQuiz"
               data-fbq-params='{"source": "landing_splash"}'
+              data-ga="start_quiz"
+              data-ga-params='{"source": "landing_splash"}'
             >
               <button
                 class="btn-primary p-20 py-10"
@@ -481,6 +487,8 @@
               data-fbq="trackCustom"
               data-fbq-event="SendFeedback"
               data-fbq-params='{"source": "landing_footer"}'
+              data-ga="send_feedback"
+              data-ga-params='{"source": "landing_footer"}'
             >
               <span>send</span>
               <span>→</span>
@@ -498,7 +506,10 @@
         <div class="flex-row align-center" href="#index">
           <img src="./images/brain-ios.png" width="40px" />
           <div class="flex-col px-10">
-            <span style="font-weight: bold" data-translation="footer-title"
+            <span
+              class="beta"
+              style="font-weight: bold"
+              data-translation="footer-title"
               >IQ Test</span
             >
             <span style="font-size: 10px" data-translation="footer-logo-slogan"
@@ -518,6 +529,8 @@
             data-fbq="trackCustom"
             data-fbq-event="OpenDiscord"
             data-fbq-params='{"source": "landing_footer"}'
+            data-ga="open_discord"
+            data-ga-params='{"source": "landing_footer"}'
           >
             <img
               src="./images/icons/Discord-Symbol-Black.svg"
@@ -540,8 +553,9 @@
 
       <div class="flex-col align-center">
         <div class="p-20" id="$footerCopyright">
-          <div data-translation="footer-copyright" class="cursor-pointer">
-            © 2025—2026 420iq.lol. All rights reserved.
+          <div class="cursor-pointer">
+            <span>© 2025—2026 420iq.lol. </span>
+            <span data-translation="footer-copyright">Made with 🧠</span>
           </div>
           <div id="$buildInfo" class="build-info" hidden>version here</div>
         </div>

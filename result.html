@@ -373,6 +373,7 @@
         class="action-btn result-stat flex-col radius-10 p-10"
         data-fbq="trackCustom"
         data-fbq-event="ShareResult"
+        data-ga="share_result"
         style="--color: #2dd67d"
       >
         <div class="flex-row align-center gap-10">
@@ -400,6 +401,9 @@
         id="$btnChallengeFriend"
         class="action-btn result-stat flex-col radius-10 p-10"
         style="--color: #e8b828"
+        data-fbq="trackCustom"
+        data-fbq-event="ChallengeFriend"
+        data-ga="challenge_friend"
       >
         <div class="flex-row align-center gap-10">
           <img
@@ -418,6 +422,9 @@
       <button
         class="action-btn result-stat flex-col radius-10 p-10"
         style="--color: #8a9bb0"
+        data-fbq="trackCustom"
+        data-fbq-event="TryAgain"
+        data-ga="try_again"
       >
         <div class="flex-row align-center gap-10">
           <img
@@ -437,6 +444,9 @@
         id="$btnDownloadCertificate"
         class="action-btn result-stat flex-col radius-10 p-10"
         style="--color: #7baad4"
+        data-fbq="trackCustom"
+        data-fbq-event="DownloadCertificate"
+        data-ga="download_certificate"
       >
         <div class="flex-row align-center gap-10">
           <img
@@ -516,6 +526,7 @@
               type="submit"
               data-fbq="trackCustom"
               data-fbq-event="SendFeedback"
+              data-ga="send_feedback"
             >
               Send feedback →
             </button>
@@ -545,6 +556,8 @@
             data-fbq="trackCustom"
             data-fbq-event="OpenDiscord"
             data-fbq-params='{"source": "result_footer"}'
+            data-ga="open_discord"
+            data-ga-params='{"source": "result_footer"}'
           >
             <img
               src="./images/icons/Discord-Symbol-Black.svg"
@@ -560,13 +573,10 @@
 
       <div class="flex-col align-center">
         <div class="p-20" style="opacity: 0.5; font-size: 14px">
-          <p
-            id="$footerCopyright"
-            class="cursor-pointer"
-            style="margin: 8px 0 0"
-          >
-            © 2025—2026 420iq.lol. All rights reserved.
-          </p>
+          <div class="cursor-pointer" id="$footerCopyright">
+            <span>© 2025—2026 420iq.lol. </span>
+            <span data-translation="footer-copyright">Made with 🧠</span>
+          </div>
           <div id="$buildInfo" class="build-info" hidden>version here</div>
         </div>
         <script type="module" src="./show-version.js" async></script>

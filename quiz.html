@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en" class="flex-col align-center justify-space-around">
   <head>
     <meta charset="UTF-8" />
@@ -237,6 +237,7 @@
           class="p-10"
           data-fbq="trackCustom"
           data-fbq-event="FinishQuizAttempt"
+          data-ga="finish_quiz_attempt"
         >
           finish
         </button>
@@ -292,6 +293,8 @@
             data-fbq="trackCustom"
             data-fbq-event="QuizFinishCancel"
             data-fbq-params='{"source": "confirmation_popup"}'
+            data-ga="quiz_finish_cancel"
+            data-ga-params='{"source": "confirmation_popup"}'
           >
             cancel
           </button>
@@ -301,6 +304,8 @@
             data-fbq="trackCustom"
             data-fbq-event="QuizFinishConfirm"
             data-fbq-params='{"source": "confirmation_popup"}'
+            data-ga="quiz_finish_confirm"
+            data-ga-params='{"source": "confirmation_popup"}'
           >
             confirm
           </button>
@@ -439,6 +444,8 @@
                 data-fbq="trackCustom"
                 data-fbq-event="CancelFormQuiz"
                 data-fbq-params='{"button": "btnCancelPostQuiz"}'
+                data-ga="cancel_form_quiz"
+                data-ga-params='{"button": "btnCancelPostQuiz"}'
               >
                 cancel
               </button>
@@ -449,6 +456,8 @@
                 data-fbq="track"
                 data-fbq-event="CompleteRegistration"
                 data-fbq-params='{"button": "submit"}'
+                data-ga="complete_registration"
+                data-ga-params='{"button": "submit"}'
               >
                 <span>send</span>
                 <span>→</span>
