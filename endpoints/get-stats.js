@@ -96,13 +96,13 @@ export async function getTop10AllTime() {
     user: users[result._userId] || null,
   }));
 
-  // sort by correctness ratio descending, then by date ascending (earlier = better)
+  // sort by IQ (correctness ratio) descending, then by date descending (more recent = higher)
   resultsWithUsers.sort((a, b) => {
     const ratioA = (a.stats?.isCorrect ?? 0) / (a.stats?.total ?? 1);
     const ratioB = (b.stats?.isCorrect ?? 0) / (b.stats?.total ?? 1);
     if (ratioB !== ratioA) return ratioB - ratioA;
     return (
-      (a.datePassed?.toMillis?.() ?? 0) - (b.datePassed?.toMillis?.() ?? 0)
+      (b.datePassed?.toMillis?.() ?? 0) - (a.datePassed?.toMillis?.() ?? 0)
     );
   });
 
