@@ -158,6 +158,14 @@ section {
 .result-item {
   padding: 10px;
   height: 40px;
+  text-decoration: none;
+  color: inherit;
+  border-radius: 8px;
+  transition: background-color 150ms;
+
+  &[href]:hover {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
 
   .item-value {
     font-size: 30px;

@@ -190,6 +190,7 @@ async function loadStatsFb() {
       countryCode: data.user?.countryCode ?? "__",
       value: calcStaticIqByStats(data.stats),
       date: data.datePassed.toDate(),
+      resultId: data.id,
     }));
 
     showResults({

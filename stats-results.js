@@ -5,9 +5,14 @@ function createResultItem({
   displayName,
   value,
   date,
+  resultId,
   locale = countryCode,
 }) {
   const $resultItem = $tmplResultItem.content.firstElementChild.cloneNode(true);
+
+  if (resultId) {
+    $resultItem.href = `./result.html#id=${resultId}`;
+  }
 
   const $itemCountry = $resultItem.querySelector(".item-country");
   $itemCountry.textContent = emojiFlags[countryCode];
