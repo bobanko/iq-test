@@ -236,7 +236,7 @@ function generateQuiz({ seed }) {
       console.groupEnd();
 
       return { questionData, configName, questionIndex, timeSpent: 0 };
-    }
+    },
   );
   currentQuiz.questions.splice(0, currentQuiz.questions.length, ..._questions);
 
@@ -262,7 +262,7 @@ function generateQuiz({ seed }) {
           // todo(vmyshko): put replace with append for fast rendering
           $patternArea.style.setProperty(
             "--size",
-            questionData.patternsInRow ?? patternsInRowDefault
+            questionData.patternsInRow ?? patternsInRowDefault,
           );
 
           {
@@ -285,7 +285,7 @@ function generateQuiz({ seed }) {
 
             $patternArea.style.setProperty(
               "--pattern-size",
-              `${Math.min(patternSizePx, maxPatternSizePx)}px`
+              `${Math.min(patternSizePx, maxPatternSizePx)}px`,
             );
           }
 
@@ -312,7 +312,7 @@ function generateQuiz({ seed }) {
           }
         },
       });
-    }
+    },
   );
 
   updateProgressQuiz({
@@ -336,12 +336,12 @@ function markAnsweredQuestions() {
       const { isCorrect, questionIndex } = answerData;
       $questionList.children[questionIndex].classList.toggle(
         "correct",
-        isCorrect
+        isCorrect,
       );
 
       $questionList.children[questionIndex].classList.toggle(
         "wrong",
-        isCorrect === false
+        isCorrect === false,
       );
     });
 }
@@ -354,7 +354,7 @@ function getQuizResults() {
       const isAnswered = selectedAnswerId !== null;
 
       const correctAnswer = questionData.answers.find(
-        (answer) => answer.isCorrect
+        (answer) => answer.isCorrect,
       );
 
       const isCorrect = isAnswered
@@ -369,7 +369,7 @@ function getQuizResults() {
         isCorrect,
         timeSpent,
       };
-    }
+    },
   );
 }
 
@@ -496,7 +496,7 @@ function wrapAnswers({
   // select previously selected answer if possible
   if (currentQuiz.answers.has(questionIndex)) {
     const $answerButton = $answerList.querySelector(
-      `[data-id='${currentQuiz.answers.get(questionIndex)}']`
+      `[data-id='${currentQuiz.answers.get(questionIndex)}']`,
     );
 
     $answerButton?.classList.add("selected");
@@ -599,7 +599,7 @@ async function loadFormSelects() {
   const countryEntries = Object.entries(countries).map(
     ([countryCode, countryName]) => {
       return [countryCode, `${emojiFlags[countryCode]} ${countryName}`];
-    }
+    },
   );
 
   fillSelect({ $select: $selectCountry, dataEntries: countryEntries });
