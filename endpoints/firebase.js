@@ -15,6 +15,7 @@ export {
   addDoc,
   doc,
   setDoc,
+  deleteDoc,
   Timestamp,
   serverTimestamp,
   getCountFromServer,
