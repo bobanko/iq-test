@@ -157,24 +157,27 @@ export async function getStatsByCountry() {
     });
   }
 
-  const countryStats = {};
-  const countedUsers = {};
+  // collect best IQ per user per country
+  const bestIqPerUser = {};
   results.forEach((result) => {
     const user = users[result._userId];
     const countryCode = user?.countryCode ?? "__";
+    const iq = calcStaticIqByStats(result.stats);
+    const key = `${countryCode}::${result._userId}`;
 
+    if (!bestIqPerUser[key] || iq > bestIqPerUser[key].iq) {
+      bestIqPerUser[key] = { countryCode, iq };
+    }
+  });
+
+  // aggregate by country using only best result per user
+  const countryStats = {};
+  Object.values(bestIqPerUser).forEach(({ countryCode, iq }) => {
     if (!countryStats[countryCode]) {
       countryStats[countryCode] = { totalIq: 0, count: 0 };
-      countedUsers[countryCode] = new Set();
     }
-
-    const iq = calcStaticIqByStats(result.stats);
     countryStats[countryCode].totalIq += iq;
-
-    if (!countedUsers[countryCode].has(result._userId)) {
-      countedUsers[countryCode].add(result._userId);
-      countryStats[countryCode].count += 1;
-    }
+    countryStats[countryCode].count += 1;
   });
 
   return Object.entries(countryStats)
