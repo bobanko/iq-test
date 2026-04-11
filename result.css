@@ -245,19 +245,25 @@ hr {
   gap: 6px;
   padding: 16px 8px;
   border-radius: 12px;
-  border: 2px solid #e8eaf0;
+  border: 2px solid #dde0e6;
+  background: #f5f6f8;
   cursor: pointer;
   transition:
     border-color 150ms,
-    background 150ms;
+    background 150ms,
+    translate 150ms,
+    box-shadow 150ms;
 
   &:hover {
-    background: #f5f6f8;
+    translate: 0 -2px;
+    background: #eceef2;
+    box-shadow: 0 4px 10px #00000010;
   }
 
   &:has(input:checked) {
     border-color: var(--accent-color, #4a90d9);
-    background: #f0f4ff;
+    background: #e4ecfa;
+    box-shadow: 0 0 0 2px hsl(from var(--accent-color, #4a90d9) h s l / 0.25);
   }
 
   input {
@@ -639,11 +645,13 @@ button.action-btn {
   cursor: pointer;
   text-align: left;
   padding: 14px;
-  transition: box-shadow 150ms;
+  transition:
+    box-shadow 200ms,
+    translate 200ms,
+    background-color 200ms;
 
   background-color: var(--color);
   color: white;
-  /* border-radius: 32px; */
   text-shadow: 1px 1px 2px hsl(from var(--color) h s calc(l - 35));
   border: 2px solid hsl(from var(--color) h s calc(l + 15));
   box-shadow:
@@ -653,9 +661,14 @@ button.action-btn {
   box-sizing: border-box;
 
   &:hover {
-    /* box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); */
+    translate: 0 -2px;
+    box-shadow:
+      0 4px 12px hsl(from var(--color) h s l / 0.4),
+      0 0 2px 2px #00000020,
+      inset 0 0 0 2px white;
   }
   &:active {
+    translate: 0 0;
     background-color: hsl(from var(--color) h calc(s - 10) calc(l - 15));
   }
 
