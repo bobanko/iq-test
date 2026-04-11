@@ -99,27 +99,41 @@ function displayResult({ userResult, allResults }) {
 
   const staticIq = calcStaticIqByStats(resultsStats);
 
-  const allResultsIqs = allResults
-    .map((result) => result.stats)
-    .map(calcStaticIqByStats);
+  // Only keep the best IQ per unique user
+  const bestIqByUser = {};
+  for (const result of allResults) {
+    const userId = result._userId;
+    const iq = calcStaticIqByStats(result.stats);
+    if (!(userId in bestIqByUser) || iq > bestIqByUser[userId]) {
+      bestIqByUser[userId] = iq;
+    }
+  }
+  const allBestIqs = Object.values(bestIqByUser);
+  initChart({ chartData: allBestIqs, highlightValue: staticIq });
 
-  initChart({ chartData: allResultsIqs, highlightValue: staticIq });
+  // Sort descending for rank (higher IQ = better)
+  const allResultsIqsSorted = allBestIqs.toSorted((a, b) => b - a);
+  // Debug output for ranking logic
+  console.log(
+    "🔥 [RANK DEBUG] allResultsIqsSorted (unique users):",
+    allResultsIqsSorted,
+  );
+  console.log("🔥 [RANK DEBUG] staticIq:", staticIq);
+  // Competition rank: 1 + count of IQs strictly greater
+  const globalRank =
+    1 + allResultsIqsSorted.filter((iq) => iq > staticIq).length;
+  console.log("🔥 [RANK DEBUG] globalRank:", globalRank);
+  const totalResultsCount = allResultsIqsSorted.length;
 
-  const allResultsIqsSorted = allResultsIqs.toSorted((a, b) => a - b);
-
-  // PR = [(N_below + 0.5 × N_equal) / N_total] × 100
+  // Percentile as before
   const resultsBelowCount = allResultsIqsSorted.filter(
     (iq) => iq < staticIq,
   ).length;
   const sameResultsCount = allResultsIqsSorted.filter(
     (iq) => iq === staticIq,
   ).length;
-  const totalResultsCount = allResultsIqsSorted.length;
-  const globalRank =
-    totalResultsCount - (resultsBelowCount + sameResultsCount / 2);
   const percetileRank =
     ((resultsBelowCount + sameResultsCount / 2) / totalResultsCount) * 100;
-
   const topPt = 100 - percetileRank;
 
   //update values
