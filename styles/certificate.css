@@ -1,0 +1,250 @@
+.cert-page {
+  width: 1122px;
+  height: 793px;
+  box-sizing: border-box;
+  margin: 0;
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  padding: 36px;
+  font-family: "Segoe UI", "Trebuchet MS", Arial, sans-serif;
+  background: linear-gradient(130deg, #0f1022 0%, #172147 35%, #274a95 100%);
+  color: #f6f7ff;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+/* ===== Decorative blobs ===== */
+
+.cert-blob-top {
+  position: absolute;
+  width: 400px;
+  height: 400px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #6c6cff80 0%, #6c6cff00 68%);
+  top: -170px;
+  right: -120px;
+  filter: blur(1px);
+}
+
+.cert-blob-bottom {
+  position: absolute;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #00d1b25c 0%, #00d1b200 68%);
+  bottom: -160px;
+  left: -60px;
+}
+
+.cert-inner-border {
+  position: absolute;
+  inset: 18px;
+  border: 1px solid #ffffff30;
+  border-radius: 0;
+  pointer-events: none;
+}
+
+/* ===== Header row ===== */
+
+.cert-header {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cert-header-text {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.cert-org-label {
+  font-size: 12px;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: #cfd8ff;
+}
+
+.cert-title {
+  margin: 10px 0;
+  font-size: 44px;
+  line-height: 1;
+  letter-spacing: -0.7px;
+  color: #ffffff;
+  font-family: "Caveat Adjusted", "Gloria Hallelujah", cursive;
+}
+
+.cert-subtitle {
+  margin: 0;
+  font-size: 15px;
+  color: #d0dafb;
+}
+
+.cert-iq-circle {
+  width: 164px;
+  height: 164px;
+  border-radius: 50%;
+  background: linear-gradient(150deg, #38ffe4 0%, #35a4ff 52%, #8b7cff 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-weight: 900;
+  font-size: 56px;
+  box-shadow: 0 14px 30px #0000004d;
+}
+
+/* ===== Details card ===== */
+
+.cert-details {
+  position: relative;
+  z-index: 1;
+  margin-top: 6px;
+  background: #ffffff12;
+  border: 1px solid #ffffff26;
+  border-radius: 18px;
+  padding: 20px 22px;
+  display: grid;
+  grid-template-columns: 1.1fr 1fr;
+  gap: 18px;
+}
+
+.cert-player-col {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 10px;
+}
+
+.cert-certifies-label {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 1.4px;
+  color: #b6c4ff;
+}
+
+.cert-player-name {
+  font-size: 40px;
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.5px;
+  word-break: break-word;
+  text-shadow: 0 2px 16px #00000040;
+  font-family: "Gloria Hallelujah", "Caveat Adjusted", cursive;
+}
+
+.cert-rank-text {
+  font-size: 17px;
+  color: #d9e1ff;
+}
+
+.cert-subgroup-badge {
+  align-self: flex-start;
+  padding: 10px 14px;
+  border-radius: 999px;
+  background: linear-gradient(90deg, #3ee6cf 0%, #5ac5ff 100%);
+  color: #112247;
+  font-size: 13px;
+  font-weight: 800;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+}
+
+.cert-stats-col {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 10px;
+}
+
+.cert-stat-card {
+  padding: 10px 12px;
+  border-radius: 12px;
+  background: #ffffff0d;
+  border: 1px solid #ffffff22;
+}
+
+.cert-stat-label {
+  font-size: 11px;
+  color: #afbeff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.cert-stat-value {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+/* ===== Footer row ===== */
+
+.cert-footer {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: auto;
+  gap: 20px;
+}
+
+.cert-issuer {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  color: #d5ddff;
+  font-size: 12px;
+}
+
+.cert-issuer-line {
+  width: 260px;
+  border-bottom: 1px solid #c9d6ff6e;
+}
+
+.cert-issuer-name {
+  font-family: "Caveat Adjusted", "Gloria Hallelujah", cursive;
+  font-size: 18px;
+}
+
+.cert-motto {
+  font-size: 11px;
+  color: #b3c2fb;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.cert-seal-block {
+  text-align: right;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.cert-verified-label {
+  font-size: 12px;
+  color: #d5deff;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-family: "Gloria Hallelujah", "Caveat Adjusted", cursive;
+}
+
+.cert-seal {
+  width: 86px;
+  height: 86px;
+  border-radius: 50%;
+  border: 2px solid #7bd5ff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  color: #96e7ff;
+  line-height: 1.2;
+  font-size: 14px;
+  background: #1b2f66;
+  font-family: "Caveat Adjusted", "Gloria Hallelujah", cursive;
+}
