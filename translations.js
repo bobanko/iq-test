@@ -65,7 +65,7 @@ export const translations = {
     "footer-title": "IQ Test",
     "footer-logo-slogan": "challenge your brain",
     "footer-nav-faqs": "FAQs",
-    "footer-copyright": "© 2025 iq-test.kek. All rights reserved.",
+    "footer-copyright": "Made with 🧠",
   },
   CN: {
     // Mandarin Chinese (Китай)
@@ -129,7 +129,7 @@ export const translations = {
     "footer-title": "智商测试",
     "footer-logo-slogan": "挑战你的大脑",
     "footer-nav-faqs": "常见问题",
-    "footer-copyright": "© 2025 iq-test.kek。保留所有权利。",
+    "footer-copyright": "用 🧠 制作",
   },
   IN: {
     // Hindi (Индия)
@@ -198,7 +198,7 @@ export const translations = {
     "footer-title": "आईक्यू टेस्ट",
     "footer-logo-slogan": "अपने दिमाग को चुनौती दें",
     "footer-nav-faqs": "प्रश्नोत्तर",
-    "footer-copyright": "© 2025 iq-test.kek। सर्वाधिकार सुरक्षित।",
+    "footer-copyright": "🧠 से बनाया गया",
   },
   ES: {
     // Spanish (Испания)
@@ -266,7 +266,7 @@ export const translations = {
     "footer-title": "Prueba de CI",
     "footer-logo-slogan": "desafía tu cerebro",
     "footer-nav-faqs": "Preguntas",
-    "footer-copyright": "© 2025 iq-test.kek. Todos los derechos reservados.",
+    "footer-copyright": "Hecho con 🧠",
   },
   FR: {
     // French (Франция)
@@ -334,7 +334,7 @@ export const translations = {
     "footer-title": "Test de QI",
     "footer-logo-slogan": "défie ton cerveau",
     "footer-nav-faqs": "FAQ",
-    "footer-copyright": "© 2025 iq-test.kek. Tous droits réservés.",
+    "footer-copyright": "Fait avec 🧠",
   },
   SA: {
     // Modern Standard Arabic (Саудовская Аравия)
@@ -402,7 +402,7 @@ export const translations = {
     "footer-title": "اختبار الذكاء",
     "footer-logo-slogan": "تحدى عقلك",
     "footer-nav-faqs": "الأسئلة",
-    "footer-copyright": "© 2025 iq-test.kek. جميع الحقوق محفوظة.",
+    "footer-copyright": "صُنع بـ 🧠",
   },
   BD: {
     // Bengali (Бангладеш)
@@ -470,7 +470,7 @@ export const translations = {
     "footer-title": "আইকিউ পরীক্ষা",
     "footer-logo-slogan": "আপনার মস্তিষ্ককে চ্যালেঞ্জ করুন",
     "footer-nav-faqs": "প্রশ্নোত্তর",
-    "footer-copyright": "© ২০২৫ iq-test.kek। সর্বস্বত্ব সংরক্ষিত।",
+    "footer-copyright": "🧠 দিয়ে তৈরি",
   },
   BR: {
     // Portuguese (Бразилия)
@@ -538,7 +538,7 @@ export const translations = {
     "footer-title": "Teste de QI",
     "footer-logo-slogan": "desafie seu cérebro",
     "footer-nav-faqs": "Perguntas",
-    "footer-copyright": "© 2025 iq-test.kek. Todos os direitos reservados.",
+    "footer-copyright": "Feito com 🧠",
   },
   RU: {
     // Russian (Россия)
@@ -606,7 +606,7 @@ export const translations = {
     "footer-title": "Тест IQ",
     "footer-logo-slogan": "брось вызов мозгу",
     "footer-nav-faqs": "Вопросы",
-    "footer-copyright": "© 2025 iq-test.kek. Все права защищены.",
+    "footer-copyright": "Сделано с 🧠",
   },
   PK: {
     // Urdu (Пакистан)
@@ -674,7 +674,7 @@ export const translations = {
     "footer-title": "آئی کیو ٹیسٹ",
     "footer-logo-slogan": "اپنے دماغ کو چیلنج کریں",
     "footer-nav-faqs": "سوالات",
-    "footer-copyright": "© 2025 iq-test.kek۔ جملہ حقوق محفوظ ہیں۔",
+    "footer-copyright": "🧠 سے بنایا گیا",
   },
   UA: {
     // Ukrainian (Украина)
@@ -742,6 +742,6 @@ export const translations = {
     "footer-title": "Тест IQ",
     "footer-logo-slogan": "кинь виклик мозку",
     "footer-nav-faqs": "Питання",
-    "footer-copyright": "© 2025 iq-test.kek. Усі права захищено.",
+    "footer-copyright": "Зроблено з 🧠",
   },
 };
