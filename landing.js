@@ -15,6 +15,7 @@ import {
   getResultsLast10,
   getResultsLast24hCount,
   getResultsTotalCount,
+  getTop10AllTime,
 } from "./endpoints/get-stats.js";
 import { getCurrentUser, signAnonUser } from "./endpoints/auth.js";
 import { getUserData } from "./endpoints/user-data.js";
@@ -125,22 +126,6 @@ const data_results_recent = Array.from({ length: 10 }, (_) => {
   };
 });
 
-const currentCountryCode = random.sample(countryCodes);
-
-document.querySelectorAll("[data-id=current_country]").forEach(($elem) => {
-  $elem.textContent = countries[currentCountryCode];
-  $elem.title = countries[currentCountryCode];
-});
-
-const data_results_current = Array.from({ length: 10 }, (_) => {
-  return {
-    displayName: random.sample(mockNames),
-    countryCode: currentCountryCode,
-    value: random.fromRange(60, 140),
-    date: getRandomDate(),
-  };
-});
-
 const data_results_perCountry = Array.from({ length: 10 }, (_) => {
   const randomCountryCode = random.sample(countryCodes);
 
@@ -202,11 +187,37 @@ async function loadStatsFb() {
   });
 
   //stubs
+  const data_top10_stub = Array(10).fill({
+    countryCode: "__",
+    displayName: "...",
+    value: "...",
+  });
+
+  $results_top10.classList.add("is-loading");
   showResults({
-    $container: $results_currentCountry,
-    data: data_results_current,
+    $container: $results_top10,
+    data: data_top10_stub,
     locale: defaultLocale,
   });
+
+  getTop10AllTime().then((data) => {
+    const data_top10 = data.map((data, index) => ({
+      displayName: data.user?.displayName ?? "not set",
+      countryCode: data.user?.countryCode ?? "__",
+      value: calcStaticIqByStats(data.stats),
+      date: data.datePassed.toDate(),
+      resultId: data.id,
+      rank: index + 1,
+    }));
+
+    showResults({
+      $container: $results_top10,
+      data: data_top10,
+      locale: defaultLocale,
+    });
+    $results_top10.classList.remove("is-loading");
+  });
+
   showResults({
     $container: $results_perCountry,
     data: data_results_perCountry,

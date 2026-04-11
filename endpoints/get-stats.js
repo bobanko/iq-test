@@ -25,11 +25,11 @@ export async function getResultsTotalCount() {
 
 export async function getResultsLast24hCount() {
   const tsOneDayAgo = Timestamp.fromDate(
-    new Date(Date.now() - 24 * 60 * 60 * 1000)
+    new Date(Date.now() - 24 * 60 * 60 * 1000),
   ); // last 24h
 
   const testsLast24h = await getCountFromServer(
-    query(quizResultsCol, where("datePassed", ">=", tsOneDayAgo))
+    query(quizResultsCol, where("datePassed", ">=", tsOneDayAgo)),
   );
 
   return testsLast24h.data().count;
@@ -37,7 +37,7 @@ export async function getResultsLast24hCount() {
 
 export async function getResultsLast10() {
   const testResultsSnapshot = await getDocs(
-    query(quizResultsCol, orderBy("datePassed", "desc"), limit(10))
+    query(quizResultsCol, orderBy("datePassed", "desc"), limit(10)),
   );
 
   const testResults = testResultsSnapshot.docs.map((doc) => ({
@@ -51,7 +51,7 @@ export async function getResultsLast10() {
   const usersQuery = query(usersRef, where("__name__", "in", userIds));
   const usersSnapshot = await getDocs(usersQuery);
   const users = Object.fromEntries(
-    usersSnapshot.docs.map((doc) => [doc.id, doc.data()])
+    usersSnapshot.docs.map((doc) => [doc.id, doc.data()]),
   );
 
   const resultsWithUsers = testResults.map((result) => ({
@@ -64,6 +64,56 @@ export async function getResultsLast10() {
 
 export function getRecentResultsInCountry(countryCode) {
   return getResultsLast10(); //stub
+}
+
+// todo(vmyshko): recheck after opus
+export async function getTop10AllTime() {
+  const resultsSnapshot = await getDocs(quizResultsCol);
+
+  const results = resultsSnapshot.docs.map((doc) => ({
+    id: doc.id,
+    ...doc.data(),
+  }));
+
+  const userIds = [...new Set(results.map((r) => r._userId))];
+
+  // Firestore "in" supports max 30 items per query
+  const usersRef = collection(db, "user-data");
+  const users = {};
+  for (let i = 0; i < userIds.length; i += 30) {
+    const batch = userIds.slice(i, i + 30);
+    const usersSnapshot = await getDocs(
+      query(usersRef, where("__name__", "in", batch)),
+    );
+    usersSnapshot.docs.forEach((doc) => {
+      users[doc.id] = doc.data();
+    });
+  }
+
+  const resultsWithUsers = results.map((result) => ({
+    ...result,
+    user: users[result._userId] || null,
+  }));
+
+  // sort by correctness ratio descending, then by date ascending (earlier = better)
+  resultsWithUsers.sort((a, b) => {
+    const ratioA = (a.stats?.isCorrect ?? 0) / (a.stats?.total ?? 1);
+    const ratioB = (b.stats?.isCorrect ?? 0) / (b.stats?.total ?? 1);
+    if (ratioB !== ratioA) return ratioB - ratioA;
+    return (
+      (a.datePassed?.toMillis?.() ?? 0) - (b.datePassed?.toMillis?.() ?? 0)
+    );
+  });
+
+  // keep only the best result per user
+  const seenUsers = new Set();
+  const uniqueResults = resultsWithUsers.filter((result) => {
+    if (seenUsers.has(result._userId)) return false;
+    seenUsers.add(result._userId);
+    return true;
+  });
+
+  return uniqueResults.slice(0, 10);
 }
 
 export async function getAllResults() {

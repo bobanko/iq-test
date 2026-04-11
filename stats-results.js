@@ -1,11 +1,14 @@
 import { countries, emojiFlags } from "./countries.mapping.js";
 
+const RANK_MEDALS = ["🥇", "🥈", "🥉"];
+
 function createResultItem({
   countryCode,
   displayName,
   value,
   date,
   resultId,
+  rank,
   locale = countryCode,
 }) {
   const $resultItem = $tmplResultItem.content.firstElementChild.cloneNode(true);
@@ -23,7 +26,8 @@ function createResultItem({
   $itemName.title = displayName;
 
   const $itemValue = $resultItem.querySelector(".item-value");
-  $itemValue.textContent = value;
+  const medal = rank && RANK_MEDALS[rank - 1];
+  $itemValue.textContent = medal ? `${medal}${value}` : value;
 
   const $itemDate = $resultItem.querySelector(".item-date");
   $itemDate.textContent = date?.toLocaleString(locale);
