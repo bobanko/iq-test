@@ -22,9 +22,7 @@ import { getUserData } from "./endpoints/user-data.js";
 import { getCached } from "./helpers/local-cache.helper.js";
 import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { initChart } from "./chart.js";
-import { generateCertificatePdf } from "./certificate.js";
-
-let currentCertificateData = null;
+import { getBestIqPerUser, calcRankingStats } from "./helpers/ranking.js";
 
 function updatePercentileGauge(percentile) {
   const fraction = Math.min(Math.max(percentile / 100, 0), 1);
@@ -102,42 +100,17 @@ async function displayResult({ userResult, allResults }) {
 
   const staticIq = calcStaticIqByStats(resultsStats);
 
-  // Only keep the best IQ per unique user
-  const bestIqByUser = {};
-  for (const result of allResults) {
-    const userId = result._userId;
-    const iq = calcStaticIqByStats(result.stats);
-    if (!(userId in bestIqByUser) || iq > bestIqByUser[userId]) {
-      bestIqByUser[userId] = iq;
-    }
-  }
+  const bestIqByUser = getBestIqPerUser(allResults);
   const allBestIqs = Object.values(bestIqByUser);
   initChart({ chartData: allBestIqs, highlightValue: staticIq });
 
-  // Sort descending for rank (higher IQ = better)
-  const allResultsIqsSorted = allBestIqs.toSorted((a, b) => b - a);
-  // Debug output for ranking logic
-  console.log(
-    "🔥 [RANK DEBUG] allResultsIqsSorted (unique users):",
-    allResultsIqsSorted,
-  );
+  const {
+    globalRank,
+    percentileRank: percetileRank,
+    topPercent: topPt,
+  } = calcRankingStats(allBestIqs, staticIq);
   console.log("🔥 [RANK DEBUG] staticIq:", staticIq);
-  // Competition rank: 1 + count of IQs strictly greater
-  const globalRank =
-    1 + allResultsIqsSorted.filter((iq) => iq > staticIq).length;
   console.log("🔥 [RANK DEBUG] globalRank:", globalRank);
-  const totalResultsCount = allResultsIqsSorted.length;
-
-  // Percentile as before
-  const resultsBelowCount = allResultsIqsSorted.filter(
-    (iq) => iq < staticIq,
-  ).length;
-  const sameResultsCount = allResultsIqsSorted.filter(
-    (iq) => iq === staticIq,
-  ).length;
-  const percetileRank =
-    ((resultsBelowCount + sameResultsCount / 2) / totalResultsCount) * 100;
-  const topPt = 100 - percetileRank;
 
   //update values
   $iqScoreValue.textContent = `${staticIq.toFixed(0)}`;
@@ -212,19 +185,6 @@ async function displayResult({ userResult, allResults }) {
 
   $chartMainLegend.innerHTML = `
   You are in the top  <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people in the world.`;
-
-  currentCertificateData = {
-    playerName,
-    iq: staticIq.toFixed(0),
-    dateTaken: datePassed.toDate().toLocaleDateString(),
-    percentileLabel: `Top ${topPt.toFixed(0)}%`,
-    correctAnswers: `${isCorrect}/${isAnswered}`,
-    completionTime: formatTimeSpan(timeSpent),
-    answerSpeed: `${answerSpeed.toFixed(2)}s per question`,
-    globalRank: `#${globalRank.toFixed(0)}`,
-    cognitiveSubgroup: findCognitiveSubgroup(staticIq).name,
-    resultUrl: location.href,
-  };
 }
 
 window.addEventListener("hashchange", onHashChanged);
@@ -297,9 +257,12 @@ $btnChallengeFriend.addEventListener("click", async () => {
   }
 });
 
-$btnDownloadCertificate.addEventListener("click", () =>
-  generateCertificatePdf(currentCertificateData),
-);
+$btnDownloadCertificate.addEventListener("click", () => {
+  const resultId = getHashParameter("id");
+  if (resultId) {
+    window.open(`./certificate.html#id=${resultId}`, "_blank");
+  }
+});
 
 {
   const $fieldset = $formContact.querySelector("fieldset");

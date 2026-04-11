@@ -1,21 +1,18 @@
 import html2canvas from "https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.esm.js";
 import { jsPDF } from "https://cdn.jsdelivr.net/npm/jspdf@2.5.2/+esm";
 
-const CERT_HTML_URL = "./certificate.html";
-const CERT_CSS_URL = "./styles/certificate.css";
+import { calcStaticIqByStats } from "./calc-iq.js";
+import { getResultById, getAllResults } from "./endpoints/get-stats.js";
+import { findCognitiveSubgroup } from "./helpers/cognitive-classification-system.js";
+import { formatTimeSpan } from "./helpers/common.js";
+import { getHashParameter } from "./helpers/hash-param.js";
+import { getBestIqPerUser, calcRankingStats } from "./helpers/ranking.js";
+import { getUserData } from "./endpoints/user-data.js";
 
 const PAGE_WIDTH_PX = 1122;
 const PAGE_HEIGHT_PX = 793;
 
-async function loadCertificateTemplate() {
-  const [htmlRes, cssRes] = await Promise.all([
-    fetch(CERT_HTML_URL),
-    fetch(CERT_CSS_URL),
-  ]);
-
-  const [html, css] = await Promise.all([htmlRes.text(), cssRes.text()]);
-  return { html, css };
-}
+// ===== Fill template slots =====
 
 function fillTemplate($root, data) {
   const $$slots = $root.querySelectorAll("[data-cert]");
@@ -27,75 +24,105 @@ function fillTemplate($root, data) {
   });
 }
 
-// ===== Certificate PDF Generation (HTML -> PDF) =====
-export async function generateCertificatePdf(certificateData) {
-  if (!certificateData) {
-    alert("Result data is not ready yet.");
-    return;
-  }
+// ===== Render canvas from cert page =====
 
-  const { html, css } = await loadCertificateTemplate();
+async function renderCanvas() {
+  return html2canvas($certPage, {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: "#0f1022",
+    windowWidth: PAGE_WIDTH_PX,
+    windowHeight: PAGE_HEIGHT_PX,
+    scrollX: 0,
+    scrollY: 0,
+    x: 0,
+    y: 0,
+  });
+}
 
-  const playerName = certificateData.playerName || "Anonymous player";
-  const safeDate = String(certificateData.dateTaken || "date").replaceAll(
-    "/",
-    "-",
-  );
+// ===== Download handlers =====
 
-  const $container = document.createElement("div");
-  $container.style.position = "fixed";
-  $container.style.left = "0";
-  $container.style.top = "0";
-  $container.style.width = `${PAGE_WIDTH_PX}px`;
-  $container.style.height = `${PAGE_HEIGHT_PX}px`;
-  $container.style.zIndex = "-1";
-  $container.style.overflow = "hidden";
-  $container.style.opacity = "0";
-  $container.style.pointerEvents = "none";
+$btnDownloadPdf.addEventListener("click", async () => {
+  const canvas = await renderCanvas();
+  const imgData = canvas.toDataURL("image/jpeg", 0.98);
 
-  $container.innerHTML = `<style>${css}</style>${html}`;
-
-  fillTemplate($container, {
-    iq: certificateData.iq,
-    playerName,
-    percentileLabel: certificateData.percentileLabel,
-    globalRank: certificateData.globalRank,
-    cognitiveSubgroup: certificateData.cognitiveSubgroup,
-    dateTaken: certificateData.dateTaken,
-    correctAnswers: certificateData.correctAnswers,
-    completionTime: certificateData.completionTime,
-    answerSpeed: certificateData.answerSpeed,
+  const pdf = new jsPDF({
+    unit: "mm",
+    format: "a4",
+    orientation: "landscape",
   });
 
-  document.body.append($container);
+  const pdfWidth = pdf.internal.pageSize.getWidth();
+  const pdfHeight = pdf.internal.pageSize.getHeight();
+  pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
+  pdf.save(`iq-certificate-${safeDate}.pdf`);
+});
 
+$btnDownloadPng.addEventListener("click", async () => {
+  const canvas = await renderCanvas();
+
+  const $link = document.createElement("a");
+  $link.download = `iq-certificate-${safeDate}.png`;
+  $link.href = canvas.toDataURL("image/png");
+  $link.click();
+});
+
+// ===== Load result and fill certificate =====
+
+let safeDate = "certificate";
+
+const resultId = getHashParameter("id");
+
+if (!resultId) {
+  $certLoading.hidden = true;
+  $certError.hidden = false;
+  $certError.textContent =
+    "No result ID provided. Open this page from your results.";
+} else {
   try {
-    const $certPage = $container.querySelector(".cert-page");
+    const [userResult, allResults] = await Promise.all([
+      getResultById(resultId),
+      getAllResults(),
+    ]);
 
-    const canvas = await html2canvas($certPage, {
-      scale: 2,
-      useCORS: true,
-      backgroundColor: "#0f1022",
-      windowWidth: PAGE_WIDTH_PX,
-      windowHeight: PAGE_HEIGHT_PX,
-      scrollX: 0,
-      scrollY: 0,
-      x: 0,
-      y: 0,
+    const userData = (await getUserData(userResult._userId)) ?? {};
+    const playerName = userData.displayName?.trim() || "Anonymous player";
+
+    const { stats, datePassed } = userResult;
+    const staticIq = calcStaticIqByStats(stats);
+
+    const bestIqByUser = getBestIqPerUser(allResults);
+    const allBestIqs = Object.values(bestIqByUser);
+    const { globalRank, topPercent: topPt } = calcRankingStats(
+      allBestIqs,
+      staticIq,
+    );
+
+    const { isAnswered, isCorrect, timeSpent } = stats;
+    const answerSpeed = timeSpent / 1000 / stats.total;
+
+    const dateObj = datePassed.toDate();
+    safeDate = dateObj.toLocaleDateString().replaceAll("/", "-");
+
+    fillTemplate($certPage, {
+      iq: staticIq.toFixed(0),
+      playerName,
+      percentileLabel: `Top ${topPt.toFixed(0)}%`,
+      globalRank: `#${globalRank.toFixed(0)}`,
+      cognitiveSubgroup: findCognitiveSubgroup(staticIq).name,
+      dateTaken: dateObj.toLocaleDateString(),
+      correctAnswers: `${isCorrect}/${isAnswered}`,
+      completionTime: formatTimeSpan(timeSpent),
+      answerSpeed: `${answerSpeed.toFixed(2)}s per question`,
     });
 
-    const imgData = canvas.toDataURL("image/jpeg", 0.98);
-    const pdf = new jsPDF({
-      unit: "mm",
-      format: "a4",
-      orientation: "landscape",
-    });
+    $btnBackToResult.href = `./result.html#id=${resultId}`;
 
-    const pdfWidth = pdf.internal.pageSize.getWidth();
-    const pdfHeight = pdf.internal.pageSize.getHeight();
-    pdf.addImage(imgData, "JPEG", 0, 0, pdfWidth, pdfHeight);
-    pdf.save(`iq-certificate-${safeDate}.pdf`);
-  } finally {
-    $container.remove();
+    $certLoading.hidden = true;
+    $certActions.hidden = false;
+  } catch (err) {
+    console.error("🔥 Failed to load certificate:", err);
+    $certLoading.hidden = true;
+    $certError.hidden = false;
   }
 }
