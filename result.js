@@ -26,6 +26,11 @@ import { fetchClientIpInfo } from "./endpoints/ip-info.js";
 import { initChart } from "./chart.js";
 import { getBestIqPerUser, calcRankingStats } from "./helpers/ranking.js";
 
+function revealStat($el) {
+  $el?.classList.remove("empty-loader");
+  $el?.classList.add("stat-revealed");
+}
+
 function updatePercentileGauge(percentile) {
   const fraction = Math.min(Math.max(percentile / 100, 0), 1);
 
@@ -203,12 +208,14 @@ async function displayResult({ userResult, allResults }) {
   const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
   if (isAnswered === 0) {
-    $brainImg.src = "./images/result/brain-dummy.png";
+    $brainImg.src = "./images/brains/brain-dummy.png";
   } else if (isCorrect < 3) {
-    $brainImg.src = "./images/result/brain-dead.png";
+    $brainImg.src = "./images/brains/brain-dead.png";
   } else if (isCorrect <= 7) {
-    $brainImg.src = "./images/result/brain-smoker.png";
+    $brainImg.src = "./images/brains/brain-smoker.png";
   }
+
+  $brainImg.parentElement.classList.remove("blurred");
 
   $completionTimeValue.textContent = formatTimeSpan(timeSpent);
 
@@ -219,7 +226,11 @@ async function displayResult({ userResult, allResults }) {
   $percentileValue.textContent = `${topPt.toFixed(0)}%`;
   $percentileDesc.textContent = `You are smarter than ${percetileRank.toFixed(0)}% of people`;
   updatePercentileGauge(percetileRank);
-  //
+
+  // reveal stat values
+  revealStat($percentileValue);
+  revealStat($globalRankValue);
+  revealStat($completionTimeValue);
 
   const accuracyRate = (isCorrect / total) * 100;
   const answerSpeed = timeSpent / 1000 / total;
@@ -229,6 +240,11 @@ async function displayResult({ userResult, allResults }) {
   $cognitiveTypeName.textContent = archetype.name;
   $cognitiveTypeDesc.textContent = archetype.desc;
   $cognitiveTypeMotto.textContent = archetype.motto;
+
+  $cognitiveTypeName.classList.remove("empty-loader");
+  $cognitiveTypeDesc.classList.remove("empty-loader");
+  $cognitiveTypeMotto.classList.remove("empty-loader");
+  $archetypeImg.hidden = false;
 
   // ===== Modifiers =====
   const answers = userResult.zAnswers ?? [];
@@ -245,6 +261,10 @@ async function displayResult({ userResult, allResults }) {
   // $topRankValue.textContent = `${topPt.toFixed(0)}%`;
   $accuracyRateValue.textContent = `${accuracyRate.toFixed(1)}%`;
   $answerSpeedValue.textContent = `${answerSpeed.toFixed(2)}s`;
+
+  revealStat($correctAnswersValue);
+  revealStat($accuracyRateValue);
+  revealStat($answerSpeedValue);
 
   // sublabels
   $topRankLabel.textContent = `Top ${topPt.toFixed(0)}% of test takers ✨`;

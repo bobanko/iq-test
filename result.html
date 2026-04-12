@@ -39,10 +39,10 @@
     <!-- Hero: IQ Score + Rank Cards -->
     <div class="hero-row">
       <section class="result-hero">
-        <div class="hero-brain">
+        <div class="hero-brain blurred">
           <img
             id="$brainImg"
-            src="./images/result/brain.png"
+            src="./images/brains/brain.png"
             alt="brain"
             width="160"
           />
@@ -82,16 +82,10 @@
 
             <div class="flex-col">
               <span class="stat-label">PERCENTILE RANK</span>
-              <div
+              <span
+                id="$percentileValue"
                 class="stat-value empty-loader flex-row align-center justify-center"
-              >
-                <img
-                  src="./images/emojis/top-arrow.png"
-                  alt="🔝"
-                  style="height: 1em"
-                />
-                <span id="$percentileValue"></span>
-              </div>
+              ></span>
             </div>
           </div>
           <span
@@ -269,55 +263,33 @@
           <div class="flex-col gap-10" style="flex: 1">
             <div class="flex-row">
               <div class="flex-col">
-                <div id="$cognitiveTypeName" class="type-name">
-                  Chaotic Clicker
-                </div>
-                <div id="$cognitiveTypeDesc" class="type-desc">
-                  You play fast, think faster, and sometimes just guess.
-                </div>
-                <div id="$cognitiveTypeMotto" class="type-motto handwritten">
-                  It works... somehow.
-                </div>
+                <div
+                  id="$cognitiveTypeName"
+                  class="type-name empty-loader"
+                ></div>
+                <div
+                  id="$cognitiveTypeDesc"
+                  class="type-desc empty-loader"
+                ></div>
+                <div
+                  id="$cognitiveTypeMotto"
+                  class="type-motto handwritten empty-loader"
+                ></div>
               </div>
               <div class="type-illustration">
-                <img src="./images/result/thinker.png" alt="type" width="140" />
+                <img
+                  id="$archetypeImg"
+                  src="./images/archetypes/chaotic-clicker.png"
+                  alt="type"
+                  width="140"
+                  hidden
+                />
               </div>
             </div>
             <div
               id="$cognitiveTypeTags"
               class="type-tags flex-row gap-5 flex-wrap"
-            >
-              <span
-                class="tag flex-row align-center gap-5"
-                style="--color: #e5f2fe"
-                ><img
-                  src="./images/emojis/bolt.png"
-                  alt=""
-                  style="height: 1em"
-                />
-                Fast Thinker</span
-              >
-              <span
-                class="tag flex-row align-center gap-5"
-                style="--color: #fdf4d2"
-                ><img
-                  src="./images/emojis/shield.png"
-                  alt=""
-                  style="height: 1em"
-                />
-                Risk Taker</span
-              >
-              <span
-                class="tag flex-row align-center gap-5"
-                style="--color: #fedfe9"
-                ><img
-                  src="./images/emojis/dice.png"
-                  alt=""
-                  style="height: 1em"
-                />
-                Unpredictable</span
-              >
-            </div>
+            ></div>
           </div>
         </div>
       </section>
@@ -337,7 +309,7 @@
             alt="🎮"
           />
           <div class="flex-col">
-            <span id="$smarterGamers" class="stat-value">42%</span>
+            <span id="$smarterGamers" class="stat-value"></span>
             <span class="stat-label">of gamers 🎮</span>
           </div>
         </div>
@@ -351,7 +323,7 @@
             alt="&lt;/&gt;"
           />
           <div class="flex-col">
-            <span id="$smarterCoders" class="stat-value">67%</span>
+            <span id="$smarterCoders" class="stat-value"></span>
             <span class="stat-label">of coders 💻</span>
           </div>
         </div>
@@ -361,7 +333,7 @@
         >
           <img class="stat-icon" src="./images/emojis/goldfish.png" alt="🐡" />
           <div class="flex-col">
-            <span id="$smarterGoldfish" class="stat-value">100%</span>
+            <span id="$smarterGoldfish" class="stat-value"></span>
             <span class="stat-label">of goldfish 🐡</span>
           </div>
           <span class="smarter-note handwritten" style="rotate: 10deg"

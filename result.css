@@ -99,11 +99,23 @@ hr {
   }
 }
 
+@keyframes statReveal {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 /* ===== Common Components ===== */
 
 .empty-loader {
   &:empty::after {
     content: "...";
+    color: black;
     animation: fadeIn 400ms alternate infinite;
   }
 }
@@ -158,6 +170,10 @@ hr {
     font-size: 28px;
     font-weight: 700;
     line-height: 1.5;
+
+    &.stat-revealed {
+      animation: statReveal 400ms ease forwards;
+    }
   }
 }
 
@@ -349,6 +365,12 @@ hr {
   display: flex;
   align-items: center;
 
+  transition: filter 500ms ease-out;
+
+  &.blurred {
+    filter: blur(15px);
+  }
+
   img {
     height: 100%;
     width: auto;
@@ -379,7 +401,7 @@ hr {
       top: 0;
       left: 80%;
       /* taken from: https://thenounproject.com/icon/up-hand-drawn-arrow-1563367/ */
-      background-image: url(./images/result/up-hand-drawn-arrow.png);
+      background-image: url(./images/up-hand-drawn-arrow.png);
       background-size: contain;
     }
   }
@@ -620,7 +642,7 @@ hr {
     top: -15%;
     right: 85%;
     rotate: 140deg;
-    background-image: url(./images/result/up-hand-drawn-arrow.png);
+    background-image: url(./images/up-hand-drawn-arrow.png);
     background-size: contain;
   }
 }
