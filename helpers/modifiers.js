@@ -5,52 +5,52 @@ import { calculateMean, calculateStandardDeviation } from "./statistics.js";
 const MODIFIERS = {
   "fast-thinker": {
     label: "Fast Thinker",
-    emoji: "bolt",
+    emoji: "⚡️",
     color: "#e5f2fe",
   },
   "coinflip-master": {
     label: "Coinflip Master",
-    emoji: "dice",
+    emoji: "🎲",
     color: "#fdf4d2",
   },
   "slow-and-steady": {
     label: "Slow and Steady",
-    emoji: "shield",
+    emoji: "🛡️",
     color: "#e8f5e9",
   },
   unpredictable: {
     label: "Unpredictable",
-    emoji: "dice",
+    emoji: "🎲",
     color: "#fedfe9",
   },
   chaos: {
     label: "Chaos",
-    emoji: "swords",
+    emoji: "⚔️",
     color: "#fedfe9",
   },
   "precision-streak": {
     label: "Precision Streak",
-    emoji: "direct-hit",
+    emoji: "🎯",
     color: "#e5f2fe",
   },
   "risk-taker": {
     label: "Risk Taker",
-    emoji: "racing-car",
+    emoji: "🏎️",
     color: "#fdf4d2",
   },
   overthinker: {
     label: "Overthinker",
-    emoji: "cloud",
+    emoji: "☁️",
     color: "#f3e8fd",
   },
   "last-minute": {
     label: "Last Minute",
-    emoji: "stopwatch",
+    emoji: "⏱️",
     color: "#fff3e0",
   },
   glitch: {
     label: "Glitch",
-    emoji: "video-game",
+    emoji: "🎮",
     color: "#f6f7f9",
   },
 };
