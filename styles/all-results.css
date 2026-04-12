@@ -1,0 +1,102 @@
+.results-table {
+  border-collapse: collapse;
+  font-size: 0.9em;
+  min-width: 700px;
+
+  th,
+  td {
+    padding: 8px 12px;
+    text-align: left;
+    border-bottom: 1px solid var(--hr-color);
+    white-space: nowrap;
+  }
+
+  thead th {
+    background: var(--bg-secondary);
+    position: sticky;
+    top: 0;
+    font-weight: 600;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      opacity: 0.8;
+    }
+
+    &.sort-asc::after {
+      content: " ▲";
+      font-size: 0.7em;
+    }
+
+    &.sort-desc::after {
+      content: " ▼";
+      font-size: 0.7em;
+    }
+  }
+
+  tbody tr {
+    &:hover {
+      background: hsla(from var(--accent-color) h s l / 0.08);
+    }
+  }
+
+  .col-iq {
+    font-weight: bold;
+  }
+
+  .col-country {
+    text-align: center;
+  }
+
+  .col-name {
+    max-width: 180px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .col-correct {
+    text-align: center;
+  }
+
+  .col-actions {
+    text-align: center;
+  }
+}
+
+.btn-delete-result {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.1em;
+  padding: 2px 6px;
+  opacity: 0.5;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.result-link {
+  color: inherit;
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+    color: var(--accent-color);
+  }
+}
+
+.admin-toggle-btn {
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  background: none;
+  border: none;
+  font-size: 1.5em;
+  cursor: pointer;
+  opacity: 0.3;
+
+  &:hover {
+    opacity: 0.7;
+  }
+}

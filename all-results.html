@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="en" class="flex-col align-center justify-space-around">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>All Results</title>
+    <link rel="icon" href="./images/brain-ios.png" type="image/png" />
+    <link rel="stylesheet" href="./landing.css" />
+    <link rel="stylesheet" href="./styles/all-results.css" />
+    <script src="./all-results.js" type="module" async></script>
+  </head>
+  <body class="inter-regular w-100p">
+    <header
+      class="flex-row align-center py-10"
+      style="justify-content: space-between"
+    >
+      <div class="flex-row align-center py-10 nowrap">
+        <img src="./images/brain-ios.png" width="40px" />
+        <div class="flex-col px-10">
+          <span class="beta" style="font-weight: bold; font-size: 28px"
+            >All Results</span
+          >
+          <span style="font-size: 10px">challenge your brain</span>
+        </div>
+      </div>
+      <a href="./index.html" class="button px-10">← Back to main</a>
+    </header>
+
+    <main class="flex-col align-center w-100p" style="margin: 0 auto">
+      <div class="flex-row align-center gap-10" style="margin-bottom: 16px">
+        <span id="$resultsCount" style="color: #888; font-size: 0.9em"></span>
+      </div>
+
+      <div id="$resultsTableWrap" class="w-100p" style="overflow-x: auto">
+        <table id="$resultsTable" class="results-table w-100p">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>IQ</th>
+              <th>Country</th>
+              <th>Name</th>
+              <th>Date</th>
+              <th>Time</th>
+              <th>Correct</th>
+              <th class="col-actions hidden" id="$colActions">Actions</th>
+            </tr>
+          </thead>
+          <tbody id="$resultsBody"></tbody>
+        </table>
+      </div>
+
+      <div id="$loadingIndicator" style="padding: 40px; color: #888">
+        Loading...
+      </div>
+    </main>
+  </body>
+</html>
