@@ -51,7 +51,7 @@ export function initChart({ chartData, highlightValue = null }) {
 
   const groups = groupBySplitPoints({
     numbers: chartData,
-    splitPoints: [60, 70, 80, 90, 100, 110, 120, 130, 140],
+    splitPoints: [65, 70, 80, 90, 100, 110, 120, 130, 135],
   });
 
   console.log("🍆", groups);
