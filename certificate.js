@@ -8,7 +8,7 @@ import { formatTimeSpan } from "./helpers/common.js";
 import { getHashParameter } from "./helpers/hash-param.js";
 import { getBestIqPerUser, calcRankingStats } from "./helpers/ranking.js";
 import { getUserData } from "./endpoints/user-data.js";
-import { generateCertificateText } from "./helpers/certificate-generator.js";
+import { generateCertificateText } from "./helpers/tier-generator.js";
 import { stringToHash } from "./helpers/hash-string.js";
 
 const PAGE_WIDTH_PX = 1122;
