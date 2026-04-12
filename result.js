@@ -202,6 +202,14 @@ async function displayResult({ userResult, allResults }) {
 
   const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
+  if (isAnswered === 0) {
+    $brainImg.src = "./images/result/brain-dummy.png";
+  } else if (isCorrect < 3) {
+    $brainImg.src = "./images/result/brain-dead.png";
+  } else if (isCorrect <= 7) {
+    $brainImg.src = "./images/result/brain-smoker.png";
+  }
+
   $completionTimeValue.textContent = formatTimeSpan(timeSpent);
 
   $dateTakenValue.textContent = datePassed.toDate().toLocaleDateString();
@@ -229,7 +237,7 @@ async function displayResult({ userResult, allResults }) {
     .map(
       (m) =>
         `<span class="tag flex-row align-center gap-5" style="--color: ${m.color}">` +
-        `<img src="./images/emojis/${m.emoji}.png" alt="" style="height: 1em" /> ${m.label}</span>`,
+        `${m.emoji} ${m.label}</span>`,
     )
     .join("");
 
