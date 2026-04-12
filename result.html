@@ -537,6 +537,32 @@
 
     <div id="$toast" class="toast" hidden>Link copied to clipboard</div>
 
+    <div id="$resultDemo" class="result-demo" hidden>
+      <label class="result-demo-label">
+        Correct
+        <input
+          id="$demoCorrectSlider"
+          type="range"
+          min="0"
+          max="40"
+          value="20"
+        />
+        <span id="$demoCorrectValue">20/40</span>
+      </label>
+      <label class="result-demo-label">
+        Time (sec)
+        <input
+          id="$demoTimeSlider"
+          type="range"
+          min="60"
+          max="1800"
+          step="10"
+          value="480"
+        />
+        <span id="$demoTimeValue">8:00</span>
+      </label>
+    </div>
+
     <footer class="flex-col">
       <hr />
       <div class="flex-row p-10" style="justify-content: space-between">

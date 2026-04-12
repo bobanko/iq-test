@@ -52,8 +52,69 @@ function onHashChanged() {
   const resultId = getHashParameter("id");
 
   if (!resultId) {
-    // todo(vmyshko): get current user id and request recent result id, then redir to it
-    alert("no id");
+    // ===== Demo mode =====
+    const TOTAL_QUESTIONS = 40;
+
+    function buildMockData({ correct, timeSec }) {
+      const mockTimeSpent = timeSec * 1000;
+
+      const userResult = {
+        _userId: "demo-user",
+        stats: {
+          isCorrect: correct,
+          isAnswered: TOTAL_QUESTIONS,
+          total: TOTAL_QUESTIONS,
+          timeSpent: mockTimeSpent,
+        },
+        datePassed: { toDate: () => new Date() },
+      };
+
+      // mock population to get meaningful ranking
+      const allResults = [
+        60, 65, 70, 75, 80, 85, 90, 95, 100, 100, 105, 110, 115, 120, 130, 140,
+      ].map((mockIq, i) => {
+        const c = Math.round(((mockIq - 60) / 80) * TOTAL_QUESTIONS);
+        return {
+          _userId: `mock-${i}`,
+          stats: {
+            isCorrect: c,
+            isAnswered: TOTAL_QUESTIONS,
+            total: TOTAL_QUESTIONS,
+            timeSpent: 300_000,
+          },
+          datePassed: { toDate: () => new Date() },
+        };
+      });
+
+      // inject current user into population
+      allResults.push(userResult);
+
+      return { userResult, allResults };
+    }
+
+    async function renderResultDemo() {
+      const correct = Number($demoCorrectSlider.value);
+      const timeSec = Number($demoTimeSlider.value);
+      const { userResult, allResults } = buildMockData({ correct, timeSec });
+
+      await displayResult({ userResult, allResults });
+    }
+
+    $resultDemo.hidden = false;
+    renderResultDemo();
+
+    $demoCorrectSlider.addEventListener("input", () => {
+      $demoCorrectValue.textContent = `${$demoCorrectSlider.value}/${TOTAL_QUESTIONS}`;
+      renderResultDemo();
+    });
+
+    $demoTimeSlider.addEventListener("input", () => {
+      $demoTimeValue.textContent = formatTimeSpan(
+        Number($demoTimeSlider.value) * 1000,
+      );
+      renderResultDemo();
+    });
+
     return;
   }
 
