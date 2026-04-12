@@ -6,6 +6,7 @@
 @import url(./styles/palette.css);
 @import url(./styles/patterns/patterns.css);
 @import url(./styles/animations.css);
+@import url(./styles/debug-panel.css);
 
 @import url(./styles/question-list.css);
 @import url(./styles/buton.css);
@@ -26,46 +27,6 @@
   --section-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
   --section-border: 1px solid #0000001a;
   --gap-section: 10px;
-}
-
-/* ===== Demo panel ===== */
-
-.result-demo {
-  position: fixed;
-  bottom: 16px;
-  right: 16px;
-  z-index: 3;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  padding: 16px;
-  border-radius: 12px;
-  background: #1b1b2fee;
-  border: 1px solid #ffffff30;
-  font-family: "Segoe UI", Arial, sans-serif;
-}
-
-.result-demo-label {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  color: #b3c2fb;
-  font-size: 13px;
-  font-weight: 600;
-
-  input[type="range"] {
-    flex: 1;
-    min-width: 160px;
-    accent-color: #5b8af5;
-    cursor: pointer;
-  }
-
-  span {
-    min-width: 48px;
-    text-align: right;
-    color: #d5deff;
-    font-variant-numeric: tabular-nums;
-  }
 }
 
 ::selection {
