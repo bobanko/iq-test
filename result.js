@@ -12,6 +12,7 @@ import {
   calculateMean,
   calculateStandardDeviation,
 } from "./helpers/statistics.js";
+import { getArchetype } from "./helpers/tier-generator.js";
 
 import "./result.fbq.js";
 import "./result.ga.js";
@@ -204,6 +205,12 @@ async function displayResult({ userResult, allResults }) {
 
   const accuracyRate = (isCorrect / total) * 100;
   const answerSpeed = timeSpent / 1000 / total;
+
+  // ===== Archetype =====
+  const archetype = getArchetype(answerSpeed, isCorrect / total);
+  $cognitiveTypeName.textContent = archetype.name;
+  $cognitiveTypeDesc.textContent = archetype.desc;
+  $cognitiveTypeMotto.textContent = archetype.motto;
 
   $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`; ///${total}`;
   // $topRankValue.textContent = `${topPt.toFixed(0)}%`;
