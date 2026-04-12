@@ -73,13 +73,112 @@ $btnDownloadPng.addEventListener("click", async () => {
 
 let safeDate = "certificate";
 
+function fillCertificate({
+  playerName,
+  staticIq,
+  globalRank,
+  topPt,
+  dateTaken,
+  isCorrect,
+  isAnswered,
+  timeSpent,
+  seed,
+}) {
+  const answerSpeed = timeSpent / 1000 / isAnswered;
+  const accuracy = Math.round((isCorrect / isAnswered) * 100);
+
+  const certText = generateCertificateText({
+    name: playerName,
+    iq: staticIq,
+    accuracy,
+    time: formatTimeSpan(timeSpent),
+    correct: isCorrect,
+    total: isAnswered,
+    seed,
+  });
+
+  fillTemplate($certPage, {
+    iq: staticIq.toFixed(0),
+    playerName,
+    percentileLabel: `Top ${topPt.toFixed(0)}%`,
+    globalRank: `#${globalRank.toFixed(0)}`,
+    cognitiveSubgroup: findCognitiveSubgroup(staticIq).name,
+    dateTaken,
+    correctAnswers: certText.stats.questions,
+    completionTime: certText.stats.time,
+    answerSpeed: `${answerSpeed.toFixed(2)}s per question`,
+    intro: certText.intro,
+    subtitle: certText.subtitle,
+    footer: certText.footer,
+    seal: certText.seal,
+  });
+}
+
 const resultId = getHashParameter("id");
 
 if (!resultId) {
+  // ===== Demo mode =====
+  let demoSeed = 42;
+  const TOTAL_QUESTIONS = 40;
+
+  function getDemoValues() {
+    return {
+      iq: Number($demoIqSlider.value),
+      correct: Number($demoCorrectSlider.value),
+      timeSec: Number($demoTimeSlider.value),
+    };
+  }
+
+  function renderDemo() {
+    const { iq, correct, timeSec } = getDemoValues();
+    const timeSpent = timeSec * 1000;
+
+    const { globalRank, topPercent: topPt } = calcRankingStats(
+      [60, 70, 80, 90, 95, 100, 100, 105, 110, 115, 120, 130, 140],
+      iq,
+    );
+
+    fillCertificate({
+      playerName: "John Doe",
+      staticIq: iq,
+      isCorrect: correct,
+      isAnswered: TOTAL_QUESTIONS,
+      timeSpent,
+      dateTaken: new Date().toLocaleDateString(),
+      globalRank,
+      topPt,
+      seed: demoSeed,
+    });
+  }
+
+  renderDemo();
+
+  $btnDemoShuffle.addEventListener("click", () => {
+    demoSeed = Math.floor(Math.random() * 2 ** 32);
+    renderDemo();
+  });
+
+  $demoIqSlider.addEventListener("input", () => {
+    $demoIqValue.textContent = $demoIqSlider.value;
+    renderDemo();
+  });
+
+  $demoCorrectSlider.addEventListener("input", () => {
+    $demoCorrectValue.textContent = `${$demoCorrectSlider.value}/${TOTAL_QUESTIONS}`;
+    renderDemo();
+  });
+
+  $demoTimeSlider.addEventListener("input", () => {
+    $demoTimeValue.textContent = formatTimeSpan(
+      Number($demoTimeSlider.value) * 1000,
+    );
+    renderDemo();
+  });
+
   $certLoading.hidden = true;
-  $certError.hidden = false;
-  $certError.textContent =
-    "No result ID provided. Open this page from your results.";
+  $certDemo.hidden = false;
+  $certActions.hidden = false;
+  $btnBackToResult.hidden = true;
 } else {
   try {
     const [userResult, allResults] = await Promise.all([
@@ -101,36 +200,19 @@ if (!resultId) {
     );
 
     const { isAnswered, isCorrect, timeSpent } = stats;
-    const answerSpeed = timeSpent / 1000 / stats.total;
-
     const dateObj = datePassed.toDate();
     safeDate = dateObj.toLocaleDateString().replaceAll("/", "-");
 
-    const accuracy = Math.round((isCorrect / isAnswered) * 100);
-    const certText = generateCertificateText({
-      name: playerName,
-      iq: staticIq,
-      accuracy,
-      time: formatTimeSpan(timeSpent),
-      correct: isCorrect,
-      total: isAnswered,
-      seed: stringToHash(resultId),
-    });
-
-    fillTemplate($certPage, {
-      iq: staticIq.toFixed(0),
+    fillCertificate({
       playerName,
-      percentileLabel: `Top ${topPt.toFixed(0)}%`,
-      globalRank: `#${globalRank.toFixed(0)}`,
-      cognitiveSubgroup: findCognitiveSubgroup(staticIq).name,
+      staticIq,
+      globalRank,
+      topPt,
       dateTaken: dateObj.toLocaleDateString(),
-      correctAnswers: certText.stats.questions,
-      completionTime: certText.stats.time,
-      answerSpeed: `${answerSpeed.toFixed(2)}s per question`,
-      intro: certText.intro,
-      subtitle: certText.subtitle,
-      footer: certText.footer,
-      seal: certText.seal,
+      isCorrect,
+      isAnswered,
+      timeSpent,
+      seed: stringToHash(resultId),
     });
 
     $btnBackToResult.href = `./result.html#id=${resultId}`;

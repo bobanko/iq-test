@@ -89,6 +89,44 @@
         </a>
       </div>
 
+      <div id="$certDemo" class="cert-demo" hidden>
+        <label class="cert-demo-label">
+          IQ
+          <input
+            id="$demoIqSlider"
+            type="range"
+            min="60"
+            max="140"
+            value="100"
+          />
+          <span id="$demoIqValue">100</span>
+        </label>
+        <label class="cert-demo-label">
+          Correct
+          <input
+            id="$demoCorrectSlider"
+            type="range"
+            min="0"
+            max="40"
+            value="20"
+          />
+          <span id="$demoCorrectValue">20/40</span>
+        </label>
+        <label class="cert-demo-label">
+          Time
+          <input
+            id="$demoTimeSlider"
+            type="range"
+            min="60"
+            max="1800"
+            step="10"
+            value="480"
+          />
+          <span id="$demoTimeValue">8:00</span>
+        </label>
+        <button id="$btnDemoShuffle" class="cert-action-btn">🎲 Shuffle</button>
+      </div>
+
       <div id="$certLoading" class="cert-loading">Loading certificate...</div>
       <div id="$certError" class="cert-error" hidden>
         Certificate not found.
