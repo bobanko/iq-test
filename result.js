@@ -207,12 +207,17 @@ async function displayResult({ userResult, allResults }) {
 
   const { isAnswered, isCorrect, timeSpent, total } = resultsStats;
 
+  // todo(vmyshko): make based on modifiers?
   if (isAnswered === 0) {
     $brainImg.src = "./images/brains/brain-dummy.png";
   } else if (isCorrect < 3) {
     $brainImg.src = "./images/brains/brain-dead.png";
   } else if (isCorrect <= 7) {
     $brainImg.src = "./images/brains/brain-smoker.png";
+  }
+
+  if (isCorrect > 10 && isCorrect < 25 && timeSpent < 5 * 60 * 1000) {
+    $brainImg.src = "./images/brains/brain-reptilian.png";
   }
 
   $brainImg.parentElement.classList.remove("blurred");
