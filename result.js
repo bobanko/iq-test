@@ -332,9 +332,10 @@ async function displayResult({ userResult, allResults }) {
   $chartMainLegend.innerHTML = `
   You are in the top  <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people in the world.`;
 
+  // todo(vmyshko): update with real comparison?
   // ===== Smarter Than =====
-  const smarterGamers = Math.min(percetileRank * 0.85, 99);
-  const smarterCoders = Math.min(percetileRank * 0.7, 95);
+  const smarterGamers = Math.min(percetileRank * 0.95, 99);
+  const smarterCoders = Math.min(percetileRank * 0.8, 95);
   $smarterGamers.textContent = `${smarterGamers.toFixed(0)}%`;
   $smarterCoders.textContent = `${smarterCoders.toFixed(0)}%`;
   $smarterGoldfish.textContent = "100%";
