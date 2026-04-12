@@ -123,15 +123,18 @@ if (!resultId) {
 
   function getDemoValues() {
     return {
-      iq: Number($demoIqSlider.value),
       correct: Number($demoCorrectSlider.value),
       timeSec: Number($demoTimeSlider.value),
     };
   }
 
   function renderDemo() {
-    const { iq, correct, timeSec } = getDemoValues();
+    const { correct, timeSec } = getDemoValues();
     const timeSpent = timeSec * 1000;
+    const iq = calcStaticIqByStats({
+      isCorrect: correct,
+      total: TOTAL_QUESTIONS,
+    });
 
     const { globalRank, topPercent: topPt } = calcRankingStats(
       [60, 70, 80, 90, 95, 100, 100, 105, 110, 115, 120, 130, 140],
@@ -155,11 +158,6 @@ if (!resultId) {
 
   $btnDemoShuffle.addEventListener("click", () => {
     demoSeed = Math.floor(Math.random() * 2 ** 32);
-    renderDemo();
-  });
-
-  $demoIqSlider.addEventListener("input", () => {
-    $demoIqValue.textContent = $demoIqSlider.value;
     renderDemo();
   });
 
