@@ -20,6 +20,7 @@ const ARCHETYPES = {
     imgName: "chaotic-clicker.png",
   },
   "slow-medium": {
+    // todo(vmyshko): replace?
     name: "Slow Burn Genius 🧠",
     desc: "You think long and deep — not always right, but always thorough.",
     motto: "Give me 5 more minutes.",

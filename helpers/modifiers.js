@@ -28,10 +28,10 @@ const MODIFIERS = {
     emoji: "⚔️",
     color: "#fedfe9",
   },
-  "precision-streak": {
-    label: "Precision Streak",
-    emoji: "🎯",
-    color: "#e5f2fe",
+  "streak-god": {
+    label: "Streak God",
+    emoji: "🔥",
+    color: "#fff3e0",
   },
   "risk-taker": {
     label: "Risk Taker",
@@ -52,6 +52,26 @@ const MODIFIERS = {
     label: "Glitch",
     emoji: "🎮",
     color: "#f6f7f9",
+  },
+  "pure-guess": {
+    label: "Pure Guess",
+    emoji: "🎰",
+    color: "#fdf4d2",
+  },
+  bot: {
+    label: "Bot",
+    emoji: "🤖",
+    color: "#e0e0e0",
+  },
+  "panic-mode": {
+    label: "Panic Mode",
+    emoji: "😱",
+    color: "#fedfe9",
+  },
+  "reptile-brain": {
+    label: "Reptile Brain",
+    emoji: "🦎",
+    color: "#e8f5e9",
   },
 };
 
@@ -101,9 +121,9 @@ export function getModifiers(answers) {
     matched.push(MODIFIERS["chaos"]);
   }
 
-  // Precision Streak — streak ≥ 6 correct in a row
-  if (getLongestCorrectStreak(answers) >= 6) {
-    matched.push(MODIFIERS["precision-streak"]);
+  // Streak God — streak ≥ 8 correct in a row
+  if (getLongestCorrectStreak(answers) >= 8) {
+    matched.push(MODIFIERS["streak-god"]);
   }
 
   // Risk Taker — many fast answers (<5s) and low accuracy
@@ -140,6 +160,36 @@ export function getModifiers(answers) {
   const skippedRatio = answers.filter((a) => !a.isAnswered).length / total;
   if (skippedRatio > 0.15) {
     matched.push(MODIFIERS["glitch"]);
+  }
+
+  // Pure Guess — >60% of answers <3s
+  const ultraFastRatio =
+    answers.filter((a) => a.isAnswered && a.timeSpent / 1000 < 3).length /
+    total;
+  if (ultraFastRatio > 0.6) {
+    matched.push(MODIFIERS["pure-guess"]);
+  }
+
+  // Bot — answered 0–2 questions
+  const answeredCount = answers.filter((a) => a.isAnswered).length;
+  if (answeredCount <= 2) {
+    matched.push(MODIFIERS["bot"]);
+  }
+
+  // Reptile Brain — very fast answers and accuracy > 50%
+  if (avgSpeedSec < 5 && accuracy > 0.5) {
+    matched.push(MODIFIERS["reptile-brain"]);
+  }
+
+  // Panic Mode — last 10 questions avg speed < 50% of first 30
+  if (total > 10) {
+    const firstPart = perQuestionSec.slice(0, -10);
+    const lastPart = perQuestionSec.slice(-10);
+    const firstAvg = calculateMean(firstPart);
+    const lastAvg = calculateMean(lastPart);
+    if (lastAvg < firstAvg * 0.5) {
+      matched.push(MODIFIERS["panic-mode"]);
+    }
   }
 
   return matched.slice(0, MAX_MODIFIERS);
