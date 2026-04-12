@@ -89,6 +89,12 @@
 
 ## HTML
 
+### Entry points
+
+- Each HTML page should have **one CSS `<link>`** and **one JS `<script>`** in `<head>` — the single entry point for that page
+- Additional styles are imported inside the entry CSS via `@import`
+- Additional scripts are imported inside the entry JS via `import`
+
 ### IDs
 
 - Always prefix with `$`: `id="$btnStart"`, `id="$screenGame"`, `id="$cardLeft"`
