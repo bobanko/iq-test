@@ -246,17 +246,35 @@ async function displayResult({ userResult, allResults }) {
   const answers = userResult.zAnswers ?? [];
   const modifiers = getModifiers(answers);
 
-  // brain image based on modifiers (last match wins)
+  // brain image and label based on modifiers (last match wins)
   const BRAIN_BY_MODIFIER = {
-    Glitch: "brain-smoker.png",
-    "Coinflip Master": "brain-dead.png",
-    Bot: "brain-dummy.png",
-    "Reptile Brain": "brain-reptilian.png",
-    "Quantum Potato": "brain-potato.png",
+    // todo(vmyshko): replace by more comic
+    Glitch: {
+      img: "brain-smoker.png",
+      label: "some wires are loose",
+    },
+    "Coinflip Master": {
+      img: "brain-dead.png",
+      label: "BRAINZ!",
+    },
+    Bot: {
+      img: "brain-dummy.png",
+      label: "thoughts not found (404)",
+    },
+    "Reptile Brain": {
+      img: "brain-reptilian.png",
+      label: "pure instinct",
+    },
+    "Quantum Potato": {
+      img: "brain-potato.png",
+      label: "superposition of smart",
+    },
   };
   for (const m of modifiers) {
-    if (BRAIN_BY_MODIFIER[m.label]) {
-      $brainImg.src = `./images/brains/${BRAIN_BY_MODIFIER[m.label]}`;
+    const brain = BRAIN_BY_MODIFIER[m.label];
+    if (brain) {
+      $brainImg.src = `./images/brains/${brain.img}`;
+      $brainLabel.textContent = brain.label;
     }
   }
 
@@ -313,6 +331,13 @@ async function displayResult({ userResult, allResults }) {
 
   $chartMainLegend.innerHTML = `
   You are in the top  <b class="highlight">${topPt.toFixed(0)}%</b> of the smartest people in the world.`;
+
+  // ===== Smarter Than =====
+  const smarterGamers = Math.min(percetileRank * 0.85, 99);
+  const smarterCoders = Math.min(percetileRank * 0.7, 95);
+  $smarterGamers.textContent = `${smarterGamers.toFixed(0)}%`;
+  $smarterCoders.textContent = `${smarterCoders.toFixed(0)}%`;
+  $smarterGoldfish.textContent = "100%";
 }
 
 window.addEventListener("hashchange", onHashChanged);
