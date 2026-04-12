@@ -73,6 +73,11 @@ const MODIFIERS = {
     emoji: "🦎",
     color: "#e8f5e9",
   },
+  "quantum-potato": {
+    label: "Quantum Potato",
+    emoji: "🥔",
+    color: "#f5f0e1",
+  },
 };
 
 const MAX_MODIFIERS = 3;
@@ -181,6 +186,11 @@ export function getModifiers(answers) {
     matched.push(MODIFIERS["reptile-brain"]);
   }
 
+  // Quantum Potato — alternating correct/incorrect streak ≥ 8
+  if (getLongestAlternatingStreak(answers) >= 8) {
+    matched.push(MODIFIERS["quantum-potato"]);
+  }
+
   // Panic Mode — last 10 questions avg speed < 50% of first 30
   if (total > 10) {
     const firstPart = perQuestionSec.slice(0, -10);
@@ -210,6 +220,22 @@ function getLongestCorrectStreak(answers) {
       if (current > max) max = current;
     } else {
       current = 0;
+    }
+  }
+  return max;
+}
+
+function getLongestAlternatingStreak(answers) {
+  let max = 1;
+  let current = 1;
+  for (let i = 1; i < answers.length; i++) {
+    const prev = answers[i - 1].isCorrect;
+    const curr = answers[i].isCorrect;
+    if (prev !== null && curr !== null && prev !== curr) {
+      current++;
+      if (current > max) max = current;
+    } else {
+      current = 1;
     }
   }
   return max;

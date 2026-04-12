@@ -252,6 +252,7 @@ async function displayResult({ userResult, allResults }) {
     "Coinflip Master": "brain-dead.png",
     Bot: "brain-dummy.png",
     "Reptile Brain": "brain-reptilian.png",
+    "Quantum Potato": "brain-potato.png",
   };
   for (const m of modifiers) {
     if (BRAIN_BY_MODIFIER[m.label]) {
