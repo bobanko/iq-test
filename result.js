@@ -12,7 +12,8 @@ import {
   calculateMean,
   calculateStandardDeviation,
 } from "./helpers/statistics.js";
-import { getArchetype } from "./helpers/tier-generator.js";
+import { getArchetype } from "./helpers/archetypes.js";
+import { getModifiers } from "./helpers/modifiers.js";
 
 import "./result.fbq.js";
 import "./result.ga.js";
@@ -58,9 +59,18 @@ function onHashChanged() {
 
     function buildMockData({ correct, timeSec }) {
       const mockTimeSpent = timeSec * 1000;
+      const avgTimePerQ = mockTimeSpent / TOTAL_QUESTIONS;
+
+      const zAnswers = Array.from({ length: TOTAL_QUESTIONS }, (_, i) => ({
+        questionIndex: i,
+        isAnswered: true,
+        isCorrect: i < correct,
+        timeSpent: avgTimePerQ,
+      }));
 
       const userResult = {
         _userId: "demo-user",
+        zAnswers,
         stats: {
           isCorrect: correct,
           isAnswered: TOTAL_QUESTIONS,
@@ -211,6 +221,17 @@ async function displayResult({ userResult, allResults }) {
   $cognitiveTypeName.textContent = archetype.name;
   $cognitiveTypeDesc.textContent = archetype.desc;
   $cognitiveTypeMotto.textContent = archetype.motto;
+
+  // ===== Modifiers =====
+  const answers = userResult.zAnswers ?? [];
+  const modifiers = getModifiers(answers);
+  $cognitiveTypeTags.innerHTML = modifiers
+    .map(
+      (m) =>
+        `<span class="tag flex-row align-center gap-5" style="--color: ${m.color}">` +
+        `<img src="./images/emojis/${m.emoji}.png" alt="" style="height: 1em" /> ${m.label}</span>`,
+    )
+    .join("");
 
   $correctAnswersValue.textContent = `${isCorrect}/${isAnswered}`; ///${total}`;
   // $topRankValue.textContent = `${topPt.toFixed(0)}%`;
