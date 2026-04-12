@@ -86,6 +86,7 @@ async function loadAllResults() {
       displayName: user.displayName || "anon",
       datePassed,
       timeSpent: result.stats?.timeSpent || 0,
+      isAnswered: result.stats?.isAnswered ?? 0,
       isCorrect: result.stats?.isCorrect ?? 0,
       total: result.stats?.total ?? 0,
     };
@@ -113,6 +114,8 @@ function sortResults(results, column, direction) {
         );
       case "time":
         return (a.timeSpent - b.timeSpent) * dir;
+      case "answered":
+        return (a.isAnswered - b.isAnswered) * dir;
       case "correct":
         return (a.isCorrect / a.total - b.isCorrect / b.total) * dir;
       default:
@@ -150,6 +153,7 @@ function renderResults() {
     "name",
     "date",
     "time",
+    "answered",
     "correct",
     "actions",
   ].indexOf(sortColumn);
@@ -206,6 +210,12 @@ function renderResults() {
     $tdTime.textContent = formatTimeSpan(result.timeSpent);
     $tr.appendChild($tdTime);
 
+    // Answered / Total
+    const $tdAnswered = document.createElement("td");
+    $tdAnswered.className = "col-correct";
+    $tdAnswered.textContent = `${result.isAnswered}/${result.total}`;
+    $tr.appendChild($tdAnswered);
+
     // Correct / Total
     const $tdCorrect = document.createElement("td");
     $tdCorrect.className = "col-correct";
@@ -250,7 +260,16 @@ function renderResults() {
 
 async function init() {
   // setup sort handlers
-  const columns = [null, "iq", "country", "name", "date", "time", "correct"];
+  const columns = [
+    null,
+    "iq",
+    "country",
+    "name",
+    "date",
+    "time",
+    "answered",
+    "correct",
+  ];
   const $$headers = $resultsTable.querySelectorAll("thead th");
   $$headers.forEach(($th, i) => {
     if (columns[i]) {
