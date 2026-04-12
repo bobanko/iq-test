@@ -8,6 +8,8 @@ import { formatTimeSpan } from "./helpers/common.js";
 import { getHashParameter } from "./helpers/hash-param.js";
 import { getBestIqPerUser, calcRankingStats } from "./helpers/ranking.js";
 import { getUserData } from "./endpoints/user-data.js";
+import { generateCertificateText } from "./helpers/certificate-generator.js";
+import { stringToHash } from "./helpers/hash-string.js";
 
 const PAGE_WIDTH_PX = 1122;
 const PAGE_HEIGHT_PX = 793;
@@ -104,6 +106,17 @@ if (!resultId) {
     const dateObj = datePassed.toDate();
     safeDate = dateObj.toLocaleDateString().replaceAll("/", "-");
 
+    const accuracy = Math.round((isCorrect / isAnswered) * 100);
+    const certText = generateCertificateText({
+      name: playerName,
+      iq: staticIq,
+      accuracy,
+      time: formatTimeSpan(timeSpent),
+      correct: isCorrect,
+      total: isAnswered,
+      seed: stringToHash(resultId),
+    });
+
     fillTemplate($certPage, {
       iq: staticIq.toFixed(0),
       playerName,
@@ -111,9 +124,13 @@ if (!resultId) {
       globalRank: `#${globalRank.toFixed(0)}`,
       cognitiveSubgroup: findCognitiveSubgroup(staticIq).name,
       dateTaken: dateObj.toLocaleDateString(),
-      correctAnswers: `${isCorrect}/${isAnswered}`,
-      completionTime: formatTimeSpan(timeSpent),
+      correctAnswers: certText.stats.questions,
+      completionTime: certText.stats.time,
       answerSpeed: `${answerSpeed.toFixed(2)}s per question`,
+      intro: certText.intro,
+      subtitle: certText.subtitle,
+      footer: certText.footer,
+      seal: certText.seal,
     });
 
     $btnBackToResult.href = `./result.html#id=${resultId}`;

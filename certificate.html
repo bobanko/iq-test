@@ -19,7 +19,7 @@
           <div class="cert-header-text">
             <div class="cert-org-label">420IQ.LOL CERTIFICATE</div>
             <h1 class="cert-title">Brain Flex Certificate</h1>
-            <p class="cert-subtitle">
+            <p class="cert-subtitle" data-cert="subtitle">
               Verified result from your latest IQ run.
             </p>
           </div>
@@ -28,7 +28,9 @@
 
         <div class="cert-details">
           <div class="cert-player-col">
-            <div class="cert-certifies-label">This certifies that</div>
+            <div class="cert-certifies-label" data-cert="intro">
+              This certifies that
+            </div>
             <div class="cert-player-name" data-cert="playerName"></div>
             <div class="cert-rank-text">
               reached <b data-cert="percentileLabel"></b> and earned rank
@@ -65,10 +67,12 @@
             <div class="cert-issuer-line"></div>
             <div class="cert-issuer-name">Issued by iq-test</div>
           </div>
-          <div class="cert-motto">Keep training your brain</div>
+          <div class="cert-motto" data-cert="footer">
+            Keep training your brain
+          </div>
           <div class="cert-seal-block">
             <div class="cert-verified-label">Verified</div>
-            <div class="cert-seal">IQ CERT</div>
+            <div class="cert-seal" data-cert="seal">IQ CERT</div>
           </div>
         </div>
       </section>
