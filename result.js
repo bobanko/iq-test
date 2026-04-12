@@ -244,7 +244,11 @@ async function displayResult({ userResult, allResults }) {
   $cognitiveTypeName.classList.remove("empty-loader");
   $cognitiveTypeDesc.classList.remove("empty-loader");
   $cognitiveTypeMotto.classList.remove("empty-loader");
-  $archetypeImg.hidden = false;
+
+  if (archetype.imgName) {
+    $archetypeImg.src = `./images/archetypes/${archetype.imgName}`;
+    $archetypeImg.hidden = false;
+  }
 
   // ===== Modifiers =====
   const answers = userResult.zAnswers ?? [];
