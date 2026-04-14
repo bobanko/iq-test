@@ -179,7 +179,14 @@ async function displayResult({ userResult, allResults }) {
 
   const bestIqByUser = getBestIqPerUser(allResults);
   const allBestIqs = Object.values(bestIqByUser);
-  initChart({ chartData: allBestIqs, highlightValue: staticIq });
+  initChart({
+    $container: $chartMain,
+    $barTmpl: $tmplChartBar,
+    $lineTmpl: $tmplChartLine,
+
+    chartData: allBestIqs,
+    highlightValue: staticIq,
+  });
 
   const {
     globalRank,

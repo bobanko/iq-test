@@ -55,6 +55,8 @@ export function generateCertificateText({
   time,
   correct,
   total,
+  topPt,
+  subgroup,
   seed,
 }) {
   const randomFn = getSeededRandom(seed);
@@ -73,7 +75,7 @@ export function generateCertificateText({
     iq,
 
     intro: pick(t.intro),
-    subtitle: pick(t.subtitle),
+    subtitle: pick(t.subtitle)(topPt, subgroup),
 
     stats: {
       accuracy: accText,

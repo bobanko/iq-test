@@ -42,8 +42,13 @@ function getGroupRangeName({ min, max }) {
   return `${min}`;
 }
 
-export function initChart({ chartData, highlightValue = null }) {
-  // todo(vmyshko): dynamically create chart as well
+export function initChart({
+  chartData,
+  highlightValue = null,
+  $container = null,
+  $barTmpl = null,
+  $lineTmpl = null,
+}) {
   const min = Math.min(...chartData);
   const max = Math.max(...chartData);
 
@@ -78,17 +83,17 @@ export function initChart({ chartData, highlightValue = null }) {
   });
   const gaussianPeak = Math.max(...gaussianValues, 1);
 
-  const $bars = $chartMain.querySelector(".bars");
-  const $lines = $chartMain.querySelector(".lines");
-  const $xLabels = $chartMain.querySelector(".x-labels");
-  const $curveArea = $chartMain.querySelector(".curve-area");
+  const $bars = $container.querySelector(".bars");
+  const $lines = $container.querySelector(".lines");
+  const $xLabels = $container.querySelector(".x-labels");
+  const $curveArea = $container.querySelector(".curve-area");
 
   $bars.replaceChildren();
   $lines.replaceChildren();
   $xLabels?.replaceChildren();
 
   groups.forEach(({ name, min, max, items }, index) => {
-    const $bar = $tmplChartBar.content.firstElementChild.cloneNode(true);
+    const $bar = $barTmpl.content.firstElementChild.cloneNode(true);
     const $xLabel = document.createElement("div");
 
     const groupTitle = getGroupRangeName({ min, max });
@@ -135,7 +140,7 @@ export function initChart({ chartData, highlightValue = null }) {
     .map((_, i) => i * chartYstep)
     .reverse() // todo(vmyshko): do it with css?
     .forEach((value) => {
-      const $line = $tmplChartLine.content.firstElementChild.cloneNode(true);
+      const $line = $lineTmpl.content.firstElementChild.cloneNode(true);
 
       //   $line.style.setProperty("--value", value);
       $line.querySelector(".value").textContent = `${value}`;
