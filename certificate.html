@@ -9,71 +9,176 @@
     <script src="./certificate.js" type="module" async></script>
   </head>
   <body>
+    <!-- chart templates -->
+    <template id="$tmplChartBar">
+      <div class="bar-container align-center">
+        <div class="bar"></div>
+        <div class="value">123</div>
+      </div>
+    </template>
+    <template id="$tmplChartLine">
+      <div class="line-container">
+        <div class="value">30</div>
+        <div class="line"></div>
+      </div>
+    </template>
+
     <div class="cert-wrapper">
       <section id="$certPage" class="cert-page">
-        <div class="cert-blob-top"></div>
-        <div class="cert-blob-bottom"></div>
-        <div class="cert-inner-border"></div>
+        <!-- Ruler -->
+        <div class="cert-ruler" aria-hidden="true">
+          <span>0</span><span>10</span><span>20</span><span>30</span>
+          <span>40</span><span>50</span><span>60</span><span>70</span
+          ><span>80</span>
+        </div>
 
+        <!-- Header -->
         <div class="cert-header">
-          <div class="cert-header-text">
-            <div class="cert-org-label">420IQ.LOL CERTIFICATE</div>
-            <h1 class="cert-title">Brain Flex Certificate</h1>
-            <p class="cert-subtitle" data-cert="subtitle">
-              Verified result from your latest IQ run.
-            </p>
+          <h1 class="cert-main-title">420IQ // CERTIFIED RESULT</h1>
+          <div class="cert-header-sub">
+            UNAUTHORIZED INTELLIGENCE ASSESSMENT
           </div>
-          <div class="cert-iq-circle" data-cert="iq"></div>
+          <div class="cert-header-note">
+            THIS DOCUMENT IS NOT RECOGNIZED BY ANY INSTITUTION AND THAT'S
+            EXACTLY WHY IT MATTERS
+          </div>
         </div>
 
-        <div class="cert-details">
-          <div class="cert-player-col">
-            <div class="cert-certifies-label" data-cert="intro">
-              This certifies that
-            </div>
-            <div class="cert-player-name" data-cert="playerName"></div>
-            <div class="cert-rank-text">
-              reached <b data-cert="percentileLabel"></b> and earned rank
-              <b data-cert="globalRank"></b>.
-            </div>
-            <div
-              class="cert-subgroup-badge"
-              data-cert="cognitiveSubgroup"
-            ></div>
-          </div>
+        <!-- Subject -->
+        <div class="cert-subject">
+          <span class="cert-subject-label">SUBJECT:</span>
+          <span class="cert-player-name" data-cert="playerName"></span>
+        </div>
 
+        <!-- IQ Score Row -->
+        <div class="cert-iq-row">
+          <div class="cert-iq-box">
+            <div class="cert-iq-value">
+              IQ: <span data-cert="iqScore"></span>
+            </div>
+            <div class="cert-iq-details">
+              <div>STATUS: <span data-cert="status"></span></div>
+              <div>
+                PERCENTILE: <span data-cert="percentile"></span>
+                <span class="cert-perf-dots" aria-hidden="true"
+                  >●●●●●● ●●●</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="cert-thinking-type" data-cert="thinkingType"></div>
+        </div>
+
+        <!-- Archetype -->
+        <div class="cert-archetype">
+          <div class="cert-archetype-title">
+            ARCHETYPE DETECTED:
+            <span class="cert-archetype-name" data-cert="archetype"></span>
+          </div>
+          <div class="cert-archetype-traits" data-cert="archetypeTraits"></div>
+        </div>
+
+        <!-- Middle: Chart + Stats -->
+        <div class="cert-middle">
+          <div class="cert-chart-col">
+            <div id="$certChart" class="cert-chart chart">
+              <div class="lines"></div>
+              <svg
+                class="curve"
+                viewBox="0 0 100 100"
+                preserveAspectRatio="none"
+              >
+                <path class="curve-area" d=""></path>
+              </svg>
+              <div class="bars"></div>
+              <div class="x-labels" aria-hidden="true"></div>
+            </div>
+            <div class="cert-chart-legend" data-cert="chartLegend"></div>
+          </div>
           <div class="cert-stats-col">
-            <div class="cert-stat-card">
-              <div class="cert-stat-label">Date</div>
-              <div class="cert-stat-value" data-cert="dateTaken"></div>
+            <div class="cert-stats-header">STATS:</div>
+            <div class="cert-stat-item">
+              <span class="cert-stat-label">pattern recognition</span>
+              <div class="cert-stat-bar">
+                <div class="cert-stat-fill" data-stat="pattern"></div>
+              </div>
+              <span class="cert-stat-value" data-cert="statPattern"></span>
             </div>
-            <div class="cert-stat-card">
-              <div class="cert-stat-label">Correct answers</div>
-              <div class="cert-stat-value" data-cert="correctAnswers"></div>
+            <div class="cert-stat-item">
+              <span class="cert-stat-label">logic stability</span>
+              <div class="cert-stat-bar">
+                <div class="cert-stat-fill" data-stat="logic"></div>
+              </div>
+              <span class="cert-stat-value" data-cert="statLogic"></span>
             </div>
-            <div class="cert-stat-card">
-              <div class="cert-stat-label">Completion time</div>
-              <div class="cert-stat-value" data-cert="completionTime"></div>
+            <div class="cert-stat-item">
+              <span class="cert-stat-label">reaction speed</span>
+              <div class="cert-stat-bar">
+                <div class="cert-stat-fill" data-stat="speed"></div>
+              </div>
+              <span class="cert-stat-value" data-cert="statSpeed"></span>
             </div>
-            <div class="cert-stat-card">
-              <div class="cert-stat-label">Average speed</div>
-              <div class="cert-stat-value" data-cert="answerSpeed"></div>
+            <div class="cert-stat-item">
+              <span class="cert-stat-label">sanity</span>
+              <div class="cert-stat-bar">
+                <div class="cert-stat-fill" data-stat="sanity"></div>
+              </div>
+              <span class="cert-stat-value" data-cert="statSanity"></span>
             </div>
           </div>
         </div>
 
+        <!-- Perforation Zone -->
+        <div class="cert-perforations" aria-hidden="true">
+          <svg class="cert-perf-grid" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <pattern
+                id="perf-dots"
+                width="9"
+                height="11"
+                patternUnits="userSpaceOnUse"
+              >
+                <rect width="6" height="8" rx="0.5" fill="#3a3a3a" />
+              </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#perf-dots)" />
+          </svg>
+          <div class="cert-perf-label">
+            <div class="cert-perf-title">SPECIAL ENCODING DATA ZONE</div>
+            <div class="cert-perf-subtitle">
+              ENCODED PERFORATION DATA (NOT FOR PHYSICAL REMOVAL)
+            </div>
+          </div>
+        </div>
+
+        <!-- Footer -->
         <div class="cert-footer">
-          <div class="cert-issuer">
-            <div class="cert-issuer-line"></div>
-            <div class="cert-issuer-name">Issued by iq-test</div>
+          <div class="cert-qr-placeholder">
+            <div class="cert-qr-box">
+              <img
+                src="https://api.qrserver.com/v1/create-qr-code/?data=HelloWorld&amp;size=100x100&format=svg"
+                alt="qr code"
+                title="qr code"
+              />
+            </div>
+            <span class="cert-qr-link">verify_result.htm</span>
           </div>
-          <div class="cert-motto" data-cert="footer">
-            Keep training your brain
+          <div class="cert-footer-middle">
+            <div class="cert-footer-meta">
+              <span>TEST ID: <span data-cert="testId"></span></span>
+              <span class="cert-meta-sep">|</span>
+              <span>TIMESTAMP: <span data-cert="timestamp"></span></span>
+              <span class="cert-meta-sep">|</span>
+              <span>VERIFIED BY: <span data-cert="verifiedBy"></span></span>
+              <span class="cert-meta-sep">|</span>
+              <span>TRUSTED BY: <span data-cert="trustedBy"></span></span>
+            </div>
+            <div class="cert-fine-print">
+              * IQ score is calculated based on correct answers and compared to
+              other test takers.
+            </div>
           </div>
-          <div class="cert-seal-block">
-            <div class="cert-verified-label">Verified</div>
-            <div class="cert-seal" data-cert="seal">IQ CERT</div>
-          </div>
+          <div class="cert-evaluator">/S/ ARTIFICIAL EVALUATOR V4.2</div>
         </div>
       </section>
 
