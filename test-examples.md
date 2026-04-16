@@ -130,3 +130,6 @@ https://wwiqtest.com
 currently blocking
 
 upd: static questions, some new, rich text and hooks on landing
+
+clone of myiq scammers but with interesting question variations
+https://brainiqtest.com/
